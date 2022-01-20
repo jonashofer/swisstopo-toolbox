@@ -1,0 +1,11 @@
+@import "~@oblique/oblique/styles/scss/core/mixins/_layout.scss";
+
+.ob-main-layout {
+  @include media-breakpoint-up(lg) {
+    width: 70%;
+  }
+}
+
+.mat-icon {
+  margin-bottom: 5px;
+}

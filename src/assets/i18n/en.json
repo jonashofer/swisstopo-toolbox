@@ -1,0 +1,81 @@
+{
+  "layout": {
+    "title": "Swisstopo Showcases",
+    "nav": {
+      "address-to-coordinate": "Address to coordinate",
+      "guide": "Guide"
+    },
+    "footer": "Swisstopo Showcases - Project 1 BFH semester project"
+  },
+  "mode": {
+    "input": "Input",
+    "file": "Upload file"
+  },
+  "search": {
+    "label": "Address",
+    "labelEdit": "Modify address",
+    "placeholder": "e.g. Bundesplatz 1 Bern",
+    "tooltip": "Multi-line entry possible by copying addresses from the clipboard. Please ensure that each address is on a new line."
+  },
+  "notifications": {
+    "entriesAdded": "{{count}} lines read in",
+    "entryEdited": "Address was adjusted",
+    "entryAlreadyExists": "This address ({{address}}) has already been added!",
+    "inputTooManyWords": "The search must not contain more than 10 words.",
+    "inputTooLong": "The search must not be longer than 4000 characters."
+  },
+  "fileInput": {
+    "replaceDialog": {
+      "title": "Upload",
+      "description": "There are already entries. Would you like to add the new addresses or replace the existing ones?",
+      "add": "Add",
+      "replace": "Replace"
+    },
+    "exampleFile": {
+      "description": "The file should contain one address per line.",
+      "button": "Download sample file"
+    }
+  },
+  "table": {
+    "header": {
+      "reset": "Discard all",
+      "address": "Address",
+      "lon": "Lon",
+      "lat": "Lat",
+      "north": "Y / North",
+      "east": "X / East",
+      "resetDialog": {
+        "title": "Reset",
+        "description": "Do you want to delete all entries?"
+      }
+    },
+    "entry": {
+      "delete": "Delete entry",
+      "edit": "Modify entry",
+      "warning": "Non-unique address"
+    }
+  },
+  "toolbar": {
+    "copy": {
+      "label": "Copy",
+      "tooltip": "Copy table to clipboard"
+    },
+    "download": {
+      "label": "Download"
+    },
+    "coordinateSystem": {
+      "tooltip": "Change coordinate system"
+    }
+  },
+  "map": {
+    "background": {
+      "standard": "Map",
+      "satellite": "Satelite"
+    },
+    "adminCHDialog": {
+      "title": "Continue to map.geo.admin.ch",
+      "description": "On the official map of Swisstopo you have the full possibilities for further use of your addresses.</br></br>To do this, a file is downloaded <b>\"addresses.kml\"</b> which you can then import into the map by dragging it in.</br></br>Thus no addresses are stored online.",
+      "button": "Download and continue to"
+    }
+  }
+}

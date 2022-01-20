@@ -1,0 +1,81 @@
+{
+  "layout": {
+    "title": "Swisstopo Showcases",
+    "nav": {
+      "address-to-coordinate": "Adressa tier coordinatas",
+      "guide": "Instrucziun"
+    },
+    "footer": "„Swisstopo Showcases – project 1 BFH semester project"
+  },
+  "mode": {
+    "input": "Endataziun",
+    "file": "Importar datoteca"
+  },
+  "search": {
+    "label": "Adressa",
+    "labelEdit": "Adattadar adressa",
+    "placeholder": "z.B. Bundesplatz 1 Bern",
+    "tooltip": "Endataziun da pliras lingias pusseivel entras copiar adressas digl archiv provisoric. Per plascher far stem che mintga adressa sesanfla sin ina nova lingia"
+  },
+  "notifications": {
+    "entriesAdded": "{{count}} lingia(s) endatadas.",
+    "entryEdited": "Adressa ei vegnida adattada.",
+    "entryAlreadyExists": "Questa adressa ({{address}}) ei gia vegnida agiuntada!",
+    "inputTooManyWords": "La tscherca astga buc cuntener dapli che 10 plaids.",
+    "inputTooLong": "La tscherca astga buc esser pli liunga che 4000 simbols."
+  },
+  "fileInput": {
+    "replaceDialog": {
+      "title": "Importar",
+      "description": "Ei exista gia endataziuns. Vuleis Vus agiuntar las novas adressas ni remplazzar las existentas?",
+      "add": "Agiuntar",
+      "replace": "Remplazzar"
+    },
+    "exampleFile": {
+      "description": "La datoteca duess haver ina adressa per lingia",
+      "button": "Exportar datoteca d’exempel"
+    }
+  },
+  "table": {
+    "header": {
+      "reset": "Annullar tut",
+      "address": "Adressa",
+      "lon": "Lon",
+      "lat": "Lat",
+      "north": "Y / Nord",
+      "east": "X / Ost",
+      "resetDialog": {
+        "title": "Reinizialisar",
+        "description": "Vuleis Vus annullar tut las endataziuns?"
+      }
+    },
+    "entry": {
+      "delete": "Annullar endataziun",
+      "edit": "Midar endataziun",
+      "warning": "Adressa nunprecisa"
+    }
+  },
+  "toolbar": {
+    "copy": {
+      "label": "Copiar",
+      "tooltip": "Exportar tabella sco datoteca"
+    },
+    "download": {
+      "label": "Exportar"
+    },
+    "coordinateSystem": {
+      "tooltip": "Midar sistem da coordinatas"
+    }
+  },
+  "map": {
+    "background": {
+      "standard": "Carta",
+      "satellite": "Satellit"
+    },
+    "adminCHDialog": {
+      "title": "Vinavon sin map.geo.admin.ch",
+      "description": "Sin la carta ufficiala da Swisstopo haveis Vus tuttas pusseivladas d‘utilisar vinavon Vossas adressas. </br></br> Per quei vegn ina datoteca exportada <b>\"addresses.kml\"</b>, la quala che Vus saveis silsuenter importar entras trer viaden. </br></br> Aschia vegnan neginas adressas memorisadas online.",
+      "button": "Exportar e per "
+    }
+  }
+}

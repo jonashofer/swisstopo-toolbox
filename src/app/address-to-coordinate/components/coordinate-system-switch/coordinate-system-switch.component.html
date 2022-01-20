@@ -1,0 +1,24 @@
+<ng-template #switchPopover>
+  <mat-button-toggle-group
+    name="coordinateSystem"
+    [ngModel]="currentSystem$ | async"
+    (ngModelChange)="onChange($event)"
+    aria-label="Coordinate System">
+    <mat-button-toggle *ngFor="let system of coordinateSystems" [value]="system">
+      {{ coordinateSystemNames[system] }}
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+</ng-template>
+
+<button
+  mat-button
+  obButton="secondary"
+  [obPopover]="switchPopover"
+  placement="bottom"
+  [matTooltip]="'toolbarResult.buttonGPS.hoverGPS' | translate"
+  matTooltipPosition="after"
+  matTooltipShowDelay="100">
+  {{ currentSystemName$ | async }}
+  <mat-icon svgIcon="cog" class="ob-icon"></mat-icon>
+  <mat-icon svgIcon="chevron-small-down" class="ob-icon"></mat-icon>
+</button>

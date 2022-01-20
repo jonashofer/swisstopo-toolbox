@@ -1,0 +1,32 @@
+<div id="map">
+  <div id="mapLink">
+    <button (click)="openMapAdminDialog(mapAdminDialog)" mat-button obButton="secondary" target="_blank">
+      <mat-icon svgIcon="login" class="ob-icon"></mat-icon>
+      map.geo.admin.ch
+    </button>
+  </div>
+  <div id="legend">
+    <mat-button-toggle-group name="background" aria-label="Background Layer" value="karte">
+      <mat-button-toggle (click)="switchToMapBackground()" value="karte"
+        >{{ "map.background.standard" | translate }}
+      </mat-button-toggle>
+      <mat-button-toggle (click)="switchToSatelliteBackground()"
+        >{{ "map.background.satellite" | translate }}
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+</div>
+
+<ng-template #mapAdminDialog id="mapAdminDialog">
+  <h2 mat-dialog-title>{{ "map.adminCHDialog.title" | translate }}</h2>
+  <mat-dialog-content class="mat-typography" [innerHTML]="'map.adminCHDialog.description' | translate">
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button obButton="secondary" [mat-dialog-close]="false">
+      {{ "i18n.common.cancel" | translate }}
+    </button>
+    <button mat-button obButton="primary" [mat-dialog-close]="true" cdkFocusInitial>
+      {{ "map.adminCHDialog.button" | translate }}<b> map.geo.admin.ch</b>
+    </button>
+  </mat-dialog-actions>
+</ng-template>

@@ -1,0 +1,82 @@
+{
+    "layout": {
+      "title": "Swisstopo Showcases",
+      "nav": {
+        "address-to-coordinate": "Indirizzo per le coordinate",
+        "guide": "Istruzioni"
+      },
+      "footer": "Swisstopo Showcases - Progetto 1 BFH Semestre di progetto"
+    },
+    "mode": {
+      "input": "Inserimento dei dati",
+      "file": "Caricare i documenti"
+    },
+    "search": {
+      "label": "Indirizzo",
+      "labelEdit": "Modificare indirizzo",
+      "placeholder": "per es. Bundesplatz 1 Bern",
+      "tooltip": "Possibilità di inserire più righe copiando gli indirizzi dagli appunti. Ogni indirizzo contempla la propria linea."
+    },
+    "notifications": {
+      "entriesAdded": "{{count}} linee riconosciute.",
+      "entryEdited": "Indirizzo modificato",
+      "entryAlreadyExists": "Questo indirizzo ({{address}}) è già stato inserito ({{address}})!",
+      "inputTooManyWords": "La ricerca non deve contenere più di 10 parole.",
+      "inputTooLong": "Per la ricerca immettere al massimo 4000 caratteri."
+    },
+    "fileInput": {
+      "replaceDialog": {
+        "title": "Caricare",
+        "description": "Esistono già delle registrazioni. Si desidera aggiungere dei nuovi indirizzi o sostituire quelli esistenti?",
+        "add": "Aggiungere",
+        "replace": "Rimpiazzare"
+      },
+      "exampleFile": {
+        "description": "Il documento deve contenere un indirizzo per ogni riga.",
+        "button": "Scaricare un documento come  esempio"
+      }
+    },
+    "table": {
+      "header": {
+        "reset": "Eliminare",
+        "address": "Indirizzo",
+        "lon": "Lon",
+        "lat": "Lat",
+        "north": "Y / Nord",
+        "east": "X / Est",
+        "resetDialog": {
+          "title": "Resettare",
+          "description": "Si desidera cancellare tutti i dati?"
+        }
+      },
+      "entry": {
+        "delete": "Eliminare la registrazione",
+        "edit": "Modificare la registrazione",
+        "warning": "Indirizzo non specifico"
+      }
+    },
+    "toolbar": {
+      "copy": {
+        "label": "Copiare",
+        "tooltip": "I dati possono essere copiati negli appunti"
+      },
+      "download": {
+        "label": "Scaricare"
+      },
+      "coordinateSystem": {
+        "tooltip": "Cambiare le coordinate del sistema"
+      }
+    },
+    "map": {
+      "background": {
+        "standard": "Mappa",
+        "satellite": "Satellite"
+      },
+      "adminCHDialog": {
+        "title": "Continuare su map.geo.admin.ch",
+        "description": "Tramite la mappa ufficiale di Swisstopo è possibile utilizzare al meglio i propri indirizzi.</br></br>Il documento che viene scaricato <b>\"addresses.kml\"</b> può essere trascinato sulla mappa. </br></br>In questo modo, nessun indirizzo viene memorizzato online.",
+        "button": "Scaricare e continuare"
+      }
+    }
+  }
+  

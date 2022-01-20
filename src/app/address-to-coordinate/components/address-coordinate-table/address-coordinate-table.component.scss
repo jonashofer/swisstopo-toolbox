@@ -1,0 +1,27 @@
+table {
+  width: 100%;
+  font-size: 0.9rem;
+  line-height: 35px;
+
+  .mat-icon[svgIcon="repeat"] {
+    color: rgba(0, 0, 0, 0.54);
+  }
+
+  .mat-column-trash {
+    width: 30px;
+  }
+
+  .icon-button {
+    cursor: pointer;
+    margin-left: 5px;
+    margin-top: 3px;
+
+    &:hover {
+      color: #069;
+    }
+
+    &[svgIcon="warning-triangle"] {
+      color: #e75e00;
+    }
+  }
+}

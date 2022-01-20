@@ -1,0 +1,81 @@
+{
+  "layout": {
+    "title": "Swisstopo Showcases",
+    "nav": {
+      "address-to-coordinate": "Adresse zu Koordinaten",
+      "guide": "Anleitung"
+    },
+    "footer": "Swisstopo Showcases - Project 1 BFH Semester Projekt"
+  },
+  "mode": {
+    "input": "Eingabe",
+    "file": "Datei hochladen"
+  },
+  "search": {
+    "label": "Adresse",
+    "labelEdit": "Adresse bearbeiten",
+    "placeholder": "z.B. Bundesplatz 1 Bern",
+    "tooltip": "Mehrzeilen-Eingabe möglich durch das kopieren von Adressen aus der Zwischenablage. Bitte achten, dass jede Adresse auf einer neuen Zeile ist."
+  },
+  "notifications": {
+    "entriesAdded": "{{count}} Zeilen eingelesen.",
+    "entryEdited": "Adresse wurde angepasst.",
+    "entryAlreadyExists": "Diese Adresse ({{address}}) wurde bereits hinzugefügt!",
+    "inputTooManyWords": "Die Suche darf nicht mehr als 10 Wörter enthalten.",
+    "inputTooLong": "Die Suche darf nicht länger als 4000 Zeichen sein."
+  },
+  "fileInput": {
+    "replaceDialog": {
+      "title": "Hochladen",
+      "description": "Es bestehen bereits Einträge. Möchten Sie die neuen Adressen hinzufügen oder die bestehenden ersetzen?",
+      "add": "Hinzufügen",
+      "replace": "Ersetzen"
+    },
+    "exampleFile": {
+      "description": "Die Datei sollte eine Adresse pro Zeile enthalten.",
+      "button": "Beispieldatei herunterladen"
+    }
+  },
+  "table": {
+    "header": {
+      "reset": "Alles verwerfen",
+      "address": "Adresse",
+      "lon": "Lon",
+      "lat": "Lat",
+      "north": "Y / Norden",
+      "east": "X / Osten",
+      "resetDialog": {
+        "title": "Zurücksetzen",
+        "description": "Möchten Sie alle Einträge löschen?"
+      }
+    },
+    "entry": {
+      "delete": "Eintrag löschen",
+      "edit": "Eintrag ändern",
+      "warning": "Nicht eindeutige Adresse"
+    }
+  },
+  "toolbar": {
+    "copy": {
+      "label": "Kopieren",
+      "tooltip": "Tabelle in Zwischenablage kopieren"
+    },
+    "download": {
+      "label": "Herunterladen"
+    },
+    "coordinateSystem": {
+      "tooltip": "Koordinatensystem ändern"
+    }
+  },
+  "map": {
+    "background": {
+      "standard": "Karte",
+      "satellite": "Satelit"
+    },
+    "adminCHDialog": {
+      "title": "Weiter nach map.geo.admin.ch",
+      "description": "Auf der offiziellen Karte von Swisstopo haben Sie die vollen Möglichkeiten zur Weiterverwendung Ihrer Adressen.</br></br>Dazu wird eine Datei <b>\"addresses.kml\"</b> heruntergeladen, die Sie dann in der Karte per Hineinziehen importieren können.</br></br>Somit werden keine Adressen online gespeichert.",
+      "button": "Herunterladen und zu"
+    }
+  }
+}
