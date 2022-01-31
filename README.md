@@ -30,3 +30,4 @@ We'd like to thank the following people for their involvement in this project:
 ## Known Bugs
 * When switching to Romansh language, an error message is shown because Oblique does not provide a romansh translation file.
 * If there are API errors, the application gets "stuck" and needs to be reloaded.
+* When using the list input via paste or the file upload, the mechanism to identify unique addresses is too basic. If more than one result is returned from the api search, it is no longer considered unique. However, a full hit of the address (e.g. `input`==`apiResult.address`==`'Mattenstrasse 18'`) should be considered unique despite another similar but longer result (e.g. `apiResult.address`==`'Mattenstrasse 18xyz'`) from the api search.
