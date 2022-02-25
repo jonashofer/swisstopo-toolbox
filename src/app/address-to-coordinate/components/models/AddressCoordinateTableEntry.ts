@@ -1,16 +1,16 @@
-import {Coordinate} from './Coordinate';
-import {CooridnateSystem} from './CoordinateSystem';
+import { Coordinate } from './Coordinate';
+import { CooridnateSystem } from './CoordinateSystem';
 
 export interface AddressCoordinateTableEntry {
-	id: number; // id of the api feature if isValid, otherwise arbitary negative number
-	address: string;
-	[CooridnateSystem.WGS_84]: Coordinate | null;
-	[CooridnateSystem.LV_95]: Coordinate | null;
-	[CooridnateSystem.LV_03]: Coordinate | null;
-	isValid: boolean;
+  id: number; // id of the api feature if isValid, otherwise arbitary negative number
+  address: string;
+  [CooridnateSystem.WGS_84]: Coordinate | null;
+  [CooridnateSystem.LV_95]: Coordinate | null;
+  [CooridnateSystem.LV_03]: Coordinate | null;
+  isValid: boolean;
 }
 
 export interface AddressSelectionResult {
-	result: AddressCoordinateTableEntry;
-	updatedId: number | null;
+  result: AddressCoordinateTableEntry;
+  updatedId: number | null;
 }

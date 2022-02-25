@@ -6,8 +6,7 @@
 				[matTooltip]="'table.header.reset' | translate"
 				(click)="dialog.open(confirmResetDialog)"
 				matTooltipPosition="after"
-				matTooltipShowDelay="100"
-			>
+				matTooltipShowDelay="100">
 				<mat-icon svgIcon="repeat" class="ob-icon"></mat-icon>
 			</button>
 		</th>
@@ -18,8 +17,7 @@
 				(click)="addressService.removeAddress(element)"
 				[matTooltip]="'table.entry.delete' | translate"
 				matTooltipPosition="after"
-				matTooltipShowDelay="500"
-			>
+				matTooltipShowDelay="500">
 				<mat-icon svgIcon="trash" class="ob-icon"></mat-icon>
 			</button>
 		</td>
@@ -42,8 +40,7 @@
 				[matTooltip]="'table.entry.edit' | translate"
 				matTooltipPosition="after"
 				matTooltipShowDelay="500"
-				(click)="editHandler.emit(element)"
-			></mat-icon>
+				(click)="editHandler.emit(element)"></mat-icon>
 			<mat-icon
 				*ngIf="!element.isValid"
 				svgIcon="warning-triangle"
@@ -51,8 +48,7 @@
 				[matTooltip]="'table.entry.warning' | translate"
 				matTooltipPosition="after"
 				matTooltipShowDelay="500"
-				(click)="editHandler.emit(element)"
-			></mat-icon>
+				(click)="editHandler.emit(element)"></mat-icon>
 		</td>
 	</ng-container>
 
@@ -87,7 +83,12 @@
 		<button mat-button obButton="secondary" [mat-dialog-close]>
 			{{ "i18n.common.cancel" | translate }}
 		</button>
-		<button mat-button obButton="primary" [mat-dialog-close] (click)="addressService.deleteAllAddresses()" cdkFocusInitial>
+		<button
+			mat-button
+			obButton="primary"
+			[mat-dialog-close]
+			(click)="addressService.deleteAllAddresses()"
+			cdkFocusInitial>
 			{{ "table.header.resetDialog.title" | translate }}
 		</button>
 	</mat-dialog-actions>

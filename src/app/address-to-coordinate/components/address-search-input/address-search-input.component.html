@@ -10,12 +10,16 @@
 		[formControl]="inputFormControl"
 		[errorStateMatcher]="instantErrorStateMatcher"
 		[matAutocomplete]="auto"
-		(paste)="onPaste($event)"
-	/>
+		(paste)="onPaste($event)" />
 	<button [obInputClear]="inputFormControl">
 		<mat-icon svgIcon="cancel" class="ob-icon"></mat-icon>
 	</button>
-	<mat-icon matSuffix svgIcon="info-circle" *ngIf="!existingEntryId" [matTooltip]="'search.tooltip' | translate" matTooltipPosition="after"></mat-icon>
+	<mat-icon
+		matSuffix
+		svgIcon="info-circle"
+		*ngIf="!existingEntryId"
+		[matTooltip]="'search.tooltip' | translate"
+		matTooltipPosition="after"></mat-icon>
 	<mat-error *ngIf="inputFormControl.invalid">{{ inputFormControl.getError("searchInput") | translate }}</mat-error>
 	<mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
 		<mat-option *ngFor="let option of results$ | async" [value]="option">

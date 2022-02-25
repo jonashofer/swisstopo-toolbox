@@ -1,4 +1,5 @@
-<ob-file-upload [accept]="['.txt', '.csv']" [multiple]="false" (uploadEvent)="uploadEvent($event, replaceDialog)"> </ob-file-upload>
+<ob-file-upload [accept]="['.txt', '.csv']" [multiple]="false" (uploadEvent)="uploadEvent($event, replaceDialog)">
+</ob-file-upload>
 <ob-alert>
 	{{ "fileInput.exampleFile.description" | translate }}
 	<button mat-button obButton="secondary" (click)="downloadService.downloadExampleTxt()">
