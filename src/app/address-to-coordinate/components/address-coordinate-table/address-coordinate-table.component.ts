@@ -1,32 +1,31 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { AddressService } from '../../services';
-import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEntry';
-import { CooridnateSystem } from '../models/CoordinateSystem';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {AddressService} from '../../services';
+import {AddressCoordinateTableEntry} from '../models/AddressCoordinateTableEntry';
+import {CooridnateSystem} from '../models/CoordinateSystem';
 
 @Component({
-  selector: 'app-address-coordinate-table',
-  templateUrl: './address-coordinate-table.component.html',
-  styleUrls: ['./address-coordinate-table.component.scss']
+	selector: 'app-address-coordinate-table',
+	templateUrl: './address-coordinate-table.component.html',
+	styleUrls: ['./address-coordinate-table.component.scss']
 })
 export class AddressCoordinateTableComponent {
-  @Input()
-  currentSystem!: CooridnateSystem;
+	@Input()
+	currentSystem!: CooridnateSystem;
 
-  @Output()
-  editHandler = new EventEmitter<AddressCoordinateTableEntry>();
+	@Output()
+	editHandler = new EventEmitter<AddressCoordinateTableEntry>();
 
-  get latLonHeadersEnabled(): boolean {
-    return this.currentSystem == CooridnateSystem.WGS_84;
-  }
+	get latLonHeadersEnabled(): boolean {
+		return this.currentSystem == CooridnateSystem.WGS_84;
+	}
 
-  get displayedColumns(): string[] {
-    if (this.currentSystem != CooridnateSystem.WGS_84) {
-      return ['trash', 'address', 'edit', 'lon', 'lat'];
-    } else {
-      return ['trash', 'address', 'edit', 'lat', 'lon'];
-    }
-  }
+	get displayedColumns(): string[] {
+		if (this.currentSystem != CooridnateSystem.WGS_84) {
+			return ['trash', 'address', 'edit', 'lon', 'lat'];
+		}
+		return ['trash', 'address', 'edit', 'lat', 'lon'];
+	}
 
-  constructor(public addressService: AddressService, public dialog: MatDialog) {}
+	constructor(public addressService: AddressService, public dialog: MatDialog) {}
 }

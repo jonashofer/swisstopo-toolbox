@@ -1,16 +1,16 @@
 <mat-menu #menu="matMenu">
-  <button mat-menu-item (click)="downloadService.downloadKml()">
-    <mat-icon svgIcon="map-marker" class="ob-icon"></mat-icon>
-    <span>.kml</span>
-  </button>
-  <button mat-menu-item (click)="downloadService.downloadCsv()">
-    <mat-icon svgIcon="file-csv" class="ob-icon"></mat-icon>
-    <span>.csv</span>
-  </button>
+	<button mat-menu-item (click)="downloadService.downloadKml()">
+		<mat-icon svgIcon="map-marker" class="ob-icon"></mat-icon>
+		<span>.kml</span>
+	</button>
+	<button mat-menu-item (click)="downloadService.downloadCsv()">
+		<mat-icon svgIcon="file-csv" class="ob-icon"></mat-icon>
+		<span>.csv</span>
+	</button>
 </mat-menu>
 
 <button mat-button obButton="secondary" [matMenuTriggerFor]="menu">
-  {{ "toolbar.download.label" | translate }}
-  <mat-icon svgIcon="download" class="ob-icon"></mat-icon>
-  <mat-icon svgIcon="chevron-small-down" class="ob-icon"></mat-icon>
+	{{ "toolbar.download.label" | translate }}
+	<mat-icon svgIcon="download" class="ob-icon"></mat-icon>
+	<mat-icon svgIcon="chevron-small-down" class="ob-icon"></mat-icon>
 </button>

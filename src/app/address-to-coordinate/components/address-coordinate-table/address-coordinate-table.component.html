@@ -1,95 +1,94 @@
 <table mat-table [dataSource]="addressService.addresses$" [ngClass]="['ob-table', 'ob-table-sm']">
-  <ng-container matColumnDef="trash">
-    <th mat-header-cell *matHeaderCellDef>
-      <button
-        mat-button
-        [matTooltip]="'table.header.reset' | translate"
-        (click)="dialog.open(confirmResetDialog)"
-        matTooltipPosition="after"
-        matTooltipShowDelay="100">
-        <mat-icon svgIcon="repeat" class="ob-icon"></mat-icon>
-      </button>
-    </th>
-    <td mat-cell *matCellDef="let element">
-      <button
-        mat-button
-        obButton="tertiary"
-        (click)="addressService.removeAddress(element)"
-        [matTooltip]="'table.entry.delete' | translate"
-        matTooltipPosition="after"
-        matTooltipShowDelay="500">
-        <mat-icon svgIcon="trash" class="ob-icon"></mat-icon>
-      </button>
-    </td>
-  </ng-container>
+	<ng-container matColumnDef="trash">
+		<th mat-header-cell *matHeaderCellDef>
+			<button
+				mat-button
+				[matTooltip]="'table.header.reset' | translate"
+				(click)="dialog.open(confirmResetDialog)"
+				matTooltipPosition="after"
+				matTooltipShowDelay="100"
+			>
+				<mat-icon svgIcon="repeat" class="ob-icon"></mat-icon>
+			</button>
+		</th>
+		<td mat-cell *matCellDef="let element">
+			<button
+				mat-button
+				obButton="tertiary"
+				(click)="addressService.removeAddress(element)"
+				[matTooltip]="'table.entry.delete' | translate"
+				matTooltipPosition="after"
+				matTooltipShowDelay="500"
+			>
+				<mat-icon svgIcon="trash" class="ob-icon"></mat-icon>
+			</button>
+		</td>
+	</ng-container>
 
-  <ng-container matColumnDef="address">
-    <th mat-header-cell *matHeaderCellDef>
-      {{ "table.header.address" | translate }}
-    </th>
-    <td mat-cell *matCellDef="let element">{{ element.address }}</td>
-  </ng-container>
+	<ng-container matColumnDef="address">
+		<th mat-header-cell *matHeaderCellDef>
+			{{ "table.header.address" | translate }}
+		</th>
+		<td mat-cell *matCellDef="let element">{{ element.address }}</td>
+	</ng-container>
 
-  <ng-container matColumnDef="edit">
-    <th mat-header-cell *matHeaderCellDef></th>
-    <td mat-cell *matCellDef="let element">
-      <mat-icon
-        *ngIf="element.isValid"
-        svgIcon="pen"
-        class="ob-icon icon-button"
-        [matTooltip]="'table.entry.edit' | translate"
-        matTooltipPosition="after"
-        matTooltipShowDelay="500"
-        (click)="editHandler.emit(element)"></mat-icon>
-      <mat-icon
-        *ngIf="!element.isValid"
-        svgIcon="warning-triangle"
-        class="ob-icon icon-button"
-        [matTooltip]="'table.entry.warning' | translate"
-        matTooltipPosition="after"
-        matTooltipShowDelay="500"
-        (click)="editHandler.emit(element)"></mat-icon>
-    </td>
-  </ng-container>
+	<ng-container matColumnDef="edit">
+		<th mat-header-cell *matHeaderCellDef></th>
+		<td mat-cell *matCellDef="let element">
+			<mat-icon
+				*ngIf="element.isValid"
+				svgIcon="pen"
+				class="ob-icon icon-button"
+				[matTooltip]="'table.entry.edit' | translate"
+				matTooltipPosition="after"
+				matTooltipShowDelay="500"
+				(click)="editHandler.emit(element)"
+			></mat-icon>
+			<mat-icon
+				*ngIf="!element.isValid"
+				svgIcon="warning-triangle"
+				class="ob-icon icon-button"
+				[matTooltip]="'table.entry.warning' | translate"
+				matTooltipPosition="after"
+				matTooltipShowDelay="500"
+				(click)="editHandler.emit(element)"
+			></mat-icon>
+		</td>
+	</ng-container>
 
-  <ng-container matColumnDef="lat">
-    <th mat-header-cell *matHeaderCellDef>
-      {{ (latLonHeadersEnabled ? "table.header.lat" : "table.header.north") | translate }}
-    </th>
-    <td mat-cell *matCellDef="let element">
-      {{ element[currentSystem]?.lat | coordinate: currentSystem }}
-    </td>
-  </ng-container>
+	<ng-container matColumnDef="lat">
+		<th mat-header-cell *matHeaderCellDef>
+			{{ (latLonHeadersEnabled ? "table.header.lat" : "table.header.north") | translate }}
+		</th>
+		<td mat-cell *matCellDef="let element">
+			{{ element[currentSystem]?.lat | coordinate: currentSystem }}
+		</td>
+	</ng-container>
 
-  <ng-container matColumnDef="lon">
-    <th mat-header-cell *matHeaderCellDef>
-      {{ (latLonHeadersEnabled ? "table.header.lon" : "table.header.east") | translate }}
-    </th>
-    <td mat-cell *matCellDef="let element">
-      {{ element[currentSystem]?.lon | coordinate: currentSystem }}
-    </td>
-  </ng-container>
+	<ng-container matColumnDef="lon">
+		<th mat-header-cell *matHeaderCellDef>
+			{{ (latLonHeadersEnabled ? "table.header.lon" : "table.header.east") | translate }}
+		</th>
+		<td mat-cell *matCellDef="let element">
+			{{ element[currentSystem]?.lon | coordinate: currentSystem }}
+		</td>
+	</ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+	<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+	<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
 
 <ng-template #confirmResetDialog>
-  <h2 mat-dialog-title>{{ "table.header.resetDialog.title" | translate }}</h2>
-  <mat-dialog-content class="mat-typography">
-    <p>{{ "table.header.resetDialog.description" | translate }}</p>
-  </mat-dialog-content>
-  <mat-dialog-actions>
-    <button mat-button obButton="secondary" [mat-dialog-close]>
-      {{ "i18n.common.cancel" | translate }}
-    </button>
-    <button
-      mat-button
-      obButton="primary"
-      [mat-dialog-close]
-      (click)="addressService.deleteAllAddresses()"
-      cdkFocusInitial>
-      {{ "table.header.resetDialog.title" | translate }}
-    </button>
-  </mat-dialog-actions>
+	<h2 mat-dialog-title>{{ "table.header.resetDialog.title" | translate }}</h2>
+	<mat-dialog-content class="mat-typography">
+		<p>{{ "table.header.resetDialog.description" | translate }}</p>
+	</mat-dialog-content>
+	<mat-dialog-actions>
+		<button mat-button obButton="secondary" [mat-dialog-close]>
+			{{ "i18n.common.cancel" | translate }}
+		</button>
+		<button mat-button obButton="primary" [mat-dialog-close] (click)="addressService.deleteAllAddresses()" cdkFocusInitial>
+			{{ "table.header.resetDialog.title" | translate }}
+		</button>
+	</mat-dialog-actions>
 </ng-template>

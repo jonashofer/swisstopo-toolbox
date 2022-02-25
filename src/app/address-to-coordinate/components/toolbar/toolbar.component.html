@@ -1,14 +1,15 @@
 <div class="button-container">
-  <button
-    mat-button
-    obButton="secondary"
-    [matTooltip]="'toolbar.copy.tooltip' | translate"
-    matTooltipPosition="after"
-    matTooltipShowDelay="100"
-    [cdkCopyToClipboard]="downloadService.getCopyToClipboardText()">
-    {{ "toolbar.copy.label" | translate }}
-    <mat-icon svgIcon="duplicate" class="ob-icon"></mat-icon>
-  </button>
-  <app-download-selector></app-download-selector>
-  <app-coordinate-system-switch></app-coordinate-system-switch>
+	<button
+		mat-button
+		obButton="secondary"
+		[matTooltip]="'toolbar.copy.tooltip' | translate"
+		matTooltipPosition="after"
+		matTooltipShowDelay="100"
+		[cdkCopyToClipboard]="downloadService.getCopyToClipboardText()"
+	>
+		{{ "toolbar.copy.label" | translate }}
+		<mat-icon svgIcon="duplicate" class="ob-icon"></mat-icon>
+	</button>
+	<app-download-selector></app-download-selector>
+	<app-coordinate-system-switch></app-coordinate-system-switch>
 </div>
