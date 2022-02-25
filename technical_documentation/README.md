@@ -91,6 +91,9 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 ### Running unit tests
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io). However, we don't have any automated tests at the moment.
 
+### Formatting
+Run `node_modules/.bin/prettier --write "src/**/*.{scss, ts, html}"` to use prettier to format the files based on the rules in `.prettierrc`. 
+
 <hr>
 
 ## System boundaries

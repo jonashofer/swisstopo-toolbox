@@ -1,11 +1,11 @@
 :host {
-	width: 70%;
-	margin-left: auto;
-	display: block;
+  width: 70%;
+  margin-left: auto;
+  display: block;
 }
 
 :host::ng-deep {
-	img {
-		max-width: 100%;
-	}
+  img {
+    max-width: 100%;
+  }
 }

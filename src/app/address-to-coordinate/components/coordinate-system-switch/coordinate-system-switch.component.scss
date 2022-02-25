@@ -1,17 +1,17 @@
-.mat-icon[svgIcon="cog"] {
-	margin-left: 10px;
+.mat-icon[svgIcon='cog'] {
+  margin-left: 10px;
 }
-.mat-icon[svgIcon="chevron-small-down"] {
-	margin-left: 3px;
+.mat-icon[svgIcon='chevron-small-down'] {
+  margin-left: 3px;
 }
 
 mat-button-toggle-group {
-	flex-wrap: wrap;
-	flex-direction: column;
-	font-size: 14px;
-	outline: none;
+  flex-wrap: wrap;
+  flex-direction: column;
+  font-size: 14px;
+  outline: none;
 
-	mat-button-toggle {
-		border-left: none !important;
-	}
+  mat-button-toggle {
+    border-left: none !important;
+  }
 }

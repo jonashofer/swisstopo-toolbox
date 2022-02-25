@@ -1,12 +1,12 @@
 .button-container {
-	display: flex;
-	justify-content: end;
-	align-items: baseline;
-	flex-wrap: wrap;
-	margin-top: 10px;
+  display: flex;
+  justify-content: end;
+  align-items: baseline;
+  flex-wrap: wrap;
+  margin-top: 10px;
 
-	& > * {
-		margin-left: 3px;
-		margin-bottom: 10px;
-	}
+  & > * {
+    margin-left: 3px;
+    margin-bottom: 10px;
+  }
 }

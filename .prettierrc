@@ -1,6 +1,18 @@
 {
 	"overrides": [
 		{
+			"files": "*.scss",
+			"options": {
+				"semi": true,
+				"singleQuote": true,
+				"bracketSpacing": true,
+				"useTabs": false,
+				"trailingComma": "none",
+				"arrowParens": "avoid",
+				"printWidth": 120
+			}
+		},
+		{
 			"files": "*.ts",
 			"options": {
 				"semi": true,

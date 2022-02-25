@@ -7,8 +7,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "prettier": "./node_modules/.bin/prettier --write src/**/{*.ts,*.html}",
-    "format": "npm run lint -- --fix && npm run prettier"
+    "format": "npm run lint --fix"
   },
   "private": true,
   "dependencies": {

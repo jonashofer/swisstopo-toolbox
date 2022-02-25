@@ -1,44 +1,44 @@
 #map {
-	clear: both;
-	width: 100%;
-	height: 550px;
-	position: relative;
-	margin-top: 20px;
+  clear: both;
+  width: 100%;
+  height: 550px;
+  position: relative;
+  margin-top: 20px;
 }
 
 #legend {
-	position: absolute;
-	right: 29px;
-	bottom: 8px;
-	z-index: 1;
-	width: 100px;
-	font-size: 13px;
+  position: absolute;
+  right: 29px;
+  bottom: 8px;
+  z-index: 1;
+  width: 100px;
+  font-size: 13px;
 }
 
 #mapLink {
-	position: absolute;
-	left: 8px;
-	bottom: 8px;
-	z-index: 1;
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  z-index: 1;
 
-	button {
-		font-size: 13px;
-		height: 20px;
-		line-height: 18px;
-		background-color: rgba(255, 255, 255);
-	}
+  button {
+    font-size: 13px;
+    height: 20px;
+    line-height: 18px;
+    background-color: rgba(255, 255, 255);
+  }
 }
 
 ::ng-deep {
-	#legend .mat-button-toggle-label-content {
-		line-height: 20px !important;
-	}
+  #legend .mat-button-toggle-label-content {
+    line-height: 20px !important;
+  }
 }
 
 mat-dialog-content {
-	max-width: 500px;
+  max-width: 500px;
 }
 
 b {
-	vertical-align: unset !important;
+  vertical-align: unset !important;
 }
