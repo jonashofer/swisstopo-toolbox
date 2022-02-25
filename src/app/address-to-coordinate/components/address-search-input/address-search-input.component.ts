@@ -55,9 +55,9 @@ export class AddressSearchInputComponent {
   @ViewChild(MatAutocompleteTrigger) trigger: MatAutocompleteTrigger | undefined;
 
   constructor(
-    private api: ApiService,
-    private notificationService: ObNotificationService,
-    private translate: TranslateService
+    private readonly api: ApiService,
+    private readonly notificationService: ObNotificationService,
+    private readonly translate: TranslateService
   ) {}
 
   onOptionSelected(event: MatAutocompleteSelectedEvent) {
@@ -70,7 +70,7 @@ export class AddressSearchInputComponent {
   onPaste(event: ClipboardEvent) {
     const clipboardData = event.clipboardData;
     const pastedText = clipboardData!.getData('text');
-    if (pastedText.indexOf('\r') !== -1 && !this.existingEntryId) {
+    if (pastedText.includes('\r') && !this.existingEntryId) {
       event.preventDefault();
       const lines = pastedText
         .split('\r')

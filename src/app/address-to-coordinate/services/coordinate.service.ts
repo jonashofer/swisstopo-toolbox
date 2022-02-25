@@ -6,7 +6,9 @@ import { CooridnateSystem } from '../components/models/CoordinateSystem';
   providedIn: 'root'
 })
 export class CoordinateService {
-  private system$: BehaviorSubject<CooridnateSystem> = new BehaviorSubject<CooridnateSystem>(CooridnateSystem.WGS_84);
+  private readonly system$: BehaviorSubject<CooridnateSystem> = new BehaviorSubject<CooridnateSystem>(
+    CooridnateSystem.WGS_84
+  );
 
   public readonly currentSystem$: Observable<CooridnateSystem> = this.system$.asObservable();
   get currentSystem() {

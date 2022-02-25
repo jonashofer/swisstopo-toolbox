@@ -11,7 +11,7 @@ import { CooridnateSystem } from '../components/models/CoordinateSystem';
   providedIn: 'root'
 })
 export class AddressService {
-  private _addresses = new BehaviorSubject<AddressCoordinateTableEntry[]>([]);
+  private readonly _addresses = new BehaviorSubject<AddressCoordinateTableEntry[]>([]);
   public addresses$ = this._addresses.asObservable();
   public validAddresses$ = this.addresses$.pipe(map(a => a.filter(a => a.isValid)));
   public hasAddresses$ = this.addresses$.pipe(map(a => a.length > 0));
@@ -34,9 +34,9 @@ export class AddressService {
   );
 
   constructor(
-    private api: ApiService,
-    private notificationService: ObNotificationService,
-    private translate: TranslateService
+    private readonly api: ApiService,
+    private readonly notificationService: ObNotificationService,
+    private readonly translate: TranslateService
   ) {}
 
   public addOrUpdateAddress(addressResult: AddressSelectionResult) {
@@ -79,7 +79,7 @@ export class AddressService {
     }
   }
 
-  private convertAddress$ = (address: AddressCoordinateTableEntry, newCoordinateSystem: CooridnateSystem) => {
+  private readonly convertAddress$ = (address: AddressCoordinateTableEntry, newCoordinateSystem: CooridnateSystem) => {
     if (address[newCoordinateSystem] != null) {
       AddressService.persistToLocalstorage(this.addresses);
       return EMPTY;

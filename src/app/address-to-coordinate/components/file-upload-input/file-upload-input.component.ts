@@ -16,12 +16,12 @@ export class FileUploadInputComponent {
   private lines: string[] = [];
 
   constructor(
-    private api: ApiService,
-    private addressService: AddressService,
+    private readonly api: ApiService,
+    private readonly addressService: AddressService,
     public downloadService: DownloadService,
-    private dialog: MatDialog,
-    private notificationService: ObNotificationService,
-    private translate: TranslateService
+    private readonly dialog: MatDialog,
+    private readonly notificationService: ObNotificationService,
+    private readonly translate: TranslateService
   ) {}
 
   uploadEvent($event: ObIUploadEvent, dialogRef: TemplateRef<any>) {
@@ -29,7 +29,7 @@ export class FileUploadInputComponent {
       return;
     }
     const file = $event.files[0];
-    let reader = new FileReader();
+    const reader = new FileReader();
     reader.onload = _ => {
       const content = reader.result as string;
       this.lines = content

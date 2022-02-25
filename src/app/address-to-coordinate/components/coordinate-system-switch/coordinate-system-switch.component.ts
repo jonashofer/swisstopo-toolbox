@@ -15,7 +15,7 @@ export class CoordinateSystemSwitchComponent {
   currentSystem$ = this.service.currentSystem$;
   currentSystemName$ = this.currentSystem$.pipe(map(s => CoordinateSystemNames[s]));
 
-  constructor(private service: CoordinateService) {}
+  constructor(private readonly service: CoordinateService) {}
 
   onChange(event: CooridnateSystem) {
     this.service.changeCurrentSystem(event);

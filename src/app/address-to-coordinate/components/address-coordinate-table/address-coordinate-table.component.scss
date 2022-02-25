@@ -3,7 +3,7 @@ table {
   font-size: 0.9rem;
   line-height: 35px;
 
-  .mat-icon[svgIcon="repeat"] {
+  .mat-icon[svgIcon='repeat'] {
     color: rgba(0, 0, 0, 0.54);
   }
 
@@ -20,7 +20,7 @@ table {
       color: #069;
     }
 
-    &[svgIcon="warning-triangle"] {
+    &[svgIcon='warning-triangle'] {
       color: #e75e00;
     }
   }

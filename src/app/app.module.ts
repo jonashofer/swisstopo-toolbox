@@ -1,24 +1,24 @@
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {
-  ObMasterLayoutModule,
-  multiTranslateLoader,
-  ObHttpApiInterceptor,
-  ObMasterLayoutConfig,
-  ObFileUploadModule,
-  ObIconModule,
+  OB_BANNER,
+  ObAlertModule,
   ObButtonModule,
-  ObHttpApiInterceptorConfig,
   ObENotificationType,
-  ObSpinnerModule,
+  ObFileUploadModule,
+  ObHttpApiInterceptor,
+  ObHttpApiInterceptorConfig,
+  ObIconModule,
   ObInputClearModule,
+  ObMasterLayoutConfig,
+  ObMasterLayoutModule,
   ObNotificationModule,
   ObPopoverModule,
-  ObAlertModule,
-  OB_BANNER
+  ObSpinnerModule,
+  multiTranslateLoader
 } from '@oblique/oblique';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DecimalPipe, registerLocaleData } from '@angular/common';
@@ -27,7 +27,7 @@ import localeFRCH from '@angular/common/locales/fr-CH';
 import localeITCH from '@angular/common/locales/it-CH';
 import localeRM from '@angular/common/locales/rm';
 import localeENCH from '@angular/common/locales/en-CH';
-import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -40,7 +40,7 @@ import { AddressCoordinateTableComponent } from './address-to-coordinate/compone
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatDialogModule, MatDialogActions } from '@angular/material/dialog';
+import { MatDialogActions, MatDialogModule } from '@angular/material/dialog';
 import { ResultMapComponent } from './address-to-coordinate/components/result-map/result-map.component';
 import { AddressSearchInputComponent } from './address-to-coordinate/components/address-search-input/address-search-input.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -146,10 +146,10 @@ registerLocaleData(localeENCH);
 })
 export class AppModule {
   constructor(masterConfig: ObMasterLayoutConfig, interceptorConfig: ObHttpApiInterceptorConfig) {
-    masterConfig.header.isMedium = true;
+    masterConfig.header.isSmall = true;
     masterConfig.homePageRoute = '/address-to-coordinate';
 
-    //NOTE: this leads to initial error because oblique tries to load its RM file which does not exist
+    // NOTE: this leads to initial error because oblique tries to load its RM file which does not exist
     masterConfig.locale.locales.push('rm-CH');
     masterConfig.locale.locales.push('en-CH');
 

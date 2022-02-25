@@ -11,9 +11,9 @@ import { AddressService } from './address.service';
 })
 export class DownloadService {
   constructor(
-    private addressService: AddressService,
-    private coordinateService: CoordinateService,
-    private coordinatePipe: CoordinatePipe
+    private readonly addressService: AddressService,
+    private readonly coordinateService: CoordinateService,
+    private readonly coordinatePipe: CoordinatePipe
   ) {}
 
   public getCopyToClipboardText(): string {
@@ -47,12 +47,11 @@ export class DownloadService {
     const lat = usePipe ? this.coordinatePipe.transform(entry[system]?.lat, system) : entry[system]?.lat;
     const lon = usePipe ? this.coordinatePipe.transform(entry[system]?.lon, system) : entry[system]?.lon;
 
-    //column order like in the table
+    // column order like in the table
     if (system == CooridnateSystem.WGS_84) {
       return [entry.address, lat, lon].join(separator);
-    } else {
-      return [entry.address, lon, lat].join(separator);
     }
+    return [entry.address, lon, lat].join(separator);
   }
 
   private toKmlPlacemark(entry: AddressCoordinateTableEntry) {

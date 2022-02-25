@@ -8,7 +8,7 @@ import VectorSource from 'ol/source/Vector';
 import VectorLayer from 'ol/layer/Vector';
 import Point from 'ol/geom/Point';
 import { fromLonLat, transformExtent } from 'ol/proj';
-import { Style, Icon } from 'ol/style';
+import { Icon, Style } from 'ol/style';
 import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEntry';
 import { MatDialog } from '@angular/material/dialog';
 import { filter } from 'rxjs/operators';
@@ -82,13 +82,13 @@ export class ResultMapComponent implements OnInit {
     return `https://map.geo.admin.ch/?layers=KML%7C%7C${encodeURIComponent(this.kmlFunctionLink)}`;
   }
 
-  constructor(private downloadService: DownloadService, private dialog: MatDialog) {}
+  constructor(private readonly downloadService: DownloadService, private readonly dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.map = new Map({
       controls: [new FullScreen()],
       layers: [mapLayer, markerLayer],
-      view: view,
+      view,
       target: 'map'
     });
     this.fitView();

@@ -6,7 +6,7 @@ import { CooridnateSystem } from './models/CoordinateSystem';
   name: 'coordinate'
 })
 export class CoordinatePipe implements PipeTransform {
-  constructor(private decimalPipe: DecimalPipe) {}
+  constructor(private readonly decimalPipe: DecimalPipe) {}
 
   transform(value: number | undefined, coordinateSystem: CooridnateSystem): string | null {
     if (!value || !coordinateSystem) {

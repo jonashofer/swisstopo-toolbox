@@ -1,29 +1,29 @@
 <mat-form-field>
-  <mat-label>{{ (existingEntryId ? "search.labelEdit" : "search.label") | translate }}</mat-label>
-  <mat-icon matPrefix svgIcon="search"></mat-icon>
-  <input
-    type="text"
-    [placeholder]="'search.placeholder' | translate"
-    aria-label="Adresse"
-    matInput
-    #trigger="matAutocompleteTrigger"
-    [formControl]="inputFormControl"
-    [errorStateMatcher]="instantErrorStateMatcher"
-    [matAutocomplete]="auto"
-    (paste)="onPaste($event)" />
-  <button [obInputClear]="inputFormControl">
-    <mat-icon svgIcon="cancel" class="ob-icon"></mat-icon>
-  </button>
-  <mat-icon
-    matSuffix
-    svgIcon="info-circle"
-    *ngIf="!existingEntryId"
-    [matTooltip]="'search.tooltip' | translate"
-    matTooltipPosition="after"></mat-icon>
-  <mat-error *ngIf="inputFormControl.invalid">{{ inputFormControl.getError("searchInput") | translate }}</mat-error>
-  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
-    <mat-option *ngFor="let option of results$ | async" [value]="option">
-      <div [outerHTML]="option.attrs.label"></div>
-    </mat-option>
-  </mat-autocomplete>
+	<mat-label>{{ (existingEntryId ? "search.labelEdit" : "search.label") | translate }}</mat-label>
+	<mat-icon matPrefix svgIcon="search"></mat-icon>
+	<input
+		type="text"
+		[placeholder]="'search.placeholder' | translate"
+		aria-label="Adresse"
+		matInput
+		#trigger="matAutocompleteTrigger"
+		[formControl]="inputFormControl"
+		[errorStateMatcher]="instantErrorStateMatcher"
+		[matAutocomplete]="auto"
+		(paste)="onPaste($event)" />
+	<button [obInputClear]="inputFormControl">
+		<mat-icon svgIcon="cancel" class="ob-icon"></mat-icon>
+	</button>
+	<mat-icon
+		matSuffix
+		svgIcon="info-circle"
+		*ngIf="!existingEntryId"
+		[matTooltip]="'search.tooltip' | translate"
+		matTooltipPosition="after"></mat-icon>
+	<mat-error *ngIf="inputFormControl.invalid">{{ inputFormControl.getError("searchInput") | translate }}</mat-error>
+	<mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
+		<mat-option *ngFor="let option of results$ | async" [value]="option">
+			<div [outerHTML]="option.attrs.label"></div>
+		</mat-option>
+	</mat-autocomplete>
 </mat-form-field>

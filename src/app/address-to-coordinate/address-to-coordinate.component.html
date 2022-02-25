@@ -1,17 +1,17 @@
 <mat-tab-group animationDuration="400ms" [(selectedIndex)]="selectedMode">
-  <mat-tab [label]="'mode.input' | translate">
-    <app-address-search-input [input]="editedAddress" (resultSelected)="addressService.addOrUpdateAddress($event)">
-    </app-address-search-input>
-  </mat-tab>
-  <mat-tab [label]="'mode.file' | translate">
-    <app-file-upload-input (finished)="selectedMode = 0"></app-file-upload-input>
-  </mat-tab>
+	<mat-tab [label]="'mode.input' | translate">
+		<app-address-search-input [input]="editedAddress" (resultSelected)="addressService.addOrUpdateAddress($event)">
+		</app-address-search-input>
+	</mat-tab>
+	<mat-tab [label]="'mode.file' | translate">
+		<app-file-upload-input (finished)="selectedMode = 0"></app-file-upload-input>
+	</mat-tab>
 </mat-tab-group>
 
 <app-address-coordinate-table
-  *ngIf="addressService.hasAddresses$ | async"
-  [currentSystem]="(coordinateService.currentSystem$ | async)!"
-  (editHandler)="editedAddress = $event"></app-address-coordinate-table>
+	*ngIf="addressService.hasAddresses$ | async"
+	[currentSystem]="(coordinateService.currentSystem$ | async)!"
+	(editHandler)="editedAddress = $event"></app-address-coordinate-table>
 
 <app-toolbar *ngIf="addressService.hasAddresses$ | async"></app-toolbar>
 

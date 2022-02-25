@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { map, startWith } from 'rxjs/operators';
 
@@ -13,5 +13,5 @@ export class GuideComponent {
     startWith(this.translateService.currentLang),
     map(l => `../../assets/cookbook/cookbook-${l}.md`)
   );
-  constructor(private translateService: TranslateService) {}
+  constructor(private readonly translateService: TranslateService) {}
 }

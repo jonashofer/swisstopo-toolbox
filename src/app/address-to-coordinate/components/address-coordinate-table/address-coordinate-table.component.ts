@@ -23,9 +23,8 @@ export class AddressCoordinateTableComponent {
   get displayedColumns(): string[] {
     if (this.currentSystem != CooridnateSystem.WGS_84) {
       return ['trash', 'address', 'edit', 'lon', 'lat'];
-    } else {
-      return ['trash', 'address', 'edit', 'lat', 'lon'];
     }
+    return ['trash', 'address', 'edit', 'lat', 'lon'];
   }
 
   constructor(public addressService: AddressService, public dialog: MatDialog) {}
