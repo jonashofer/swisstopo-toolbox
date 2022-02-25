@@ -146,7 +146,7 @@ registerLocaleData(localeENCH);
 })
 export class AppModule {
   constructor(masterConfig: ObMasterLayoutConfig, interceptorConfig: ObHttpApiInterceptorConfig) {
-    masterConfig.header.isMedium = true;
+    masterConfig.header.isSmall = true;
     masterConfig.homePageRoute = '/address-to-coordinate';
 
     //NOTE: this leads to initial error because oblique tries to load its RM file which does not exist
