@@ -118,6 +118,7 @@
       }
     }
   },
+  "defaultProject": "application",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
@@ -128,8 +129,6 @@
     }
   },
   "cli": {
-    "schematicCollections": [
-      "@angular-eslint/schematics"
-    ]
+    "defaultCollection": "@angular-eslint/schematics"
   }
 }
