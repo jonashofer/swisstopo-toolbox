@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core
 import {
   AbstractControl,
   AsyncValidatorFn,
-  FormControl,
+  UntypedFormControl,
   FormGroupDirective,
   NgForm,
   ValidationErrors,
@@ -24,7 +24,7 @@ import { AddressCoordinateTableEntry, AddressSelectionResult } from '../models/A
   styleUrls: ['./address-search-input.component.scss']
 })
 export class AddressSearchInputComponent {
-  public inputFormControl = new FormControl(null, { validators: this.searchInputValidator(), updateOn: 'change' });
+  public inputFormControl = new UntypedFormControl(null, { validators: this.searchInputValidator(), updateOn: 'change' });
   instantErrorStateMatcher = new InstantErrorStateMatcher();
 
   results$ = this.inputFormControl.valueChanges.pipe(
@@ -108,7 +108,7 @@ export class AddressSearchInputComponent {
 
 // Custom Matcher needed to fire mat-error directly on change, as with updateOn: 'change'
 class InstantErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+  isErrorState(control: UntypedFormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     return !!(control && control.invalid && (control.dirty || control.touched));
   }
 }
