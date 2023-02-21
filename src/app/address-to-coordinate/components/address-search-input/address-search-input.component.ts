@@ -9,7 +9,7 @@ import {
   ValidatorFn,
   Validators
 } from '@angular/forms';
-import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { MatLegacyAutocompleteSelectedEvent as MatAutocompleteSelectedEvent, MatLegacyAutocompleteTrigger as MatAutocompleteTrigger } from '@angular/material/legacy-autocomplete';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ObNotificationService } from '@oblique/oblique';
