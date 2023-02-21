@@ -24,14 +24,14 @@ import { AddressCoordinateTableEntry, AddressSelectionResult } from '../models/A
   styleUrls: ['./address-search-input.component.scss']
 })
 export class AddressSearchInputComponent {
-  public inputFormControl = new FormControl(null, { validators: this.searchInputValidator(), updateOn: 'change' });
+  public inputFormControl = new FormControl<string>('', { validators: this.searchInputValidator(), updateOn: 'change' });
   instantErrorStateMatcher = new InstantErrorStateMatcher();
 
   results$ = this.inputFormControl.valueChanges.pipe(
     filter(v => this.inputFormControl.valid && typeof v === 'string'),
     debounceTime(300),
     switchMap(value =>
-      this.api.searchLocationsList(value).pipe(
+      this.api.searchLocationsList(value as unknown as string).pipe(
         tap(_ => this.trigger?.openPanel()),
         map(r => r.results)
       )

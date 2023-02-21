@@ -95,7 +95,10 @@ export class ResultMapComponent implements OnInit {
   }
 
   fitView() {
-    const extent = markerLayer.getSource().getExtent();
+    const extent = markerLayer.getSource()?.getExtent();
+    if (extent == null) {
+      return;
+    }
     if (extent[0] == Infinity && extent[1] == Infinity) {
       view.setCenter([910000, 5910000]);
       view.setZoom(8);
