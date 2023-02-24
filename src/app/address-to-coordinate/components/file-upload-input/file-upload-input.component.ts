@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output, TemplateRef } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { ObIUploadEvent, ObNotificationService } from '@oblique/oblique';
 import { AddressService, ApiService, DownloadService } from '../../services';

@@ -9,7 +9,7 @@ import {
   ValidatorFn,
   Validators
 } from '@angular/forms';
-import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { MatLegacyAutocompleteSelectedEvent as MatAutocompleteSelectedEvent, MatLegacyAutocompleteTrigger as MatAutocompleteTrigger } from '@angular/material/legacy-autocomplete';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ObNotificationService } from '@oblique/oblique';
@@ -24,14 +24,14 @@ import { AddressCoordinateTableEntry, AddressSelectionResult } from '../models/A
   styleUrls: ['./address-search-input.component.scss']
 })
 export class AddressSearchInputComponent {
-  public inputFormControl = new FormControl(null, { validators: this.searchInputValidator(), updateOn: 'change' });
+  public inputFormControl = new FormControl<string>('', { validators: this.searchInputValidator(), updateOn: 'change' });
   instantErrorStateMatcher = new InstantErrorStateMatcher();
 
   results$ = this.inputFormControl.valueChanges.pipe(
     filter(v => this.inputFormControl.valid && typeof v === 'string'),
     debounceTime(300),
     switchMap(value =>
-      this.api.searchLocationsList(value).pipe(
+      this.api.searchLocationsList(value as unknown as string).pipe(
         tap(_ => this.trigger?.openPanel()),
         map(r => r.results)
       )

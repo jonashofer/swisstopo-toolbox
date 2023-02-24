@@ -39,7 +39,6 @@
             "styles": [
               "node_modules/@oblique/oblique/styles/css/oblique-core.css",
               "node_modules/@oblique/oblique/styles/css/frutiger.css",
-              "node_modules/@oblique/oblique/styles/css/oblique-material.css",
               "node_modules/ol/ol.css",
               "src/styles/styles.scss"
             ],
@@ -118,7 +117,6 @@
       }
     }
   },
-  "defaultProject": "application",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
@@ -126,9 +124,17 @@
     },
     "@schematics/angular:directive": {
       "prefix": "app"
+    },
+    "@angular-eslint/schematics:application": {
+      "setParserOptionsProject": true
+    },
+    "@angular-eslint/schematics:library": {
+      "setParserOptionsProject": true
     }
   },
   "cli": {
-    "defaultCollection": "@angular-eslint/schematics"
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }

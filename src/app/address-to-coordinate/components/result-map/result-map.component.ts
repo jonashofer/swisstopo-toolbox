@@ -10,7 +10,7 @@ import Point from 'ol/geom/Point';
 import { fromLonLat, transformExtent } from 'ol/proj';
 import { Icon, Style } from 'ol/style';
 import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEntry';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { filter } from 'rxjs/operators';
 import { DownloadService } from '../../services';
 
@@ -95,7 +95,10 @@ export class ResultMapComponent implements OnInit {
   }
 
   fitView() {
-    const extent = markerLayer.getSource().getExtent();
+    const extent = markerLayer.getSource()?.getExtent();
+    if (extent == null) {
+      return;
+    }
     if (extent[0] == Infinity && extent[1] == Infinity) {
       view.setCenter([910000, 5910000]);
       view.setZoom(8);
