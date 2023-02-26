@@ -128,11 +128,7 @@ registerLocaleData(localeENCH);
     { provide: HTTP_INTERCEPTORS, useClass: ObHttpApiInterceptor, multi: true },
     {
       provide: OB_BANNER,
-      useValue: {
-        text: 'BFH',
-        color: '#FFCB05',
-        bgColor: '#37556E'
-      }
+      useValue: environment.banner
     },
     AddressService,
     ApiService,
