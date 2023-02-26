@@ -3,7 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ObNotificationService } from '@oblique/oblique';
 import { BehaviorSubject, EMPTY, from } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
-import { ApiService } from '.';
+import { ApiDetailService, ApiService } from '.';
 import { AddressCoordinateTableEntry, AddressSelectionResult } from '../components/models/AddressCoordinateTableEntry';
 import { CooridnateSystem } from '../components/models/CoordinateSystem';
 
@@ -35,25 +35,32 @@ export class AddressService {
 
   constructor(
     private readonly api: ApiService,
+    private readonly apiDetail: ApiDetailService,
     private readonly notificationService: ObNotificationService,
     private readonly translate: TranslateService
   ) {}
 
   public addOrUpdateAddress(addressResult: AddressSelectionResult) {
-    if (addressResult.updatedId) {
-      const addresses = this._addresses.value.slice();
-      const indexToReplace = addresses.findIndex(e => e.id == addressResult.updatedId);
-      addresses[indexToReplace] = addressResult.result;
-      this._addresses.next(addresses);
-      this.notificationService.success(this.translate.instant('notifications.entryEdited'));
-    } else if (!this._addresses.value.some(a => a.id === addressResult.result.id)) {
-      this._addresses.next(this._addresses.value.concat(addressResult.result));
-    } else {
-      this.notificationService.info(
-        this.translate.instant('notifications.entryAlreadyExists', {
-          address: addressResult.result.address
-        })
-      );
+    if (addressResult.result.featureId != null) {
+      this.apiDetail.getBuildingInfo(addressResult.result.featureId).subscribe(r => {
+        addressResult.result.egid = r.feature.attributes.egid;
+        addressResult.result.egrid = r.feature.attributes.egrid;
+        if (addressResult.updatedId) {
+          const addresses = this._addresses.value.slice();
+          const indexToReplace = addresses.findIndex(e => e.id == addressResult.updatedId);
+          addresses[indexToReplace] = addressResult.result;
+          this._addresses.next(addresses);
+          this.notificationService.success(this.translate.instant('notifications.entryEdited'));
+        } else if (!this._addresses.value.some(a => a.id === addressResult.result.id)) {
+          this._addresses.next(this._addresses.value.concat(addressResult.result));
+        } else {
+          this.notificationService.info(
+            this.translate.instant('notifications.entryAlreadyExists', {
+              address: addressResult.result.address
+            })
+          );
+        }
+      });
     }
   }
 

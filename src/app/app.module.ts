@@ -47,7 +47,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
 import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
 import { CoordinateSystemSwitchComponent } from './address-to-coordinate/components/coordinate-system-switch/coordinate-system-switch.component';
-import { AddressService, ApiService, CoordinateService, DownloadService } from './address-to-coordinate/services';
+import { AddressService, ApiService, ApiDetailService, CoordinateService, DownloadService } from './address-to-coordinate/services';
 import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
 import { CoordinatePipe } from './address-to-coordinate/components/coordinate.pipe';
 import { DownloadSelectorComponent } from './address-to-coordinate/components/download-selector/download-selector.component';
@@ -136,6 +136,7 @@ registerLocaleData(localeENCH);
     },
     AddressService,
     ApiService,
+    ApiDetailService,
     CoordinateService,
     DownloadService,
     DecimalPipe,

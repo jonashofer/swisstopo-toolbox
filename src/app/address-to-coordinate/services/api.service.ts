@@ -92,11 +92,12 @@ export class ApiService {
             }
             const entry: AddressCoordinateTableEntry = {
               address: r.input,
+              featureId: null,
               id: this.bulkAddId--,
               isValid: false,
               lv03: null,
               lv95: null,
-              wgs84: null
+              wgs84: null,
             };
             return entry;
           })
@@ -115,7 +116,8 @@ export class ApiService {
       },
       [CooridnateSystem.LV_03]: null,
       [CooridnateSystem.LV_95]: null,
-      isValid: true
+      isValid: true,
+      featureId: result.attrs.featureId,
     };
   }
 

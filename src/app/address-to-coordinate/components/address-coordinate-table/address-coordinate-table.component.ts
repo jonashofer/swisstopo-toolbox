@@ -22,9 +22,9 @@ export class AddressCoordinateTableComponent {
 
   get displayedColumns(): string[] {
     if (this.currentSystem != CooridnateSystem.WGS_84) {
-      return ['trash', 'address', 'edit', 'lon', 'lat'];
+      return ['trash', 'address', 'edit', 'lon', 'lat', 'egid', 'egrid'];
     }
-    return ['trash', 'address', 'edit', 'lat', 'lon'];
+    return ['trash', 'address', 'edit', 'lat', 'lon', 'egid', 'egrid'];
   }
 
   constructor(public addressService: AddressService, public dialog: MatDialog) {}

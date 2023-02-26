@@ -8,6 +8,10 @@ export interface AddressCoordinateTableEntry {
   [CooridnateSystem.LV_95]: Coordinate | null;
   [CooridnateSystem.LV_03]: Coordinate | null;
   isValid: boolean;
+  featureId: string | null;
+  egid?: string;
+  egrid?: string;
+
 }
 
 export interface AddressSelectionResult {

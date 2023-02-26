@@ -64,6 +64,7 @@ export class AddressSearchInputComponent {
     this.inputFormControl.setValue(null);
     const selectedValue = event.option.value as ApiSearchResult;
     const entry = this.api.mapApiResultToAddress(selectedValue);
+    
     this.emitEntry(entry);
   }
 

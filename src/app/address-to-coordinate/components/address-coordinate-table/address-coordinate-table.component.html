@@ -70,6 +70,24 @@
 		</td>
 	</ng-container>
 
+	<ng-container matColumnDef="egid">
+		<th mat-header-cell *matHeaderCellDef>
+			EGID
+		</th>
+		<td mat-cell *matCellDef="let element">
+			{{ element.egid }}
+		</td>
+	</ng-container>
+
+	<ng-container matColumnDef="egrid">
+		<th mat-header-cell *matHeaderCellDef>
+			EGRID
+		</th>
+		<td mat-cell *matCellDef="let element">
+			{{ element.egrid }}
+		</td>
+	</ng-container>
+
 	<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 	<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
