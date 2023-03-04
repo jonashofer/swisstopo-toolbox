@@ -18,7 +18,8 @@ import {
   ObNotificationModule,
   ObPopoverModule,
   ObSpinnerModule,
-  multiTranslateLoader
+  multiTranslateLoader,
+  ObAutocompleteModule
 } from '@oblique/oblique';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DecimalPipe, registerLocaleData } from '@angular/common';
@@ -27,6 +28,8 @@ import localeFRCH from '@angular/common/locales/fr-CH';
 import localeITCH from '@angular/common/locales/it-CH';
 import localeRM from '@angular/common/locales/rm';
 import localeENCH from '@angular/common/locales/en-CH';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import {MatListModule} from '@angular/material/list';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
@@ -40,7 +43,12 @@ import { AddressCoordinateTableComponent } from './address-to-coordinate/compone
 import { MatLegacyTableModule as MatTableModule } from '@angular/material/legacy-table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
-import { MatLegacyDialogActions as MatDialogActions, MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
+
+import { ObIAutocompleteInputOption, ObIAutocompleteInputOptionGroup, OptionLabelIconPosition } from '@oblique/oblique';
+import {
+  MatLegacyDialogActions as MatDialogActions,
+  MatLegacyDialogModule as MatDialogModule
+} from '@angular/material/legacy-dialog';
 import { ResultMapComponent } from './address-to-coordinate/components/result-map/result-map.component';
 import { AddressSearchInputComponent } from './address-to-coordinate/components/address-search-input/address-search-input.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -57,6 +65,7 @@ import { FileUploadInputComponent } from './address-to-coordinate/components/fil
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { ToolbarComponent } from './address-to-coordinate/components/toolbar/toolbar.component';
 import { environment } from 'src/environments/environment';
+import { ColumnConfigDialogComponent } from './address-to-coordinate/components/column-config-dialog/column-config-dialog.component';
 
 registerLocaleData(localeDECH);
 registerLocaleData(localeFRCH);
@@ -76,9 +85,12 @@ registerLocaleData(localeENCH);
     CoordinatePipe,
     GuideComponent,
     FileUploadInputComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    ColumnConfigDialogComponent
   ],
   imports: [
+    MatListModule,
+    DragDropModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
@@ -89,6 +101,7 @@ registerLocaleData(localeENCH);
     ObButtonModule,
     ObSpinnerModule,
     ObButtonModule,
+    ObAutocompleteModule,
     ObInputClearModule,
     ObNotificationModule,
     ObPopoverModule,

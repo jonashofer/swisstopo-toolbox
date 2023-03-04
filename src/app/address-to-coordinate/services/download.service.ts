@@ -44,8 +44,9 @@ export class DownloadService {
 
   private getLine(entry: AddressCoordinateTableEntry, separator: string, usePipe: boolean) {
     const system = this.coordinateService.currentSystem;
-    const lat = usePipe ? this.coordinatePipe.transform(entry[system]?.lat, system) : entry[system]?.lat;
-    const lon = usePipe ? this.coordinatePipe.transform(entry[system]?.lon, system) : entry[system]?.lon;
+    const coord = {lat: 0, lon:0} // TODO fix
+    const lat = usePipe ? this.coordinatePipe.transform(coord.lat, system) : coord.lat;
+    const lon = usePipe ? this.coordinatePipe.transform(coord.lon, system) : coord.lon;
 
     // column order like in the table
     if (system == CooridnateSystem.WGS_84) {
@@ -55,6 +56,6 @@ export class DownloadService {
   }
 
   private toKmlPlacemark(entry: AddressCoordinateTableEntry) {
-    return `<Placemark><Point><coordinates>${entry.wgs84!.lon},${entry.wgs84!.lat}</coordinates></Point></Placemark>`;
+    return `<Placemark><Point><coordinates>${entry.wgs84_lon},${entry.wgs84_lat}</coordinates></Point></Placemark>`;
   }
 }

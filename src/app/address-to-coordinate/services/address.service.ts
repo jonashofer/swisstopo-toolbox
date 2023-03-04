@@ -6,12 +6,15 @@ import { map, mergeMap } from 'rxjs/operators';
 import { ApiService } from '.';
 import { AddressCoordinateTableEntry, AddressSelectionResult } from '../components/models/AddressCoordinateTableEntry';
 import { CooridnateSystem } from '../components/models/CoordinateSystem';
+import { StorageService } from './storage.service';
+
+const STORAGE_KEY = 'addresses';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AddressService {
-  private readonly _addresses = new BehaviorSubject<AddressCoordinateTableEntry[]>([]);
+  private readonly _addresses = new BehaviorSubject<AddressCoordinateTableEntry[]>(StorageService.get<AddressCoordinateTableEntry[]>(STORAGE_KEY) ||[]);
   public addresses$ = this._addresses.asObservable();
   public validAddresses$ = this.addresses$.pipe(map(a => a.filter(a => a.isValid)));
   public hasAddresses$ = this.addresses$.pipe(map(a => a.length > 0));
@@ -27,17 +30,19 @@ export class AddressService {
     return this.addresses.filter(a => a.isValid);
   }
 
-  public saveToLocalStorage$ = this.addresses$.pipe(
-    map(adresses => {
-      AddressService.persistToLocalstorage(adresses);
-    })
-  );
-
   constructor(
     private readonly api: ApiService,
     private readonly notificationService: ObNotificationService,
     private readonly translate: TranslateService
-  ) {}
+  ) {
+    this.addresses$
+      .pipe(
+        map(addresses => {
+          StorageService.save(STORAGE_KEY, addresses);
+        })
+      )
+      .subscribe();
+  }
 
   public addOrUpdateAddress(addressResult: AddressSelectionResult) {
     if (addressResult.updatedId) {
@@ -71,29 +76,17 @@ export class AddressService {
   public convertAddresses$ = (addresses: AddressCoordinateTableEntry[], newCoordinateSystem: CooridnateSystem) =>
     from(addresses).pipe(mergeMap(address => this.convertAddress$(address, newCoordinateSystem)));
 
-  public loadFromLocalstorage() {
-    const saved = localStorage.getItem('addresses');
-    if (saved) {
-      const loadedAddresses = JSON.parse(saved);
-      this._addresses.next(loadedAddresses);
-    }
-  }
-
   private readonly convertAddress$ = (address: AddressCoordinateTableEntry, newCoordinateSystem: CooridnateSystem) => {
-    if (address[newCoordinateSystem] != null) {
-      AddressService.persistToLocalstorage(this.addresses);
-      return EMPTY;
-    }
+    // if (address[newCoordinateSystem] != null) {
+    //   StorageService.save(STORAGE_KEY, this.addresses);
+    //   return EMPTY;
+    // }
 
-    return this.api.convertFromWgs84(address.wgs84!, newCoordinateSystem).pipe(
+    return this.api.convertFromWgs84({lat: address.wgs84_lat!, lon: address.wgs84_lon!}, newCoordinateSystem).pipe(
       map(coordinate => {
-        address[newCoordinateSystem] = coordinate;
-        AddressService.persistToLocalstorage(this.addresses);
+        // address[newCoordinateSystem] = coordinate;
+        StorageService.save(STORAGE_KEY, this.addresses);
       })
     );
   };
-
-  private static persistToLocalstorage(addresses: AddressCoordinateTableEntry[]) {
-    localStorage.setItem('addresses', JSON.stringify(addresses));
-  }
 }

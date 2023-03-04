@@ -2,6 +2,13 @@
 	<button
 		mat-button
 		obButton="secondary"
+		(click)="columnService.openConfigDialog()">
+		Ansicht konfigurieren
+		<mat-icon svgIcon="eye" class="ob-icon"></mat-icon>
+	</button>
+	<button
+		mat-button
+		obButton="secondary"
 		[matTooltip]="'toolbar.copy.tooltip' | translate"
 		matTooltipPosition="after"
 		matTooltipShowDelay="100"

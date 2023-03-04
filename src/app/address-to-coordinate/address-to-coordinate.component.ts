@@ -16,9 +16,6 @@ export class AddressToCoordinateComponent implements OnInit {
   constructor(public addressService: AddressService, public coordinateService: CoordinateService) {}
 
   ngOnInit(): void {
-    this.addressService.loadFromLocalstorage();
-    this.addressService.saveToLocalStorage$.subscribe();
-
     combineLatest([this.coordinateService.currentSystem$, this.addressService.validAddresses$])
       .pipe(switchMap(([s, a]) => this.addressService.convertAddresses$(a, s)))
       .subscribe();

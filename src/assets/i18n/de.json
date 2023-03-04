@@ -77,5 +77,20 @@
       "description": "Auf der offiziellen Karte von Swisstopo haben Sie die vollen Möglichkeiten zur Weiterverwendung Ihrer Adressen.</br></br>Dazu wird eine Datei <b>\"addresses.kml\"</b> heruntergeladen, die Sie dann in der Karte per Hineinziehen importieren können.</br></br>Somit werden keine Adressen online gespeichert.",
       "button": "Herunterladen und zu"
     }
+  },
+  "columns": {
+    "address": "Adresse",
+    "egid": "EGID",
+    "egrid": "EGRID",
+    "height": "Höhe (m ü. M.)",
+    "wgs84_lon": "Lon (GPS)",
+    "wgs84_lat": "Lat (GPS)",
+    "lv95_north": "Y / Norden (LV95)",
+    "lv95_east": "X / Osten (LV95)",
+    "lv03_north": "Y / Norden (LV03)",
+    "lv03_east": "X / Osten (LV03)"
+  },
+  "columnConfigDialog": {
+    "title": "Anzeigespalten konfigurieren"
   }
 }

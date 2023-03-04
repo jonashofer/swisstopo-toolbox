@@ -1,0 +1,24 @@
+<h2 mat-dialog-title>{{ "columnConfigDialog.title" | translate }}</h2>
+<mat-dialog-content class="mat-typography">
+    <mat-list cdkDropList (cdkDropListDropped)="dropItem($event)">
+        <mat-list-item *ngFor="let item of activeColumns" cdkDrag style="height:50px;font-size:large;width:500px;margin-top:20px">
+            <mat-icon svgIcon="exchange" class="ob-icon rotate"></mat-icon>
+            <span> {{ 'columns.' + item.key | translate }}</span>
+            <mat-icon svgIcon="cancel" class="ob-icon" style="float:right" (click)="remove(item)"></mat-icon>
+            <hr style="margin-left:20px">
+        
+        </mat-list-item>
+    </mat-list>
+
+    <ob-autocomplete [inputLabelKey]="'Spalte hinzufügen'" (selectedOptionChange)="updateSelection($event)"
+        [formControl]="formControl" [autocompleteOptions]="inactiveColumns">
+    </ob-autocomplete>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button obButton="tertiary" [mat-dialog-close]>
+        {{ "i18n.common.cancel" | translate }}
+    </button>
+    <button mat-button obButton="primary" [mat-dialog-close] cdkFocusInitial (click)="save()">
+        {{ "i18n.common.save" | translate }}
+    </button>
+</mat-dialog-actions>

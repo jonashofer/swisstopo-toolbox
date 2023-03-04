@@ -1,8 +1,22 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { filter, map, Observable, tap } from 'rxjs';
 import { AddressService } from '../../services';
+import { ColumnService } from '../../services/column.service';
 import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEntry';
 import { CooridnateSystem } from '../models/CoordinateSystem';
+
+//all columns that should not be rendered in a generic way, need to have a custom
+//matColumnDef in the template and need to be registered here
+const customLayoutColumns: string[] = [];
+
+// export function mapEach<T, R>(mapper: (value: T) => R) {
+//   return (source: Observable<T[]>): Observable<R[]> => {
+//     return source.pipe(
+//       map(array => array.map(mapper))
+//     );
+//   };
+// }
 
 @Component({
   selector: 'app-address-coordinate-table',
@@ -20,12 +34,19 @@ export class AddressCoordinateTableComponent {
     return this.currentSystem == CooridnateSystem.WGS_84;
   }
 
-  get displayedColumns(): string[] {
-    if (this.currentSystem != CooridnateSystem.WGS_84) {
-      return ['trash', 'address', 'edit', 'lon', 'lat'];
-    }
-    return ['trash', 'address', 'edit', 'lat', 'lon'];
-  }
+  displayedColumns$ = this.columnService.columns$.pipe(
+    map(userConfig => {
+      userConfig.unshift('trash', 'address', 'edit'); //those got custom columns
+      return userConfig;
+    }),
+    tap(c => console.log(c))
+  );
 
-  constructor(public addressService: AddressService, public dialog: MatDialog) {}
+  standardLayoutColumns$ = this.columnService.columns$.pipe(
+    map(c => {
+      return c.filter(e => !customLayoutColumns.includes(e));
+    })
+  );
+
+  constructor(public addressService: AddressService, private columnService: ColumnService, public dialog: MatDialog) {}
 }

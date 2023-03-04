@@ -94,9 +94,8 @@ export class ApiService {
               address: r.input,
               id: this.bulkAddId--,
               isValid: false,
-              lv03: null,
-              lv95: null,
-              wgs84: null
+              wgs84_lat: null,
+              wgs84_lon: null
             };
             return entry;
           })
@@ -105,16 +104,12 @@ export class ApiService {
     );
   }
 
-  public mapApiResultToAddress(result: ApiSearchResult) {
+  public mapApiResultToAddress(result: ApiSearchResult): AddressCoordinateTableEntry {
     return {
       address: this.sanitize(result.attrs.label),
       id: result.id,
-      [CooridnateSystem.WGS_84]: {
-        lat: result.attrs.lat,
-        lon: result.attrs.lon
-      },
-      [CooridnateSystem.LV_03]: null,
-      [CooridnateSystem.LV_95]: null,
+      wgs84_lat: result.attrs.lat,
+      wgs84_lon: result.attrs.lon,
       isValid: true
     };
   }
