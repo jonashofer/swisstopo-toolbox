@@ -36,8 +36,9 @@ export class AddressCoordinateTableComponent {
 
   displayedColumns$ = this.columnService.columns$.pipe(
     map(userConfig => {
-      userConfig.unshift('trash', 'address', 'edit'); //those got custom columns
-      return userConfig;
+      const matColumns = userConfig.map(c => c.toString());
+      matColumns.unshift('trash', 'address', 'edit'); //those got custom columns
+      return matColumns;
     }),
     tap(c => console.log(c))
   );

@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ObNotificationService } from '@oblique/oblique';
-import { BehaviorSubject, EMPTY, from } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
-import { ApiService } from '.';
+import { BehaviorSubject, EMPTY, forkJoin, from, Observable, of } from 'rxjs';
+import { flatMap, map, mergeMap, tap } from 'rxjs/operators';
+import { ApiDetailService, ApiService } from '.';
 import { AddressCoordinateTableEntry, AddressSelectionResult } from '../components/models/AddressCoordinateTableEntry';
+import { ColumnDefinitions } from '../components/models/ColumnConfiguration';
 import { CooridnateSystem } from '../components/models/CoordinateSystem';
 import { StorageService } from './storage.service';
 
@@ -14,7 +15,9 @@ const STORAGE_KEY = 'addresses';
   providedIn: 'root'
 })
 export class AddressService {
-  private readonly _addresses = new BehaviorSubject<AddressCoordinateTableEntry[]>(StorageService.get<AddressCoordinateTableEntry[]>(STORAGE_KEY) ||[]);
+  private readonly _addresses = new BehaviorSubject<AddressCoordinateTableEntry[]>(
+    StorageService.get<AddressCoordinateTableEntry[]>(STORAGE_KEY) || []
+  );
   public addresses$ = this._addresses.asObservable();
   public validAddresses$ = this.addresses$.pipe(map(a => a.filter(a => a.isValid)));
   public hasAddresses$ = this.addresses$.pipe(map(a => a.length > 0));
@@ -32,6 +35,7 @@ export class AddressService {
 
   constructor(
     private readonly api: ApiService,
+    private readonly apiDetail: ApiDetailService,
     private readonly notificationService: ObNotificationService,
     private readonly translate: TranslateService
   ) {
@@ -73,20 +77,80 @@ export class AddressService {
     this._addresses.next([]);
   }
 
-  public convertAddresses$ = (addresses: AddressCoordinateTableEntry[], newCoordinateSystem: CooridnateSystem) =>
-    from(addresses).pipe(mergeMap(address => this.convertAddress$(address, newCoordinateSystem)));
+  public enrichAddresses$ = (
+    addresses: AddressCoordinateTableEntry[],
+    newCoordinateSystem: CooridnateSystem,
+    columns: ColumnDefinitions[]
+  ) => from(addresses).pipe(mergeMap(address => forkJoin(this.enrichAddress$(address, newCoordinateSystem, columns))));
 
-  private readonly convertAddress$ = (address: AddressCoordinateTableEntry, newCoordinateSystem: CooridnateSystem) => {
-    // if (address[newCoordinateSystem] != null) {
-    //   StorageService.save(STORAGE_KEY, this.addresses);
-    //   return EMPTY;
-    // }
+  private readonly enrichAddress$ = (
+    address: AddressCoordinateTableEntry,
+    newCoordinateSystem: CooridnateSystem,
+    columns: ColumnDefinitions[]
+  ) => {
+    const queries: Observable<any>[] = [];
 
-    return this.api.convertFromWgs84({lat: address.wgs84_lat!, lon: address.wgs84_lon!}, newCoordinateSystem).pipe(
-      map(coordinate => {
-        // address[newCoordinateSystem] = coordinate;
-        StorageService.save(STORAGE_KEY, this.addresses);
-      })
-    );
+    console.log(columns)
+    // GWR data
+    if ((address.featureId && columns.includes(ColumnDefinitions.EGID)) || columns.includes(ColumnDefinitions.EGRID)) {
+      const gwrQuery = this.apiDetail.getBuildingInfo(address.featureId!).pipe(
+        map(r => {
+          address.egid = r.feature.attributes.egid;
+          address.egrid = r.feature.attributes.egrid;
+          return address;
+        })
+      );
+      queries.push(gwrQuery);
+    }
+
+    // LV95 data plus dependent Height data
+    if (
+      columns.includes(ColumnDefinitions.HEIGHT) ||
+      columns.includes(ColumnDefinitions.LV_95_east) ||
+      columns.includes(ColumnDefinitions.LV_95_north)
+    ) {
+      const lv95Query = this.api
+        .convertFromWgs84({ lat: address.wgs84_lat!, lon: address.wgs84_lon! }, CooridnateSystem.LV_95)
+        .pipe(
+          map(r => {
+            address.lv95_east = r.lon;
+            address.lv95_north = r.lat;
+            return address;
+          })
+        );
+
+      if (columns.includes(ColumnDefinitions.HEIGHT)) {
+        const heightQuery = lv95Query.pipe(
+          mergeMap(r =>
+            this.apiDetail.getHeight(r.lv95_east!, r.lv95_north!).pipe(
+              map(r => {
+                address.height = r;
+                return r;
+              })
+            )
+          )
+        );
+
+        queries.push(heightQuery);
+      } else {
+        queries.push(lv95Query);
+      }
+    }
+
+    if (columns.includes(ColumnDefinitions.LV_03_east) || columns.includes(ColumnDefinitions.LV_03_north)) {
+      const lv03Query = this.api
+        .convertFromWgs84({ lat: address.wgs84_lat!, lon: address.wgs84_lon! }, CooridnateSystem.LV_03)
+        .pipe(
+          map(r => {
+            address.lv03_east = r.lon;
+            address.lv03_north = r.lat;
+            return r;
+          })
+        );
+      queries.push(lv03Query);
+    }
+
+    console.log(queries)
+    return queries;
   };
 }

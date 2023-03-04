@@ -8,6 +8,7 @@ export interface AddressCoordinateTableEntry {
   [ColumnDefinitions.WGS_84_lon]: number | null;
   [ColumnDefinitions.WGS_84_lat]: number | null;
 
+  featureId?: string;
   [ColumnDefinitions.EGID]?: string | null;
   [ColumnDefinitions.EGRID]?: string | null;
   [ColumnDefinitions.HEIGHT]?: string | null;

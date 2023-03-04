@@ -1,6 +1,6 @@
 // object to enable future expansion such as width, sorts etc.
 export interface ColumnConfigItem {
-  key: string;
+  key: ColumnDefinitions;
 }
 
 // object to enable future support for multiple profiles

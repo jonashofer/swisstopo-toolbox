@@ -108,6 +108,7 @@ export class ApiService {
     return {
       address: this.sanitize(result.attrs.label),
       id: result.id,
+      featureId: result.attrs.featureId,
       wgs84_lat: result.attrs.lat,
       wgs84_lon: result.attrs.lon,
       isValid: true
