@@ -3,6 +3,8 @@
     "title": "Swisstopo Showcases",
     "nav": {
       "address-to-coordinate": "Adresse zu Koordinaten",
+      "coordinate-to-address": "Koordinaten zu Adresse",
+      "egid": "EGID",
       "guide": "Anleitung"
     },
     "footer": "Swisstopo Showcases - Project 1 BFH Semester Projekt"

@@ -6,6 +6,8 @@ import { GuideComponent } from './guide/guide.component';
 const routes: Routes = [
   { path: '', redirectTo: 'address-to-coordinate', pathMatch: 'full' },
   { path: 'address-to-coordinate', component: AddressToCoordinateComponent },
+  { path: 'coordinate-to-address', component: AddressToCoordinateComponent },
+  { path: 'egid', component: AddressToCoordinateComponent },
   { path: 'guide', component: GuideComponent }
 ];
 
