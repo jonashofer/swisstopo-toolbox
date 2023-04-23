@@ -66,6 +66,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { ToolbarComponent } from './address-to-coordinate/components/toolbar/toolbar.component';
 import { environment } from 'src/environments/environment';
 import { ColumnConfigDialogComponent } from './address-to-coordinate/components/column-config-dialog/column-config-dialog.component';
+import { CoordinateToAddressComponent } from './coordinate-to-address/coordinate-to-address.component';
 
 registerLocaleData(localeDECH);
 registerLocaleData(localeFRCH);
@@ -86,7 +87,8 @@ registerLocaleData(localeENCH);
     GuideComponent,
     FileUploadInputComponent,
     ToolbarComponent,
-    ColumnConfigDialogComponent
+    ColumnConfigDialogComponent,
+    CoordinateToAddressComponent
   ],
   imports: [
     MatListModule,
