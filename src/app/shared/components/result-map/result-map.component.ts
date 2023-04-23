@@ -9,7 +9,7 @@ import VectorLayer from 'ol/layer/Vector';
 import Point from 'ol/geom/Point';
 import { fromLonLat, transformExtent } from 'ol/proj';
 import { Icon, Style } from 'ol/style';
-import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEntry';
+import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTableEntry';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { filter } from 'rxjs/operators';
 import { DownloadService } from '../../services';

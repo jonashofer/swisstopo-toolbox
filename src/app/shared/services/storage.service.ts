@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AddressCoordinateTableEntry } from '../components/models/AddressCoordinateTableEntry';
+import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEntry';
 
 @Injectable({
   providedIn: 'root'

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { BehaviorSubject, map } from 'rxjs';
 import { ColumnConfigDialogComponent } from '../components/column-config-dialog/column-config-dialog.component';
-import { ColumnConfig, ColumnDefinitions } from '../components/models/ColumnConfiguration';
+import { ColumnConfig, ColumnDefinitions } from '../models/ColumnConfiguration';
 import { StorageService } from './storage.service';
 
 const STORAGE_KEY = 'columns';

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import saveAs from 'file-saver';
 import { CoordinateService } from '.';
 import { CoordinatePipe } from '../components/coordinate.pipe';
-import { AddressCoordinateTableEntry } from '../components/models/AddressCoordinateTableEntry';
-import { CooridnateSystem } from '../components/models/CoordinateSystem';
+import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEntry';
+import { CooridnateSystem } from '../models/CoordinateSystem';
 import { AddressService } from './address.service';
 
 @Injectable({

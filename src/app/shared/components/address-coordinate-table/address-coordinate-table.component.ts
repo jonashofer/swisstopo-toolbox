@@ -3,8 +3,8 @@ import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { filter, map, Observable, tap } from 'rxjs';
 import { AddressService } from '../../services';
 import { ColumnService } from '../../services/column.service';
-import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEntry';
-import { CooridnateSystem } from '../models/CoordinateSystem';
+import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTableEntry';
+import { CooridnateSystem } from '../../models/CoordinateSystem';
 
 //all columns that should not be rendered in a generic way, need to have a custom
 //matColumnDef in the template and need to be registered here

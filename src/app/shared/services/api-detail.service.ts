@@ -4,9 +4,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { ObNotificationService } from '@oblique/oblique';
 import { Observable, from, of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
-import { AddressCoordinateTableEntry } from '../components/models/AddressCoordinateTableEntry';
-import { Coordinate } from '../components/models/Coordinate';
-import { CooridnateSystem } from '../components/models/CoordinateSystem';
+import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEntry';
+import { Coordinate } from '../models/Coordinate';
+import { CooridnateSystem } from '../models/CoordinateSystem';
 
 export interface Attributes {
   egid: string;

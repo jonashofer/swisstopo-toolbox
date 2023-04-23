@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { CooridnateSystem } from '../components/models/CoordinateSystem';
+import { CooridnateSystem } from '../models/CoordinateSystem';
 
 @Injectable({
   providedIn: 'root'

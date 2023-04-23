@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { CoordinateService } from '../../services';
-import { CoordinateSystemNames, CooridnateSystem } from '../models/CoordinateSystem';
+import { CoordinateSystemNames, CooridnateSystem } from '../../models/CoordinateSystem';
 
 @Component({
   selector: 'app-coordinate-system-switch',

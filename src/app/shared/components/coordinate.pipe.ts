@@ -1,6 +1,6 @@
 import { DecimalPipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
-import { CooridnateSystem } from './models/CoordinateSystem';
+import { CooridnateSystem } from '../models/CoordinateSystem';
 
 @Pipe({
   name: 'coordinate'

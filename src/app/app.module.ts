@@ -39,7 +39,7 @@ import { MatLegacyTabsModule as MatTabsModule } from '@angular/material/legacy-t
 import { MatLegacyAutocompleteModule as MatAutocompleteModule } from '@angular/material/legacy-autocomplete';
 import { AddressToCoordinateComponent } from './address-to-coordinate/address-to-coordinate.component';
 import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
-import { AddressCoordinateTableComponent } from './address-to-coordinate/components/address-coordinate-table/address-coordinate-table.component';
+import { AddressCoordinateTableComponent } from './shared/components/address-coordinate-table/address-coordinate-table.component';
 import { MatLegacyTableModule as MatTableModule } from '@angular/material/legacy-table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
@@ -49,23 +49,23 @@ import {
   MatLegacyDialogActions as MatDialogActions,
   MatLegacyDialogModule as MatDialogModule
 } from '@angular/material/legacy-dialog';
-import { ResultMapComponent } from './address-to-coordinate/components/result-map/result-map.component';
-import { AddressSearchInputComponent } from './address-to-coordinate/components/address-search-input/address-search-input.component';
+import { ResultMapComponent } from './shared/components/result-map/result-map.component';
+import { AddressSearchInputComponent } from './shared/components/address-search-input/address-search-input.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
 import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
-import { CoordinateSystemSwitchComponent } from './address-to-coordinate/components/coordinate-system-switch/coordinate-system-switch.component';
-import { AddressService, ApiDetailService, ApiService, CoordinateService, DownloadService } from './address-to-coordinate/services';
+import { CoordinateSystemSwitchComponent } from './shared/components/coordinate-system-switch/coordinate-system-switch.component';
+import { AddressService, ApiDetailService, ApiService, CoordinateService, DownloadService } from './shared/services';
 import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
-import { CoordinatePipe } from './address-to-coordinate/components/coordinate.pipe';
-import { DownloadSelectorComponent } from './address-to-coordinate/components/download-selector/download-selector.component';
+import { CoordinatePipe } from './shared/components/coordinate.pipe';
+import { DownloadSelectorComponent } from './shared/components/download-selector/download-selector.component';
 import { GuideComponent } from './guide/guide.component';
 import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
-import { FileUploadInputComponent } from './address-to-coordinate/components/file-upload-input/file-upload-input.component';
+import { FileUploadInputComponent } from './shared/components/file-upload-input/file-upload-input.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
-import { ToolbarComponent } from './address-to-coordinate/components/toolbar/toolbar.component';
+import { ToolbarComponent } from './shared/components/toolbar/toolbar.component';
 import { environment } from 'src/environments/environment';
-import { ColumnConfigDialogComponent } from './address-to-coordinate/components/column-config-dialog/column-config-dialog.component';
+import { ColumnConfigDialogComponent } from './shared/components/column-config-dialog/column-config-dialog.component';
 import { CoordinateToAddressComponent } from './coordinate-to-address/coordinate-to-address.component';
 
 registerLocaleData(localeDECH);

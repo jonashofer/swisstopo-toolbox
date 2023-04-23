@@ -4,7 +4,7 @@ import { ObIAutocompleteInputOption } from '@oblique/oblique';
 import { TranslateService } from '@ngx-translate/core';
 import { FormControl } from '@angular/forms';
 import { ColumnService } from '../../services/column.service';
-import { ColumnConfigItem, ColumnDefinitions } from '../models/ColumnConfiguration';
+import { ColumnConfigItem, ColumnDefinitions } from '../../models/ColumnConfiguration';
 
 @Component({
   selector: 'app-column-config-dialog',

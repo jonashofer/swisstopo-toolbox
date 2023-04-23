@@ -4,9 +4,9 @@ import { ObNotificationService } from '@oblique/oblique';
 import { BehaviorSubject, EMPTY, forkJoin, from, Observable, of } from 'rxjs';
 import { flatMap, map, mergeMap, tap } from 'rxjs/operators';
 import { ApiDetailService, ApiService } from '.';
-import { AddressCoordinateTableEntry, AddressSelectionResult } from '../components/models/AddressCoordinateTableEntry';
-import { ColumnDefinitions } from '../components/models/ColumnConfiguration';
-import { CooridnateSystem } from '../components/models/CoordinateSystem';
+import { AddressCoordinateTableEntry, AddressSelectionResult } from '../models/AddressCoordinateTableEntry';
+import { ColumnDefinitions } from '../models/ColumnConfiguration';
+import { CooridnateSystem } from '../models/CoordinateSystem';
 import { StorageService } from './storage.service';
 
 const STORAGE_KEY = 'addresses';

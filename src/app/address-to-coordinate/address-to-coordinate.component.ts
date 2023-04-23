@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { combineLatest } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { AddressService, CoordinateService } from './services';
-import { AddressCoordinateTableEntry } from './components/models/AddressCoordinateTableEntry';
-import { ColumnService } from './services/column.service';
+import { AddressCoordinateTableEntry } from '../shared/models/AddressCoordinateTableEntry';
+import { AddressService, CoordinateService } from '../shared/services';
+import { ColumnService } from '../shared/services/column.service';
 
 @Component({
   selector: 'app-address-to-coordinate',

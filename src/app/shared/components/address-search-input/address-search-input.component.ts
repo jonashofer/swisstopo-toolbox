@@ -16,7 +16,7 @@ import { ObNotificationService } from '@oblique/oblique';
 import { debounceTime, filter, map, switchMap, tap } from 'rxjs/operators';
 import { ApiService } from '../../services';
 import { ApiSearchResult } from '../../services/api.service';
-import { AddressCoordinateTableEntry, AddressSelectionResult } from '../models/AddressCoordinateTableEntry';
+import { AddressCoordinateTableEntry, AddressSelectionResult } from '../../models/AddressCoordinateTableEntry';
 
 @Component({
   selector: 'app-address-search-input',
