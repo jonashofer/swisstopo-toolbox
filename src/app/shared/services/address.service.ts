@@ -110,7 +110,7 @@ export class AddressService {
       columns.includes(ColumnDefinitions.LV_95_north)
     ) {
       const lv95Query = this.api
-        .convertFromWgs84({ lat: address.wgs84_lat!, lon: address.wgs84_lon! }, CooridnateSystem.LV_95)
+        .convert({ lat: address.wgs84_lat!, lon: address.wgs84_lon!, system: CooridnateSystem.WGS_84 }, CooridnateSystem.LV_95)
         .pipe(
           map(r => {
             address.lv95_east = r.lon;
@@ -139,7 +139,7 @@ export class AddressService {
 
     if (columns.includes(ColumnDefinitions.LV_03_east) || columns.includes(ColumnDefinitions.LV_03_north)) {
       const lv03Query = this.api
-        .convertFromWgs84({ lat: address.wgs84_lat!, lon: address.wgs84_lon! }, CooridnateSystem.LV_03)
+        .convert({ lat: address.wgs84_lat!, lon: address.wgs84_lon!, system: CooridnateSystem.WGS_84 }, CooridnateSystem.LV_03)
         .pipe(
           map(r => {
             address.lv03_east = r.lon;

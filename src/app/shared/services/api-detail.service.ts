@@ -1,12 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { ObNotificationService } from '@oblique/oblique';
-import { Observable, from, of } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
-import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEntry';
-import { Coordinate } from '../models/Coordinate';
-import { CooridnateSystem } from '../models/CoordinateSystem';
+import { map } from 'rxjs/operators';
 
 export interface Attributes {
   egid: string;

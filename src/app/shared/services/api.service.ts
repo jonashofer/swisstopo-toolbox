@@ -115,12 +115,14 @@ export class ApiService {
     };
   }
 
-  public convertFromWgs84(coordinate: Coordinate, targetSystem: CooridnateSystem): Observable<Coordinate> {
-    if (targetSystem == CooridnateSystem.WGS_84) {
+  public convert(coordinate: Coordinate, targetSystem: CooridnateSystem): Observable<Coordinate> {
+    console.log(coordinate.system)
+    if (coordinate.system == targetSystem || coordinate.system == null) {
+      console.log("same system conversion")
       return of(coordinate);
     }
 
-    const mode = this.buildReframeApiMode(CooridnateSystem.WGS_84, targetSystem);
+    const mode = this.buildReframeApiMode(coordinate.system, targetSystem);
     const request = `https://geodesy.geo.admin.ch/reframe/${mode}?northing=${encodeURIComponent(
       coordinate.lat
     )}&easting=${encodeURIComponent(coordinate.lon)}&format=json`;
