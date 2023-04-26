@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { CoordinateService } from '../../services';
-import { CoordinateSystemNames, CooridnateSystem } from '../../models/CoordinateSystem';
+import { CoordinateSystemNames, CoordinateSystem } from '../../models/CoordinateSystem';
 
 @Component({
   selector: 'app-coordinate-system-switch',
@@ -9,7 +9,7 @@ import { CoordinateSystemNames, CooridnateSystem } from '../../models/Coordinate
   styleUrls: ['./coordinate-system-switch.component.scss']
 })
 export class CoordinateSystemSwitchComponent {
-  coordinateSystems = Object.values(CooridnateSystem);
+  coordinateSystems = Object.values(CoordinateSystem);
   coordinateSystemNames = CoordinateSystemNames;
 
   currentSystem$ = this.service.currentSystem$;
@@ -17,7 +17,7 @@ export class CoordinateSystemSwitchComponent {
 
   constructor(private readonly service: CoordinateService) {}
 
-  onChange(event: CooridnateSystem) {
+  onChange(event: CoordinateSystem) {
     this.service.changeCurrentSystem(event);
   }
 }

@@ -6,7 +6,7 @@ import { Observable, from, of } from 'rxjs';
 import { map, mergeMap, tap } from 'rxjs/operators';
 import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEntry';
 import { Coordinate } from '../models/Coordinate';
-import { CooridnateSystem } from '../models/CoordinateSystem';
+import { CoordinateSystem } from '../models/CoordinateSystem';
 
 export interface Attrs {
   origin: string;
@@ -115,7 +115,7 @@ export class ApiService {
     };
   }
 
-  public convert(coordinate: Coordinate, targetSystem: CooridnateSystem): Observable<Coordinate> {
+  public convert(coordinate: Coordinate, targetSystem: CoordinateSystem): Observable<Coordinate> {
     if (coordinate.system == targetSystem || coordinate.system == null) {
       return of(coordinate);
     }
@@ -138,11 +138,11 @@ export class ApiService {
     return div.textContent || div.innerText || '';
   }
 
-  private buildReframeApiMode(from: CooridnateSystem, to: CooridnateSystem): string {
+  private buildReframeApiMode(from: CoordinateSystem, to: CoordinateSystem): string {
     const dict = {
-      [CooridnateSystem.WGS_84]: 'wgs84',
-      [CooridnateSystem.LV_95]: 'lv95',
-      [CooridnateSystem.LV_03]: 'lv03'
+      [CoordinateSystem.WGS_84]: 'wgs84',
+      [CoordinateSystem.LV_95]: 'lv95',
+      [CoordinateSystem.LV_03]: 'lv03'
     };
 
     return `${dict[from]}to${dict[to]}`;

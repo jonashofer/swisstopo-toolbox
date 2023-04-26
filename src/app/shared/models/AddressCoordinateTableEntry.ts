@@ -1,6 +1,6 @@
 import { ColumnDefinitions } from './ColumnConfiguration';
 import { Coordinate } from './Coordinate';
-import { CooridnateSystem } from './CoordinateSystem';
+import { CoordinateSystem } from './CoordinateSystem';
 
 export interface AddressCoordinateTableEntry {
   id: number; // id of the api feature if isValid, otherwise arbitary negative number

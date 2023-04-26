@@ -4,7 +4,7 @@ import { map } from 'rxjs';
 import { AddressService } from '../../services';
 import { ColumnService } from '../../services/column.service';
 import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTableEntry';
-import { CooridnateSystem } from '../../models/CoordinateSystem';
+import { CoordinateSystem } from '../../models/CoordinateSystem';
 
 //all columns that should not be rendered in a generic way, need to have a custom
 //matColumnDef in the template and need to be registered here
@@ -25,13 +25,13 @@ const customLayoutColumns: string[] = [];
 })
 export class AddressCoordinateTableComponent {
   @Input()
-  currentSystem!: CooridnateSystem;
+  currentSystem!: CoordinateSystem;
 
   @Output()
   editHandler = new EventEmitter<AddressCoordinateTableEntry>();
 
   get latLonHeadersEnabled(): boolean {
-    return this.currentSystem == CooridnateSystem.WGS_84;
+    return this.currentSystem == CoordinateSystem.WGS_84;
   }
 
   displayedColumns$ = this.columnService.columns$.pipe(

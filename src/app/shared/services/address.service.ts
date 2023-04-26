@@ -6,7 +6,7 @@ import { flatMap, map, mergeMap, tap } from 'rxjs/operators';
 import { ApiDetailService, ApiService } from '.';
 import { AddressCoordinateTableEntry, AddressSelectionResult } from '../models/AddressCoordinateTableEntry';
 import { ColumnDefinitions } from '../models/ColumnConfiguration';
-import { CooridnateSystem } from '../models/CoordinateSystem';
+import { CoordinateSystem } from '../models/CoordinateSystem';
 import { StorageService } from './storage.service';
 
 const STORAGE_KEY = 'addresses';
@@ -79,13 +79,13 @@ export class AddressService {
 
   public enrichAddresses$ = (
     addresses: AddressCoordinateTableEntry[],
-    newCoordinateSystem: CooridnateSystem,
+    newCoordinateSystem: CoordinateSystem,
     columns: ColumnDefinitions[]
   ) => from(addresses).pipe(mergeMap(address => forkJoin(this.enrichAddress$(address, newCoordinateSystem, columns))));
 
   private readonly enrichAddress$ = (
     address: AddressCoordinateTableEntry,
-    newCoordinateSystem: CooridnateSystem,
+    newCoordinateSystem: CoordinateSystem,
     columns: ColumnDefinitions[]
   ) => {
     const queries: Observable<any>[] = [];
@@ -109,7 +109,7 @@ export class AddressService {
       columns.includes(ColumnDefinitions.LV_95_north)
     ) {
       const lv95Query = this.api
-        .convert({ lat: address.wgs84_lat!, lon: address.wgs84_lon!, system: CooridnateSystem.WGS_84 }, CooridnateSystem.LV_95)
+        .convert({ lat: address.wgs84_lat!, lon: address.wgs84_lon!, system: CoordinateSystem.WGS_84 }, CoordinateSystem.LV_95)
         .pipe(
           map(r => {
             address.lv95_east = r.lon;
@@ -138,7 +138,7 @@ export class AddressService {
 
     if (columns.includes(ColumnDefinitions.LV_03_east) || columns.includes(ColumnDefinitions.LV_03_north)) {
       const lv03Query = this.api
-        .convert({ lat: address.wgs84_lat!, lon: address.wgs84_lon!, system: CooridnateSystem.WGS_84 }, CooridnateSystem.LV_03)
+        .convert({ lat: address.wgs84_lat!, lon: address.wgs84_lon!, system: CoordinateSystem.WGS_84 }, CoordinateSystem.LV_03)
         .pipe(
           map(r => {
             address.lv03_east = r.lon;

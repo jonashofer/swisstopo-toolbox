@@ -6,7 +6,7 @@ import { FormControl } from '@angular/forms';
 import { ReverseApiService } from '../shared/services/reverse-api.service';
 import { Coordinate } from '../shared/models/Coordinate';
 import { ApiService, CoordinateService } from '../shared/services';
-import { CooridnateSystem } from '../shared/models/CoordinateSystem';
+import { CoordinateSystem } from '../shared/models/CoordinateSystem';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -29,7 +29,7 @@ export class CoordinateToAddressComponent {
   );
 
   results$: Observable<ObIAutocompleteInputOption[]> = this.debouncedInput$.pipe(
-    switchMap(value => this.apiService.convert(value, CooridnateSystem.LV_95)),
+    switchMap(value => this.apiService.convert(value, CoordinateSystem.LV_95)),
     switchMap(value => this.reverseApi.searchNearestAddresses(value)),
     map(r => {
       const items = r.map(x => ({ label: x.name, disabled: false }));

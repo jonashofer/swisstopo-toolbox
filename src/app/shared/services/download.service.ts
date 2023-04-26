@@ -3,7 +3,7 @@ import saveAs from 'file-saver';
 import { CoordinateService } from '.';
 import { CoordinatePipe } from '../components/coordinate.pipe';
 import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEntry';
-import { CooridnateSystem } from '../models/CoordinateSystem';
+import { CoordinateSystem } from '../models/CoordinateSystem';
 import { AddressService } from './address.service';
 
 @Injectable({
@@ -49,7 +49,7 @@ export class DownloadService {
     const lon = usePipe ? this.coordinatePipe.transform(coord.lon, system) : coord.lon;
 
     // column order like in the table
-    if (system == CooridnateSystem.WGS_84) {
+    if (system == CoordinateSystem.WGS_84) {
       return [entry.address, lat, lon].join(separator);
     }
     return [entry.address, lon, lat].join(separator);

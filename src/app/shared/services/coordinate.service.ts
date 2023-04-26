@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { CooridnateSystem } from '../models/CoordinateSystem';
+import { CoordinateSystem } from '../models/CoordinateSystem';
 import { Coordinate } from '../models/Coordinate';
 import { ApiService } from './api.service';
 
@@ -8,18 +8,18 @@ import { ApiService } from './api.service';
   providedIn: 'root'
 })
 export class CoordinateService {
-  private readonly system$: BehaviorSubject<CooridnateSystem> = new BehaviorSubject<CooridnateSystem>(
-    CooridnateSystem.WGS_84
+  private readonly system$: BehaviorSubject<CoordinateSystem> = new BehaviorSubject<CoordinateSystem>(
+    CoordinateSystem.WGS_84
   );
 
-  public readonly currentSystem$: Observable<CooridnateSystem> = this.system$.asObservable();
+  public readonly currentSystem$: Observable<CoordinateSystem> = this.system$.asObservable();
   get currentSystem() {
     return this.system$.value;
   }
 
   constructor(private apiService: ApiService) {}
 
-  public changeCurrentSystem(newSystem: CooridnateSystem): void {
+  public changeCurrentSystem(newSystem: CoordinateSystem): void {
     if (this.system$.value !== newSystem) {
       this.system$.next(newSystem);
     }
@@ -45,27 +45,27 @@ export class CoordinateService {
     const isLV95 = (lon: number, lat: number) => lon >= 2000000 && lon <= 3000000 && lat >= 1000000 && lat <= 1400000;
 
     if (isLV95(a, b)) {
-      return { lon: a, lat: b, system: CooridnateSystem.LV_95 };
+      return { lon: a, lat: b, system: CoordinateSystem.LV_95 };
     }
 
     if (isLV95(b, a)) {
-      return { lon: b, lat: a, system: CooridnateSystem.LV_95 };
+      return { lon: b, lat: a, system: CoordinateSystem.LV_95 };
     }
 
     if (isWGS84(a, b)) {
-      return { lat: a, lon: b, system: CooridnateSystem.WGS_84 };
+      return { lat: a, lon: b, system: CoordinateSystem.WGS_84 };
     }
 
     if (isWGS84(b, a)) {
-      return { lat: b, lon: a, system: CooridnateSystem.WGS_84 };
+      return { lat: b, lon: a, system: CoordinateSystem.WGS_84 };
     }
 
     if (isLV03(a, b)) {
-      return { lon: a, lat: b, system: CooridnateSystem.LV_03 };
+      return { lon: a, lat: b, system: CoordinateSystem.LV_03 };
     }
 
     if (isLV03(b, a)) {
-      return { lon: b, lat: a, system: CooridnateSystem.LV_03 };
+      return { lon: b, lat: a, system: CoordinateSystem.LV_03 };
     }
 
     return null;
