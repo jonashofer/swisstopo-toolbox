@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, map } from 'rxjs';
+import { Observable, of, map, tap } from 'rxjs';
 import { ApiSearchResult } from './api.service';
 import { HttpClient } from '@angular/common/http';
 import { Coordinate } from '../models/Coordinate';
@@ -103,10 +103,9 @@ export interface Attributes {
 export class ReverseApiService {
   constructor(private httpClient: HttpClient) {}
 
-  public searchNearestAddresses(lv95coord: Coordinate) {
-    console.log("search nearest addresses");
+  public searchNearestAddresses(lv95coord: Coordinate) : Observable<{name: string, distance: number}[]> {
     if(lv95coord.system !== CooridnateSystem.LV_95) {
-      return of();
+      return of([]);
     }
 
     // same validation as in search input for catching multiline or fileinputs
@@ -120,17 +119,18 @@ export class ReverseApiService {
 
     return this.httpClient.get<MapServerIdentifyResult>(request).pipe(
       map((data: MapServerIdentifyResult) => {
-        console.log(data);
         const apiResults = data.results || [];
-        return apiResults.map(r => {
-          const attr = r.attributes;
-          const east = attr.dkode || attr.gkode;
-          const north = attr.dkodn || attr.gkodn;
-          const coord: Coordinate = {lon: east, lat: north}
-          const distance = this.calculateDistance(lv95coord, coord);
-          const name = `${attr.strname_deinr}, ${attr.dplz4} ${attr.dplzname} (${distance}m)`
-          return {name, distance};
-        }).sort((a, b) => a.distance - b.distance);
+        return apiResults
+          .map(r => {
+            const attr = r.attributes;
+            const east = attr.dkode || attr.gkode;
+            const north = attr.dkodn || attr.gkodn;
+            const coord: Coordinate = {lon: east, lat: north, system: CooridnateSystem.LV_95}
+            const distance = this.calculateDistance(lv95coord, coord);
+            const name = `${attr.strname_deinr}, ${attr.dplz4} ${attr.dplzname} (${distance}m)`
+            return {name, distance};
+          })
+          .sort((a, b) => a.distance - b.distance);
       })
     );
   }

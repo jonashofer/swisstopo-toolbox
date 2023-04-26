@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
-import { filter, map, Observable, tap } from 'rxjs';
+import { map } from 'rxjs';
 import { AddressService } from '../../services';
 import { ColumnService } from '../../services/column.service';
 import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTableEntry';
@@ -39,8 +39,7 @@ export class AddressCoordinateTableComponent {
       const matColumns = userConfig.map(c => c.toString());
       matColumns.unshift('trash', 'address', 'edit'); //those got custom columns
       return matColumns;
-    }),
-    tap(c => console.log(c))
+    })
   );
 
   standardLayoutColumns$ = this.columnService.columns$.pipe(

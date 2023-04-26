@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ObNotificationService } from '@oblique/oblique';
 import { Observable, from, of } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { map, mergeMap, tap } from 'rxjs/operators';
 import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEntry';
 import { Coordinate } from '../models/Coordinate';
 import { CooridnateSystem } from '../models/CoordinateSystem';
@@ -116,9 +116,7 @@ export class ApiService {
   }
 
   public convert(coordinate: Coordinate, targetSystem: CooridnateSystem): Observable<Coordinate> {
-    console.log(coordinate.system)
     if (coordinate.system == targetSystem || coordinate.system == null) {
-      console.log("same system conversion")
       return of(coordinate);
     }
 
@@ -129,7 +127,7 @@ export class ApiService {
 
     return this.httpClient.get<{ easting: string; northing: string }>(request).pipe(
       map(r => {
-        return { lat: +r.northing, lon: +r.easting };
+        return { lat: +r.northing, lon: +r.easting, system: targetSystem };
       })
     );
   }

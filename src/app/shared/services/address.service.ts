@@ -90,7 +90,6 @@ export class AddressService {
   ) => {
     const queries: Observable<any>[] = [];
 
-    console.log(columns)
     // GWR data
     if ((address.featureId && columns.includes(ColumnDefinitions.EGID)) || columns.includes(ColumnDefinitions.EGRID)) {
       const gwrQuery = this.apiDetail.getBuildingInfo(address.featureId!).pipe(
@@ -150,7 +149,7 @@ export class AddressService {
       queries.push(lv03Query);
     }
 
-    console.log(queries)
+    // console.log(queries)
     return queries;
   };
 }

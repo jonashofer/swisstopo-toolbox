@@ -104,12 +104,7 @@ export class ApiDetailService {
 
   public getBuildingInfo(featureId: string) {
     const request = `https://api.geo.admin.ch/rest/services/api/MapServer/ch.bfs.gebaeude_wohnungs_register/${featureId}?returnGeometry=false`;
-    return this.httpClient.get<RootObject>(request).pipe(
-      map((data: RootObject) => {
-        console.log(data);
-        return data;
-      })
-    );
+    return this.httpClient.get<RootObject>(request);
   }
 
   public getHeight(lv95_east: number, lv95_north: number) {
