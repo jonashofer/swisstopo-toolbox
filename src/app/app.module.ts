@@ -50,7 +50,6 @@ import {
   MatLegacyDialogModule as MatDialogModule
 } from '@angular/material/legacy-dialog';
 import { ResultMapComponent } from './shared/components/result-map/result-map.component';
-import { AddressSearchInputComponent } from './shared/components/address-search-input/address-search-input.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
 import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
@@ -67,6 +66,7 @@ import { ToolbarComponent } from './shared/components/toolbar/toolbar.component'
 import { environment } from 'src/environments/environment';
 import { ColumnConfigDialogComponent } from './shared/components/column-config-dialog/column-config-dialog.component';
 import { CoordinateToAddressComponent } from './coordinate-to-address/coordinate-to-address.component';
+import { SearchInputComponent } from './shared/components/search-input/search-input.component';
 
 registerLocaleData(localeDECH);
 registerLocaleData(localeFRCH);
@@ -80,7 +80,7 @@ registerLocaleData(localeENCH);
     AddressToCoordinateComponent,
     AddressCoordinateTableComponent,
     ResultMapComponent,
-    AddressSearchInputComponent,
+    SearchInputComponent,
     CoordinateSystemSwitchComponent,
     DownloadSelectorComponent,
     CoordinatePipe,

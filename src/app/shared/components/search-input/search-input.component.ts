@@ -20,11 +20,11 @@ import { AddressCoordinateTableEntry, AddressSelectionResult } from '../../model
 import { InputMode } from '../../models/InputMode';
 
 @Component({
-  selector: 'app-address-search-input',
-  templateUrl: './address-search-input.component.html',
-  styleUrls: ['./address-search-input.component.scss']
+  selector: 'app-search-input',
+  templateUrl: './search-input.component.html',
+  styleUrls: ['./search-input.component.scss']
 })
-export class AddressSearchInputComponent {
+export class SearchInputComponent {
   public inputFormControl = new FormControl<string>('', { validators: this.searchInputValidator(), updateOn: 'change' });
   instantErrorStateMatcher = new InstantErrorStateMatcher();
 
