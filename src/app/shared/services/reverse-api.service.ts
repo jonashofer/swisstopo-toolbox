@@ -127,7 +127,7 @@ export class ReverseApiService {
             const north = attr.dkodn || attr.gkodn;
             const coord: Coordinate = {lon: east, lat: north, system: CoordinateSystem.LV_95}
             const distance = this.calculateDistance(lv95coord, coord);
-            const name = `${attr.strname_deinr}, ${attr.dplz4} ${attr.dplzname} (${distance}m)`
+            const name = `${attr.strname_deinr}, ${attr.dplz4} ${attr.dplzname} (~${distance}m)`
             return {name, distance};
           })
           .sort((a, b) => a.distance - b.distance);
@@ -139,6 +139,6 @@ export class ReverseApiService {
     const deltaX = coord2.lat - coord1.lat;
     const deltaY = coord2.lon - coord1.lon;
     const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-    return distance;
+    return Math.round(distance);
   }
 }
