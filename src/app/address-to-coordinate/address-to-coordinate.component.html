@@ -8,10 +8,10 @@
 	</mat-tab>
 </mat-tab-group>
 
-<app-address-coordinate-table
+<app-result-table
 	*ngIf="addressService.hasAddresses$ | async"
 	[currentSystem]="(coordinateService.currentSystem$ | async)!"
-	(editHandler)="editedAddress = $event"></app-address-coordinate-table>
+	(editHandler)="editedAddress = $event"></app-result-table>
 
 <app-toolbar *ngIf="addressService.hasAddresses$ | async"></app-toolbar>
 

@@ -39,7 +39,7 @@ import { MatLegacyTabsModule as MatTabsModule } from '@angular/material/legacy-t
 import { MatLegacyAutocompleteModule as MatAutocompleteModule } from '@angular/material/legacy-autocomplete';
 import { AddressToCoordinateComponent } from './address-to-coordinate/address-to-coordinate.component';
 import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
-import { AddressCoordinateTableComponent } from './shared/components/address-coordinate-table/address-coordinate-table.component';
+import { ResultTableComponent } from './shared/components/result-table/result-table.component';
 import { MatLegacyTableModule as MatTableModule } from '@angular/material/legacy-table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
@@ -78,7 +78,7 @@ registerLocaleData(localeENCH);
   declarations: [
     AppComponent,
     AddressToCoordinateComponent,
-    AddressCoordinateTableComponent,
+    ResultTableComponent,
     ResultMapComponent,
     SearchInputComponent,
     CoordinateSystemSwitchComponent,

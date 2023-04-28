@@ -19,11 +19,11 @@ const customLayoutColumns: string[] = [];
 // }
 
 @Component({
-  selector: 'app-address-coordinate-table',
-  templateUrl: './address-coordinate-table.component.html',
-  styleUrls: ['./address-coordinate-table.component.scss']
+  selector: 'app-result-table',
+  templateUrl: './result-table.component.html',
+  styleUrls: ['./result-table.component.scss']
 })
-export class AddressCoordinateTableComponent {
+export class ResultTableComponent {
   @Input()
   currentSystem!: CoordinateSystem;
 
