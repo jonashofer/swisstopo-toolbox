@@ -4,6 +4,7 @@ import { switchMap } from 'rxjs/operators';
 import { AddressCoordinateTableEntry } from '../shared/models/AddressCoordinateTableEntry';
 import { AddressService, CoordinateService } from '../shared/services';
 import { ColumnService } from '../shared/services/column.service';
+import { InputMode } from '../shared/models/InputMode';
 
 @Component({
   selector: 'app-address-to-coordinate',
@@ -13,6 +14,8 @@ import { ColumnService } from '../shared/services/column.service';
 export class AddressToCoordinateComponent implements OnInit {
   editedAddress: AddressCoordinateTableEntry | null = null;
   selectedMode = 0;
+
+  inputMode = InputMode.Address;
 
   constructor(public addressService: AddressService, public coordinateService: CoordinateService, public columnService: ColumnService) {}
 

@@ -17,6 +17,7 @@ import { debounceTime, filter, map, switchMap, tap } from 'rxjs/operators';
 import { ApiService } from '../../services';
 import { ApiSearchResult } from '../../services/api.service';
 import { AddressCoordinateTableEntry, AddressSelectionResult } from '../../models/AddressCoordinateTableEntry';
+import { InputMode } from '../../models/InputMode';
 
 @Component({
   selector: 'app-address-search-input',
@@ -39,6 +40,9 @@ export class AddressSearchInputComponent {
   );
 
   existingEntryId: number | null = null;
+
+  @Input()
+  mode = InputMode.All;
 
   @Input()
   set input(existingEntry: AddressCoordinateTableEntry | null) {
