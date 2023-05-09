@@ -53,7 +53,7 @@ export class TextInputComponent {
       if (this.mode === InputSearchMode.Coordinate) {
         return this.reverseApi.search(value);
       } else {
-        return this.api.searchLocationsList(value).pipe(map(r => r.results.map(x => ({ text: x.attrs.label }))));
+        return this.api.searchLocationsList(value).pipe(map(r => r.results.map(x => ({ text: x.attrs.label, a2c_data: x }))));
       }
     }),
     tap(_ => this.trigger?.openPanel())
