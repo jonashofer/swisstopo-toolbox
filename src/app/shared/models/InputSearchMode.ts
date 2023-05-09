@@ -1,4 +1,4 @@
-export enum InputMode {
+export enum InputSearchMode {
     None = 0,
     Address = 1 << 0,
     wgs84 = 1 << 1,

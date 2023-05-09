@@ -1,4 +1,11 @@
-<mat-tab-group animationDuration="400ms" [(selectedIndex)]="selectedMode">
+<app-search-input [searchMode]="coordinateSearchMode"></app-search-input>
+
+<app-result-table
+	*ngIf="addressService.hasAddresses$ | async"
+	[currentSystem]="(coordinateService.currentSystem$ | async)!"
+	></app-result-table>
+
+<!-- <mat-tab-group animationDuration="400ms" [(selectedIndex)]="selectedMode">
 	<mat-tab [label]="'mode.input' | translate">
 		<ob-autocomplete
             [formControl]="input"
@@ -14,3 +21,4 @@
 	*ngIf="addressService.hasAddresses$ | async"
 	[currentSystem]="(coordinateService.currentSystem$ | async)!"
 	(editHandler)="editedAddress = $event"></app-result-table>
+</mat-tab-group> -->

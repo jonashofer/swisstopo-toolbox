@@ -15,7 +15,7 @@ export class CoordinateService {
     return this.system$.value;
   }
 
-  constructor(private apiService: ApiService) {}
+  constructor() {}
 
   public changeCurrentSystem(newSystem: CoordinateSystem): void {
     if (this.system$.value !== newSystem) {

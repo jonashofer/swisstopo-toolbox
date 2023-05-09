@@ -17,7 +17,7 @@ import { debounceTime, filter, map, switchMap, tap } from 'rxjs/operators';
 import { ApiService } from '../../services';
 import { ApiSearchResult } from '../../services/api.service';
 import { AddressCoordinateTableEntry, AddressSelectionResult } from '../../models/AddressCoordinateTableEntry';
-import { InputMode } from '../../models/InputMode';
+import { InputSearchMode } from '../../models/InputSearchMode';
 
 @Component({
   selector: 'app-text-input',
@@ -42,10 +42,10 @@ export class TextInputComponent {
   existingEntryId: number | null = null;
 
   @Input()
-  mode = InputMode.All;
+  mode = InputSearchMode.All;
 
   @Input()
-  set input(existingEntry: AddressCoordinateTableEntry | null) {
+  set addressToEdit(existingEntry: AddressCoordinateTableEntry | null) {
     if (existingEntry) {
       this.inputFormControl.setValue(existingEntry.address);
       document.getElementsByTagName('input')[0].focus();

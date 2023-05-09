@@ -66,6 +66,7 @@ import { environment } from 'src/environments/environment';
 import { ColumnConfigDialogComponent } from './shared/components/column-config-dialog/column-config-dialog.component';
 import { CoordinateToAddressComponent } from './coordinate-to-address/coordinate-to-address.component';
 import { TextInputComponent } from './shared/components/text-input/text-input.component';
+import { SearchInputComponent } from './shared/components/search-input/search-input.component';
 
 registerLocaleData(localeDECH);
 registerLocaleData(localeFRCH);
@@ -77,6 +78,7 @@ registerLocaleData(localeENCH);
   declarations: [
     AppComponent,
     AddressToCoordinateComponent,
+    SearchInputComponent,
     ResultTableComponent,
     ResultMapComponent,
     TextInputComponent,

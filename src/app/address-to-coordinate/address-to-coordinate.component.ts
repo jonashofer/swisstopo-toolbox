@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { combineLatest } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { AddressCoordinateTableEntry } from '../shared/models/AddressCoordinateTableEntry';
 import { AddressService, CoordinateService } from '../shared/services';
 import { ColumnService } from '../shared/services/column.service';
-import { InputMode } from '../shared/models/InputMode';
 import { getFeatureTabComponentProviders } from '../feature-tab.config';
+import { InputSearchMode } from '../shared/models/InputSearchMode';
 
 @Component({
   selector: 'app-address-to-coordinate',
@@ -13,17 +11,14 @@ import { getFeatureTabComponentProviders } from '../feature-tab.config';
   styleUrls: ['./address-to-coordinate.component.scss'],
   providers: getFeatureTabComponentProviders("address-to-coordinate")
 })
-export class AddressToCoordinateComponent implements OnInit {
-  editedAddress: AddressCoordinateTableEntry | null = null;
+export class AddressToCoordinateComponent {
+  addressToEdit: AddressCoordinateTableEntry | null = null;
   selectedMode = 0;
 
-  inputMode = InputMode.Address;
+  addressSearchMode = InputSearchMode.Address;
 
-  constructor(public addressService: AddressService, public coordinateService: CoordinateService, public columnService: ColumnService) {}
-
-  ngOnInit(): void {
-    combineLatest([this.coordinateService.currentSystem$, this.addressService.validAddresses$, this.columnService.columns$])
-      .pipe(switchMap(([s, a, c]) => this.addressService.enrichAddresses$(a, s, c)))
-      .subscribe();
+  constructor(private cd: ChangeDetectorRef, public addressService: AddressService, public coordinateService: CoordinateService, public columnService: ColumnService) {
+    
+    console.log('AddressToCoordinateComponent constructed');
   }
 }
