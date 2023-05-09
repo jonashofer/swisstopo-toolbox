@@ -148,13 +148,6 @@ registerLocaleData(localeENCH);
         bgColor: '#37556E'
       }
     },
-    AddressService,
-    ApiService,
-    ApiDetailService,
-    CoordinateService,
-    DownloadService,
-    DecimalPipe,
-    CoordinatePipe,
     MatDialogActions
   ],
   bootstrap: [AppComponent]

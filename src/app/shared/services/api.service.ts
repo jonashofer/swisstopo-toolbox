@@ -34,9 +34,7 @@ export interface RootObject {
   results: ApiSearchResult[];
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ApiService {
   private bulkAddId = -1;
 

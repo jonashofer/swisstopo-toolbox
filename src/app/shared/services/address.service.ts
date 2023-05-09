@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ObNotificationService } from '@oblique/oblique';
 import { BehaviorSubject, EMPTY, forkJoin, from, Observable, of } from 'rxjs';
@@ -8,19 +8,18 @@ import { AddressCoordinateTableEntry, AddressSelectionResult } from '../models/A
 import { ColumnDefinitions } from '../models/ColumnConfiguration';
 import { CoordinateSystem } from '../models/CoordinateSystem';
 import { StorageService } from './storage.service';
+import { FEATURE_TAB_CONFIG, FeatureTabConfig } from 'src/app/feature-tab.config';
 
-const STORAGE_KEY = 'addresses';
-
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AddressService {
   private readonly _addresses = new BehaviorSubject<AddressCoordinateTableEntry[]>(
-    StorageService.get<AddressCoordinateTableEntry[]>(STORAGE_KEY) || []
+    StorageService.get<AddressCoordinateTableEntry[]>(this.featureIdentifier.name) || []
   );
   public addresses$ = this._addresses.asObservable();
   public validAddresses$ = this.addresses$.pipe(map(a => a.filter(a => a.isValid)));
   public hasAddresses$ = this.addresses$.pipe(map(a => a.length > 0));
+
+  public featureName = this.featureIdentifier.name;
 
   get hasAddresses() {
     return this.addresses.length > 0;
@@ -37,12 +36,14 @@ export class AddressService {
     private readonly api: ApiService,
     private readonly apiDetail: ApiDetailService,
     private readonly notificationService: ObNotificationService,
-    private readonly translate: TranslateService
+    private readonly translate: TranslateService,
+    @Inject(FEATURE_TAB_CONFIG) private featureIdentifier: FeatureTabConfig
   ) {
+    console.log('AddressService constructed with:', featureIdentifier.name);
     this.addresses$
       .pipe(
         map(addresses => {
-          StorageService.save(STORAGE_KEY, addresses);
+          StorageService.save(this.featureIdentifier.name, addresses);
         })
       )
       .subscribe();

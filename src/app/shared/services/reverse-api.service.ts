@@ -97,9 +97,7 @@ export interface Attributes {
   label: string;
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ReverseApiService {
   constructor(private httpClient: HttpClient) {}
 

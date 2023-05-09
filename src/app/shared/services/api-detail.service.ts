@@ -96,9 +96,7 @@ export interface RootObject {
   feature: Feature;
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ApiDetailService {
   constructor(private readonly httpClient: HttpClient) {}
 

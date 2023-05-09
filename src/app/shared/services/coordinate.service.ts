@@ -4,9 +4,7 @@ import { CoordinateSystem } from '../models/CoordinateSystem';
 import { Coordinate } from '../models/Coordinate';
 import { ApiService } from './api.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class CoordinateService {
   private readonly system$: BehaviorSubject<CoordinateSystem> = new BehaviorSubject<CoordinateSystem>(
     CoordinateSystem.WGS_84

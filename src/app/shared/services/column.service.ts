@@ -15,9 +15,7 @@ const DEFAULT: ColumnConfig = {
   ]
 };
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ColumnService {
   private readonly columns = new BehaviorSubject<ColumnConfig>(
     StorageService.get<ColumnConfig>(STORAGE_KEY) || DEFAULT

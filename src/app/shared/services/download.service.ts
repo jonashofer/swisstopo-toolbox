@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import saveAs from 'file-saver';
 import { CoordinateService } from '.';
 import { CoordinatePipe } from '../components/coordinate.pipe';
@@ -6,15 +6,15 @@ import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEnt
 import { CoordinateSystem } from '../models/CoordinateSystem';
 import { AddressService } from './address.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class DownloadService {
   constructor(
-    private readonly addressService: AddressService,
+    @Inject(AddressService) private readonly addressService: AddressService,
     private readonly coordinateService: CoordinateService,
     private readonly coordinatePipe: CoordinatePipe
-  ) {}
+  ) {
+    console.log('DownloadService', addressService.featureName);
+  }
 
   public getCopyToClipboardText(): string {
     return this.addressService.addresses.map(a => this.getLine(a, '\t', true)).join('\r\n');

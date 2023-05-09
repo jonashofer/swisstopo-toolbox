@@ -5,11 +5,13 @@ import { AddressCoordinateTableEntry } from '../shared/models/AddressCoordinateT
 import { AddressService, CoordinateService } from '../shared/services';
 import { ColumnService } from '../shared/services/column.service';
 import { InputMode } from '../shared/models/InputMode';
+import { getFeatureTabComponentProviders } from '../feature-tab.config';
 
 @Component({
   selector: 'app-address-to-coordinate',
   templateUrl: './address-to-coordinate.component.html',
-  styleUrls: ['./address-to-coordinate.component.scss']
+  styleUrls: ['./address-to-coordinate.component.scss'],
+  providers: getFeatureTabComponentProviders("address-to-coordinate")
 })
 export class AddressToCoordinateComponent implements OnInit {
   editedAddress: AddressCoordinateTableEntry | null = null;

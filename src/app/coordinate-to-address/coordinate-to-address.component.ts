@@ -5,14 +5,16 @@ import { debounceTime, filter, map, switchMap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { ReverseApiService } from '../shared/services/reverse-api.service';
 import { Coordinate } from '../shared/models/Coordinate';
-import { ApiService, CoordinateService } from '../shared/services';
+import { AddressService, ApiService, CoordinateService } from '../shared/services';
 import { CoordinateSystem } from '../shared/models/CoordinateSystem';
 import { Observable } from 'rxjs';
+import { getFeatureTabComponentProviders } from '../feature-tab.config';
 
 @Component({
   selector: 'app-coordinate-to-address',
   templateUrl: './coordinate-to-address.component.html',
-  styleUrls: ['./coordinate-to-address.component.scss']
+  styleUrls: ['./coordinate-to-address.component.scss'],
+  providers: getFeatureTabComponentProviders("coordinate-to-address")
 })
 export class CoordinateToAddressComponent {
   selectedMode = 0;
@@ -38,9 +40,9 @@ export class CoordinateToAddressComponent {
   );
 
   constructor(
+    public addressService: AddressService,
     private reverseApi: ReverseApiService,
-    private coordinateService: CoordinateService,
+    public coordinateService: CoordinateService,
     private apiService: ApiService
-  ) {
-  }
+  ) {}
 }
