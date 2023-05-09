@@ -24,6 +24,7 @@ import { InputSearchMode } from '../../models/InputSearchMode';
 import { GWREntry, GWRSearchResult, ReverseApiService } from '../../services/reverse-api.service';
 import { Observable } from 'rxjs';
 import { Coordinate } from '../../models/Coordinate';
+import { FEATURE_TAB_CONFIG, FeatureTabConfig } from 'src/app/feature-tab.config';
 
 export interface SearchResultItem {
   text: string;
@@ -64,6 +65,8 @@ export class TextInputComponent {
   @Input()
   mode = InputSearchMode.All;
 
+  searchLabel = "";
+
   @Input()
   set addressToEdit(existingEntry: AddressCoordinateTableEntry | null) {
     if (existingEntry) {
@@ -82,8 +85,12 @@ export class TextInputComponent {
     private readonly api: ApiService,
     private readonly reverseApi: ReverseApiService,
     private readonly notificationService: ObNotificationService,
-    private readonly translate: TranslateService
-  ) {}
+    private readonly translate: TranslateService,
+    @Inject(FEATURE_TAB_CONFIG) public featureConfig: FeatureTabConfig
+
+  ) {
+    this.searchLabel = `search.${featureConfig.shortName}.`;
+  }
 
   onOptionSelected(event: MatAutocompleteSelectedEvent) {
     this.inputFormControl.setValue(null);

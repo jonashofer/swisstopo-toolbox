@@ -14,10 +14,18 @@
     "file": "Datei hochladen"
   },
   "search": {
-    "label": "Adresse",
-    "labelEdit": "Adresse bearbeiten",
-    "placeholder": "z.B. Bundesplatz 1 Bern",
-    "tooltip": "Mehrzeilen-Eingabe möglich durch das kopieren von Adressen aus der Zwischenablage. Bitte achten, dass jede Adresse auf einer neuen Zeile ist."
+    "atc": {
+      "label": "Adresse",
+      "labelEdit": "Adresse bearbeiten",
+      "placeholder": "z.B. Bundesplatz 1 Bern",
+      "tooltip": "Mehrzeilen-Eingabe möglich durch das kopieren von Adressen aus der Zwischenablage. Bitte achten, dass jede Adresse auf einer neuen Zeile ist."
+    },
+    "cta": {
+      "label": "Koordinaten",
+      "labelEdit": "Koordinaten bearbeiten",
+      "placeholder": "z.B. 2600994.1, 1197491.8 oder 46.95108, 7.438637 oder 683220.1, 248081.9",
+      "tooltip": "Mehrzeilen-Eingabe möglich durch das kopieren von Koordinaten aus der Zwischenablage. Bitte achten, dass jedes Koordinaten-Paar auf einer neuen Zeile ist."
+    }
   },
   "notifications": {
     "entriesAdded": "{{count}} Zeilen eingelesen.",
@@ -25,7 +33,7 @@
     "entryAlreadyExists": "Diese Adresse ({{address}}) wurde bereits hinzugefügt!",
     "inputTooManyWords": "Die Suche darf nicht mehr als 10 Wörter enthalten.",
     "inputTooLong": "Die Suche darf nicht länger als 4000 Zeichen sein.",
-    "inputNotCoordinate": "Es konnten keine Koordinaten erkannt werden."
+    "inputNotCoordinate": "Keine in der Schweiz liegenden Koordinaten erkannt."
   },
   "fileInput": {
     "replaceDialog": {
