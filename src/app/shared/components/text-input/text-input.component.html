@@ -23,7 +23,7 @@
 	<mat-error *ngIf="inputFormControl.invalid">{{ inputFormControl.getError("searchInput") | translate }}</mat-error>
 	<mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
 		<mat-option *ngFor="let option of results$ | async" [value]="option">
-			<div [outerHTML]="option.attrs.label"></div>
+			<div [outerHTML]="option.text"></div>
 		</mat-option>
 	</mat-autocomplete>
 </mat-form-field>

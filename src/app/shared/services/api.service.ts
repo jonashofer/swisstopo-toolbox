@@ -68,7 +68,7 @@ export class ApiService {
     );
   }
 
-  public validateSearchInput(input: string): { valid: boolean; messageLabel: string | null } {
+  public validateSearchInput(input: string): { valid: boolean; messageLabel?: string } {
     const length = input.trim().length;
     const wordCount = input.split(' ').filter((w: string) => w.trim().length >= 1).length;
     if (length > 4000) {
@@ -77,7 +77,7 @@ export class ApiService {
     if (wordCount > 10) {
       return { valid: false, messageLabel: 'notifications.inputTooManyWords' };
     }
-    return { valid: true, messageLabel: null };
+    return { valid: true };
   }
 
   public searchMultiple(inputs: string[]): Observable<AddressCoordinateTableEntry> {
@@ -90,7 +90,7 @@ export class ApiService {
             }
             const entry: AddressCoordinateTableEntry = {
               address: r.input,
-              id: this.bulkAddId--,
+              id: (this.bulkAddId--).toString(),
               isValid: false,
               wgs84_lat: null,
               wgs84_lon: null
@@ -105,7 +105,7 @@ export class ApiService {
   public mapApiResultToAddress(result: ApiSearchResult): AddressCoordinateTableEntry {
     return {
       address: this.sanitize(result.attrs.label),
-      id: result.id,
+      id: result.id.toString(),
       featureId: result.attrs.featureId,
       wgs84_lat: result.attrs.lat,
       wgs84_lon: result.attrs.lon,

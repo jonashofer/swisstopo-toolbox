@@ -1,21 +1,24 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, map, tap } from 'rxjs';
-import { ApiSearchResult } from './api.service';
+import { Observable, of, map, tap, switchMap } from 'rxjs';
+import { ApiSearchResult, ApiService } from './api.service';
 import { HttpClient } from '@angular/common/http';
 import { Coordinate } from '../models/Coordinate';
 import { CoordinateSystem } from '../models/CoordinateSystem';
+import { CoordinateService } from './coordinate.service';
+import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEntry';
+import { SearchResultItem } from '../components/text-input/text-input.component';
 
 export interface MapServerIdentifyResult {
-  results?: ResultsEntity[] | null;
+  results?: GWRSearchResult[] | null;
 }
-export interface ResultsEntity {
+export interface GWRSearchResult {
   layerBodId: string;
   layerName: string;
   featureId: string;
   id: string;
-  attributes: Attributes;
+  attributes: GWREntry;
 }
-export interface Attributes {
+export interface GWREntry {
   egid: string;
   strname_deinr: string;
   plz_plz6: string;
@@ -99,10 +102,54 @@ export interface Attributes {
 
 @Injectable()
 export class ReverseApiService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    private httpClient: HttpClient,
+    private coordinateService: CoordinateService,
+    private apiService: ApiService
+  ) {}
 
-  public searchNearestAddresses(lv95coord: Coordinate) : Observable<{name: string, distance: number}[]> {
-    if(lv95coord.system !== CoordinateSystem.LV_95) {
+  public validateSearchInput(value: string): { valid: boolean; messageLabel?: string | undefined } {
+    console.log('validateSearchInput', value)
+    const parsed = this.coordinateService.tryParse(value);
+    if (parsed === null) {
+      return { valid: false, messageLabel: 'notifications.inputNotCoordinate' };
+    } else {
+      return { valid: true };
+    }
+  }
+
+  public search(input: string): Observable<SearchResultItem[]> {
+    console.log('search', input)
+    const coordinates = this.coordinateService.tryParse(input)!;
+
+    return this.apiService
+      .convert(coordinates, CoordinateSystem.LV_95)
+      .pipe(switchMap(value => this.searchNearestAddresses(value)));
+  }
+
+  public mapReverseApiResultToAddress(item: SearchResultItem): Observable<AddressCoordinateTableEntry> {
+    const i = item.c2a_data!;
+    const gwr = i.gwr;
+    return this.apiService.convert(i.lv95, CoordinateSystem.WGS_84).pipe(
+      map(wgs84 => {
+        return {
+          address: i.addressText,
+          id: i.gwr.id,
+          featureId: gwr.featureId,
+          lv95_east: i.lv95.lon,
+          lv95_north: i.lv95.lat,
+          isValid: true,
+          wgs84_lat: wgs84.lat,
+          wgs84_lon: wgs84.lon,
+          egid: gwr.attributes.egid,
+          egrid: gwr.attributes.egrid
+        };
+      })
+    );
+  }
+
+  public searchNearestAddresses(lv95coord: Coordinate): Observable<SearchResultItem[]> {
+    if (lv95coord.system !== CoordinateSystem.LV_95) {
       return of([]);
     }
 
@@ -123,12 +170,21 @@ export class ReverseApiService {
             const attr = r.attributes;
             const east = attr.dkode || attr.gkode;
             const north = attr.dkodn || attr.gkodn;
-            const coord: Coordinate = {lon: east, lat: north, system: CoordinateSystem.LV_95}
+            const coord: Coordinate = { lon: east, lat: north, system: CoordinateSystem.LV_95 };
             const distance = this.calculateDistance(lv95coord, coord);
-            const name = `${attr.strname_deinr}, ${attr.dplz4} ${attr.dplzname} (~${distance}m)`
-            return {name, distance};
+            const fullAddress = `${attr.strname_deinr}, ${attr.dplz4} ${attr.dplzname}`;
+            const a = { fullAddress, distance, gwr: r };
+            return {
+              text: `${fullAddress} (${distance}m entfernt)`,
+              c2a_data: {
+                gwr: r,
+                lv95: coord,
+                addressText: fullAddress,
+                distance: distance
+              }
+            };
           })
-          .sort((a, b) => a.distance - b.distance);
+          .sort((a, b) => a.c2a_data.distance - b.c2a_data.distance);
       })
     );
   }

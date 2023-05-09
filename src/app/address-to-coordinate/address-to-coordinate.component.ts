@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { AddressCoordinateTableEntry } from '../shared/models/AddressCoordinateTableEntry';
 import { AddressService, CoordinateService } from '../shared/services';
 import { ColumnService } from '../shared/services/column.service';
@@ -9,7 +9,7 @@ import { InputSearchMode } from '../shared/models/InputSearchMode';
   selector: 'app-address-to-coordinate',
   templateUrl: './address-to-coordinate.component.html',
   styleUrls: ['./address-to-coordinate.component.scss'],
-  providers: getFeatureTabComponentProviders("address-to-coordinate")
+  providers: getFeatureTabComponentProviders('address-to-coordinate', 'atc')
 })
 export class AddressToCoordinateComponent {
   addressToEdit: AddressCoordinateTableEntry | null = null;
@@ -17,8 +17,8 @@ export class AddressToCoordinateComponent {
 
   addressSearchMode = InputSearchMode.Address;
 
-  constructor(private cd: ChangeDetectorRef, public addressService: AddressService, public coordinateService: CoordinateService, public columnService: ColumnService) {
-    
-    console.log('AddressToCoordinateComponent constructed');
-  }
+  constructor(
+    public addressService: AddressService,
+    public coordinateService: CoordinateService,
+  ) {}
 }

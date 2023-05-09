@@ -39,7 +39,6 @@ export class AddressService {
     private readonly translate: TranslateService,
     @Inject(FEATURE_TAB_CONFIG) private featureIdentifier: FeatureTabConfig
   ) {
-    console.log('AddressService constructed with:', featureIdentifier.name);
     this.addresses$
       .pipe(
         map(addresses => {
@@ -110,7 +109,10 @@ export class AddressService {
       columns.includes(ColumnDefinitions.LV_95_north)
     ) {
       const lv95Query = this.api
-        .convert({ lat: address.wgs84_lat!, lon: address.wgs84_lon!, system: CoordinateSystem.WGS_84 }, CoordinateSystem.LV_95)
+        .convert(
+          { lat: address.wgs84_lat!, lon: address.wgs84_lon!, system: CoordinateSystem.WGS_84 },
+          CoordinateSystem.LV_95
+        )
         .pipe(
           map(r => {
             address.lv95_east = r.lon;
@@ -139,7 +141,10 @@ export class AddressService {
 
     if (columns.includes(ColumnDefinitions.LV_03_east) || columns.includes(ColumnDefinitions.LV_03_north)) {
       const lv03Query = this.api
-        .convert({ lat: address.wgs84_lat!, lon: address.wgs84_lon!, system: CoordinateSystem.WGS_84 }, CoordinateSystem.LV_03)
+        .convert(
+          { lat: address.wgs84_lat!, lon: address.wgs84_lon!, system: CoordinateSystem.WGS_84 },
+          CoordinateSystem.LV_03
+        )
         .pipe(
           map(r => {
             address.lv03_east = r.lon;
@@ -150,7 +155,6 @@ export class AddressService {
       queries.push(lv03Query);
     }
 
-    // console.log(queries)
     return queries;
   };
 }

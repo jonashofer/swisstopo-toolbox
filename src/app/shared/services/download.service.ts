@@ -12,9 +12,7 @@ export class DownloadService {
     @Inject(AddressService) private readonly addressService: AddressService,
     private readonly coordinateService: CoordinateService,
     private readonly coordinatePipe: CoordinatePipe
-  ) {
-    console.log('DownloadService', addressService.featureName);
-  }
+  ) {}
 
   public getCopyToClipboardText(): string {
     return this.addressService.addresses.map(a => this.getLine(a, '\t', true)).join('\r\n');
@@ -44,7 +42,7 @@ export class DownloadService {
 
   private getLine(entry: AddressCoordinateTableEntry, separator: string, usePipe: boolean) {
     const system = this.coordinateService.currentSystem;
-    const coord = {lat: 0, lon:0} // TODO fix
+    const coord = { lat: 0, lon: 0 }; // TODO fix
     const lat = usePipe ? this.coordinatePipe.transform(coord.lat, system) : coord.lat;
     const lon = usePipe ? this.coordinatePipe.transform(coord.lon, system) : coord.lon;
 

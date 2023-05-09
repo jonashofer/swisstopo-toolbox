@@ -85,6 +85,7 @@ export class ResultMapComponent implements OnInit {
   constructor(private readonly downloadService: DownloadService, private readonly dialog: MatDialog) {}
 
   ngOnInit(): void {
+    console.log('init map')
     this.map = new Map({
       controls: [new FullScreen()],
       layers: [mapLayer, markerLayer],

@@ -24,6 +24,7 @@ export class CoordinateService {
   }
 
   public tryParse(input: string): Coordinate | null {
+    console.log('clean:', input)
     // Remove superficial characters
     const cleanedInput = input.replace(/[°'"NE]/g, '').replace(/[,;]/, '.');
 

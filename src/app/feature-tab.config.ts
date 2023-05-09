@@ -7,17 +7,19 @@ import { ColumnService } from './shared/services/column.service';
 import { ReverseApiService } from './shared/services/reverse-api.service';
 
 export interface FeatureTabConfig {
+  shortName: string;
   name: string;
 }
 
 export const FEATURE_TAB_CONFIG = new InjectionToken<FeatureTabConfig>('feature-config');
 
-export function getFeatureTabComponentProviders(featureName: string): Provider[] {
+export function getFeatureTabComponentProviders(featureName: string, shortName: string): Provider[] {
   return [
     AddressService,
     {
       provide: FEATURE_TAB_CONFIG,
       useValue: {
+        shortName: shortName,
         name: featureName
       }
     },

@@ -1,9 +1,7 @@
 import { ColumnDefinitions } from './ColumnConfiguration';
-import { Coordinate } from './Coordinate';
-import { CoordinateSystem } from './CoordinateSystem';
 
 export interface AddressCoordinateTableEntry {
-  id: number; // id of the api feature if isValid, otherwise arbitary negative number
+  id: string; // id of the api feature if isValid, otherwise arbitary negative number
   address: string;
   [ColumnDefinitions.WGS_84_lon]: number | null;
   [ColumnDefinitions.WGS_84_lat]: number | null;
@@ -21,5 +19,5 @@ export interface AddressCoordinateTableEntry {
 
 export interface AddressSelectionResult {
   result: AddressCoordinateTableEntry;
-  updatedId: number | null;
+  updatedId: string | null;
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, Output, ViewChild } from '@angular/core';
 import {
   AbstractControl,
   AsyncValidatorFn,
@@ -9,7 +9,10 @@ import {
   ValidatorFn,
   Validators
 } from '@angular/forms';
-import { MatLegacyAutocompleteSelectedEvent as MatAutocompleteSelectedEvent, MatLegacyAutocompleteTrigger as MatAutocompleteTrigger } from '@angular/material/legacy-autocomplete';
+import {
+  MatLegacyAutocompleteSelectedEvent as MatAutocompleteSelectedEvent,
+  MatLegacyAutocompleteTrigger as MatAutocompleteTrigger
+} from '@angular/material/legacy-autocomplete';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ObNotificationService } from '@oblique/oblique';
@@ -18,6 +21,16 @@ import { ApiService } from '../../services';
 import { ApiSearchResult } from '../../services/api.service';
 import { AddressCoordinateTableEntry, AddressSelectionResult } from '../../models/AddressCoordinateTableEntry';
 import { InputSearchMode } from '../../models/InputSearchMode';
+import { GWREntry, GWRSearchResult, ReverseApiService } from '../../services/reverse-api.service';
+import { Observable } from 'rxjs';
+import { Coordinate } from '../../models/Coordinate';
+
+export interface SearchResultItem {
+  text: string;
+
+  a2c_data?: ApiSearchResult;
+  c2a_data?: {gwr: GWRSearchResult, addressText: string, distance: number, lv95: Coordinate};
+}
 
 @Component({
   selector: 'app-text-input',
@@ -25,21 +38,28 @@ import { InputSearchMode } from '../../models/InputSearchMode';
   styleUrls: ['./text-input.component.scss']
 })
 export class TextInputComponent {
-  public inputFormControl = new FormControl<string>('', { validators: this.searchInputValidator(), updateOn: 'change' });
+  public inputFormControl = new FormControl<string>('', {
+    validators: this.searchInputValidator(),
+    updateOn: 'change'
+  });
   instantErrorStateMatcher = new InstantErrorStateMatcher();
 
-  results$ = this.inputFormControl.valueChanges.pipe(
+  results$: Observable<SearchResultItem[]> = this.inputFormControl.valueChanges.pipe(
     filter(v => this.inputFormControl.valid && typeof v === 'string'),
+    filter((v): v is string => !!v),
     debounceTime(300),
-    switchMap(value =>
-      this.api.searchLocationsList(value as unknown as string).pipe(
-        tap(_ => this.trigger?.openPanel()),
-        map(r => r.results)
-      )
-    )
+    switchMap(value => {
+      console.log
+      if (this.mode === InputSearchMode.Coordinate) {
+        return this.reverseApi.search(value);
+      } else {
+        return this.api.searchLocationsList(value).pipe(map(r => r.results.map(x => ({ text: x.attrs.label }))));
+      }
+    }),
+    tap(_ => this.trigger?.openPanel())
   );
 
-  existingEntryId: number | null = null;
+  existingEntryId: string | null = null;
 
   @Input()
   mode = InputSearchMode.All;
@@ -60,15 +80,21 @@ export class TextInputComponent {
 
   constructor(
     private readonly api: ApiService,
+    private readonly reverseApi: ReverseApiService,
     private readonly notificationService: ObNotificationService,
     private readonly translate: TranslateService
   ) {}
 
   onOptionSelected(event: MatAutocompleteSelectedEvent) {
     this.inputFormControl.setValue(null);
-    const selectedValue = event.option.value as ApiSearchResult;
-    const entry = this.api.mapApiResultToAddress(selectedValue);
-    this.emitEntry(entry);
+    const selectedValue = event.option.value as SearchResultItem;
+    if (selectedValue.a2c_data) {
+      const entry = this.api.mapApiResultToAddress(selectedValue.a2c_data);
+      this.emitEntry(entry);
+    } else if (selectedValue.c2a_data) {
+      const entry = this.reverseApi.mapReverseApiResultToAddress(selectedValue);
+      entry.subscribe(e => this.emitEntry(e));
+    }
   }
 
   onPaste(event: ClipboardEvent) {
@@ -98,9 +124,21 @@ export class TextInputComponent {
   }
 
   private searchInputValidator(): ValidatorFn {
+    switch (this.mode) {
+      case InputSearchMode.Address:
+    }
+
     return (control: AbstractControl): ValidationErrors | null => {
       if (control.value && typeof control.value === 'string') {
-        const validation = this.api.validateSearchInput(control.value);
+        let validation: { valid: boolean; messageLabel?: string } = { valid: true };
+        switch (this.mode) {
+          case InputSearchMode.Address:
+            validation = this.api.validateSearchInput(control.value);
+            break;
+          case InputSearchMode.Coordinate:
+            validation = this.reverseApi.validateSearchInput(control.value);
+            break;
+        }
         if (!validation.valid) {
           return { searchInput: validation.messageLabel! };
         }

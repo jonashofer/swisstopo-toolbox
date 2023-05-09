@@ -15,7 +15,7 @@ import { InputSearchMode } from '../shared/models/InputSearchMode';
   selector: 'app-coordinate-to-address',
   templateUrl: './coordinate-to-address.component.html',
   styleUrls: ['./coordinate-to-address.component.scss'],
-  providers: getFeatureTabComponentProviders("coordinate-to-address")
+  providers: getFeatureTabComponentProviders('coordinate-to-address', 'cta')
 })
 export class CoordinateToAddressComponent {
   selectedMode = 0;
@@ -23,29 +23,8 @@ export class CoordinateToAddressComponent {
 
   coordinateSearchMode = InputSearchMode.Coordinate;
 
-  input = new FormControl('');
-
-  debouncedInput$ = this.input.valueChanges.pipe(
-    filter(_ => this.input.valid),
-    filter((v): v is string => !!v),
-    map(v => this.coordinateService.tryParse(v)),
-    filter((coords): coords is Coordinate => coords !== null),
-    debounceTime(300)
-  );
-
-  results$: Observable<ObIAutocompleteInputOption[]> = this.debouncedInput$.pipe(
-    switchMap(value => this.apiService.convert(value, CoordinateSystem.LV_95)),
-    switchMap(value => this.reverseApi.searchNearestAddresses(value)),
-    map(r => {
-      const items = r.map(x => ({ label: x.name, disabled: false }));
-      return items;
-    })
-  );
-
   constructor(
     public addressService: AddressService,
-    private reverseApi: ReverseApiService,
     public coordinateService: CoordinateService,
-    private apiService: ApiService
   ) {}
 }

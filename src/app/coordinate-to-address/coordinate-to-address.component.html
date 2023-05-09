@@ -1,9 +1,11 @@
 <app-search-input [searchMode]="coordinateSearchMode"></app-search-input>
 
-<app-result-table
-	*ngIf="addressService.hasAddresses$ | async"
-	[currentSystem]="(coordinateService.currentSystem$ | async)!"
-	></app-result-table>
+<app-result-table *ngIf="addressService.hasAddresses$ | async"
+	[currentSystem]="(coordinateService.currentSystem$ | async)!"></app-result-table>
+
+<app-toolbar *ngIf="addressService.hasAddresses$ | async"></app-toolbar>
+
+<app-result-map [addresses]="(addressService.validAddresses$ | async)!"></app-result-map>
 
 <!-- <mat-tab-group animationDuration="400ms" [(selectedIndex)]="selectedMode">
 	<mat-tab [label]="'mode.input' | translate">

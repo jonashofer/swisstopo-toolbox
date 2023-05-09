@@ -24,7 +24,8 @@
     "entryEdited": "Adresse wurde angepasst.",
     "entryAlreadyExists": "Diese Adresse ({{address}}) wurde bereits hinzugefügt!",
     "inputTooManyWords": "Die Suche darf nicht mehr als 10 Wörter enthalten.",
-    "inputTooLong": "Die Suche darf nicht länger als 4000 Zeichen sein."
+    "inputTooLong": "Die Suche darf nicht länger als 4000 Zeichen sein.",
+    "inputNotCoordinate": "Es konnten keine Koordinaten erkannt werden."
   },
   "fileInput": {
     "replaceDialog": {
