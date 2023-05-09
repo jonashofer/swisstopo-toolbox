@@ -28,7 +28,7 @@ import { FEATURE_TAB_CONFIG, FeatureTabConfig } from 'src/app/feature-tab.config
 
 export interface SearchResultItem {
   text: string;
-
+  originalInput?: string;
   a2c_data?: ApiSearchResult;
   c2a_data?: {gwr: GWRSearchResult, addressText: string, distance: number, lv95: Coordinate};
 }
@@ -50,11 +50,12 @@ export class TextInputComponent {
     filter((v): v is string => !!v),
     debounceTime(300),
     switchMap(value => {
-      console.log
       if (this.mode === InputSearchMode.Coordinate) {
         return this.reverseApi.search(value);
       } else {
-        return this.api.searchLocationsList(value).pipe(map(r => r.results.map(x => ({ text: x.attrs.label, a2c_data: x }))));
+        return this.api
+          .searchLocationsList(value)
+          .pipe(map(r => r.results.map(x => ({ text: x.attrs.label, originalInput: value, a2c_data: x }))));
       }
     }),
     tap(_ => this.trigger?.openPanel())
@@ -65,14 +66,18 @@ export class TextInputComponent {
   @Input()
   mode = InputSearchMode.All;
 
-  searchLabel = "";
+  searchLabel = '';
 
   @Input()
   set addressToEdit(existingEntry: AddressCoordinateTableEntry | null) {
     if (existingEntry) {
-      this.inputFormControl.setValue(existingEntry.address);
-      document.getElementsByTagName('input')[0].focus();
+      if (existingEntry.originalInput) {
+        this.inputFormControl.setValue(existingEntry.originalInput);
+      } else {
+        this.inputFormControl.setValue(existingEntry.address);
+      }
       this.existingEntryId = existingEntry.id;
+      document.getElementsByTagName('input')[0].focus();
     }
   }
 
@@ -87,7 +92,6 @@ export class TextInputComponent {
     private readonly notificationService: ObNotificationService,
     private readonly translate: TranslateService,
     @Inject(FEATURE_TAB_CONFIG) public featureConfig: FeatureTabConfig
-
   ) {
     this.searchLabel = `search.${featureConfig.shortName}.`;
   }

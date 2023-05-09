@@ -105,11 +105,10 @@ export class ReverseApiService {
   constructor(
     private httpClient: HttpClient,
     private coordinateService: CoordinateService,
-    private apiService: ApiService
+    private apiService: ApiService,
   ) {}
 
   public validateSearchInput(value: string): { valid: boolean; messageLabel?: string | undefined } {
-    console.log('validateSearchInput', value)
     const parsed = this.coordinateService.tryParse(value);
     if (parsed === null) {
       return { valid: false, messageLabel: 'notifications.inputNotCoordinate' };
@@ -119,12 +118,11 @@ export class ReverseApiService {
   }
 
   public search(input: string): Observable<SearchResultItem[]> {
-    console.log('search', input)
     const coordinates = this.coordinateService.tryParse(input)!;
 
     return this.apiService
       .convert(coordinates, CoordinateSystem.LV_95)
-      .pipe(switchMap(value => this.searchNearestAddresses(value)));
+      .pipe(switchMap(value => this.searchNearestAddresses(value, this.coordinateService.stringify(coordinates, ", "))));
   }
 
   public mapReverseApiResultToAddress(item: SearchResultItem): Observable<AddressCoordinateTableEntry> {
@@ -134,6 +132,7 @@ export class ReverseApiService {
       map(wgs84 => {
         return {
           address: i.addressText,
+          originalInput: item.originalInput,
           id: i.gwr.id,
           featureId: gwr.featureId,
           lv95_east: i.lv95.lon,
@@ -148,11 +147,10 @@ export class ReverseApiService {
     );
   }
 
-  public searchNearestAddresses(lv95coord: Coordinate): Observable<SearchResultItem[]> {
+  public searchNearestAddresses(lv95coord: Coordinate, originalInput: string): Observable<SearchResultItem[]> {
     if (lv95coord.system !== CoordinateSystem.LV_95) {
       return of([]);
     }
-
     // same validation as in search input for catching multiline or fileinputs
     // const validation = this.validateSearchInput(input);
     // if (!validation.valid) {
@@ -168,14 +166,15 @@ export class ReverseApiService {
         return apiResults
           .map(r => {
             const attr = r.attributes;
+            const fullAddress = `${attr.strname_deinr}, ${attr.dplz4} ${attr.dplzname}`;
             const east = attr.dkode || attr.gkode;
             const north = attr.dkodn || attr.gkodn;
             const coord: Coordinate = { lon: east, lat: north, system: CoordinateSystem.LV_95 };
             const distance = this.calculateDistance(lv95coord, coord);
-            const fullAddress = `${attr.strname_deinr}, ${attr.dplz4} ${attr.dplzname}`;
-            const a = { fullAddress, distance, gwr: r };
+            const distanceSuffix = distance > 0 ? ` (${distance}m entfernt)` : '';
             return {
-              text: `${fullAddress} (${distance}m entfernt)`,
+              text: `${fullAddress}${distanceSuffix}`,
+              originalInput: originalInput,
               c2a_data: {
                 gwr: r,
                 lv95: coord,

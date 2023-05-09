@@ -1,7 +1,8 @@
-<app-search-input [searchMode]="coordinateSearchMode"></app-search-input>
+<app-search-input [searchMode]="coordinateSearchMode" [addressToEdit]="editedAddress"></app-search-input>
 
 <app-result-table *ngIf="addressService.hasAddresses$ | async"
-	[currentSystem]="(coordinateService.currentSystem$ | async)!"></app-result-table>
+	[currentSystem]="(coordinateService.currentSystem$ | async)!"
+	(editHandler)="editedAddress = $event"></app-result-table>
 
 <app-toolbar *ngIf="addressService.hasAddresses$ | async"></app-toolbar>
 

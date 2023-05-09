@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { CoordinateSystem } from '../models/CoordinateSystem';
 import { Coordinate } from '../models/Coordinate';
 import { ApiService } from './api.service';
+import { CoordinatePipe } from '../components/coordinate.pipe';
 
 @Injectable()
 export class CoordinateService {
@@ -15,7 +16,18 @@ export class CoordinateService {
     return this.system$.value;
   }
 
-  constructor() {}
+  constructor(private readonly coordinatePipe: CoordinatePipe) {}
+
+  public stringify(coord: Coordinate, seperator: string): string { 
+    const lat = this.coordinatePipe.transform(coord.lat, this.currentSystem);
+    const lon = this.coordinatePipe.transform(coord.lon, this.currentSystem);
+
+    // column order like in the table
+    if (this.currentSystem == CoordinateSystem.WGS_84) {
+      return `${lat}${seperator}${lon}`;
+    }
+    return `${lon}${seperator}${lat}`;
+  }
 
   public changeCurrentSystem(newSystem: CoordinateSystem): void {
     if (this.system$.value !== newSystem) {
@@ -24,7 +36,6 @@ export class CoordinateService {
   }
 
   public tryParse(input: string): Coordinate | null {
-    console.log('clean:', input)
     // Remove superficial characters
     const cleanedInput = input.replace(/[°'"NE]/g, '').replace(/[,;]/, '.');
 

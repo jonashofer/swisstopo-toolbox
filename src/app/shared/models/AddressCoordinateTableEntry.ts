@@ -1,3 +1,4 @@
+import { Coordinate } from 'ol/coordinate';
 import { ColumnDefinitions } from './ColumnConfiguration';
 
 export interface AddressCoordinateTableEntry {
@@ -5,6 +6,8 @@ export interface AddressCoordinateTableEntry {
   address: string;
   [ColumnDefinitions.WGS_84_lon]: number | null;
   [ColumnDefinitions.WGS_84_lat]: number | null;
+
+  originalInput?: string;
 
   featureId?: string;
   [ColumnDefinitions.EGID]?: string | null;

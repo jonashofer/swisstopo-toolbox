@@ -10,8 +10,7 @@ import { AddressService } from './address.service';
 export class DownloadService {
   constructor(
     @Inject(AddressService) private readonly addressService: AddressService,
-    private readonly coordinateService: CoordinateService,
-    private readonly coordinatePipe: CoordinatePipe
+    private readonly coordinateService: CoordinateService
   ) {}
 
   public getCopyToClipboardText(): string {
@@ -41,16 +40,9 @@ export class DownloadService {
   }
 
   private getLine(entry: AddressCoordinateTableEntry, separator: string, usePipe: boolean) {
-    const system = this.coordinateService.currentSystem;
-    const coord = { lat: 0, lon: 0 }; // TODO fix
-    const lat = usePipe ? this.coordinatePipe.transform(coord.lat, system) : coord.lat;
-    const lon = usePipe ? this.coordinatePipe.transform(coord.lon, system) : coord.lon;
-
-    // column order like in the table
-    if (system == CoordinateSystem.WGS_84) {
-      return [entry.address, lat, lon].join(separator);
-    }
-    return [entry.address, lon, lat].join(separator);
+    return usePipe
+      ? `${entry.address}${this.coordinateService.stringify({lat: entry.wgs84_lat!, lon: entry.wgs84_lon!, system: CoordinateSystem.WGS_84}, separator)}}` //TODO fix
+      : `${entry.address}${entry.wgs84_lon}${separator}${entry.wgs84_lat}`; //TODO fix
   }
 
   private toKmlPlacemark(entry: AddressCoordinateTableEntry) {
