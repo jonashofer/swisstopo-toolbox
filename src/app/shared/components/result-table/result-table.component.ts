@@ -1,22 +1,22 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
-import { map } from 'rxjs';
+import { map, tap } from 'rxjs';
 import { AddressService } from '../../services';
 import { ColumnService } from '../../services/column.service';
 import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTableEntry';
 import { CoordinateSystem } from '../../models/CoordinateSystem';
+import { ColumnDefinitions } from '../../models/ColumnConfiguration';
 
 //all columns that should not be rendered in a generic way, need to have a custom
 //matColumnDef in the template and need to be registered here
-const customLayoutColumns: string[] = [];
+const customLayoutColumns: string[] = ['wgs84', 'lv95', 'lv03'];
 
-// export function mapEach<T, R>(mapper: (value: T) => R) {
-//   return (source: Observable<T[]>): Observable<R[]> => {
-//     return source.pipe(
-//       map(array => array.map(mapper))
-//     );
+// const columnExpansions = Object.keys(CoordinateSystem).map(key => {
+//   const val = CoordinateSystem[key as keyof typeof CoordinateSystem];
+//   return {
+//     [val]: [`${val}_lat`, `${val}_lon`]
 //   };
-// }
+// });
 
 @Component({
   selector: 'app-result-table',
@@ -24,21 +24,14 @@ const customLayoutColumns: string[] = [];
   styleUrls: ['./result-table.component.scss']
 })
 export class ResultTableComponent {
-  @Input()
-  currentSystem!: CoordinateSystem;
-
   @Output()
   editHandler = new EventEmitter<AddressCoordinateTableEntry>();
 
-  get latLonHeadersEnabled(): boolean {
-    return this.currentSystem == CoordinateSystem.WGS_84;
-  }
-
   displayedColumns$ = this.columnService.columns$.pipe(
     map(userConfig => {
-      const matColumns = userConfig.map(c => c.toString());
-      matColumns.unshift('trash', 'address', 'edit'); //those got custom columns
-      return matColumns;
+      const expandedColumns = userConfig.flatMap(c => this.expandColumnForView(c));
+      expandedColumns.unshift('trash', 'address', 'edit');
+      return expandedColumns;
     })
   );
 
@@ -48,5 +41,19 @@ export class ResultTableComponent {
     })
   );
 
+  sys = CoordinateSystem;
+
   constructor(public addressService: AddressService, private columnService: ColumnService, public dialog: MatDialog) {}
+
+  private expandColumnForView(column: ColumnDefinitions): string[] {
+    switch (column) {
+      case ColumnDefinitions.WGS_84:
+        return ['wgs84_lat', 'wgs84_lon'];
+      case ColumnDefinitions.LV_95:
+      case ColumnDefinitions.LV_03:
+        return [`${column}_east`, `${column}_north`];
+      default:
+        return [column];
+    }
+  }
 }

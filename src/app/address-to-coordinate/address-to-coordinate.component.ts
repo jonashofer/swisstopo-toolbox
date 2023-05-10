@@ -19,6 +19,5 @@ export class AddressToCoordinateComponent {
 
   constructor(
     public addressService: AddressService,
-    public coordinateService: CoordinateService,
   ) {}
 }

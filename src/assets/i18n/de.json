@@ -96,14 +96,18 @@
     "egid": "EGID",
     "egrid": "EGRID",
     "height": "Höhe (m ü. M.)",
+    "wgs84": "GPS-Koordinaten (WGS 84)",
     "wgs84_lon": "Lon (GPS)",
     "wgs84_lat": "Lat (GPS)",
+    "lv95": "Schweizer Koordinaten (CH1903+ / LV95)",
     "lv95_north": "Y / Norden (LV95)",
     "lv95_east": "X / Osten (LV95)",
+    "lv03": "Schweizer Koordinaten (CH1903 / LV03)",
     "lv03_north": "Y / Norden (LV03)",
     "lv03_east": "X / Osten (LV03)"
   },
   "columnConfigDialog": {
-    "title": "Anzeigespalten konfigurieren"
+    "title": "Anzeigespalten konfigurieren",
+    "add": "Spalte hinzufügen"
   }
 }

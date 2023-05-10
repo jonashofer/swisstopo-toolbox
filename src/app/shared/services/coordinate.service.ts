@@ -4,6 +4,7 @@ import { CoordinateSystem } from '../models/CoordinateSystem';
 import { Coordinate } from '../models/Coordinate';
 import { ApiService } from './api.service';
 import { CoordinatePipe } from '../components/coordinate.pipe';
+import { StorageService } from './storage.service';
 
 @Injectable()
 export class CoordinateService {
@@ -16,7 +17,10 @@ export class CoordinateService {
     return this.system$.value;
   }
 
-  constructor(private readonly coordinatePipe: CoordinatePipe) {}
+  constructor(private readonly coordinatePipe: CoordinatePipe) {
+    this.system$.next(StorageService.get('coordinateSystem') || CoordinateSystem.WGS_84);
+    this.system$.subscribe(system => {StorageService.save('coordinateSystem', system); })
+  }
 
   public stringify(coord: Coordinate, seperator: string): string { 
     const lat = this.coordinatePipe.transform(coord.lat, this.currentSystem);
@@ -37,7 +41,7 @@ export class CoordinateService {
 
   public tryParse(input: string): Coordinate | null {
     // Remove superficial characters
-    const cleanedInput = input.replace(/[°'"NE]/g, '').replace(/[,;]/, '.');
+    const cleanedInput = input.trim().replace(/[°'’"NE]/g, '').replace(/[,;]/, '.');
 
     // Split the string into two parts
     const parts = cleanedInput.split(/[\s\t]+/);

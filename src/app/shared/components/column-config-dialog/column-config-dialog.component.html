@@ -10,7 +10,7 @@
         </mat-list-item>
     </mat-list>
 
-    <ob-autocomplete [inputLabelKey]="'Spalte hinzufügen'" (selectedOptionChange)="updateSelection($event)"
+    <ob-autocomplete inputLabelKey="columnConfigDialog.add" (selectedOptionChange)="updateSelection($event)"
         [formControl]="formControl" [autocompleteOptions]="inactiveColumns">
     </ob-autocomplete>
 </mat-dialog-content>

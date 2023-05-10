@@ -20,7 +20,7 @@ export class ColumnConfigDialogComponent implements OnInit {
   labelCache: any;
 
   ngOnInit() {
-    this.activeColumns = [...this.columnService.getCurrentConfig().columns];
+    this.activeColumns = [...this.columnService.getCurrentConfig()];
     this.calculateInactive();
 
     //ugly hack to workaround obliques restriction that we cannot use objects for autocomplete
@@ -36,7 +36,7 @@ export class ColumnConfigDialogComponent implements OnInit {
   }
 
   save() {
-    this.columnService.setConfig({ key: 'default', columns: this.activeColumns });
+    this.columnService.setConfig(this.activeColumns);
   }
 
   dropItem(event: CdkDragDrop<string[]>) {

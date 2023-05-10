@@ -5,12 +5,6 @@ export interface ColumnConfigItem {
   key: ColumnDefinitions;
 }
 
-// object to enable future support for multiple profiles
-export interface ColumnConfig {
-    columns: ColumnConfigItem[];
-    key: string;
-}
-
 // hardcoded columns currently: trash, address, edit
 export enum ColumnDefinitions {
   EGID = 'egid',

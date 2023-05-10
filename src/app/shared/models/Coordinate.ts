@@ -1,11 +1,11 @@
-import { CoordinateSystem } from "./CoordinateSystem";
+import { CoordinateSystem } from './CoordinateSystem';
 
 export interface Coordinate {
-	/**Latitude / Northing */
+  /**Latitude / Northing */
   lat: number;
 
-	/**Longtitude / Easting */
-	lon: number;
+  /**Longtitude / Easting */
+  lon: number;
 
-  system: CoordinateSystem
+  system: CoordinateSystem;
 }
