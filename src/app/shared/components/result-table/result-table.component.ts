@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, Output, ViewContainerRef } from '@angular/core';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { map, tap } from 'rxjs';
 import { AddressService } from '../../services';
@@ -31,6 +31,7 @@ export class ResultTableComponent {
     map(userConfig => {
       const expandedColumns = userConfig.flatMap(c => this.expandColumnForView(c));
       expandedColumns.unshift('trash', 'address', 'edit');
+      expandedColumns.push('config');
       return expandedColumns;
     })
   );
@@ -43,7 +44,7 @@ export class ResultTableComponent {
 
   sys = CoordinateSystem;
 
-  constructor(public addressService: AddressService, private columnService: ColumnService, public dialog: MatDialog) {}
+  constructor(public addressService: AddressService, public columnService: ColumnService, public dialog: MatDialog, public viewContainerRef: ViewContainerRef) {}
 
   private expandColumnForView(column: ColumnDefinitions): string[] {
     switch (column) {

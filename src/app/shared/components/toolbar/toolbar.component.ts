@@ -1,6 +1,5 @@
-import { Component, ViewContainerRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { DownloadService } from '../../services';
-import { ColumnService } from '../../services/column.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -8,5 +7,5 @@ import { ColumnService } from '../../services/column.service';
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent {
-  constructor(public downloadService: DownloadService, public columnService: ColumnService, public viewContainerRef: ViewContainerRef) {}
+  constructor(public downloadService: DownloadService) {}
 }
