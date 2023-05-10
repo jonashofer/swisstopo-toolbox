@@ -92,8 +92,9 @@ export class ApiService {
               address: r.input,
               id: (this.bulkAddId--).toString(),
               isValid: false,
-              wgs84_lat: null,
-              wgs84_lon: null
+							wgs84: null,
+							lv95: null,
+							lv03: null
             };
             return entry;
           })
@@ -107,8 +108,13 @@ export class ApiService {
       address: this.sanitize(result.attrs.label),
       id: result.id.toString(),
       featureId: result.attrs.featureId,
-      wgs84_lat: result.attrs.lat,
-      wgs84_lon: result.attrs.lon,
+			wgs84: {
+				system: CoordinateSystem.WGS_84,
+				lat: result.attrs.lat,
+				lon: result.attrs.lon,
+			},
+			lv95: null,
+			lv03: null,
       isValid: true
     };
   }

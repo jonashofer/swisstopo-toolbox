@@ -79,10 +79,12 @@ export class AddressService {
 
   public enrichAddresses$ = (
     addresses: AddressCoordinateTableEntry[],
-    newCoordinateSystem: CoordinateSystem,
+    coordinateSystem: CoordinateSystem,
     columns: ColumnDefinitions[]
-  ) => from(addresses).pipe(mergeMap(address => forkJoin(this.enrichAddress$(address, newCoordinateSystem, columns))));
+  ) => from(addresses).pipe(mergeMap(address => forkJoin(this.enrichAddress$(address, coordinateSystem, columns))));
 
+	//TODO optional: rework together with c2a to fetch wgs84 here and not in mapReverseApiResultToAddress(?)
+	/** requires the address entry to have wgs84 coordinates */
   private readonly enrichAddress$ = (
     address: AddressCoordinateTableEntry,
     newCoordinateSystem: CoordinateSystem,
@@ -105,26 +107,24 @@ export class AddressService {
     // LV95 data plus dependent Height data
     if (
       columns.includes(ColumnDefinitions.HEIGHT) ||
-      columns.includes(ColumnDefinitions.LV_95_east) ||
-      columns.includes(ColumnDefinitions.LV_95_north)
+      columns.includes(ColumnDefinitions.LV_95)
     ) {
       const lv95Query = this.api
         .convert(
-          { lat: address.wgs84_lat!, lon: address.wgs84_lon!, system: CoordinateSystem.WGS_84 },
+          address.wgs84!,
           CoordinateSystem.LV_95
         )
         .pipe(
           map(r => {
-            address.lv95_east = r.lon;
-            address.lv95_north = r.lat;
+            address.lv95 = r;
             return address;
           })
         );
 
       if (columns.includes(ColumnDefinitions.HEIGHT)) {
-        const heightQuery = lv95Query.pipe(
+        const lv95AndHeightQuery = lv95Query.pipe(
           mergeMap(r =>
-            this.apiDetail.getHeight(r.lv95_east!, r.lv95_north!).pipe(
+            this.apiDetail.getHeight(r.lv95!.lon, r.lv95!.lat).pipe(
               map(r => {
                 address.height = r;
                 return r;
@@ -133,22 +133,21 @@ export class AddressService {
           )
         );
 
-        queries.push(heightQuery);
+        queries.push(lv95AndHeightQuery);
       } else {
         queries.push(lv95Query);
       }
     }
 
-    if (columns.includes(ColumnDefinitions.LV_03_east) || columns.includes(ColumnDefinitions.LV_03_north)) {
+    if (columns.includes(ColumnDefinitions.LV_03)) {
       const lv03Query = this.api
         .convert(
-          { lat: address.wgs84_lat!, lon: address.wgs84_lon!, system: CoordinateSystem.WGS_84 },
+          address.wgs84!,
           CoordinateSystem.LV_03
         )
         .pipe(
           map(r => {
-            address.lv03_east = r.lon;
-            address.lv03_north = r.lat;
+            address.lv03 = r;
             return r;
           })
         );

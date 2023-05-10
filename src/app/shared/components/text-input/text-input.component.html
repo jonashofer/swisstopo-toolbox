@@ -25,5 +25,8 @@
 		<mat-option *ngFor="let option of results$ | async" [value]="option">
 			<div [outerHTML]="option.text"></div>
 		</mat-option>
-	</mat-autocomplete>
+		<mat-option *ngIf="noResults" disabled>
+			<span>{{searchLabel + 'noResults' | translate}}</span>
+		</mat-option>
+	  </mat-autocomplete>
 </mat-form-field>

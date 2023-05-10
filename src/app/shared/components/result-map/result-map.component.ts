@@ -59,7 +59,7 @@ export class ResultMapComponent implements OnInit {
     const newFeatures = value.map(
       c =>
         new Feature({
-          geometry: new Point(fromLonLat([c.wgs84_lon!, c.wgs84_lat!]))
+          geometry: new Point(fromLonLat([c.wgs84?.lon!, c.wgs84?.lat!]))
         })
     );
     markerLayer.setSource(
@@ -73,7 +73,7 @@ export class ResultMapComponent implements OnInit {
   get kmlFunctionLink() {
     const coords: any = {};
     this._addresses.forEach((adr, index) => {
-      coords[index] = `${adr.wgs84_lon},${adr.wgs84_lat}`;
+      coords[index] = `${adr.wgs84?.lon},${adr.wgs84?.lat}`;
     });
     return `${window.location.protocol}//${window.location.host}/.netlify/functions/kml?${new URLSearchParams(coords)}`;
   }

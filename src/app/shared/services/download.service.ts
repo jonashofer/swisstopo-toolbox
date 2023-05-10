@@ -41,11 +41,11 @@ export class DownloadService {
 
   private getLine(entry: AddressCoordinateTableEntry, separator: string, usePipe: boolean) {
     return usePipe
-      ? `${entry.address}${this.coordinateService.stringify({lat: entry.wgs84_lat!, lon: entry.wgs84_lon!, system: CoordinateSystem.WGS_84}, separator)}}` //TODO fix
-      : `${entry.address}${entry.wgs84_lon}${separator}${entry.wgs84_lat}`; //TODO fix
+      ? `${entry.address}${this.coordinateService.stringify(entry.wgs84!, separator)}}` //TODO fix
+      : `${entry.address}${entry.wgs84!.lon}${separator}${entry.wgs84!.lat}`; //TODO fix
   }
 
   private toKmlPlacemark(entry: AddressCoordinateTableEntry) {
-    return `<Placemark><Point><coordinates>${entry.wgs84_lon},${entry.wgs84_lat}</coordinates></Point></Placemark>`;
+    return `<Placemark><Point><coordinates>${entry.wgs84?.lon},${entry.wgs84?.lat}</coordinates></Point></Placemark>`;
   }
 }

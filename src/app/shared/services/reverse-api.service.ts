@@ -135,11 +135,18 @@ export class ReverseApiService {
           originalInput: item.originalInput,
           id: i.gwr.id,
           featureId: gwr.featureId,
-          lv95_east: i.lv95.lon,
-          lv95_north: i.lv95.lat,
           isValid: true,
-          wgs84_lat: wgs84.lat,
-          wgs84_lon: wgs84.lon,
+					wgs84: {
+						system: CoordinateSystem.WGS_84,
+						lat: wgs84.lat,
+						lon: wgs84.lon,
+					},
+					lv95: {
+						system: CoordinateSystem.LV_95,
+						lat: i.lv95.lat,
+						lon: i.lv95.lon,
+					},
+					lv03: null,
           egid: gwr.attributes.egid,
           egrid: gwr.attributes.egrid
         };

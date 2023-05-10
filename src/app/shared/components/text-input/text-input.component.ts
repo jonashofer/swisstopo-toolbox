@@ -1,14 +1,11 @@
 import { Component, EventEmitter, Inject, Input, Output, ViewChild } from '@angular/core';
 import {
   AbstractControl,
-  AsyncValidatorFn,
   FormControl,
   FormGroupDirective,
   NgForm,
   ValidationErrors,
-  ValidatorFn,
-  Validators
-} from '@angular/forms';
+  ValidatorFn} from '@angular/forms';
 import {
   MatLegacyAutocompleteSelectedEvent as MatAutocompleteSelectedEvent,
   MatLegacyAutocompleteTrigger as MatAutocompleteTrigger
@@ -21,8 +18,8 @@ import { ApiService } from '../../services';
 import { ApiSearchResult } from '../../services/api.service';
 import { AddressCoordinateTableEntry, AddressSelectionResult } from '../../models/AddressCoordinateTableEntry';
 import { InputSearchMode } from '../../models/InputSearchMode';
-import { GWREntry, GWRSearchResult, ReverseApiService } from '../../services/reverse-api.service';
-import { Observable } from 'rxjs';
+import { GWRSearchResult, ReverseApiService } from '../../services/reverse-api.service';
+import { Observable, of } from 'rxjs';
 import { Coordinate } from '../../models/Coordinate';
 import { FEATURE_TAB_CONFIG, FeatureTabConfig } from 'src/app/feature-tab.config';
 
@@ -44,22 +41,28 @@ export class TextInputComponent {
     updateOn: 'change'
   });
   instantErrorStateMatcher = new InstantErrorStateMatcher();
+	noResults = false;
 
   results$: Observable<SearchResultItem[]> = this.inputFormControl.valueChanges.pipe(
-    filter(v => this.inputFormControl.valid && typeof v === 'string'),
-    filter((v): v is string => !!v),
-    debounceTime(300),
-    switchMap(value => {
-      if (this.mode === InputSearchMode.Coordinate) {
-        return this.reverseApi.search(value);
-      } else {
-        return this.api
-          .searchLocationsList(value)
-          .pipe(map(r => r.results.map(x => ({ text: x.attrs.label, originalInput: value, a2c_data: x }))));
-      }
-    }),
-    tap(_ => this.trigger?.openPanel())
-  );
+		debounceTime(300),
+		switchMap(value => {
+			if (this.inputFormControl.valid && typeof value === 'string' && value !== '') {
+				if (this.mode === InputSearchMode.Coordinate) {
+					return this.reverseApi.search(value);
+				} else {
+					return this.api
+						.searchLocationsList(value)
+						.pipe(
+							map(r => r.results.map(x => ({ text: x.attrs.label, originalInput: value, a2c_data: x } as SearchResultItem))),
+							tap(_ => this.trigger?.openPanel()),
+						);
+				}
+			} else {
+				return of([]);
+			}
+		}),
+		tap(r => this.noResults = r.length === 0 && this.inputFormControl.valid && !!this.inputFormControl.value)
+	);
 
   existingEntryId: string | null = null;
 

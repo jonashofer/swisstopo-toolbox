@@ -1,3 +1,5 @@
+import { CoordinateSystem } from "./CoordinateSystem";
+
 // object to enable future expansion such as width, sorts etc.
 export interface ColumnConfigItem {
   key: ColumnDefinitions;
@@ -14,10 +16,18 @@ export enum ColumnDefinitions {
   EGID = 'egid',
   EGRID = 'egrid',
   HEIGHT = 'height',
-  WGS_84_lon = 'wgs84_lon',
-  WGS_84_lat = 'wgs84_lat',
-  LV_95_north = 'lv95_north',
-  LV_95_east = 'lv95_east',
-  LV_03_north = 'lv03_north',
-  LV_03_east = 'lv03_east',
+	WGS_84 = 'wgs84',
+	LV_95 = 'lv95',
+	LV_03 = 'lv03',
+}
+
+export function getColumnDefinition(coordinateSystem: CoordinateSystem) {
+  switch (coordinateSystem) {
+    case CoordinateSystem.WGS_84:
+      return ColumnDefinitions.WGS_84;
+    case CoordinateSystem.LV_95:
+      return ColumnDefinitions.LV_95;
+    case CoordinateSystem.LV_03:
+      return ColumnDefinitions.LV_03;
+  }
 }

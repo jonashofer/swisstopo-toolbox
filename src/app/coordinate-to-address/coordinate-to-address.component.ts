@@ -1,13 +1,6 @@
-import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AddressCoordinateTableEntry } from '../shared/models/AddressCoordinateTableEntry';
-import { ObIAutocompleteInputOption } from '@oblique/oblique';
-import { debounceTime, filter, map, switchMap } from 'rxjs/operators';
-import { FormControl } from '@angular/forms';
-import { ReverseApiService } from '../shared/services/reverse-api.service';
-import { Coordinate } from '../shared/models/Coordinate';
-import { AddressService, ApiService, CoordinateService } from '../shared/services';
-import { CoordinateSystem } from '../shared/models/CoordinateSystem';
-import { Observable } from 'rxjs';
+import { AddressService, CoordinateService } from '../shared/services';
 import { getFeatureTabComponentProviders } from '../feature-tab.config';
 import { InputSearchMode } from '../shared/models/InputSearchMode';
 

@@ -18,12 +18,14 @@
       "label": "Adresse",
       "labelEdit": "Adresse bearbeiten",
       "placeholder": "z.B. Bundesplatz 1 Bern",
+      "noResults": "Keine Resultate gefunden",
       "tooltip": "Mehrzeilen-Eingabe möglich durch das kopieren von Adressen aus der Zwischenablage. Bitte achten, dass jede Adresse auf einer neuen Zeile ist."
     },
     "cta": {
       "label": "Koordinaten",
       "labelEdit": "Eintrag bearbeiten",
       "placeholder": "z.B. 2600994.1, 1197491.8 oder 46.95108, 7.438637 oder 683220.1, 248081.9",
+      "noResults": "Keine Adresse im Umkreis von 100m gefunden",
       "tooltip": "Mehrzeilen-Eingabe möglich durch das kopieren von Koordinaten aus der Zwischenablage. Bitte achten, dass jedes Koordinaten-Paar auf einer neuen Zeile ist."
     }
   },
