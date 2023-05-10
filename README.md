@@ -1,4 +1,4 @@
-# Swisstopo Showcases
+# Swisstopo Toolbox
 Welcome to our approach on bringing geodata closer to the user. This is our semester project during our Bachelor studies at the Bern University of Applied Sciences (BFH). 
 
 Try it out at: [swisstopo-showcases.netlify.app/address-to-coordinate](https://swisstopo-showcases.netlify.app/address-to-coordinate)

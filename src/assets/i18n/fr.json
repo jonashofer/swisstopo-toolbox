@@ -1,11 +1,11 @@
 {
   "layout": {
-    "title": "Swisstopo Showcases",
+    "title": "Swisstopo Toolbox",
     "nav": {
       "address-to-coordinate": "Adresses aux coordonnées",
       "guide": "Instructions"
     },
-    "footer": "Swisstopo Showcases - Project 1 BFH Projet du Semestre"
+    "footer": "Swisstopo Toolbox pour le travail sur les adresses et les coordonnées"
   },
   "mode": {
     "input": "Saisie des données",

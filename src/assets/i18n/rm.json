@@ -1,11 +1,11 @@
 {
   "layout": {
-    "title": "Swisstopo Showcases",
+    "title": "Swisstopo Toolbox",
     "nav": {
       "address-to-coordinate": "Adressa tier coordinatas",
       "guide": "Instrucziun"
     },
-    "footer": "„Swisstopo Showcases – project 1 BFH semester project"
+    "footer": "Swisstopo Toolbox"
   },
   "mode": {
     "input": "Endataziun",
