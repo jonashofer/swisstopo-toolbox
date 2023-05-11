@@ -44,17 +44,17 @@ export class ApiService {
     private readonly translate: TranslateService
   ) {}
 
-  public searchLocationsList(input: string): Observable<{ input: string; results: ApiSearchResult[] }> {
+  public searchLocationsList(input: string): Observable<ApiSearchResult[]> {
     input = input.trim();
     if (!input) {
-      return of({ input, results: [] });
+      return of([]);
     }
 
     // same validation as in search input for catching multiline or fileinputs
     const validation = this.validateSearchInput(input);
     if (!validation.valid) {
       this.notificationService.warning(this.translate.instant(validation.messageLabel!));
-      return of({ input, results: [] });
+      return of([]);
     }
 
     const request = `https://api3.geo.admin.ch/rest/services/api/SearchServer?lang=de&searchText=${encodeURIComponent(
@@ -63,7 +63,7 @@ export class ApiService {
     return this.httpClient.get<RootObject>(request).pipe(
       map((data: RootObject) => {
         const resultWeightDesc = (a: ApiSearchResult, b: ApiSearchResult) => b.weight - a.weight;
-        return { results: data.results.sort(resultWeightDesc), input };
+        return data.results.sort(resultWeightDesc);
       })
     );
   }
@@ -82,14 +82,14 @@ export class ApiService {
 
   public searchMultiple(inputs: string[]): Observable<AddressCoordinateTableEntry> {
     return from(inputs).pipe(
-      mergeMap(address =>
-        this.searchLocationsList(address).pipe(
+      mergeMap(userInput =>
+        this.searchLocationsList(userInput).pipe(
           map(r => {
-            if (r.results.length == 1) {
-              return this.mapApiResultToAddress(r.results[0]);
+            if (r.length == 1) {
+              return this.mapApiResultToAddress(r[0]);
             }
             const entry: AddressCoordinateTableEntry = {
-              address: r.input,
+              address: userInput,
               id: (this.bulkAddId--).toString(),
               isValid: false,
 							wgs84: null,

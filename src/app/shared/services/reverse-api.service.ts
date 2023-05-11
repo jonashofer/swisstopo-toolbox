@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, map, tap, switchMap } from 'rxjs';
+import { Observable, of, map, tap, switchMap, from, mergeMap } from 'rxjs';
 import { ApiSearchResult, ApiService } from './api.service';
 import { HttpClient } from '@angular/common/http';
 import { Coordinate } from '../models/Coordinate';
@@ -102,10 +102,11 @@ export interface GWREntry {
 
 @Injectable()
 export class ReverseApiService {
+  private bulkAddId = -1;
   constructor(
     private httpClient: HttpClient,
     private coordinateService: CoordinateService,
-    private apiService: ApiService,
+    private apiService: ApiService
   ) {}
 
   public validateSearchInput(value: string): { valid: boolean; messageLabel?: string | undefined } {
@@ -117,12 +118,51 @@ export class ReverseApiService {
     }
   }
 
+  public searchMultiple(lines: string[]): Observable<AddressCoordinateTableEntry> {
+    return from(lines).pipe(
+      mergeMap(userInput => {
+				const parseResult = this.coordinateService.tryParse(userInput);
+				if (parseResult == null) {
+					const entry: AddressCoordinateTableEntry = {
+						address: userInput + ' ❌(not coordinates!)',
+						id: (--this.bulkAddId).toString(),
+						isValid: false,
+						wgs84: null,
+						lv95: null,
+						lv03: null
+					};
+					return of(entry);
+				} else {
+					return this.search(userInput).pipe(
+						switchMap(r => {
+							if (r.length > 0) {
+								return this.mapReverseApiResultToAddress(r[0]);
+							}
+							const entry: AddressCoordinateTableEntry = {
+								address: userInput + ' ❌(nothing found)',
+								id: (--this.bulkAddId).toString(),
+								isValid: false,
+								wgs84: null,
+								lv95: null,
+								lv03: null
+							};
+							return of(entry);
+						})
+					);
+				}
+			}
+      )
+    );
+  }
+
   public search(input: string): Observable<SearchResultItem[]> {
     const coordinates = this.coordinateService.tryParse(input)!;
 
     return this.apiService
       .convert(coordinates, CoordinateSystem.LV_95)
-      .pipe(switchMap(value => this.searchNearestAddresses(value, this.coordinateService.stringify(coordinates, ", "))));
+      .pipe(
+        switchMap(value => this.searchNearestAddresses(value, this.coordinateService.stringify(coordinates, ', ')))
+      );
   }
 
   public mapReverseApiResultToAddress(item: SearchResultItem): Observable<AddressCoordinateTableEntry> {
@@ -136,17 +176,17 @@ export class ReverseApiService {
           id: i.gwr.id,
           featureId: gwr.featureId,
           isValid: true,
-					wgs84: {
-						system: CoordinateSystem.WGS_84,
-						lat: wgs84.lat,
-						lon: wgs84.lon,
-					},
-					lv95: {
-						system: CoordinateSystem.LV_95,
-						lat: i.lv95.lat,
-						lon: i.lv95.lon,
-					},
-					lv03: null,
+          wgs84: {
+            system: CoordinateSystem.WGS_84,
+            lat: wgs84.lat,
+            lon: wgs84.lon
+          },
+          lv95: {
+            system: CoordinateSystem.LV_95,
+            lat: i.lv95.lat,
+            lon: i.lv95.lon
+          },
+          lv03: null,
           egid: gwr.attributes.egid,
           egrid: gwr.attributes.egrid
         };

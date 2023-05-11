@@ -22,7 +22,11 @@ export class CoordinateService {
     this.system$.subscribe(system => {StorageService.save('coordinateSystem', system); })
   }
 
-  public stringify(coord: Coordinate, seperator: string): string { 
+  public stringify(coord: Coordinate | null, seperator: string): string {
+		if(coord == null) {
+			return seperator
+		}
+
     const lat = this.coordinatePipe.transform(coord.lat, this.currentSystem);
     const lon = this.coordinatePipe.transform(coord.lon, this.currentSystem);
 

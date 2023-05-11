@@ -53,7 +53,7 @@ export class TextInputComponent {
 					return this.api
 						.searchLocationsList(value)
 						.pipe(
-							map(r => r.results.map(x => ({ text: x.attrs.label, originalInput: value, a2c_data: x } as SearchResultItem))),
+							map(r => r.map(x => ({ text: x.attrs.label, originalInput: value, a2c_data: x } as SearchResultItem))),
 							tap(_ => this.trigger?.openPanel()),
 						);
 				}
@@ -125,7 +125,11 @@ export class TextInputComponent {
           count: lines.length
         })
       );
-      this.api.searchMultiple(lines).subscribe(r => this.emitEntry(r));
+      if (this.mode === InputSearchMode.Coordinate) {
+        this.reverseApi.searchMultiple(lines).subscribe(r => this.emitEntry(r));
+      } else {
+        this.api.searchMultiple(lines).subscribe(r => this.emitEntry(r));
+      }
     }
   }
 

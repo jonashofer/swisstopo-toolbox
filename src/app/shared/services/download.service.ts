@@ -41,8 +41,8 @@ export class DownloadService {
 
   private getLine(entry: AddressCoordinateTableEntry, separator: string, usePipe: boolean) {
     return usePipe
-      ? `${entry.address}${this.coordinateService.stringify(entry.wgs84!, separator)}}` //TODO fix
-      : `${entry.address}${entry.wgs84!.lon}${separator}${entry.wgs84!.lat}`; //TODO fix
+      ? `${entry.address}${separator}${this.coordinateService.stringify(entry.wgs84, separator)}` //TODO fix
+      : `${entry.address}${separator}${entry.wgs84?.lon}${separator}${entry.wgs84?.lat}`; //TODO fix
   }
 
   private toKmlPlacemark(entry: AddressCoordinateTableEntry) {

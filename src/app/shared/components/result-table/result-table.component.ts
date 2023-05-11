@@ -11,13 +11,6 @@ import { ColumnDefinitions } from '../../models/ColumnConfiguration';
 //matColumnDef in the template and need to be registered here
 const customLayoutColumns: string[] = ['wgs84', 'lv95', 'lv03'];
 
-// const columnExpansions = Object.keys(CoordinateSystem).map(key => {
-//   const val = CoordinateSystem[key as keyof typeof CoordinateSystem];
-//   return {
-//     [val]: [`${val}_lat`, `${val}_lon`]
-//   };
-// });
-
 @Component({
   selector: 'app-result-table',
   templateUrl: './result-table.component.html',
