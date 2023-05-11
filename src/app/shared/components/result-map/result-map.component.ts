@@ -1,7 +1,7 @@
 import Map from 'ol/Map';
-import { AfterViewInit, Component, ElementRef, Input, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { Feature, View } from 'ol';
-import { Group, Tile as TileLayer } from 'ol/layer';
+import { Tile as TileLayer } from 'ol/layer';
 import { XYZ } from 'ol/source';
 import { FullScreen } from 'ol/control';
 import VectorSource from 'ol/source/Vector';
@@ -13,18 +13,27 @@ import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTable
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { filter } from 'rxjs/operators';
 import { DownloadService } from '../../services';
+import { StorageService } from '../../services/storage.service';
 
-const mapLayer = new TileLayer({
-  source: new XYZ({
-    url: `https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/{z}/{x}/{y}.jpeg`
-  })
-});
+enum BackgroundLayers {
+  Standard = 'pixel_farbig',
+  Satellite = 'satellite'
+}
 
-const satelliteLayer = new TileLayer({
-  source: new XYZ({
-    url: `https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.swissimage/default/current/3857/{z}/{x}/{y}.jpeg`
+const layers = [
+  new TileLayer({
+    source: new XYZ({
+      url: `https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/{z}/{x}/{y}.jpeg`
+    }),
+    properties: { name: BackgroundLayers.Standard }
+  }),
+  new TileLayer({
+    source: new XYZ({
+      url: `https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.swissimage/default/current/3857/{z}/{x}/{y}.jpeg`
+    }),
+    properties: { name: BackgroundLayers.Satellite }
   })
-});
+];
 
 const markerLayer = new VectorLayer({
   style: new Style({
@@ -44,19 +53,21 @@ const view = new View({
   enableRotation: false
 });
 
+const storageKey = "map-background";
+
 @Component({
   selector: 'app-result-map',
   templateUrl: './result-map.component.html',
   styleUrls: ['./result-map.component.scss']
 })
-export class ResultMapComponent implements AfterViewInit {
+export class ResultMapComponent implements AfterViewInit, OnDestroy {
   map: Map | null = null;
   _addresses: AddressCoordinateTableEntry[] = [];
 
   @Input()
   set addresses(value: AddressCoordinateTableEntry[]) {
-    this._addresses = value;
-    const newFeatures = value.map(
+    this._addresses = value.sort((a, b) => (b.wgs84?.lat || 0) - (a.wgs84?.lat || 0)); // sort addresses based on latitude
+    const newFeatures = this._addresses.map(
       c =>
         new Feature({
           geometry: new Point(fromLonLat([c.wgs84?.lon!, c.wgs84?.lat!]))
@@ -70,8 +81,11 @@ export class ResultMapComponent implements AfterViewInit {
     this.fitView();
   }
 
-	@ViewChild('map')
-	mapDiv: ElementRef | undefined
+  @ViewChild('map')
+  mapDiv: ElementRef | undefined;
+
+	BackgroundLayers = BackgroundLayers;
+	currentLayer: BackgroundLayers = BackgroundLayers.Standard;
 
   get kmlFunctionLink() {
     const coords: any = {};
@@ -85,19 +99,27 @@ export class ResultMapComponent implements AfterViewInit {
     return `https://map.geo.admin.ch/?layers=KML%7C%7C${encodeURIComponent(this.kmlFunctionLink)}`;
   }
 
-  constructor(private readonly downloadService: DownloadService, private readonly dialog: MatDialog) {}
-
-	ngAfterViewInit() {
-		if(this.mapDiv) {
-			this.map = new Map({
-				controls: [new FullScreen()],
-				layers: [mapLayer, markerLayer],
-				view,
-				target: this.mapDiv.nativeElement
-			});
-			this.fitView();
-		}
+  constructor(private readonly downloadService: DownloadService, private readonly dialog: MatDialog) {
+		this.currentLayer = StorageService.get<BackgroundLayers>(storageKey) || BackgroundLayers.Standard;
 	}
+
+  ngAfterViewInit() {
+    if (this.mapDiv) {
+      this.map = new Map({
+        controls: [new FullScreen()],
+        layers: this.getLayers(),
+        view,
+        target: this.mapDiv.nativeElement
+      });
+      this.fitView();
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.map) {
+      this.map.setTarget(undefined);
+    }
+  }
 
   fitView() {
     const extent = markerLayer.getSource()?.getExtent();
@@ -116,13 +138,14 @@ export class ResultMapComponent implements AfterViewInit {
     }
   }
 
-  switchToMapBackground() {
-    this.map?.setLayerGroup(new Group({ layers: [mapLayer, markerLayer] }));
+  changeBackground() {
+    this.map?.setLayers(this.getLayers());
+		StorageService.save<BackgroundLayers>(storageKey, this.currentLayer)
   }
 
-  switchToSatelliteBackground() {
-    this.map?.setLayerGroup(new Group({ layers: [satelliteLayer, markerLayer] }));
-  }
+	getLayers() {
+		return [...layers.filter(l => l.getProperties().name == this.currentLayer), markerLayer];
+	}
 
   openMapAdminDialog(templateRef: TemplateRef<any>) {
     const dialogRef = this.dialog.open(templateRef);

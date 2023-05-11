@@ -6,11 +6,11 @@
 		</button>
 	</div>
 	<div id="legend">
-		<mat-button-toggle-group name="background" aria-label="Background Layer" value="karte">
-			<mat-button-toggle (click)="switchToMapBackground()" value="karte"
+		<mat-button-toggle-group name="background" aria-label="Background Layer" [(value)]="currentLayer">
+			<mat-button-toggle (click)="changeBackground()" [value]="BackgroundLayers.Standard"
 				>{{ "map.background.standard" | translate }}
 			</mat-button-toggle>
-			<mat-button-toggle (click)="switchToSatelliteBackground()"
+			<mat-button-toggle (click)="changeBackground()" [value]="BackgroundLayers.Satellite"
 				>{{ "map.background.satellite" | translate }}
 			</mat-button-toggle>
 		</mat-button-toggle-group>
