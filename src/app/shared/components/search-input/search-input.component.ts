@@ -1,4 +1,4 @@
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTableEntry';
 import { InputSearchMode } from '../../models/InputSearchMode';
 import { AddressService, CoordinateService } from '../../services';

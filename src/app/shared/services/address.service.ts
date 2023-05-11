@@ -2,7 +2,7 @@ import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ObNotificationService } from '@oblique/oblique';
 import { BehaviorSubject, EMPTY, forkJoin, from, Observable, of } from 'rxjs';
-import { flatMap, map, mergeMap, tap } from 'rxjs/operators';
+import { catchError, flatMap, map, mergeMap, tap } from 'rxjs/operators';
 import { ApiDetailService, ApiService } from '.';
 import { AddressCoordinateTableEntry, AddressSelectionResult } from '../models/AddressCoordinateTableEntry';
 import { ColumnDefinitions } from '../models/ColumnConfiguration';
@@ -81,10 +81,16 @@ export class AddressService {
     addresses: AddressCoordinateTableEntry[],
     coordinateSystem: CoordinateSystem,
     columns: ColumnDefinitions[]
-  ) => from(addresses).pipe(mergeMap(address => forkJoin(this.enrichAddress$(address, coordinateSystem, columns))));
+  ) =>
+    from(addresses).pipe(
+      mergeMap(address => forkJoin(this.enrichAddress$(address, coordinateSystem, columns))),
+      catchError(err => {
+        return of([]);
+      })
+    );
 
-	//TODO optional: rework together with c2a to fetch wgs84 here and not in mapReverseApiResultToAddress(?)
-	/** requires the address entry to have wgs84 coordinates */
+  //TODO optional: rework together with c2a to fetch wgs84 here and not in mapReverseApiResultToAddress(?)
+  /** requires the address entry to have wgs84 coordinates */
   private readonly enrichAddress$ = (
     address: AddressCoordinateTableEntry,
     newCoordinateSystem: CoordinateSystem,
@@ -105,21 +111,13 @@ export class AddressService {
     }
 
     // LV95 data plus dependent Height data
-    if (
-      columns.includes(ColumnDefinitions.HEIGHT) ||
-      columns.includes(ColumnDefinitions.LV_95)
-    ) {
-      const lv95Query = this.api
-        .convert(
-          address.wgs84!,
-          CoordinateSystem.LV_95
-        )
-        .pipe(
-          map(r => {
-            address.lv95 = r;
-            return address;
-          })
-        );
+    if (columns.includes(ColumnDefinitions.HEIGHT) || columns.includes(ColumnDefinitions.LV_95)) {
+      const lv95Query = this.api.convert(address.wgs84!, CoordinateSystem.LV_95).pipe(
+        map(r => {
+          address.lv95 = r;
+          return address;
+        })
+      );
 
       if (columns.includes(ColumnDefinitions.HEIGHT)) {
         const lv95AndHeightQuery = lv95Query.pipe(
@@ -140,17 +138,12 @@ export class AddressService {
     }
 
     if (columns.includes(ColumnDefinitions.LV_03)) {
-      const lv03Query = this.api
-        .convert(
-          address.wgs84!,
-          CoordinateSystem.LV_03
-        )
-        .pipe(
-          map(r => {
-            address.lv03 = r;
-            return r;
-          })
-        );
+      const lv03Query = this.api.convert(address.wgs84!, CoordinateSystem.LV_03).pipe(
+        map(r => {
+          address.lv03 = r;
+          return r;
+        })
+      );
       queries.push(lv03Query);
     }
 

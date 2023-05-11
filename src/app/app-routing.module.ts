@@ -8,7 +8,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'address-to-coordinate', pathMatch: 'full' },
   { path: 'address-to-coordinate', component: AddressToCoordinateComponent },
   { path: 'coordinate-to-address', component: CoordinateToAddressComponent },
-  { path: 'egid', component: AddressToCoordinateComponent },
+  // { path: 'egid', component: AddressToCoordinateComponent },
   { path: 'guide', component: GuideComponent }
 ];
 

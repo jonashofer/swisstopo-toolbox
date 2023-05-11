@@ -1,19 +1,17 @@
-import { Component, EventEmitter, Inject, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
   FormGroupDirective,
   NgForm,
   ValidationErrors,
-  ValidatorFn} from '@angular/forms';
-import {
-  MatLegacyAutocompleteSelectedEvent as MatAutocompleteSelectedEvent,
-  MatLegacyAutocompleteTrigger as MatAutocompleteTrigger
-} from '@angular/material/legacy-autocomplete';
+  ValidatorFn
+} from '@angular/forms';
+import { MatLegacyAutocompleteSelectedEvent as MatAutocompleteSelectedEvent } from '@angular/material/legacy-autocomplete';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ObNotificationService } from '@oblique/oblique';
-import { debounceTime, filter, map, switchMap, tap } from 'rxjs/operators';
+import { catchError, debounceTime, map, switchMap, tap } from 'rxjs/operators';
 import { ApiService } from '../../services';
 import { ApiSearchResult } from '../../services/api.service';
 import { AddressCoordinateTableEntry, AddressSelectionResult } from '../../models/AddressCoordinateTableEntry';
@@ -27,7 +25,7 @@ export interface SearchResultItem {
   text: string;
   originalInput?: string;
   a2c_data?: ApiSearchResult;
-  c2a_data?: {gwr: GWRSearchResult, addressText: string, distance: number, lv95: Coordinate};
+  c2a_data?: { gwr: GWRSearchResult; addressText: string; distance: number; lv95: Coordinate };
 }
 
 @Component({
@@ -41,28 +39,33 @@ export class TextInputComponent {
     updateOn: 'change'
   });
   instantErrorStateMatcher = new InstantErrorStateMatcher();
-	noResults = false;
+  noResults = false;
 
   results$: Observable<SearchResultItem[]> = this.inputFormControl.valueChanges.pipe(
-		debounceTime(300),
-		switchMap(value => {
-			if (this.inputFormControl.valid && typeof value === 'string' && value !== '') {
-				if (this.mode === InputSearchMode.Coordinate) {
-					return this.reverseApi.search(value);
-				} else {
-					return this.api
-						.searchLocationsList(value)
-						.pipe(
-							map(r => r.map(x => ({ text: x.attrs.label, originalInput: value, a2c_data: x } as SearchResultItem))),
-							tap(_ => this.trigger?.openPanel()),
-						);
-				}
-			} else {
-				return of([]);
-			}
-		}),
-		tap(r => this.noResults = r.length === 0 && this.inputFormControl.valid && !!this.inputFormControl.value)
-	);
+    debounceTime(300),
+    switchMap(value => {
+      console.log('letsgo');
+      if (this.inputFormControl.valid && typeof value === 'string' && value !== '') {
+        if (this.mode === InputSearchMode.Coordinate) {
+          return this.reverseApi.search(value).pipe(
+            catchError(err => {
+              return of([]);
+            })
+          );
+        } else {
+          return this.api.searchLocationsList(value).pipe(
+            map(r => r.map(x => ({ text: x.attrs.label, originalInput: value, a2c_data: x } as SearchResultItem))),
+            catchError(err => {
+              return of([]);
+            })
+          );
+        }
+      } else {
+        return of([]);
+      }
+    }),
+    tap(r => (this.noResults = r.length === 0 && this.inputFormControl.valid && !!this.inputFormControl.value))
+  );
 
   existingEntryId: string | null = null;
 
@@ -86,8 +89,6 @@ export class TextInputComponent {
 
   @Output()
   resultSelected = new EventEmitter<AddressSelectionResult>();
-
-  @ViewChild(MatAutocompleteTrigger) trigger: MatAutocompleteTrigger | undefined;
 
   constructor(
     private readonly api: ApiService,

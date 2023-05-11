@@ -109,5 +109,9 @@
   "columnConfigDialog": {
     "title": "Anzeigespalten konfigurieren",
     "add": "Spalte hinzufügen"
+  },
+  "apiError": {
+    "title": "Serverfehler",
+    "description": "Fehler bei der Abfrage der Daten. Bitte versuchen Sie es später noch einmal."
   }
 }

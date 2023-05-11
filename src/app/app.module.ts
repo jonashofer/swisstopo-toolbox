@@ -165,5 +165,7 @@ export class AppModule {
 
     interceptorConfig.api.spinner = false; // deactivate global spinner
     interceptorConfig.api.notification.severity = ObENotificationType.WARNING;
+    interceptorConfig.api.notification.title = "apiError.title";
+    interceptorConfig.api.notification.text = "apiError.description";
   }
 }
