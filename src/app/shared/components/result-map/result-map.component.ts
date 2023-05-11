@@ -1,5 +1,5 @@
 import Map from 'ol/Map';
-import { Component, Input, OnInit, TemplateRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, TemplateRef, ViewChild } from '@angular/core';
 import { Feature, View } from 'ol';
 import { Group, Tile as TileLayer } from 'ol/layer';
 import { XYZ } from 'ol/source';
@@ -49,7 +49,7 @@ const view = new View({
   templateUrl: './result-map.component.html',
   styleUrls: ['./result-map.component.scss']
 })
-export class ResultMapComponent implements OnInit {
+export class ResultMapComponent implements AfterViewInit {
   map: Map | null = null;
   _addresses: AddressCoordinateTableEntry[] = [];
 
@@ -70,6 +70,9 @@ export class ResultMapComponent implements OnInit {
     this.fitView();
   }
 
+	@ViewChild('map')
+	mapDiv: ElementRef | undefined
+
   get kmlFunctionLink() {
     const coords: any = {};
     this._addresses.forEach((adr, index) => {
@@ -84,16 +87,17 @@ export class ResultMapComponent implements OnInit {
 
   constructor(private readonly downloadService: DownloadService, private readonly dialog: MatDialog) {}
 
-  ngOnInit(): void {
-    console.log('init map')
-    this.map = new Map({
-      controls: [new FullScreen()],
-      layers: [mapLayer, markerLayer],
-      view,
-      target: 'map'
-    });
-    this.fitView();
-  }
+	ngAfterViewInit() {
+		if(this.mapDiv) {
+			this.map = new Map({
+				controls: [new FullScreen()],
+				layers: [mapLayer, markerLayer],
+				view,
+				target: this.mapDiv.nativeElement
+			});
+			this.fitView();
+		}
+	}
 
   fitView() {
     const extent = markerLayer.getSource()?.getExtent();
