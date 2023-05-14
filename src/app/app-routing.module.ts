@@ -3,12 +3,26 @@ import { RouterModule, Routes } from '@angular/router';
 import { AddressToCoordinateComponent } from './address-to-coordinate/address-to-coordinate.component';
 import { GuideComponent } from './guide/guide.component';
 import { CoordinateToAddressComponent } from './coordinate-to-address/coordinate-to-address.component';
+import { of, tap } from 'rxjs';
 
 const routes: Routes = [
   { path: '', redirectTo: 'address-to-coordinate', pathMatch: 'full' },
   { path: 'address-to-coordinate', component: AddressToCoordinateComponent },
   { path: 'coordinate-to-address', component: CoordinateToAddressComponent },
-  // { path: 'egid', component: AddressToCoordinateComponent },
+  {
+    path: 'egid',
+    children: [
+      { path: 'from-address', component: GuideComponent },
+      { path: 'to-address', component: GuideComponent }
+    ]
+  },
+  {
+    path: 'height',
+    children: [
+      { path: 'from-coordinates', component: GuideComponent },
+      { path: 'from-address', component: GuideComponent }
+    ]
+  },
   { path: 'guide', component: GuideComponent }
 ];
 

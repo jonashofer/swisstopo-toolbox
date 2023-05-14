@@ -9,7 +9,14 @@ import { ColumnDefinitions } from '../../models/ColumnConfiguration';
 
 //all columns that should not be rendered in a generic way, need to have a custom
 //matColumnDef in the template and need to be registered here
-const customLayoutColumns: string[] = ['wgs84', 'lv95', 'lv03'];
+const customLayoutColumns: string[] = [
+  ColumnDefinitions.WGS_84,
+  ColumnDefinitions.LV_95,
+  ColumnDefinitions.LV_03,
+  ColumnDefinitions.ADDRESS,
+  ColumnDefinitions.EDIT_ADDRESS,
+  ColumnDefinitions.COORDINATE_CHIPS
+];
 
 @Component({
   selector: 'app-result-table',
@@ -23,7 +30,7 @@ export class ResultTableComponent {
   displayedColumns$ = this.columnService.columns$.pipe(
     map(userConfig => {
       const expandedColumns = userConfig.flatMap(c => this.expandColumnForView(c));
-      expandedColumns.unshift('trash', 'address', 'edit');
+      expandedColumns.unshift('trash');
       expandedColumns.push('config');
       return expandedColumns;
     })
@@ -36,8 +43,14 @@ export class ResultTableComponent {
   );
 
   sys = CoordinateSystem;
+  col = ColumnDefinitions;
 
-  constructor(public addressService: AddressService, public columnService: ColumnService, public dialog: MatDialog, public viewContainerRef: ViewContainerRef) {}
+  constructor(
+    public addressService: AddressService,
+    public columnService: ColumnService,
+    public dialog: MatDialog,
+    public viewContainerRef: ViewContainerRef
+  ) {}
 
   private expandColumnForView(column: ColumnDefinitions): string[] {
     switch (column) {

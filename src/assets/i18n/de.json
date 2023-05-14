@@ -5,6 +5,11 @@
       "address-to-coordinate": "Adresse zu Koordinaten",
       "coordinate-to-address": "Koordinaten zu Adresse",
       "egid": "EGID",
+      "egid.to-address": "EGID zu Adresse",
+      "egid.from-address": "Adresse zu EGID",
+      "height": "Höhe",
+      "height.from-address": "Adresse zu Höhe",
+      "height.from-coordinates": "Koordinaten zu Höhe",
       "guide": "Anleitung"
     },
     "footer": "Swisstopo Toolbox für die Verarbeitung von Adressen und Koordinaten"
@@ -23,10 +28,11 @@
     },
     "cta": {
       "label": "Koordinaten",
-      "labelEdit": "Eintrag bearbeiten",
+      "labelEdit": "Ursprüngliche Koordinaten bearbeiten",
       "placeholder": "z.B. 2600994.1, 1197491.8 oder 46.95108, 7.438637 oder 683220.1, 248081.9",
       "noResults": "Keine Adresse im Umkreis von 100m gefunden",
-      "tooltip": "Mehrzeilen-Eingabe möglich durch das kopieren von Koordinaten aus der Zwischenablage. Bitte achten, dass jedes Koordinaten-Paar auf einer neuen Zeile ist."
+      "tooltip": "Mehrzeilen-Eingabe möglich durch das kopieren von Koordinaten aus der Zwischenablage. Bitte achten, dass jedes Koordinaten-Paar auf einer neuen Zeile ist.",
+      "distance": "({{distance}}m entfernt)"
     }
   },
   "notifications": {
@@ -103,8 +109,8 @@
     "lv95_north": "Y / Norden",
     "lv95_east": "X / Osten",
     "lv03": "Schweizer Koordinaten (CH1903 / LV03)",
-    "lv03_north": "Y / Norden (LV03)",
-    "lv03_east": "X / Osten (LV03)"
+    "lv03_north": "Y / Norden",
+    "lv03_east": "X / Osten"
   },
   "columnConfigDialog": {
     "title": "Anzeigespalten konfigurieren",

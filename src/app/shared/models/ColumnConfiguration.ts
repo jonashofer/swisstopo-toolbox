@@ -3,6 +3,15 @@ import { CoordinateSystem } from "./CoordinateSystem";
 // object to enable future expansion such as width, sorts etc.
 export interface ColumnConfigItem {
   key: ColumnDefinitions;
+  isSystemColumn: boolean;
+}
+
+export function userCol(definition: ColumnDefinitions): ColumnConfigItem {
+  return { key: definition, isSystemColumn: false };
+}
+
+export function sysCol(definition: ColumnDefinitions): ColumnConfigItem {
+  return { key: definition, isSystemColumn: true }; 
 }
 
 // hardcoded columns currently: trash, address, edit
@@ -13,6 +22,12 @@ export enum ColumnDefinitions {
 	WGS_84 = 'wgs84',
 	LV_95 = 'lv95',
 	LV_03 = 'lv03',
+
+  // TRASH = 'trash',
+  ADDRESS = 'address',
+  EDIT_ADDRESS = 'edit-address',
+  COORDINATE_CHIPS = 'coordinate-chips',
+  // CONFIG = 'config'
 }
 
 export function getColumnDefinition(coordinateSystem: CoordinateSystem) {

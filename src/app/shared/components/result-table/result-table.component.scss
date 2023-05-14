@@ -10,9 +10,28 @@ table {
   .mat-column-trash {
     width: 30px;
   }
-
+  
   .mat-column-config {
     width: 30px;
+  }
+
+  .mat-column-wgs84_lat {
+    width: 75px;
+  }
+  .mat-column-wgs84_lon {
+    width: 75px;
+  }
+  .mat-column-lv95_east {
+    width: 95px;
+  }
+  .mat-column-lv95_north {
+    width: 95px;
+  }
+  .mat-column-lv03_east {
+    width: 95px;
+  }
+  .mat-column-lv03_north {
+    width: 95px;
   }
 
   .icon-button {

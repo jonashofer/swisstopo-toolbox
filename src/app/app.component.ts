@@ -19,7 +19,9 @@ export class AppComponent {
       .map(r => {
         return {
           url: r.path ?? '',
-          label: translateService.instant(`layout.nav.${r.path}`)
+          label: translateService.instant(`layout.nav.${r.path}`),
+          children:
+            r.children?.map(c => ({ url: c.path ?? '', label: translateService.instant(`layout.nav.${r.path}.${c.path}`) })) ?? undefined
         };
       });
   }

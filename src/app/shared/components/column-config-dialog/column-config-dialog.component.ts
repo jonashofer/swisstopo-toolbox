@@ -53,8 +53,8 @@ export class ColumnConfigDialogComponent implements OnInit {
 
   updateSelection(item: ObIAutocompleteInputOption): void {
     const index = this.inactiveColumns.indexOf(item);
-    this.inactiveColumns.splice(index, 1);
-    this.activeColumns.push({ key: this.labelCache[item.label] });
+    this.inactiveColumns.splice(index, 1);  
+    this.activeColumns.push({ key: this.labelCache[item.label], isSystemColumn: false });
 
     if (this.inactiveColumns.length == 0) {
       this.formControl.disable();

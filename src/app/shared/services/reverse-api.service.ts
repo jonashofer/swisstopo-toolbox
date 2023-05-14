@@ -7,6 +7,7 @@ import { CoordinateSystem } from '../models/CoordinateSystem';
 import { CoordinateService } from './coordinate.service';
 import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEntry';
 import { SearchResultItem } from '../components/text-input/text-input.component';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface MapServerIdentifyResult {
   results?: GWRSearchResult[] | null;
@@ -106,7 +107,8 @@ export class ReverseApiService {
   constructor(
     private httpClient: HttpClient,
     private coordinateService: CoordinateService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private translateService: TranslateService
   ) {}
 
   public validateSearchInput(value: string): { valid: boolean; messageLabel?: string | undefined } {
@@ -121,37 +123,36 @@ export class ReverseApiService {
   public searchMultiple(lines: string[]): Observable<AddressCoordinateTableEntry> {
     return from(lines).pipe(
       mergeMap(userInput => {
-				const parseResult = this.coordinateService.tryParse(userInput);
-				if (parseResult == null) {
-					const entry: AddressCoordinateTableEntry = {
-						address: userInput + ' ❌(not coordinates!)',
-						id: (--this.bulkAddId).toString(),
-						isValid: false,
-						wgs84: null,
-						lv95: null,
-						lv03: null
-					};
-					return of(entry);
-				} else {
-					return this.search(userInput).pipe(
-						switchMap(r => {
-							if (r.length > 0) {
-								return this.mapReverseApiResultToAddress(r[0]);
-							}
-							const entry: AddressCoordinateTableEntry = {
-								address: userInput + ' ❌(nothing found)',
-								id: (--this.bulkAddId).toString(),
-								isValid: false,
-								wgs84: null,
-								lv95: null,
-								lv03: null
-							};
-							return of(entry);
-						})
-					);
-				}
-			}
-      )
+        const parseResult = this.coordinateService.tryParse(userInput);
+        if (parseResult == null) {
+          const entry: AddressCoordinateTableEntry = {
+            address: userInput + ' ❌(not coordinates!)',
+            id: (--this.bulkAddId).toString(),
+            isValid: false,
+            wgs84: null,
+            lv95: null,
+            lv03: null
+          };
+          return of(entry);
+        } else {
+          return this.search(userInput).pipe(
+            switchMap(r => {
+              if (r.length > 0) {
+                return this.mapReverseApiResultToAddress(r[0]);
+              }
+              const entry: AddressCoordinateTableEntry = {
+                address: userInput + ' ❌(nothing found)',
+                id: (--this.bulkAddId).toString(),
+                isValid: false,
+                wgs84: null,
+                lv95: null,
+                lv03: null
+              };
+              return of(entry);
+            })
+          );
+        }
+      })
     );
   }
 
@@ -218,7 +219,8 @@ export class ReverseApiService {
             const north = attr.dkodn || attr.gkodn;
             const coord: Coordinate = { lon: east, lat: north, system: CoordinateSystem.LV_95 };
             const distance = this.calculateDistance(lv95coord, coord);
-            const distanceSuffix = distance > 0 ? ` (${distance}m entfernt)` : '';
+            const distanceSuffix =
+              distance > 0 ? ` <i>${this.translateService.instant('search.cta.distance', { distance })}</i>` : '';
             return {
               text: `${fullAddress}${distanceSuffix}`,
               originalInput: originalInput,

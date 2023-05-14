@@ -2,7 +2,7 @@ import { Inject, Injectable, ViewContainerRef } from '@angular/core';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { BehaviorSubject, filter, map, pairwise } from 'rxjs';
 import { ColumnConfigDialogComponent } from '../components/column-config-dialog/column-config-dialog.component';
-import { ColumnConfigItem, ColumnDefinitions, getColumnDefinition } from '../models/ColumnConfiguration';
+import { ColumnConfigItem, ColumnDefinitions, getColumnDefinition, sysCol, userCol } from '../models/ColumnConfiguration';
 import { StorageService } from './storage.service';
 import { CoordinateSystem } from '../models/CoordinateSystem';
 import { FEATURE_TAB_CONFIG, FeatureTabConfig } from 'src/app/feature-tab.config';
@@ -53,7 +53,7 @@ export class ColumnService {
     }
     const newColumns = this.columns.value.slice();
     const existingIndex = newColumns.findIndex(c => c.key === getColumnDefinition(oldSystem));
-    const newItem = { key: getColumnDefinition(newSystem) };
+    const newItem: ColumnConfigItem = { key: getColumnDefinition(newSystem), isSystemColumn: false };
 
     if (existingIndex != -1) {
       newColumns[existingIndex] = newItem;
@@ -68,11 +68,20 @@ export class ColumnService {
   private getInitial(): ColumnConfigItem[] {
     switch (this.featureIdentifier) {
       case 'atc':
-        return [{ key: ColumnDefinitions.WGS_84 }];
+        return [
+          userCol(ColumnDefinitions.ADDRESS),
+          sysCol(ColumnDefinitions.EDIT_ADDRESS),
+          userCol(ColumnDefinitions.WGS_84)
+        ];
       case 'cta':
-        return [{ key: ColumnDefinitions.WGS_84 }];
+        return [
+          // sysCol(ColumnDefinitions.COORDINATE_CHIPS),
+          userCol(ColumnDefinitions.WGS_84),
+          userCol(ColumnDefinitions.ADDRESS),
+          sysCol(ColumnDefinitions.EDIT_ADDRESS)
+        ];
       default:
-        return [{ key: ColumnDefinitions.WGS_84 }];
+        return [];
     }
   }
 
