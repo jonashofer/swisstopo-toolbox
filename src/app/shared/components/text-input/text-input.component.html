@@ -11,7 +11,7 @@
 		[errorStateMatcher]="instantErrorStateMatcher"
 		[matAutocomplete]="auto"
 		(paste)="onPaste($event)" />
-	<button [obInputClear]="inputFormControl">
+	<button [obInputClear]="inputFormControl" (click)="clearInput()">
 		<mat-icon svgIcon="cancel" class="ob-icon"></mat-icon>
 	</button>
 	<mat-icon

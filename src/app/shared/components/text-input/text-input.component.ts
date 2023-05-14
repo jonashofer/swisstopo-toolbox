@@ -112,6 +112,10 @@ export class TextInputComponent {
     }
   }
 
+  clearInput() {
+    this.existingEntryId = null;
+  }
+
   onPaste(event: ClipboardEvent) {
     const clipboardData = event.clipboardData;
     const pastedText = clipboardData!.getData('text');
