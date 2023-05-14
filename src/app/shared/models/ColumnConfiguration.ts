@@ -26,8 +26,7 @@ export enum ColumnDefinitions {
   // TRASH = 'trash',
   ADDRESS = 'address',
   EDIT_ADDRESS = 'edit-address',
-  COORDINATE_CHIPS = 'coordinate-chips',
-  // CONFIG = 'config'
+  // COORDINATE_CHIPS = 'coordinate-chips',
 }
 
 export function getColumnDefinition(coordinateSystem: CoordinateSystem) {

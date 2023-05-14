@@ -37,7 +37,7 @@ export class AddressService {
     private readonly apiDetail: ApiDetailService,
     private readonly notificationService: ObNotificationService,
     private readonly translate: TranslateService,
-    @Inject(FEATURE_TAB_CONFIG) private featureIdentifier: FeatureTabConfig
+    @Inject(FEATURE_TAB_CONFIG) public featureIdentifier: FeatureTabConfig
   ) {
     this.addresses$
       .pipe(

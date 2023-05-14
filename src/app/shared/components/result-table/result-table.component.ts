@@ -15,7 +15,7 @@ const customLayoutColumns: string[] = [
   ColumnDefinitions.LV_03,
   ColumnDefinitions.ADDRESS,
   ColumnDefinitions.EDIT_ADDRESS,
-  ColumnDefinitions.COORDINATE_CHIPS
+  // ColumnDefinitions.COORDINATE_CHIPS
 ];
 
 @Component({

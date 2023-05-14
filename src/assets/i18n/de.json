@@ -110,7 +110,8 @@
     "lv95_east": "X / Osten",
     "lv03": "Schweizer Koordinaten (CH1903 / LV03)",
     "lv03_north": "Y / Norden",
-    "lv03_east": "X / Osten"
+    "lv03_east": "X / Osten",
+    "edit-address": "Bearbeitungsfunktion"
   },
   "columnConfigDialog": {
     "title": "Anzeigespalten konfigurieren",

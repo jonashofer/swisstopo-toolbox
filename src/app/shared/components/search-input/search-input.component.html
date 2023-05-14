@@ -5,6 +5,6 @@
 		</app-text-input>
 	</mat-tab>
 	<mat-tab [label]="'mode.file' | translate">
-		<app-file-upload-input (finished)="selectedInputType = 0"></app-file-upload-input>
+		<app-file-upload-input [mode]="searchMode" (finished)="selectedInputType = 0"></app-file-upload-input>
 	</mat-tab>
 </mat-tab-group>
