@@ -4,6 +4,7 @@
     "nav": {
       "address-to-coordinate": "Adresse zu Koordinaten",
       "coordinate-to-address": "Koordinaten zu Adresse",
+      "convert-coordinates": "Koordinaten konvertieren",
       "egid": "EGID",
       "egid.to-address": "EGID zu Adresse",
       "egid.from-address": "Adresse zu EGID",
