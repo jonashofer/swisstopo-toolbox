@@ -2,7 +2,7 @@ import { Inject, Injectable, ViewContainerRef } from '@angular/core';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { BehaviorSubject, filter, map, pairwise } from 'rxjs';
 import { ColumnConfigDialogComponent } from '../components/column-config-dialog/column-config-dialog.component';
-import { ColumnConfigItem, ColumnDefinitions, getColumnDefinition, sysCol, userCol } from '../models/ColumnConfiguration';
+import { ColumnConfigItem, ColumnDefinitions, getColumnDefinition, inactiveUserCol, sysCol, userCol } from '../models/ColumnConfiguration';
 import { StorageService } from './storage.service';
 import { CoordinateSystem } from '../models/CoordinateSystem';
 import { FEATURE_TAB_CONFIG, FeatureTabConfig } from 'src/app/feature-tab.config';
@@ -14,7 +14,7 @@ export class ColumnService {
 
   public readonly columns$ = this.columns.asObservable().pipe(
     map(e => {
-      return e.map(c => c.key);
+      return e.filter(c => c.active).map(c => c.key);
     })
   );
 
@@ -47,13 +47,14 @@ export class ColumnService {
     return this.dialog.open(ColumnConfigDialogComponent, { viewContainerRef: viewContainerRef }).afterClosed();
   }
 
+  //TODO set active/inactive etc and do not replace!
   private handleCoordinateSystemChange(oldSystem: CoordinateSystem, newSystem: CoordinateSystem) {
     if (oldSystem === newSystem || this.columns.value == null) {
       return;
     }
     const newColumns = this.columns.value.slice();
     const existingIndex = newColumns.findIndex(c => c.key === getColumnDefinition(oldSystem));
-    const newItem: ColumnConfigItem = { key: getColumnDefinition(newSystem), isSystemColumn: false };
+    const newItem: ColumnConfigItem = { key: getColumnDefinition(newSystem), isSystemColumn: false, active: true };
 
     if (existingIndex != -1) {
       newColumns[existingIndex] = newItem;
@@ -71,14 +72,24 @@ export class ColumnService {
         return [
           userCol(ColumnDefinitions.ADDRESS),
           sysCol(ColumnDefinitions.EDIT_ADDRESS),
-          userCol(ColumnDefinitions.WGS_84)
+          userCol(ColumnDefinitions.WGS_84),
+          inactiveUserCol(ColumnDefinitions.LV_95),
+          inactiveUserCol(ColumnDefinitions.LV_03),
+          inactiveUserCol(ColumnDefinitions.HEIGHT),
+          inactiveUserCol(ColumnDefinitions.EGID),
+          inactiveUserCol(ColumnDefinitions.EGRID),
         ];
       case 'cta':
         return [
           // sysCol(ColumnDefinitions.COORDINATE_CHIPS),
           userCol(ColumnDefinitions.WGS_84),
           userCol(ColumnDefinitions.ADDRESS),
-          sysCol(ColumnDefinitions.EDIT_ADDRESS)
+          sysCol(ColumnDefinitions.EDIT_ADDRESS),
+          inactiveUserCol(ColumnDefinitions.LV_95),
+          inactiveUserCol(ColumnDefinitions.LV_03),
+          inactiveUserCol(ColumnDefinitions.HEIGHT),
+          inactiveUserCol(ColumnDefinitions.EGID),
+          inactiveUserCol(ColumnDefinitions.EGRID),
         ];
       default:
         return [];

@@ -4,14 +4,19 @@ import { CoordinateSystem } from "./CoordinateSystem";
 export interface ColumnConfigItem {
   key: ColumnDefinitions;
   isSystemColumn: boolean;
+  active: boolean;
 }
 
 export function userCol(definition: ColumnDefinitions): ColumnConfigItem {
-  return { key: definition, isSystemColumn: false };
+  return { key: definition, isSystemColumn: false, active: true };
+}
+
+export function inactiveUserCol(definition: ColumnDefinitions): ColumnConfigItem {
+  return { key: definition, isSystemColumn: false, active: false };
 }
 
 export function sysCol(definition: ColumnDefinitions): ColumnConfigItem {
-  return { key: definition, isSystemColumn: true }; 
+  return { key: definition, isSystemColumn: true, active: true }; 
 }
 
 // hardcoded columns currently: trash, address, edit
