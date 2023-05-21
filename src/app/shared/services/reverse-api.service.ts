@@ -126,9 +126,10 @@ export class ReverseApiService {
         const parseResult = this.coordinateService.tryParse(userInput);
         if (parseResult == null) {
           const entry: AddressCoordinateTableEntry = {
-            address: userInput + ' ❌(not coordinates!)',
+            address: userInput,
             id: (--this.bulkAddId).toString(),
             isValid: false,
+            warningTranslationKey: 'notifications.inputNotCoordinate',
             wgs84: null,
             lv95: null,
             lv03: null
@@ -141,9 +142,10 @@ export class ReverseApiService {
                 return this.mapReverseApiResultToAddress(r[0]);
               }
               const entry: AddressCoordinateTableEntry = {
-                address: userInput + ' ❌(nothing found)',
+                address: userInput,
                 id: (--this.bulkAddId).toString(),
                 isValid: false,
+                warningTranslationKey: 'search.cta.noResults',
                 wgs84: null,
                 lv95: null,
                 lv03: null

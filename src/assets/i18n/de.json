@@ -72,7 +72,10 @@
     "entry": {
       "delete": "Eintrag löschen",
       "edit": "Eintrag ändern",
-      "warning": "Nicht eindeutige Adresse"
+      "warning": {
+        "ambiguous": "Nicht eindeutige Adresse",
+        "invalid": "Adresse nicht gefunden"
+      }
     }
   },
   "toolbar": {

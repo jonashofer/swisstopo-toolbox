@@ -45,7 +45,7 @@
 				*ngIf="!element.isValid"
 				svgIcon="warning-triangle"
 				class="ob-icon icon-button"
-				[matTooltip]="'table.entry.warning' | translate"
+				[matTooltip]="element.warningTranslationKey | translate"
 				matTooltipPosition="after"
 				matTooltipShowDelay="500"
 				(click)="editHandler.emit(element)"></mat-icon>

@@ -88,10 +88,12 @@ export class ApiService {
             if (r.length == 1) {
               return this.mapApiResultToAddress(r[0]);
             }
+            const warningTranslationKey = r.length > 1 ? 'table.entry.warning.ambiguous' : 'table.entry.warning.invalid';
             const entry: AddressCoordinateTableEntry = {
               address: userInput,
               id: (this.bulkAddId--).toString(),
               isValid: false,
+              warningTranslationKey: warningTranslationKey,
 							wgs84: null,
 							lv95: null,
 							lv03: null

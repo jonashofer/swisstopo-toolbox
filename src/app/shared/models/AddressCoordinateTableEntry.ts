@@ -18,6 +18,7 @@ export interface AddressCoordinateTableEntry {
   [ColumnDefinitions.HEIGHT]?: string | null;
 
   isValid: boolean;
+  warningTranslationKey?: string;
 }
 
 export interface AddressSelectionResult {
