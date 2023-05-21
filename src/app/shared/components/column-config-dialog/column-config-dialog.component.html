@@ -2,15 +2,15 @@
 <mat-dialog-content class="mat-typography">
     <mat-selection-list #list cdkDropList (cdkDropListDropped)="drop($event)"
         (selectionChange)="onSelectionChange($event)">
-        <section *ngFor="let item of items; let i=index" cdkDrag>
+        <section *ngFor="let item of items; let i=index; let first = first; let last = last" cdkDrag>
             <mat-list-option [value]="item" [checkboxPosition]="'before'" [selected]="item.active">
-                {{ 'columns.' + item.key | translate }}
-                <mat-icon [matTooltip]="'Nach unten' | translate" matTooltipPosition="after" matTooltipShowDelay="100"
-                    svgIcon="arrow-down" class="ob-icon" style="float:right"
+                <span class="label">{{ 'columns.' + item.key | translate }}</span>
+                <mat-icon [matTooltip]="'Nach unten' | translate" matTooltipPosition="after" matTooltipShowDelay="500"
+                    svgIcon="arrow-down" class="ob-icon" [class.hidden]="last"
                     (click)="moveDown(i); $event.stopPropagation()"></mat-icon>
 
-                <mat-icon [matTooltip]="'Nach oben' | translate" matTooltipPosition="after" matTooltipShowDelay="100"
-                    svgIcon="arrow-up" class="ob-icon" style="float:right;margin-left: 30px; margin-right:10px"
+                <mat-icon [matTooltip]="'Nach oben' | translate" matTooltipPosition="after" matTooltipShowDelay="500"
+                    svgIcon="arrow-up" class="ob-icon" [class.hidden]="first"
                     (click)="moveUp(i); $event.stopPropagation()"></mat-icon>
 
             </mat-list-option>
@@ -19,7 +19,10 @@
     </mat-selection-list>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button mat-button obButton="tertiary" [mat-dialog-close]>
+    <button mat-button obButton="tertiary" (click)="reset()">
+        {{ "i18n.common.reset" | translate }}
+    </button>
+    <button mat-button obButton="secondary" [mat-dialog-close]>
         {{ "i18n.common.cancel" | translate }}
     </button>
     <button mat-button obButton="primary" [mat-dialog-close] cdkFocusInitial (click)="save()">

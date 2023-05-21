@@ -47,26 +47,31 @@ export class ColumnService {
     return this.dialog.open(ColumnConfigDialogComponent, { viewContainerRef: viewContainerRef }).afterClosed();
   }
 
-  //TODO set active/inactive etc and do not replace!
+  // NOTE: this does only (de-)activate the respective systems and does not handle cases
+  //       with custom orders or multiple systems activated manually by the user
   private handleCoordinateSystemChange(oldSystem: CoordinateSystem, newSystem: CoordinateSystem) {
     if (oldSystem === newSystem || this.columns.value == null) {
       return;
     }
     const newColumns = this.columns.value.slice();
-    const existingIndex = newColumns.findIndex(c => c.key === getColumnDefinition(oldSystem));
-    const newItem: ColumnConfigItem = { key: getColumnDefinition(newSystem), isSystemColumn: false, active: true };
 
-    if (existingIndex != -1) {
-      newColumns[existingIndex] = newItem;
-    } else {
-      newColumns.unshift(newItem);
+    // set old to inactive
+    const oldSystemItem = newColumns.find(c => c.key === getColumnDefinition(oldSystem));
+    if (oldSystemItem) {
+      oldSystemItem.active = false;
     }
+    
+    // set new to active
+    const newSystemItem = newColumns.find(c => c.key === getColumnDefinition(newSystem));
+    if (newSystemItem) {
+      newSystemItem.active = true;
+    }
+
     this.columns.next(newColumns);
     this.saveConfig();
   }
 
-  // TODO refactor to not have tab identifiers all over the place
-  private getInitial(): ColumnConfigItem[] {
+  public getInitial(): ColumnConfigItem[] {
     switch (this.featureIdentifier) {
       case 'atc':
         return [

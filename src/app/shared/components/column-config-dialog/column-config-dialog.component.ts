@@ -11,7 +11,11 @@ import { MatSelectionList, MatSelectionListChange } from '@angular/material/list
   styleUrls: ['./column-config-dialog.component.scss']
 })
 export class ColumnConfigDialogComponent implements OnInit {
-  constructor(private readonly columnService: ColumnService, private readonly translate: TranslateService) {}
+  constructor(private readonly columnService: ColumnService) {}
+
+  ngOnInit() {
+    this.items = [...this.columnService.getCurrentConfig()];
+  }
 
   items: ColumnConfigItem[] = [];
 
@@ -38,11 +42,11 @@ export class ColumnConfigDialogComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-    this.items = [...this.columnService.getCurrentConfig()];
-  }
-
   save() {
     this.columnService.setConfig(this.items);
+  }
+
+  reset() {
+    this.items = this.columnService.getInitial()
   }
 }
