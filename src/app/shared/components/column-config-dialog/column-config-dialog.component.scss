@@ -40,6 +40,10 @@
   visibility: hidden;
 }
 
+.mdc-list-item.mdc-list-item--with-one-line {
+  height: 40px;
+}
+
 mat-list-option {
   cursor: default;
 
