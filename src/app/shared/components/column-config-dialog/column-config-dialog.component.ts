@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { TranslateService } from '@ngx-translate/core';
 import { ColumnService } from '../../services/column.service';
 import { ColumnConfigItem } from '../../models/ColumnConfiguration';
 import { MatSelectionList, MatSelectionListChange } from '@angular/material/list';
@@ -14,7 +13,7 @@ export class ColumnConfigDialogComponent implements OnInit {
   constructor(private readonly columnService: ColumnService) {}
 
   ngOnInit() {
-    this.items = [...this.columnService.getCurrentConfig()];
+    this.items = this.columnService.getCurrentConfig().map(x => Object.assign({}, x)); // deep copy to prevent setting original objects
   }
 
   items: ColumnConfigItem[] = [];
