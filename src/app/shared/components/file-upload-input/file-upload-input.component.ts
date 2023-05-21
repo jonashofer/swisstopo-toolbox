@@ -52,6 +52,7 @@ export class FileUploadInputComponent {
     reader.readAsText(file as File);
   }
 
+  //TODO generalize-refactoring
   emitResults(replace: boolean) {
     if (replace) {
       this.addressService.deleteAllAddresses();

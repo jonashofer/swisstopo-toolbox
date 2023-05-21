@@ -71,6 +71,7 @@ export class ColumnService {
     this.saveConfig();
   }
 
+  //TODO generalize-refactoring
   public getInitial(): ColumnConfigItem[] {
     switch (this.featureIdentifier) {
       case 'atc':

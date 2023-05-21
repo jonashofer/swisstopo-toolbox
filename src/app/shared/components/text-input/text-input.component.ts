@@ -100,6 +100,7 @@ export class TextInputComponent {
     this.searchLabel = `search.${featureConfig.shortName}.`;
   }
 
+  //TODO generalize-refactoring
   onOptionSelected(event: MatAutocompleteSelectedEvent) {
     this.inputFormControl.setValue(null);
     const selectedValue = event.option.value as SearchResultItem;
@@ -116,6 +117,7 @@ export class TextInputComponent {
     this.existingEntryId = null;
   }
 
+  //TODO generalize-refactoring
   onPaste(event: ClipboardEvent) {
     const clipboardData = event.clipboardData;
     const pastedText = clipboardData!.getData('text');
@@ -151,6 +153,7 @@ export class TextInputComponent {
       case InputSearchMode.Address:
     }
 
+  //TODO generalize-refactoring
     return (control: AbstractControl): ValidationErrors | null => {
       if (control.value && typeof control.value === 'string') {
         let validation: { valid: boolean; messageLabel?: string } = { valid: true };

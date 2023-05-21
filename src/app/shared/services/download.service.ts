@@ -5,6 +5,7 @@ import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEnt
 import { AddressService } from './address.service';
 import { Subject } from 'rxjs';
 
+//TODO generalize-refactoring
 @Injectable()
 export class DownloadService {
 

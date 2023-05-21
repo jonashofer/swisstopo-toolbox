@@ -89,6 +89,7 @@ export class AddressService {
       })
     );
 
+  //TODO generalize-refactoring
   //TODO optional: rework together with c2a to fetch wgs84 here and not in mapReverseApiResultToAddress(?)
   /** requires the address entry to have wgs84 coordinates */
   private readonly enrichAddress$ = (
