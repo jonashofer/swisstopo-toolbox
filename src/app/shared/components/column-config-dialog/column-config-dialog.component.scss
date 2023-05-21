@@ -1,3 +1,5 @@
+@import 'node_modules/@oblique/oblique/styles/scss/core/variables';
+
 #cdk-drop-list-0>mat-list-option:nth-child(1)>span.mdc-list-item__start.mat-mdc-list-option-checkbox-before.ng-star-inserted {
   margin-right: 10px
 }
@@ -49,4 +51,10 @@ mat-list-option {
   .ob-icon {
     cursor: pointer;
   }
+}
+
+// styling hack to be able to use non-legacy list module that isn't yet obliqued.
+::ng-deep mat-list-option[aria-selected="true"] .mdc-checkbox__background {
+  border-color: $ob-primary !important;
+  background-color: $ob-primary !important;
 }
