@@ -1,11 +1,12 @@
-import { Component, EventEmitter, Inject, Input, Output, ViewContainerRef } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { map, tap } from 'rxjs';
-import { AddressService } from '../../services';
+import { AddressService, DownloadService } from '../../services';
 import { ColumnService } from '../../services/column.service';
 import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTableEntry';
 import { CoordinateSystem } from '../../models/CoordinateSystem';
 import { ColumnDefinitions } from '../../models/ColumnConfiguration';
+import { MatRipple } from '@angular/material/core';
 
 //all columns that should not be rendered in a generic way, need to have a custom
 //matColumnDef in the template and need to be registered here
@@ -23,9 +24,11 @@ const customLayoutColumns: string[] = [
   templateUrl: './result-table.component.html',
   styleUrls: ['./result-table.component.scss']
 })
-export class ResultTableComponent {
+export class ResultTableComponent implements OnInit {
   @Output()
   editHandler = new EventEmitter<AddressCoordinateTableEntry>();
+
+  @ViewChild('ripple') ripple: MatRipple | undefined;
 
   displayedColumns$ = this.columnService.columns$.pipe(
     map(userConfig => {
@@ -49,8 +52,13 @@ export class ResultTableComponent {
     public addressService: AddressService,
     public columnService: ColumnService,
     public dialog: MatDialog,
-    public viewContainerRef: ViewContainerRef
+    public viewContainerRef: ViewContainerRef,
+    private downloadService: DownloadService
   ) {}
+
+  ngOnInit() {
+    this.downloadService.addressesCopied$.subscribe(() => this.ripple?.launch(0, 0, { centered: true }));
+  }
 
   private expandColumnForView(column: ColumnDefinitions): string[] {
     switch (column) {

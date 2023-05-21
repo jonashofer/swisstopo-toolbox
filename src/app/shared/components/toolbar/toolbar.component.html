@@ -5,7 +5,8 @@
 		[matTooltip]="'toolbar.copy.tooltip' | translate"
 		matTooltipPosition="after"
 		matTooltipShowDelay="100"
-		[cdkCopyToClipboard]="downloadService.getCopyToClipboardText()">
+		[cdkCopyToClipboard]="downloadService.getCopyToClipboardText()"
+		(click)="downloadService.addressesCopied$.next()">
 		{{ "toolbar.copy.label" | translate }}
 		<mat-icon svgIcon="duplicate" class="ob-icon"></mat-icon>
 	</button>

@@ -1,13 +1,15 @@
 import { Inject, Injectable } from '@angular/core';
 import saveAs from 'file-saver';
 import { CoordinateService } from '.';
-import { CoordinatePipe } from '../components/coordinate.pipe';
 import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEntry';
-import { CoordinateSystem } from '../models/CoordinateSystem';
 import { AddressService } from './address.service';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class DownloadService {
+
+  public addressesCopied$ = new Subject<void>();
+
   constructor(
     @Inject(AddressService) private readonly addressService: AddressService,
     private readonly coordinateService: CoordinateService

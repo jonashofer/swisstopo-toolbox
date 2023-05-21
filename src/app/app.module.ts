@@ -67,6 +67,7 @@ import { ColumnConfigDialogComponent } from './shared/components/column-config-d
 import { CoordinateToAddressComponent } from './coordinate-to-address/coordinate-to-address.component';
 import { TextInputComponent } from './shared/components/text-input/text-input.component';
 import { SearchInputComponent } from './shared/components/search-input/search-input.component';
+import { MatRippleModule } from '@angular/material/core';
 
 registerLocaleData(localeDECH);
 registerLocaleData(localeFRCH);
@@ -92,6 +93,7 @@ registerLocaleData(localeENCH);
     CoordinateToAddressComponent
   ],
   imports: [
+    MatRippleModule,
     MatListModule,
     DragDropModule,
     BrowserModule,

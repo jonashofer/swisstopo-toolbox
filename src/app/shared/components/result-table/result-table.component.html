@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="addressService.addresses$" [ngClass]="['ob-table', 'ob-table-sm']">
+<table mat-table [dataSource]="addressService.addresses$" [ngClass]="['ob-table', 'ob-table-sm']" matRipple #ripple="matRipple" [matRippleDisabled]="true">
 	<ng-container matColumnDef="trash">
 		<th mat-header-cell *matHeaderCellDef>
 			<button
