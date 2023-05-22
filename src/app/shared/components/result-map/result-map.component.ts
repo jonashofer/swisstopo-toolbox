@@ -4,16 +4,21 @@ import { Feature, View } from 'ol';
 import { Tile as TileLayer } from 'ol/layer';
 import { XYZ } from 'ol/source';
 import { FullScreen } from 'ol/control';
-import VectorSource from 'ol/source/Vector';
+import VectorSource, { VectorSourceEvent } from 'ol/source/Vector';
 import VectorLayer from 'ol/layer/Vector';
 import Point from 'ol/geom/Point';
 import { fromLonLat, transformExtent } from 'ol/proj';
-import { Icon, Style } from 'ol/style';
+import { Fill, Icon, Stroke, Style } from 'ol/style';
 import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTableEntry';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { filter } from 'rxjs/operators';
 import { DownloadService } from '../../services';
 import { StorageService } from '../../services/storage.service';
+import { MapInteractionService } from '../../services/map-interaction.service';
+import EventType from 'ol/events/EventType';
+import BaseEvent from 'ol/events/Event';
+import CircleStyle from 'ol/style/Circle';
+import { set } from 'ol/transform';
 
 enum BackgroundLayers {
   Standard = 'pixel_farbig',
@@ -35,13 +40,73 @@ const layers = [
   })
 ];
 
-const markerLayer = new VectorLayer({
-  style: new Style({
-    image: new Icon({
-      anchor: [0.5, 1],
-      src: 'https://map.geo.admin.ch/f13b978/img/marker.png'
+const svg = (hexFill: string, hexStroke: string) => encodeURIComponent(`
+<svg version="1.1" id="marker" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+	width="40" height="40" viewBox="0 0 256 256" xml:space="preserve">
+	<style type="text/css">
+		<![CDATA[
+			.st0{fill:${hexFill};}
+			.st1{fill:${hexStroke};}
+		]]>
+	</style>
+	<path class="st1" d="M128.18,249.042c-4.252,0-8.151-2.365-10.114-6.137L64.648,140.331c-0.082-0.156-0.159-0.313-0.233-0.474
+		C55.837,121.342,47.9,101.865,47.9,84.859c0-20.079,8.655-40.271,23.747-55.4c15.512-15.549,35.68-24.113,56.787-24.113
+		c21.099,0,41.188,8.579,56.57,24.155c14.904,15.093,23.453,35.271,23.454,55.358c0,18.868-9.282,38.867-16.062,53.47l-0.707,1.526
+		c-0.07,0.152-0.146,0.306-0.224,0.453l-53.159,102.574c-1.959,3.778-5.859,6.151-10.116,6.156
+		C128.188,249.042,128.184,249.042,128.18,249.042z"/>
+	<path class="st0" d="M128.052,16.75c-37.729,0-69.129,32.667-69.129,68.109c0,15.947,8.973,36.204,15.459,50.204l53.417,102.574
+		l53.162-102.574c6.484-13.999,15.711-33.242,15.711-50.203C196.671,49.418,165.773,16.75,128.052,16.75z M127.025,113.857
+		c-16.585,0-30.031-13.445-30.031-30.03s13.445-30.03,30.031-30.03c16.584,0,30.03,13.445,30.03,30.03
+		S143.609,113.857,127.025,113.857z"/>
+</svg>`);
+
+const svgSrc = (hexFill: string, hexStroke: string) => `data:image/svg+xml;charset=utf-8,${svg(hexFill, hexStroke)}`;
+
+const iconStyle = new Style({
+  image: new Icon({
+    anchor: [0.5, 1],
+    src: svgSrc('#fa011c', "#ffffff")
+  })
+});
+
+const selectedIconStyle = new Style({
+  image: new Icon({
+    anchor: [0.5, 1],
+    src: svgSrc("#b00020", '#ffffff')
+    // src: svgSrc("#ffffff", '#fa011c')
+    // src: svgSrc("#14516f", '#ffffff')
+  })
+});
+// const markerStyle = new Style({
+//   image: new Icon({
+//     anchor: [0.5, 1],
+//     src: 'https://map.geo.admin.ch/f13b978/img/marker.png'
+//   })
+// })
+
+// const selectedMarkerStyle = new Style({
+//   image: new Icon({
+//     anchor: [0.5, 1],
+//     src: 'https://map.geo.admin.ch/f13b978/img/marker.png',
+//     color: '#ffff00'
+//   })
+// })
+
+  const circleStyle = new Style({
+    image: new CircleStyle({
+      radius: 8,
+      fill: new Fill({
+        color: [255, 255, 0, 0.5]
+      }),
+      stroke: new Stroke({
+        color: [255, 140, 0, 1],
+        width: 3
+      })
     })
   })
+
+const markerLayer = new VectorLayer({
+  style: iconStyle
 });
 
 const view = new View({
@@ -53,7 +118,7 @@ const view = new View({
   enableRotation: false
 });
 
-const storageKey = "map-background";
+const storageKey = 'map-background';
 
 @Component({
   selector: 'app-result-map',
@@ -70,7 +135,8 @@ export class ResultMapComponent implements AfterViewInit, OnDestroy {
     const newFeatures = this._addresses.map(
       c =>
         new Feature({
-          geometry: new Point(fromLonLat([c.wgs84?.lon!, c.wgs84?.lat!]))
+          geometry: new Point(fromLonLat([c.wgs84?.lon!, c.wgs84?.lat!])),
+          gwrfeatureId: c.featureId
         })
     );
     markerLayer.setSource(
@@ -84,24 +150,18 @@ export class ResultMapComponent implements AfterViewInit, OnDestroy {
   @ViewChild('map')
   mapDiv: ElementRef | undefined;
 
-	BackgroundLayers = BackgroundLayers;
-	currentLayer: BackgroundLayers = BackgroundLayers.Standard;
+  BackgroundLayers = BackgroundLayers;
+  currentLayer: BackgroundLayers = BackgroundLayers.Standard;
 
-  get kmlFunctionLink() {
-    const coords: any = {};
-    this._addresses.forEach((adr, index) => {
-      coords[index] = `${adr.wgs84?.lon},${adr.wgs84?.lat}`;
-    });
-    return `${window.location.protocol}//${window.location.host}/.netlify/functions/kml?${new URLSearchParams(coords)}`;
+  constructor(
+    private readonly mapInteractionService: MapInteractionService,
+    private readonly downloadService: DownloadService,
+    private readonly dialog: MatDialog
+  ) {
+    this.currentLayer = StorageService.get<BackgroundLayers>(storageKey) || BackgroundLayers.Standard;
+
+    this.mapInteractionService.tableToMap$.subscribe(featureId => this.hightlightFeature(featureId));
   }
-
-  get mapGeoAdminLink() {
-    return `https://map.geo.admin.ch/?layers=KML%7C%7C${encodeURIComponent(this.kmlFunctionLink)}`;
-  }
-
-  constructor(private readonly downloadService: DownloadService, private readonly dialog: MatDialog) {
-		this.currentLayer = StorageService.get<BackgroundLayers>(storageKey) || BackgroundLayers.Standard;
-	}
 
   ngAfterViewInit() {
     if (this.mapDiv) {
@@ -112,6 +172,27 @@ export class ResultMapComponent implements AfterViewInit, OnDestroy {
         target: this.mapDiv.nativeElement
       });
       this.fitView();
+
+      this.map.on('click', (e: any) => {
+        const features = this.map?.getFeaturesAtPixel(e.pixel, {layerFilter: layer => layer === markerLayer});
+        if (features && features.length > 0) {
+          const feature = features[0];
+          const featureId = feature.get('gwrfeatureId');
+          this.mapInteractionService.sendToTable(featureId);
+          this.hightlightFeature(featureId)
+        }
+      });
+
+      this.map.on('pointermove', evt => {
+        var hit = this.map?.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
+          return true;
+        });
+        if (hit) {
+          this.map!.getTargetElement().style.cursor = 'pointer';
+        } else {
+          this.map!.getTargetElement().style.cursor = '';
+        }
+      });
     }
   }
 
@@ -140,12 +221,12 @@ export class ResultMapComponent implements AfterViewInit, OnDestroy {
 
   changeBackground() {
     this.map?.setLayers(this.getLayers());
-		StorageService.save<BackgroundLayers>(storageKey, this.currentLayer)
+    StorageService.save<BackgroundLayers>(storageKey, this.currentLayer);
   }
 
-	getLayers() {
-		return [...layers.filter(l => l.getProperties().name == this.currentLayer), markerLayer];
-	}
+  getLayers() {
+    return [...layers.filter(l => l.getProperties().name == this.currentLayer), markerLayer];
+  }
 
   openMapAdminDialog(templateRef: TemplateRef<any>) {
     const dialogRef = this.dialog.open(templateRef);
@@ -157,5 +238,14 @@ export class ResultMapComponent implements AfterViewInit, OnDestroy {
         this.downloadService.downloadKml();
         window.open('https://map.geo.admin.ch', '_blank');
       });
+  }
+
+  private hightlightFeature(featureId: string) {
+      const feature = markerLayer.getSource()?.getFeatures().find(f => f.get('gwrfeatureId') === featureId);
+      feature?.setStyle(selectedIconStyle)
+      setTimeout(() => {
+        feature?.setStyle(iconStyle)
+      }, 1000)
+    
   }
 }

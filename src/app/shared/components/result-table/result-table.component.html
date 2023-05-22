@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="addressService.addresses$" [ngClass]="['ob-table', 'ob-table-sm']" matRipple #ripple="matRipple" [matRippleDisabled]="true">
+<table mat-table [dataSource]="addressService.addresses$" [ngClass]="['ob-table', 'ob-table-sm', 'ob-table-hover']" matRipple #tableRipple="matRipple" [matRippleDisabled]="true">
 	<ng-container matColumnDef="trash">
 		<th mat-header-cell *matHeaderCellDef>
 			<button
@@ -40,7 +40,7 @@
 				[matTooltip]="'table.entry.edit' | translate"
 				matTooltipPosition="after"
 				matTooltipShowDelay="500"
-				(click)="editHandler.emit(element)"></mat-icon>
+				(click)="editHandler.emit(element); $event.stopPropagation()"></mat-icon>
 			<mat-icon
 				*ngIf="!element.isValid"
 				svgIcon="warning-triangle"
@@ -48,7 +48,7 @@
 				[matTooltip]="element.warningTranslationKey | translate"
 				matTooltipPosition="after"
 				matTooltipShowDelay="500"
-				(click)="editHandler.emit(element)"></mat-icon>
+				(click)="editHandler.emit(element); $event.stopPropagation()"></mat-icon>
 		</td>
 	</ng-container>
 	
@@ -95,7 +95,11 @@
 	</ng-container>
 
 	<tr mat-header-row *matHeaderRowDef="displayedColumns$ | async"></tr>
-	<tr mat-row *matRowDef="let row; columns: displayedColumns$ | async"></tr>
+	<tr mat-row
+		*matRowDef="let row; columns: displayedColumns$ | async"
+		(click)="tableRowClicked(row)"
+		[class.highlight]="highlightId == row.featureId"
+		></tr>
 </table>
 
 <ng-template #confirmResetDialog>

@@ -1,3 +1,5 @@
+@import 'node_modules/@oblique/oblique/styles/scss/core/variables';
+
 table {
   width: 100%;
   font-size: 0.9rem;
@@ -10,7 +12,7 @@ table {
   .mat-column-trash {
     width: 30px;
   }
-  
+
   .mat-column-config {
     width: 30px;
   }
@@ -18,18 +20,23 @@ table {
   .mat-column-wgs84_lat {
     width: 75px;
   }
+
   .mat-column-wgs84_lon {
     width: 75px;
   }
+
   .mat-column-lv95_east {
     width: 95px;
   }
+
   .mat-column-lv95_north {
     width: 95px;
   }
+
   .mat-column-lv03_east {
     width: 95px;
   }
+
   .mat-column-lv03_north {
     width: 95px;
   }
@@ -46,5 +53,10 @@ table {
     &[svgIcon='warning-triangle'] {
       color: #e75e00;
     }
+  }
+
+  .highlight {
+    background-color: $ob-light !important;
+    transition: background-color 0.5s cubic-bezier(0.075, 0.82, 0.165, 1)
   }
 }

@@ -7,6 +7,7 @@ import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTable
 import { CoordinateSystem } from '../../models/CoordinateSystem';
 import { ColumnDefinitions } from '../../models/ColumnConfiguration';
 import { MatRipple } from '@angular/material/core';
+import { MapInteractionService } from '../../services/map-interaction.service';
 
 //all columns that should not be rendered in a generic way, need to have a custom
 //matColumnDef in the template and need to be registered here
@@ -15,7 +16,7 @@ const customLayoutColumns: string[] = [
   ColumnDefinitions.LV_95,
   ColumnDefinitions.LV_03,
   ColumnDefinitions.ADDRESS,
-  ColumnDefinitions.EDIT_ADDRESS,
+  ColumnDefinitions.EDIT_ADDRESS
   // ColumnDefinitions.COORDINATE_CHIPS
 ];
 
@@ -28,7 +29,7 @@ export class ResultTableComponent implements OnInit {
   @Output()
   editHandler = new EventEmitter<AddressCoordinateTableEntry>();
 
-  @ViewChild('ripple') ripple: MatRipple | undefined;
+  @ViewChild('tableRipple') tableRipple: MatRipple | undefined;
 
   displayedColumns$ = this.columnService.columns$.pipe(
     map(userConfig => {
@@ -48,16 +49,28 @@ export class ResultTableComponent implements OnInit {
   sys = CoordinateSystem;
   col = ColumnDefinitions;
 
+  highlightId = '';
+
   constructor(
     public addressService: AddressService,
     public columnService: ColumnService,
     public dialog: MatDialog,
     public viewContainerRef: ViewContainerRef,
-    private downloadService: DownloadService
+    private downloadService: DownloadService,
+    private mapInteractionService: MapInteractionService
   ) {}
 
   ngOnInit() {
-    this.downloadService.addressesCopied$.subscribe(() => this.ripple?.launch(0, 0, { centered: true }));
+    this.downloadService.addressesCopied$.subscribe(() => this.tableRipple?.launch(0, 0, { centered: true }));
+
+    this.mapInteractionService.mapToTable$.subscribe(id => {
+      this.highlightRow(id);
+    });
+  }
+
+  public tableRowClicked(row: AddressCoordinateTableEntry) {
+    this.highlightRow(row.featureId!);
+    this.mapInteractionService.sendToMap(row.featureId!);
   }
 
   private expandColumnForView(column: ColumnDefinitions): string[] {
@@ -70,5 +83,12 @@ export class ResultTableComponent implements OnInit {
       default:
         return [column];
     }
+  }
+
+  private highlightRow(featureId: string) {
+    this.highlightId = featureId;
+      setTimeout(() => {
+        this.highlightId = '';
+      }, 1000);
   }
 }

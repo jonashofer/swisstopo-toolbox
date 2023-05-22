@@ -5,6 +5,7 @@ import { CoordinatePipe } from './shared/components/coordinate.pipe';
 import { AddressService, ApiService, ApiDetailService, CoordinateService, DownloadService } from './shared/services';
 import { ColumnService } from './shared/services/column.service';
 import { ReverseApiService } from './shared/services/reverse-api.service';
+import { MapInteractionService } from './shared/services/map-interaction.service';
 
 export interface FeatureTabConfig {
   shortName: string;
@@ -30,6 +31,7 @@ export function getFeatureTabComponentProviders(featureName: string, shortName: 
     DownloadService,
     DecimalPipe,
     CoordinatePipe,
-    ReverseApiService
+    ReverseApiService,
+    MapInteractionService
   ];
 }
