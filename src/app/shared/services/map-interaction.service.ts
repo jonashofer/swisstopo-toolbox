@@ -3,21 +3,19 @@ import { Subject } from "rxjs";
 
 @Injectable()
 export class MapInteractionService {
-    private tableToMap = new Subject<string>();
+    private tableToMap = new Subject<{id: string, end: boolean}>();
     public tableToMap$ = this.tableToMap.asObservable();
 
-    private mapToTable = new Subject<string>();
+    private mapToTable = new Subject<{id: string, end: boolean}>();
     public mapToTable$ = this.mapToTable.asObservable();
 
     constructor() {}
 
-    public sendToMap(id: string) {
-        console.log("sendToMap", id);
-        this.tableToMap.next(id);
+    public sendToMap(id: string, end: boolean) {
+        this.tableToMap.next({id, end});
     }
 
-    public sendToTable(id: string) {
-        console.log("sendToTable", id);
-        this.mapToTable.next(id);
+    public sendToTable(id: string, end: boolean) {
+        this.mapToTable.next({id, end});
     }
 }

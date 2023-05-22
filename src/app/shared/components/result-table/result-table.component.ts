@@ -63,15 +63,15 @@ export class ResultTableComponent implements OnInit {
   ngOnInit() {
     this.downloadService.addressesCopied$.subscribe(() => this.tableRipple?.launch(0, 0, { centered: true }));
 
-    this.mapInteractionService.mapToTable$.subscribe(id => {
-      this.highlightRow(id);
+    this.mapInteractionService.mapToTable$.subscribe((x) => {
+      this.highlightRow(x.id, x.end);
     });
   }
 
-  public tableRowClicked(row: AddressCoordinateTableEntry) {
-    this.highlightRow(row.featureId!);
-    this.mapInteractionService.sendToMap(row.featureId!);
-  }
+  // public tableRowClicked(row: AddressCoordinateTableEntry) {
+  //   // this.highlightRow(row.featureId!, false);
+  //   this.mapInteractionService.sendToMap(row.featureId!, false);
+  // }
 
   private expandColumnForView(column: ColumnDefinitions): string[] {
     switch (column) {
@@ -85,10 +85,15 @@ export class ResultTableComponent implements OnInit {
     }
   }
 
-  private highlightRow(featureId: string) {
-    this.highlightId = featureId;
-      setTimeout(() => {
-        this.highlightId = '';
-      }, 1000);
+  private highlightRow(featureId: string, end: boolean) {
+    if (end) {
+      this.highlightId = '';
+    } else {
+      this.highlightId = featureId;
+    }
+  }
+
+  rowHovered(row: AddressCoordinateTableEntry, isHovered: boolean) {
+    this.mapInteractionService.sendToMap(row.featureId!, isHovered)
   }
 }

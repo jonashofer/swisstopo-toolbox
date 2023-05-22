@@ -19,6 +19,7 @@ import EventType from 'ol/events/EventType';
 import BaseEvent from 'ol/events/Event';
 import CircleStyle from 'ol/style/Circle';
 import { set } from 'ol/transform';
+import { Geometry } from 'ol/geom';
 
 enum BackgroundLayers {
   Standard = 'pixel_farbig',
@@ -40,7 +41,8 @@ const layers = [
   })
 ];
 
-const svg = (hexFill: string, hexStroke: string) => encodeURIComponent(`
+const svg = (hexFill: string, hexStroke: string) =>
+  encodeURIComponent(`
 <svg version="1.1" id="marker" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
 	width="40" height="40" viewBox="0 0 256 256" xml:space="preserve">
 	<style type="text/css">
@@ -65,14 +67,14 @@ const svgSrc = (hexFill: string, hexStroke: string) => `data:image/svg+xml;chars
 const iconStyle = new Style({
   image: new Icon({
     anchor: [0.5, 1],
-    src: svgSrc('#fa011c', "#ffffff")
+    src: svgSrc('#fa011c', '#ffffff')
   })
 });
 
 const selectedIconStyle = new Style({
   image: new Icon({
     anchor: [0.5, 1],
-    src: svgSrc("#b00020", '#ffffff')
+    src: svgSrc('#b00020', '#ffffff')
     // src: svgSrc("#ffffff", '#fa011c')
     // src: svgSrc("#14516f", '#ffffff')
   })
@@ -92,18 +94,18 @@ const selectedIconStyle = new Style({
 //   })
 // })
 
-  const circleStyle = new Style({
-    image: new CircleStyle({
-      radius: 8,
-      fill: new Fill({
-        color: [255, 255, 0, 0.5]
-      }),
-      stroke: new Stroke({
-        color: [255, 140, 0, 1],
-        width: 3
-      })
+const circleStyle = new Style({
+  image: new CircleStyle({
+    radius: 8,
+    fill: new Fill({
+      color: [255, 255, 0, 0.5]
+    }),
+    stroke: new Stroke({
+      color: [255, 140, 0, 1],
+      width: 3
     })
   })
+});
 
 const markerLayer = new VectorLayer({
   style: iconStyle
@@ -153,6 +155,7 @@ export class ResultMapComponent implements AfterViewInit, OnDestroy {
   BackgroundLayers = BackgroundLayers;
   currentLayer: BackgroundLayers = BackgroundLayers.Standard;
 
+  lastHighlightedFeature: Feature<Geometry> | null = null;
   constructor(
     private readonly mapInteractionService: MapInteractionService,
     private readonly downloadService: DownloadService,
@@ -160,7 +163,7 @@ export class ResultMapComponent implements AfterViewInit, OnDestroy {
   ) {
     this.currentLayer = StorageService.get<BackgroundLayers>(storageKey) || BackgroundLayers.Standard;
 
-    this.mapInteractionService.tableToMap$.subscribe(featureId => this.hightlightFeature(featureId));
+    this.mapInteractionService.tableToMap$.subscribe(x => this.hightlightFeature(x.id, x.end));
   }
 
   ngAfterViewInit() {
@@ -173,24 +176,46 @@ export class ResultMapComponent implements AfterViewInit, OnDestroy {
       });
       this.fitView();
 
-      this.map.on('click', (e: any) => {
-        const features = this.map?.getFeaturesAtPixel(e.pixel, {layerFilter: layer => layer === markerLayer});
-        if (features && features.length > 0) {
-          const feature = features[0];
-          const featureId = feature.get('gwrfeatureId');
-          this.mapInteractionService.sendToTable(featureId);
-          this.hightlightFeature(featureId)
-        }
-      });
+      // this.map.on('click', (e: any) => {
+      //   const features = this.map?.getFeaturesAtPixel(e.pixel, {layerFilter: layer => layer === markerLayer});
+      //   if (features && features.length > 0) {
+      //     const feature = features[0];
+      //     const featureId = feature.get('gwrfeatureId');
+      //     this.mapInteractionService.sendToTable(featureId, false);
+      //     this.hightlightFeature(featureId, false)
+      //   }
+      // });
 
       this.map.on('pointermove', evt => {
-        var hit = this.map?.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
-          return true;
-        });
-        if (hit) {
-          this.map!.getTargetElement().style.cursor = 'pointer';
-        } else {
+        const features = this.map?.getFeaturesAtPixel(evt.pixel, { layerFilter: layer => layer === markerLayer });
+
+        if (features == null) {
+          return;
+        }
+
+        const isLeave =
+          (features.length === 0 || features[0] !== this.lastHighlightedFeature) && this.lastHighlightedFeature != null;
+        const isEnter = features.length > 0 && features[0] !== this.lastHighlightedFeature;
+        const isSame = features.length > 0 && features[0] === this.lastHighlightedFeature;
+
+        if (!isLeave && !isEnter && !isSame) {
+          return;
+        }
+
+        if (isLeave) {
+          this.mapInteractionService.sendToTable(this.lastHighlightedFeature?.get('gwrfeatureId'), true);
+          this.lastHighlightedFeature?.setStyle(iconStyle);
           this.map!.getTargetElement().style.cursor = '';
+          this.lastHighlightedFeature = null;
+          return;
+        }
+        if (isEnter) {
+          const feature = features[0];
+          this.lastHighlightedFeature = feature as Feature<Geometry>;
+          this.lastHighlightedFeature.setStyle(selectedIconStyle);
+          this.map!.getTargetElement().style.cursor = 'pointer';
+          this.mapInteractionService.sendToTable(feature.get('gwrfeatureId'), false);
+          return;
         }
       });
     }
@@ -240,12 +265,11 @@ export class ResultMapComponent implements AfterViewInit, OnDestroy {
       });
   }
 
-  private hightlightFeature(featureId: string) {
-      const feature = markerLayer.getSource()?.getFeatures().find(f => f.get('gwrfeatureId') === featureId);
-      feature?.setStyle(selectedIconStyle)
-      setTimeout(() => {
-        feature?.setStyle(iconStyle)
-      }, 1000)
-    
+  private hightlightFeature(featureId: string, end: boolean) {
+    const feature = markerLayer
+      .getSource()
+      ?.getFeatures()
+      .find(f => f.get('gwrfeatureId') === featureId);
+    feature?.setStyle(end ? selectedIconStyle : iconStyle);
   }
 }
