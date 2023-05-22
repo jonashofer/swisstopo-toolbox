@@ -1,7 +1,7 @@
 <app-search-input [searchMode]="addressSearchMode" [addressToEdit]="addressToEdit"></app-search-input>
 
 <app-result-table *ngIf="addressService.hasAddresses$ | async"
-	(editHandler)="addressToEdit = $event"></app-result-table>
+	(editHandler)="edit($event)"></app-result-table>
 
 <app-toolbar *ngIf="addressService.hasAddresses$ | async"></app-toolbar>
 

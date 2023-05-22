@@ -49,7 +49,7 @@ export class AddressService {
   }
 
   public addOrUpdateAddress(addressResult: AddressSelectionResult) {
-    if (addressResult.updatedId) {
+    if (addressResult.updatedId && this._addresses.value.some(a => a.id === addressResult.updatedId)) {
       const addresses = this._addresses.value.slice();
       const indexToReplace = addresses.findIndex(e => e.id == addressResult.updatedId);
       addresses[indexToReplace] = addressResult.result;

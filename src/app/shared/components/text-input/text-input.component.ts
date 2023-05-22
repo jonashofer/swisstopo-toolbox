@@ -44,7 +44,6 @@ export class TextInputComponent {
   results$: Observable<SearchResultItem[]> = this.inputFormControl.valueChanges.pipe(
     debounceTime(300),
     switchMap(value => {
-      console.log('letsgo');
       if (this.inputFormControl.valid && typeof value === 'string' && value !== '') {
         if (this.mode === InputSearchMode.Coordinate) {
           return this.reverseApi.search(value).pipe(

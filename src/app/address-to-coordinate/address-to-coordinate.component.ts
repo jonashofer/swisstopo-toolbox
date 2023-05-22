@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { AddressCoordinateTableEntry } from '../shared/models/AddressCoordinateTableEntry';
 import { AddressService, CoordinateService } from '../shared/services';
-import { ColumnService } from '../shared/services/column.service';
 import { getFeatureTabComponentProviders } from '../feature-tab.config';
 import { InputSearchMode } from '../shared/models/InputSearchMode';
 
@@ -20,4 +19,8 @@ export class AddressToCoordinateComponent {
   constructor(
     public addressService: AddressService,
   ) {}
+
+  edit(address: AddressCoordinateTableEntry) {
+    this.addressToEdit = {...address};
+  }
 }

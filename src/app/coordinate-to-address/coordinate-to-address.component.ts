@@ -19,4 +19,8 @@ export class CoordinateToAddressComponent {
   constructor(
     public addressService: AddressService,
   ) {}
+
+  edit(address: AddressCoordinateTableEntry) {
+    this.editedAddress = {...address};
+  }
 }
