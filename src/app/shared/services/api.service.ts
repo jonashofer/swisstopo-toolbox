@@ -24,14 +24,14 @@ interface Attrs {
   label: string;
 }
 
-export interface ApiSearchResult {
+export interface AddressToCoordinateApiData {
   id: number;
   weight: number;
   attrs: Attrs;
 }
 
 interface RootObject {
-  results: ApiSearchResult[];
+  results: AddressToCoordinateApiData[];
 }
 
 @Injectable()
@@ -44,7 +44,7 @@ export class ApiService {
     private readonly translate: TranslateService
   ) {}
 
-  public searchLocationsList(input: string): Observable<ApiSearchResult[]> {
+  public searchLocationsList(input: string): Observable<AddressToCoordinateApiData[]> {
     input = input.trim();
     if (!input) {
       return of([]);
@@ -62,7 +62,7 @@ export class ApiService {
     )}&lang=de&type=locations&origins=address`;
     return this.httpClient.get<RootObject>(request).pipe(
       map((data: RootObject) => {
-        const resultWeightDesc = (a: ApiSearchResult, b: ApiSearchResult) => b.weight - a.weight;
+        const resultWeightDesc = (a: AddressToCoordinateApiData, b: AddressToCoordinateApiData) => b.weight - a.weight;
         return data.results.sort(resultWeightDesc);
       })
     );
@@ -105,7 +105,7 @@ export class ApiService {
     );
   }
 
-  public mapApiResultToAddress(result: ApiSearchResult): AddressCoordinateTableEntry {
+  public mapApiResultToAddress(result: AddressToCoordinateApiData): AddressCoordinateTableEntry {
     return {
       address: this.sanitize(result.attrs.label),
       id: result.attrs.featureId,
@@ -122,7 +122,7 @@ export class ApiService {
 
   public convert(coordinate: Coordinate, targetSystem: CoordinateSystem): Observable<Coordinate> {
     if (coordinate.system == targetSystem || coordinate.system == null) {
-      return of(coordinate);
+      return of(coordinate)
     }
 
     const mode = this.buildReframeApiMode(coordinate.system, targetSystem);

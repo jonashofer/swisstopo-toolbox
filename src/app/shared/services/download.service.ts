@@ -6,7 +6,6 @@ import { AddressService } from './address.service';
 import { Subject } from 'rxjs';
 import { FEATURE_SERVICE_TOKEN, FeatureService } from './features/feature.service';
 
-//TODO generalize-refactoring
 @Injectable()
 export class DownloadService {
 

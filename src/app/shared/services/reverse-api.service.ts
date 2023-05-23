@@ -20,7 +20,7 @@ interface GWRSearchResult {
   id: string;
   attributes: GWREntry;
 }
-interface SearchResultData {
+export interface CoordinateToAddressApiData {
   gwr: GWRSearchResult;
   addressText: string;
   distance: number;
@@ -37,13 +37,8 @@ export class ReverseApiService {
     private translateService: TranslateService
   ) {}
 
-  public validateSearchInput(value: string): { valid: boolean; messageLabel?: string | undefined } {
-    const parsed = this.coordinateService.tryParse(value);
-    if (parsed === null) {
-      return { valid: false, messageLabel: 'notifications.inputNotCoordinate' };
-    } else {
-      return { valid: true };
-    }
+  public validateSearchInput(value: string): string | null {
+    return this.coordinateService.tryParse(value) === null ? 'notifications.inputNotCoordinate' : null;
   }
 
   public searchMultiple(lines: string[]): Observable<AddressCoordinateTableEntry> {
@@ -62,7 +57,7 @@ export class ReverseApiService {
           };
           return of(entry);
         } else {
-          return this.search(userInput).pipe(
+          return this.search(parseResult).pipe(
             switchMap(r => {
               if (r.length > 0) {
                 return this.mapReverseApiResultToAddress(r[0]);
@@ -84,18 +79,18 @@ export class ReverseApiService {
     );
   }
 
-  public search(input: string): Observable<SearchResultItemTyped<SearchResultData>[]> {
-    const coordinates = this.coordinateService.tryParse(input)!;
-
+  public search(input: Coordinate): Observable<SearchResultItemTyped<CoordinateToAddressApiData>[]> {
     return this.apiService
-      .convert(coordinates, CoordinateSystem.LV_95)
+      .convert(input, CoordinateSystem.LV_95)
       .pipe(
-        switchMap(value => this.searchNearestAddresses(value, this.coordinateService.stringify(coordinates, ', ')))
+        switchMap(value => this.searchNearestAddresses(value, this.coordinateService.stringify(input, ', ')))
       );
   }
 
   //TODO wgs84 zu enrich zügeln, dann kann muss auch hier kein observable zurückgegeben werden
-  public mapReverseApiResultToAddress(item: SearchResultItemTyped<SearchResultData>): Observable<AddressCoordinateTableEntry> {
+  public mapReverseApiResultToAddress(
+    item: SearchResultItemTyped<CoordinateToAddressApiData>
+  ): Observable<AddressCoordinateTableEntry> {
     const i = item.data;
     const gwr = i.gwr;
     return this.apiService.convert(i.lv95, CoordinateSystem.WGS_84).pipe(
@@ -123,17 +118,13 @@ export class ReverseApiService {
     );
   }
 
-  public searchNearestAddresses(lv95coord: Coordinate, originalInput: string): Observable<SearchResultItemTyped<SearchResultData>[]> {
+  public searchNearestAddresses(
+    lv95coord: Coordinate,
+    originalInput: string
+  ): Observable<SearchResultItemTyped<CoordinateToAddressApiData>[]> {
     if (lv95coord.system !== CoordinateSystem.LV_95) {
       return of([]);
     }
-    // same validation as in search input for catching multiline or fileinputs
-    // const validation = this.validateSearchInput(input);
-    // if (!validation.valid) {
-    //   this.notificationService.warning(this.translate.instant(validation.messageLabel!));
-    //   return of({ input, results: [] });
-    // }
-
     const request = `https://api.geo.admin.ch/rest/services/api/MapServer/identify?mapExtent=0,0,100,100&imageDisplay=100,100,100&tolerance=100&geometryType=esriGeometryPoint&geometry=${lv95coord.lon},${lv95coord.lat}&layers=all:ch.bfs.gebaeude_wohnungs_register&returnGeometry=false&sr=2056`;
 
     return this.httpClient.get<MapServerIdentifyResult>(request).pipe(
@@ -161,7 +152,7 @@ export class ReverseApiService {
             };
           })
           .sort((a, b) => a.data.distance - b.data.distance);
-      })
+      }),
     );
   }
 

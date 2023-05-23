@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { FeatureServiceBase, SearchResultItemTyped, } from './feature.service';
-import { ApiSearchResult, ApiService } from '../api.service';
+import { AddressToCoordinateApiData, ApiService } from '../api.service';
 import { Observable, catchError, map, of } from 'rxjs';
 import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTableEntry';
 import { ColumnConfigItem, ColumnDefinitions, inactiveUserCol, sysCol, userCol } from '../../models/ColumnConfiguration';
 
 @Injectable()
-export class AddressToCoordinateService extends FeatureServiceBase<string, ApiSearchResult> {
+export class AddressToCoordinateService extends FeatureServiceBase<AddressToCoordinateApiData> {
 
-  constructor(private apiService: ApiService) {
+  constructor(private readonly apiService: ApiService) {
     super('address-to-coordinate', 'atc');
   }
 
@@ -16,11 +16,7 @@ export class AddressToCoordinateService extends FeatureServiceBase<string, ApiSe
     return this.apiService.validateSearchInput(input);
   }
 
-  parseInput(validInput: string): string {
-    return validInput;
-  }
-
-  search(input: string): Observable<SearchResultItemTyped<ApiSearchResult>[]> {
+  search(input: string): Observable<SearchResultItemTyped<AddressToCoordinateApiData>[]> {
     return this.apiService.searchLocationsList(input).pipe(
       map(r =>
         r.map(apiSearchResult => ({ text: apiSearchResult.attrs.label, originalInput: input, data: apiSearchResult }))
@@ -35,7 +31,7 @@ export class AddressToCoordinateService extends FeatureServiceBase<string, ApiSe
     throw new Error('Method not implemented.');
   }
 
-  transformInput(input: SearchResultItemTyped<ApiSearchResult>): Observable<AddressCoordinateTableEntry> {
+  transformInput(input: SearchResultItemTyped<AddressToCoordinateApiData>): Observable<AddressCoordinateTableEntry> {
     return of(this.apiService.mapApiResultToAddress(input.data));
   }
 

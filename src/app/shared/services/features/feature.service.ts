@@ -23,12 +23,9 @@ export interface FeatureService {
   
   validateSearchInput(input: string): string | null;
 
-  parseInput(validInput: string): any;
+  // parseInput(validInput: string): any;
 
-  search(input: any): Observable<SearchResultItem[]>;
-
-  // TODO re-add if needed, currently defaulting to option.text
-  // abstract displayFn(input: SearchResultItem<AutocompleteData>): string;
+  search(validInput: string): Observable<SearchResultItem[]>;
 
   // TODO remove observable need by moving dynamic things (reverse wgs84 search) into enrich
   transformInput(input: SearchResultItem): Observable<AddressCoordinateTableEntry>;
@@ -44,18 +41,15 @@ export interface FeatureService {
 }
 
 @Injectable()
-export abstract class FeatureServiceBase<ParsedInputType, AutocompleteData> implements FeatureService {
+export abstract class FeatureServiceBase<AutocompleteData> implements FeatureService {
 
   constructor(public name: string, public shortName: string) { }
 
   abstract validateSearchInput(input: string): string | null;
 
-  abstract parseInput(validInput: string): ParsedInputType;
+  // abstract parseInput(validInput: string): ParsedInputType;
 
-  abstract search(input: ParsedInputType): Observable<SearchResultItemTyped<AutocompleteData>[]>;
-
-  // TODO re-add if needed, currently defaulting to option.text
-  // abstract displayFn(input: SearchResultItem<AutocompleteData>): string;
+  abstract search(validInput: string): Observable<SearchResultItemTyped<AutocompleteData>[]>;
 
   abstract transformInput(input: SearchResultItemTyped<AutocompleteData>): Observable<AddressCoordinateTableEntry>;
 

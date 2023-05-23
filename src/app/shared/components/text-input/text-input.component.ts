@@ -42,23 +42,7 @@ export class TextInputComponent {
     debounceTime(300),
     switchMap(value => {
       if (this.inputFormControl.valid && typeof value === 'string' && value !== '') {
-        //TODO generalize-refactoring
         return this.featureService.search(value);
-
-        // if (this.mode === InputSearchMode.Coordinate) {
-        //   return this.reverseApi.search(value).pipe(
-        //     catchError(err => {
-        //       return of([]);
-        //     })
-        //   );
-        // } else {
-        //   return this.api.searchLocationsList(value).pipe(
-        //     map(r => r.map(x => ({ text: x.attrs.label, originalInput: value, a2c_data: x } as SearchResultItem))),
-        //     catchError(err => {
-        //       return of([]);
-        //     })
-        //   );
-        // }
       } else {
         return of([]);
       }
@@ -68,19 +52,13 @@ export class TextInputComponent {
 
   existingEntryId: string | null = null;
 
-  // @Input()
-  // mode = InputSearchMode.All;
-
   searchLabel = '';
 
   @Input()
   set addressToEdit(existingEntry: AddressCoordinateTableEntry | null) {
     if (existingEntry) {
-      if (existingEntry.originalInput) {
-        this.inputFormControl.setValue(existingEntry.originalInput);
-      } else {
-        this.inputFormControl.setValue(existingEntry.address);
-      }
+      const value = this.featureService.transformEntryForEdit(existingEntry);
+      this.inputFormControl.setValue(value);
       this.existingEntryId = existingEntry.id;
       document.getElementsByTagName('input')[0].focus();
     }
@@ -99,19 +77,10 @@ export class TextInputComponent {
     this.searchLabel = `search.${featureService.shortName}.`;
   }
 
-  //TODO generalize-refactoring
   onOptionSelected(event: MatAutocompleteSelectedEvent) {
     this.inputFormControl.setValue(null);
     const selectedValue = event.option.value as SearchResultItem;
     this.featureService.transformInput(selectedValue).subscribe(r => this.emitEntry(r));
-
-    // if (selectedValue.a2c_data) {
-    //   const entry = this.api.mapApiResultToAddress(selectedValue.a2c_data);
-    //   this.emitEntry(entry);
-    // } else if (selectedValue.c2a_data) {
-    //   const entry = this.reverseApi.mapReverseApiResultToAddress(selectedValue);
-    //   entry.subscribe(e => this.emitEntry(e));
-    // }
   }
 
   clearInput() {
@@ -146,33 +115,17 @@ export class TextInputComponent {
   }
 
   private searchInputValidator(): ValidatorFn {
-
-  //TODO generalize-refactoring
     return (control: AbstractControl): ValidationErrors | null => {
-      if (control.value && typeof control.value === 'string') {
-        const validation = this.featureService.validateSearchInput(control.value);
-        if (validation) {
-          return { searchInput: validation};
+        if (control.value && typeof control.value === 'string') {
+            const validation = this.featureService.validateSearchInput(control.value);
+            if (validation) {
+                return { searchInput: validation };
+            }
         }
-        else {
-          return null;
-        }
-        // let validation: { valid: boolean; messageLabel?: string } = { valid: true };
-        // switch (this.mode) {
-        //   case InputSearchMode.Address:
-        //     validation = this.api.validateSearchInput(control.value);
-        //     break;
-        //   case InputSearchMode.Coordinate:
-        //     validation = this.reverseApi.validateSearchInput(control.value);
-        //     break;
-        // }
-        // if (!validation.valid) {
-        //   return { searchInput: validation.messageLabel! };
-        // }
-      }
-      return null;
+        return null;
     };
-  }
+}
+
 }
 
 // Custom Matcher needed to fire mat-error directly on change, as with updateOn: 'change'

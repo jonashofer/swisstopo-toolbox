@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { AddressCoordinateTableEntry } from '../shared/models/AddressCoordinateTableEntry';
 import { AddressService, CoordinateService } from '../shared/services';
+import { getFeatureProviders } from '../shared/services/features/feature.provider';
+import { CoordinateToAddressService } from '../shared/services/features/coordinate-to-address.feature.service';
 
 @Component({
   selector: 'app-coordinate-to-address',
   templateUrl: './coordinate-to-address.component.html',
-  // providers: getFeatureTabComponentProviders('coordinate-to-address')
+  providers: getFeatureProviders(CoordinateToAddressService)
 })
 export class CoordinateToAddressComponent {
   editedAddress: AddressCoordinateTableEntry | null = null;

@@ -71,36 +71,8 @@ export class ColumnService {
     this.saveConfig();
   }
 
-  //TODO generalize-refactoring
   public getInitial(): ColumnConfigItem[] {
     return this.featureService.getDefaultColumns();
-    // switch (this.featureIdentifier) {
-    //   case 'atc':
-    //     return [
-    //       userCol(ColumnDefinitions.ADDRESS),
-    //       sysCol(ColumnDefinitions.EDIT_ADDRESS),
-    //       userCol(ColumnDefinitions.WGS_84),
-    //       inactiveUserCol(ColumnDefinitions.LV_95),
-    //       inactiveUserCol(ColumnDefinitions.LV_03),
-    //       inactiveUserCol(ColumnDefinitions.HEIGHT),
-    //       inactiveUserCol(ColumnDefinitions.EGID),
-    //       inactiveUserCol(ColumnDefinitions.EGRID),
-    //     ];
-    //   case 'cta':
-    //     return [
-    //       // sysCol(ColumnDefinitions.COORDINATE_CHIPS),
-    //       userCol(ColumnDefinitions.WGS_84),
-    //       userCol(ColumnDefinitions.ADDRESS),
-    //       sysCol(ColumnDefinitions.EDIT_ADDRESS),
-    //       inactiveUserCol(ColumnDefinitions.LV_95),
-    //       inactiveUserCol(ColumnDefinitions.LV_03),
-    //       inactiveUserCol(ColumnDefinitions.HEIGHT),
-    //       inactiveUserCol(ColumnDefinitions.EGID),
-    //       inactiveUserCol(ColumnDefinitions.EGRID),
-    //     ];
-    //   default:
-    //     return [];
-    // }
   }
 
   private saveConfig() {
