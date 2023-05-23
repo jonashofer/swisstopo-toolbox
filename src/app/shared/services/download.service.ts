@@ -4,6 +4,7 @@ import { CoordinateService } from '.';
 import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEntry';
 import { AddressService } from './address.service';
 import { Subject } from 'rxjs';
+import { FEATURE_SERVICE_TOKEN, FeatureService } from './features/feature.service';
 
 //TODO generalize-refactoring
 @Injectable()
@@ -13,7 +14,8 @@ export class DownloadService {
 
   constructor(
     @Inject(AddressService) private readonly addressService: AddressService,
-    private readonly coordinateService: CoordinateService
+    private readonly coordinateService: CoordinateService,
+    @Inject(FEATURE_SERVICE_TOKEN) private readonly featureService: FeatureService
   ) {}
 
   public getCopyToClipboardText(): string {
@@ -21,7 +23,8 @@ export class DownloadService {
   }
 
   public downloadExampleTxt() {
-    const result = `Bundesplatz 1 3011 Bern\r\nSeftigenstrasse 264 3084 Wabern\r\nParadeplatz 2\r\n`;
+    // const result = `Bundesplatz 1 3011 Bern\r\nSeftigenstrasse 264 3084 Wabern\r\nParadeplatz 2\r\n`;
+    const result = this.featureService.getExampleFileContent();
     const file = new Blob([result], { type: 'text/plain' });
     saveAs(file, 'example.txt');
   }

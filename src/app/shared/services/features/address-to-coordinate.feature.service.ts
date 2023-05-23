@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
-import { BaseFeatureService, SearchResultItem, ValidationResult } from './feature-base.service';
+import { FeatureServiceBase, SearchResultItemTyped, } from './feature.service';
 import { ApiSearchResult, ApiService } from '../api.service';
 import { Observable, catchError, map, of } from 'rxjs';
 import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTableEntry';
 import { ColumnConfigItem, ColumnDefinitions, inactiveUserCol, sysCol, userCol } from '../../models/ColumnConfiguration';
 
 @Injectable()
-export class AddressToCoordinateService extends BaseFeatureService<string, ApiSearchResult> {
+export class AddressToCoordinateService extends FeatureServiceBase<string, ApiSearchResult> {
+
   constructor(private apiService: ApiService) {
-    super();
+    super('address-to-coordinate', 'atc');
   }
 
-  validateSearchInput(input: string): ValidationResult {
+  validateSearchInput(input: string): string | null {
     return this.apiService.validateSearchInput(input);
   }
 
@@ -19,7 +20,7 @@ export class AddressToCoordinateService extends BaseFeatureService<string, ApiSe
     return validInput;
   }
 
-  search(input: string): Observable<SearchResultItem<ApiSearchResult>[]> {
+  search(input: string): Observable<SearchResultItemTyped<ApiSearchResult>[]> {
     return this.apiService.searchLocationsList(input).pipe(
       map(r =>
         r.map(apiSearchResult => ({ text: apiSearchResult.attrs.label, originalInput: input, data: apiSearchResult }))
@@ -34,8 +35,8 @@ export class AddressToCoordinateService extends BaseFeatureService<string, ApiSe
     throw new Error('Method not implemented.');
   }
 
-  transformInput(input: SearchResultItem<ApiSearchResult>): AddressCoordinateTableEntry {
-    return this.apiService.mapApiResultToAddress(input.data);
+  transformInput(input: SearchResultItemTyped<ApiSearchResult>): Observable<AddressCoordinateTableEntry> {
+    return of(this.apiService.mapApiResultToAddress(input.data));
   }
 
   transformEntryForEdit(entry: AddressCoordinateTableEntry): string {

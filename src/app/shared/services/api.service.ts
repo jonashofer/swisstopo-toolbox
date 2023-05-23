@@ -52,8 +52,8 @@ export class ApiService {
 
     // same validation as in search input for catching multiline or fileinputs
     const validation = this.validateSearchInput(input);
-    if (!validation.valid) {
-      this.notificationService.warning(this.translate.instant(validation.messageLabel!));
+    if (validation) {
+      this.notificationService.warning(this.translate.instant(validation));
       return of([]);
     }
 
@@ -68,16 +68,16 @@ export class ApiService {
     );
   }
 
-  public validateSearchInput(input: string): { valid: boolean; messageLabel?: string } {
+  public validateSearchInput(input: string): string | null {
     const length = input.trim().length;
     const wordCount = input.split(' ').filter((w: string) => w.trim().length >= 1).length;
     if (length > 4000) {
-      return { valid: false, messageLabel: 'notifications.inputTooLong' };
+      return 'notifications.inputTooLong';
     }
     if (wordCount > 10) {
-      return { valid: false, messageLabel: 'notifications.inputTooManyWords' };
+      return 'notifications.inputTooManyWords';
     }
-    return { valid: true };
+    return null;
   }
 
   public searchMultiple(inputs: string[]): Observable<AddressCoordinateTableEntry> {

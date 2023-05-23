@@ -11,22 +11,19 @@ import { MatLegacyAutocompleteSelectedEvent as MatAutocompleteSelectedEvent } fr
 import { ErrorStateMatcher } from '@angular/material/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ObNotificationService } from '@oblique/oblique';
-import { catchError, debounceTime, map, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, switchMap, tap } from 'rxjs/operators';
 import { ApiService } from '../../services';
-import { ApiSearchResult } from '../../services/api.service';
 import { AddressCoordinateTableEntry, AddressSelectionResult } from '../../models/AddressCoordinateTableEntry';
-import { InputSearchMode } from '../../models/InputSearchMode';
-import { GWRSearchResult, ReverseApiService } from '../../services/reverse-api.service';
+import { ReverseApiService } from '../../services/reverse-api.service';
 import { Observable, of } from 'rxjs';
-import { Coordinate } from '../../models/Coordinate';
-import { FEATURE_TAB_CONFIG, FeatureTabConfig } from 'src/app/feature-tab.config';
+import { FEATURE_SERVICE_TOKEN, FeatureService, SearchResultItem } from '../../services/features/feature.service';
 
-export interface SearchResultItem {
-  text: string;
-  originalInput?: string;
-  a2c_data?: ApiSearchResult;
-  c2a_data?: { gwr: GWRSearchResult; addressText: string; distance: number; lv95: Coordinate };
-}
+// export interface SearchResultItem {
+//   text: string;
+//   originalInput?: string;
+//   a2c_data?: ApiSearchResult;
+//   c2a_data?: { gwr: GWRSearchResult; addressText: string; distance: number; lv95: Coordinate };
+// }
 
 @Component({
   selector: 'app-text-input',
@@ -46,20 +43,22 @@ export class TextInputComponent {
     switchMap(value => {
       if (this.inputFormControl.valid && typeof value === 'string' && value !== '') {
         //TODO generalize-refactoring
-        if (this.mode === InputSearchMode.Coordinate) {
-          return this.reverseApi.search(value).pipe(
-            catchError(err => {
-              return of([]);
-            })
-          );
-        } else {
-          return this.api.searchLocationsList(value).pipe(
-            map(r => r.map(x => ({ text: x.attrs.label, originalInput: value, a2c_data: x } as SearchResultItem))),
-            catchError(err => {
-              return of([]);
-            })
-          );
-        }
+        return this.featureService.search(value);
+
+        // if (this.mode === InputSearchMode.Coordinate) {
+        //   return this.reverseApi.search(value).pipe(
+        //     catchError(err => {
+        //       return of([]);
+        //     })
+        //   );
+        // } else {
+        //   return this.api.searchLocationsList(value).pipe(
+        //     map(r => r.map(x => ({ text: x.attrs.label, originalInput: value, a2c_data: x } as SearchResultItem))),
+        //     catchError(err => {
+        //       return of([]);
+        //     })
+        //   );
+        // }
       } else {
         return of([]);
       }
@@ -69,8 +68,8 @@ export class TextInputComponent {
 
   existingEntryId: string | null = null;
 
-  @Input()
-  mode = InputSearchMode.All;
+  // @Input()
+  // mode = InputSearchMode.All;
 
   searchLabel = '';
 
@@ -95,22 +94,24 @@ export class TextInputComponent {
     private readonly reverseApi: ReverseApiService,
     private readonly notificationService: ObNotificationService,
     private readonly translate: TranslateService,
-    @Inject(FEATURE_TAB_CONFIG) public featureConfig: FeatureTabConfig
+    @Inject(FEATURE_SERVICE_TOKEN) public featureService: FeatureService
   ) {
-    this.searchLabel = `search.${featureConfig.shortName}.`;
+    this.searchLabel = `search.${featureService.shortName}.`;
   }
 
   //TODO generalize-refactoring
   onOptionSelected(event: MatAutocompleteSelectedEvent) {
     this.inputFormControl.setValue(null);
     const selectedValue = event.option.value as SearchResultItem;
-    if (selectedValue.a2c_data) {
-      const entry = this.api.mapApiResultToAddress(selectedValue.a2c_data);
-      this.emitEntry(entry);
-    } else if (selectedValue.c2a_data) {
-      const entry = this.reverseApi.mapReverseApiResultToAddress(selectedValue);
-      entry.subscribe(e => this.emitEntry(e));
-    }
+    this.featureService.transformInput(selectedValue).subscribe(r => this.emitEntry(r));
+
+    // if (selectedValue.a2c_data) {
+    //   const entry = this.api.mapApiResultToAddress(selectedValue.a2c_data);
+    //   this.emitEntry(entry);
+    // } else if (selectedValue.c2a_data) {
+    //   const entry = this.reverseApi.mapReverseApiResultToAddress(selectedValue);
+    //   entry.subscribe(e => this.emitEntry(e));
+    // }
   }
 
   clearInput() {
@@ -132,11 +133,7 @@ export class TextInputComponent {
           count: lines.length
         })
       );
-      if (this.mode === InputSearchMode.Coordinate) {
-        this.reverseApi.searchMultiple(lines).subscribe(r => this.emitEntry(r));
-      } else {
-        this.api.searchMultiple(lines).subscribe(r => this.emitEntry(r));
-      }
+      this.featureService.searchMultiple(lines).subscribe(r => this.emitEntry(r));
     }
   }
 
@@ -149,25 +146,29 @@ export class TextInputComponent {
   }
 
   private searchInputValidator(): ValidatorFn {
-    switch (this.mode) {
-      case InputSearchMode.Address:
-    }
 
   //TODO generalize-refactoring
     return (control: AbstractControl): ValidationErrors | null => {
       if (control.value && typeof control.value === 'string') {
-        let validation: { valid: boolean; messageLabel?: string } = { valid: true };
-        switch (this.mode) {
-          case InputSearchMode.Address:
-            validation = this.api.validateSearchInput(control.value);
-            break;
-          case InputSearchMode.Coordinate:
-            validation = this.reverseApi.validateSearchInput(control.value);
-            break;
+        const validation = this.featureService.validateSearchInput(control.value);
+        if (validation) {
+          return { searchInput: validation};
         }
-        if (!validation.valid) {
-          return { searchInput: validation.messageLabel! };
+        else {
+          return null;
         }
+        // let validation: { valid: boolean; messageLabel?: string } = { valid: true };
+        // switch (this.mode) {
+        //   case InputSearchMode.Address:
+        //     validation = this.api.validateSearchInput(control.value);
+        //     break;
+        //   case InputSearchMode.Coordinate:
+        //     validation = this.reverseApi.validateSearchInput(control.value);
+        //     break;
+        // }
+        // if (!validation.valid) {
+        //   return { searchInput: validation.messageLabel! };
+        // }
       }
       return null;
     };

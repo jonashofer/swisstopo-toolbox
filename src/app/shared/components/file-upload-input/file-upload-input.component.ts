@@ -3,8 +3,8 @@ import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { ObIUploadEvent, ObNotificationService } from '@oblique/oblique';
 import { AddressService, ApiService, DownloadService } from '../../services';
-import { InputSearchMode } from '../../models/InputSearchMode';
 import { ReverseApiService } from '../../services/reverse-api.service';
+import { FEATURE_SERVICE_TOKEN, FeatureService } from '../../services/features/feature.service';
 
 @Component({
   selector: 'app-file-upload-input',
@@ -15,8 +15,8 @@ export class FileUploadInputComponent {
   @Output()
   finished = new EventEmitter<void>();
 
-  @Input()
-  mode = InputSearchMode.All;
+  // @Input()
+  // mode = InputSearchMode.All;
 
   private lines: string[] = [];
 
@@ -27,7 +27,8 @@ export class FileUploadInputComponent {
     public downloadService: DownloadService,
     private readonly dialog: MatDialog,
     private readonly notificationService: ObNotificationService,
-    private readonly translate: TranslateService
+    private readonly translate: TranslateService,
+    @Inject(FEATURE_SERVICE_TOKEN) private readonly featureService: FeatureService
   ) {}
 
   uploadEvent($event: ObIUploadEvent, dialogRef: TemplateRef<any>) {
@@ -62,15 +63,22 @@ export class FileUploadInputComponent {
         count: this.lines.length
       })
     );
-    if (this.mode === InputSearchMode.Address) {
-      this.api
-        .searchMultiple(this.lines)
-        .subscribe(r => this.addressService.addOrUpdateAddress({ result: r, updatedId: null }));
-    } else {
-      this.reverseApi.searchMultiple(this.lines).subscribe(r => this.addressService.addOrUpdateAddress({ result: r, updatedId: null }));
-    }
-    this.lines = [];
-    this.finished.emit();
+
+    this.featureService.searchMultiple(this.lines).subscribe(r => {
+      this.addressService.addOrUpdateAddress({ result: r, updatedId: null });
+      this.lines = [];
+      this.finished.emit();
+    });
+
+    // if (this.mode === InputSearchMode.Address) {
+    //   this.api
+    //     .searchMultiple(this.lines)
+    //     .subscribe(r => this.addressService.addOrUpdateAddress({ result: r, updatedId: null }));
+    // } else {
+    //   this.reverseApi.searchMultiple(this.lines).subscribe(r => this.addressService.addOrUpdateAddress({ result: r, updatedId: null }));
+    // }
+    // this.lines = [];
+    // this.finished.emit();
   }
 }
 

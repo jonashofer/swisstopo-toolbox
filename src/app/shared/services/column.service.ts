@@ -5,8 +5,8 @@ import { ColumnConfigDialogComponent } from '../components/column-config-dialog/
 import { ColumnConfigItem, ColumnDefinitions, getColumnDefinition, inactiveUserCol, sysCol, userCol } from '../models/ColumnConfiguration';
 import { StorageService } from './storage.service';
 import { CoordinateSystem } from '../models/CoordinateSystem';
-import { FEATURE_TAB_CONFIG, FeatureTabConfig } from 'src/app/feature-tab.config';
 import { CoordinateService } from './coordinate.service';
+import { FEATURE_SERVICE_TOKEN, FeatureService } from './features/feature.service';
 
 @Injectable()
 export class ColumnService {
@@ -22,12 +22,12 @@ export class ColumnService {
   featureIdentifier = '';
 
   constructor(
-    @Inject(FEATURE_TAB_CONFIG) featureIdentifier: FeatureTabConfig,
+    @Inject(FEATURE_SERVICE_TOKEN) private readonly featureService: FeatureService,
     private readonly dialog: MatDialog,
     private readonly coordinateService: CoordinateService
   ) {
-    this.featureIdentifier = featureIdentifier.shortName;
-    this.storageKey = `displayColumns_${featureIdentifier.shortName}`;
+    this.featureIdentifier = featureService.shortName;
+    this.storageKey = `displayColumns_${featureService.shortName}`;
     this.columns.next(StorageService.get<ColumnConfigItem[]>(this.storageKey) || this.getInitial());
     this.coordinateService.currentSystem$
       .pipe(pairwise())
@@ -73,33 +73,34 @@ export class ColumnService {
 
   //TODO generalize-refactoring
   public getInitial(): ColumnConfigItem[] {
-    switch (this.featureIdentifier) {
-      case 'atc':
-        return [
-          userCol(ColumnDefinitions.ADDRESS),
-          sysCol(ColumnDefinitions.EDIT_ADDRESS),
-          userCol(ColumnDefinitions.WGS_84),
-          inactiveUserCol(ColumnDefinitions.LV_95),
-          inactiveUserCol(ColumnDefinitions.LV_03),
-          inactiveUserCol(ColumnDefinitions.HEIGHT),
-          inactiveUserCol(ColumnDefinitions.EGID),
-          inactiveUserCol(ColumnDefinitions.EGRID),
-        ];
-      case 'cta':
-        return [
-          // sysCol(ColumnDefinitions.COORDINATE_CHIPS),
-          userCol(ColumnDefinitions.WGS_84),
-          userCol(ColumnDefinitions.ADDRESS),
-          sysCol(ColumnDefinitions.EDIT_ADDRESS),
-          inactiveUserCol(ColumnDefinitions.LV_95),
-          inactiveUserCol(ColumnDefinitions.LV_03),
-          inactiveUserCol(ColumnDefinitions.HEIGHT),
-          inactiveUserCol(ColumnDefinitions.EGID),
-          inactiveUserCol(ColumnDefinitions.EGRID),
-        ];
-      default:
-        return [];
-    }
+    return this.featureService.getDefaultColumns();
+    // switch (this.featureIdentifier) {
+    //   case 'atc':
+    //     return [
+    //       userCol(ColumnDefinitions.ADDRESS),
+    //       sysCol(ColumnDefinitions.EDIT_ADDRESS),
+    //       userCol(ColumnDefinitions.WGS_84),
+    //       inactiveUserCol(ColumnDefinitions.LV_95),
+    //       inactiveUserCol(ColumnDefinitions.LV_03),
+    //       inactiveUserCol(ColumnDefinitions.HEIGHT),
+    //       inactiveUserCol(ColumnDefinitions.EGID),
+    //       inactiveUserCol(ColumnDefinitions.EGRID),
+    //     ];
+    //   case 'cta':
+    //     return [
+    //       // sysCol(ColumnDefinitions.COORDINATE_CHIPS),
+    //       userCol(ColumnDefinitions.WGS_84),
+    //       userCol(ColumnDefinitions.ADDRESS),
+    //       sysCol(ColumnDefinitions.EDIT_ADDRESS),
+    //       inactiveUserCol(ColumnDefinitions.LV_95),
+    //       inactiveUserCol(ColumnDefinitions.LV_03),
+    //       inactiveUserCol(ColumnDefinitions.HEIGHT),
+    //       inactiveUserCol(ColumnDefinitions.EGID),
+    //       inactiveUserCol(ColumnDefinitions.EGRID),
+    //     ];
+    //   default:
+    //     return [];
+    // }
   }
 
   private saveConfig() {

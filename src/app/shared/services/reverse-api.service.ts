@@ -6,99 +6,25 @@ import { Coordinate } from '../models/Coordinate';
 import { CoordinateSystem } from '../models/CoordinateSystem';
 import { CoordinateService } from './coordinate.service';
 import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEntry';
-import { SearchResultItem } from '../components/text-input/text-input.component';
 import { TranslateService } from '@ngx-translate/core';
+import { SearchResultItemTyped } from './features/feature.service';
+import { GWREntry } from '../models/GeoAdminApiModels';
 
-export interface MapServerIdentifyResult {
+interface MapServerIdentifyResult {
   results?: GWRSearchResult[] | null;
 }
-export interface GWRSearchResult {
+interface GWRSearchResult {
   layerBodId: string;
   layerName: string;
   featureId: string;
   id: string;
   attributes: GWREntry;
 }
-export interface GWREntry {
-  egid: string;
-  strname_deinr: string;
-  plz_plz6: string;
-  ggdename: string;
-  ggdenr: number;
-  gexpdat: string;
-  gdekt: string;
-  egrid: string;
-  lgbkr: number;
-  lparz: string;
-  lparzsx?: null;
-  ltyp?: null;
-  gebnr: string;
-  gbez: string;
-  gkode: number;
-  gkodn: number;
-  gksce: number;
-  gstat: number;
-  gkat: number;
-  gklas?: null;
-  gbauj?: null;
-  gbaum?: null;
-  gbaup: number;
-  gabbj?: null;
-  garea: number;
-  gvol?: null;
-  gvolnorm?: null;
-  gvolsce?: null;
-  gastw: number;
-  ganzwhg?: null;
-  gazzi?: null;
-  gschutzr?: null;
-  gebf?: null;
-  gwaerzh1: number;
-  genh1: number;
-  gwaersceh1: number;
-  gwaerdath1: string;
-  gwaerzh2?: null;
-  genh2?: null;
-  gwaersceh2?: null;
-  gwaerdath2: string;
-  gwaerzw1: number;
-  genw1: number;
-  gwaerscew1: number;
-  gwaerdatw1: string;
-  gwaerzw2?: null;
-  genw2?: null;
-  gwaerscew2?: null;
-  gwaerdatw2: string;
-  edid: string;
-  egaid: number;
-  deinr: string;
-  esid: number;
-  strname?: string[] | null;
-  strnamk?: string[] | null;
-  strindx?: string[] | null;
-  strsp?: string[] | null;
-  stroffiziel: string;
-  dplz4: number;
-  dplzz: number;
-  dplzname: string;
-  dkode?: number;
-  dkodn?: number;
-  doffadr: number;
-  dexpdat: string;
-  ewid?: null;
-  whgnr?: null;
-  wstwk?: null;
-  wmehrg?: null;
-  weinr?: null;
-  wbez?: null;
-  wstat?: null;
-  wexpdat?: null;
-  wbauj?: null;
-  wabbj?: null;
-  warea?: null;
-  wazim?: null;
-  wkche?: null;
-  label: string;
+interface SearchResultData {
+  gwr: GWRSearchResult;
+  addressText: string;
+  distance: number;
+  lv95: Coordinate;
 }
 
 @Injectable()
@@ -158,7 +84,7 @@ export class ReverseApiService {
     );
   }
 
-  public search(input: string): Observable<SearchResultItem[]> {
+  public search(input: string): Observable<SearchResultItemTyped<SearchResultData>[]> {
     const coordinates = this.coordinateService.tryParse(input)!;
 
     return this.apiService
@@ -168,8 +94,9 @@ export class ReverseApiService {
       );
   }
 
-  public mapReverseApiResultToAddress(item: SearchResultItem): Observable<AddressCoordinateTableEntry> {
-    const i = item.c2a_data!;
+  //TODO wgs84 zu enrich zügeln, dann kann muss auch hier kein observable zurückgegeben werden
+  public mapReverseApiResultToAddress(item: SearchResultItemTyped<SearchResultData>): Observable<AddressCoordinateTableEntry> {
+    const i = item.data;
     const gwr = i.gwr;
     return this.apiService.convert(i.lv95, CoordinateSystem.WGS_84).pipe(
       map(wgs84 => {
@@ -196,7 +123,7 @@ export class ReverseApiService {
     );
   }
 
-  public searchNearestAddresses(lv95coord: Coordinate, originalInput: string): Observable<SearchResultItem[]> {
+  public searchNearestAddresses(lv95coord: Coordinate, originalInput: string): Observable<SearchResultItemTyped<SearchResultData>[]> {
     if (lv95coord.system !== CoordinateSystem.LV_95) {
       return of([]);
     }
@@ -225,7 +152,7 @@ export class ReverseApiService {
             return {
               text: `${fullAddress}${distanceSuffix}`,
               originalInput: originalInput,
-              c2a_data: {
+              data: {
                 gwr: r,
                 lv95: coord,
                 addressText: fullAddress,
@@ -233,7 +160,7 @@ export class ReverseApiService {
               }
             };
           })
-          .sort((a, b) => a.c2a_data.distance - b.c2a_data.distance);
+          .sort((a, b) => a.data.distance - b.data.distance);
       })
     );
   }

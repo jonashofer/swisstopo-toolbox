@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { GWREntry } from './reverse-api.service';
+import { GWREntry } from '../models/GeoAdminApiModels';
 
-
-export interface Feature {
+interface Feature {
   layerBodId: string;
   layerName: string;
   featureId: string;
@@ -12,7 +11,7 @@ export interface Feature {
   attributes: GWREntry;
 }
 
-export interface RootObject {
+interface RootObject {
   feature: Feature;
 }
 

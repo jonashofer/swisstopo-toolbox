@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTableEntry';
-import { InputSearchMode } from '../../models/InputSearchMode';
 import { AddressService, CoordinateService } from '../../services';
 import { combineLatest, switchMap } from 'rxjs';
 import { ColumnService } from '../../services/column.service';
@@ -16,8 +15,6 @@ export class SearchInputComponent {
   @Input()
   addressToEdit: AddressCoordinateTableEntry | null = null;
 
-  @Input()
-  searchMode = InputSearchMode.All;
   constructor(
     public addressService: AddressService,
     public coordinateService: CoordinateService,

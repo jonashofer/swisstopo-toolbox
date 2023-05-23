@@ -8,18 +8,39 @@ import { AddressCoordinateTableEntry, AddressSelectionResult } from '../models/A
 import { ColumnDefinitions } from '../models/ColumnConfiguration';
 import { CoordinateSystem } from '../models/CoordinateSystem';
 import { StorageService } from './storage.service';
-import { FEATURE_TAB_CONFIG, FeatureTabConfig } from 'src/app/feature-tab.config';
+import { FEATURE_SERVICE_TOKEN, FeatureService } from './features/feature.service';
 
 @Injectable()
 export class AddressService {
-  private readonly _addresses = new BehaviorSubject<AddressCoordinateTableEntry[]>(
-    StorageService.get<AddressCoordinateTableEntry[]>(this.featureIdentifier.name) || []
-  );
-  public addresses$ = this._addresses.asObservable();
-  public validAddresses$ = this.addresses$.pipe(map(a => a.filter(a => a.isValid)));
-  public hasAddresses$ = this.addresses$.pipe(map(a => a.length > 0));
+  public featureName;
+  private readonly _addresses;
+  public addresses$;
+  public validAddresses$;
+  public hasAddresses$;
 
-  public featureName = this.featureIdentifier.name;
+  constructor(
+    private readonly api: ApiService,
+    private readonly apiDetail: ApiDetailService,
+    private readonly notificationService: ObNotificationService,
+    private readonly translate: TranslateService,
+    @Inject(FEATURE_SERVICE_TOKEN) featureService: FeatureService
+  ) {
+    this.featureName = featureService.name;
+    this._addresses = new BehaviorSubject<AddressCoordinateTableEntry[]>(
+      StorageService.get<AddressCoordinateTableEntry[]>(this.featureName) || []
+    );
+    this.addresses$ = this._addresses.asObservable();
+    this.validAddresses$ = this.addresses$.pipe(map(a => a.filter(a => a.isValid)));
+    this.hasAddresses$ = this.addresses$.pipe(map(a => a.length > 0));
+
+    this.addresses$
+      .pipe(
+        map(addresses => {
+          StorageService.save(this.featureName, addresses);
+        })
+      )
+      .subscribe();
+  }
 
   get hasAddresses() {
     return this.addresses.length > 0;
@@ -30,22 +51,6 @@ export class AddressService {
   }
   get validAddresses() {
     return this.addresses.filter(a => a.isValid);
-  }
-
-  constructor(
-    private readonly api: ApiService,
-    private readonly apiDetail: ApiDetailService,
-    private readonly notificationService: ObNotificationService,
-    private readonly translate: TranslateService,
-    @Inject(FEATURE_TAB_CONFIG) public featureIdentifier: FeatureTabConfig
-  ) {
-    this.addresses$
-      .pipe(
-        map(addresses => {
-          StorageService.save(this.featureIdentifier.name, addresses);
-        })
-      )
-      .subscribe();
   }
 
   public addOrUpdateAddress(addressResult: AddressSelectionResult) {
