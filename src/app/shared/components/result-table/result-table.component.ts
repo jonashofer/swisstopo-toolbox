@@ -70,7 +70,7 @@ export class ResultTableComponent implements OnInit {
 
   // public tableRowClicked(row: AddressCoordinateTableEntry) {
   //   // this.highlightRow(row.featureId!, false);
-  //   this.mapInteractionService.sendToMap(row.featureId!, false);
+  //   this.mapInteractionService.sendToMap(row.id, false);
   // }
 
   private expandColumnForView(column: ColumnDefinitions): string[] {
@@ -85,15 +85,15 @@ export class ResultTableComponent implements OnInit {
     }
   }
 
-  private highlightRow(featureId: string, end: boolean) {
+  private highlightRow(id: string, end: boolean) {
     if (end) {
       this.highlightId = '';
     } else {
-      this.highlightId = featureId;
+      this.highlightId = id;
     }
   }
 
   rowHovered(row: AddressCoordinateTableEntry, isHovered: boolean) {
-    this.mapInteractionService.sendToMap(row.featureId!, isHovered)
+    this.mapInteractionService.sendToMap(row.id, isHovered)
   }
 }

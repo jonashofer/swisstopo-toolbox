@@ -136,7 +136,7 @@ export class ResultMapComponent implements AfterViewInit, OnDestroy {
       c =>
         new Feature({
           geometry: new Point(fromLonLat([c.wgs84?.lon!, c.wgs84?.lat!])),
-          gwrfeatureId: c.featureId
+          id: c.id
         })
     );
     markerLayer.setSource(
@@ -178,7 +178,7 @@ export class ResultMapComponent implements AfterViewInit, OnDestroy {
       //   const features = this.map?.getFeaturesAtPixel(e.pixel, {layerFilter: layer => layer === markerLayer});
       //   if (features && features.length > 0) {
       //     const feature = features[0];
-      //     const featureId = feature.get('gwrfeatureId');
+      //     const featureId = feature.get('id');
       //     this.mapInteractionService.sendToTable(featureId, false);
       //     this.hightlightFeature(featureId, false)
       //   }
@@ -201,7 +201,7 @@ export class ResultMapComponent implements AfterViewInit, OnDestroy {
         }
 
         if (isLeave) {
-          this.mapInteractionService.sendToTable(this.lastHighlightedFeature?.get('gwrfeatureId'), true);
+          this.mapInteractionService.sendToTable(this.lastHighlightedFeature?.get('id'), true);
           this.lastHighlightedFeature?.setStyle(iconStyle);
           this.map!.getTargetElement().style.cursor = '';
           this.lastHighlightedFeature = null;
@@ -212,7 +212,7 @@ export class ResultMapComponent implements AfterViewInit, OnDestroy {
           this.lastHighlightedFeature = feature as Feature<Geometry>;
           this.lastHighlightedFeature.setStyle(selectedIconStyle);
           this.map!.getTargetElement().style.cursor = 'pointer';
-          this.mapInteractionService.sendToTable(feature.get('gwrfeatureId'), false);
+          this.mapInteractionService.sendToTable(feature.get('id'), false);
           return;
         }
       });
@@ -263,11 +263,11 @@ export class ResultMapComponent implements AfterViewInit, OnDestroy {
       });
   }
 
-  private hightlightFeature(featureId: string, end: boolean) {
+  private hightlightFeature(id: string, end: boolean) {
     const feature = markerLayer
       .getSource()
       ?.getFeatures()
-      .find(f => f.get('gwrfeatureId') === featureId);
+      .find(f => f.get('id') === id);
     feature?.setStyle(end ? selectedIconStyle : iconStyle);
   }
 }

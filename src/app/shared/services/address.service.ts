@@ -2,7 +2,7 @@ import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ObNotificationService } from '@oblique/oblique';
 import { BehaviorSubject, EMPTY, forkJoin, from, Observable, of } from 'rxjs';
-import { catchError, flatMap, map, mergeMap, tap } from 'rxjs/operators';
+import { catchError, filter, flatMap, map, mergeMap, tap } from 'rxjs/operators';
 import { ApiDetailService, ApiService } from '.';
 import { AddressCoordinateTableEntry, AddressSelectionResult } from '../models/AddressCoordinateTableEntry';
 import { ColumnDefinitions } from '../models/ColumnConfiguration';
@@ -83,6 +83,7 @@ export class AddressService {
     columns: ColumnDefinitions[]
   ) =>
     from(addresses).pipe(
+      filter(address => address.isValid),
       mergeMap(address => forkJoin(this.enrichAddress$(address, coordinateSystem, columns))),
       catchError(err => {
         return of([]);
@@ -100,8 +101,8 @@ export class AddressService {
     const queries: Observable<any>[] = [];
 
     // GWR data
-    if ((address.featureId && columns.includes(ColumnDefinitions.EGID)) || columns.includes(ColumnDefinitions.EGRID)) {
-      const gwrQuery = this.apiDetail.getBuildingInfo(address.featureId!).pipe(
+    if ((address.id && columns.includes(ColumnDefinitions.EGID)) || columns.includes(ColumnDefinitions.EGRID)) {
+      const gwrQuery = this.apiDetail.getBuildingInfo(address.id).pipe(
         map(r => {
           address.egid = r.feature.attributes.egid;
           address.egrid = r.feature.attributes.egrid;

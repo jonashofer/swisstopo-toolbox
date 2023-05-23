@@ -108,8 +108,7 @@ export class ApiService {
   public mapApiResultToAddress(result: ApiSearchResult): AddressCoordinateTableEntry {
     return {
       address: this.sanitize(result.attrs.label),
-      id: result.id.toString(),
-      featureId: result.attrs.featureId,
+      id: result.attrs.featureId,
 			wgs84: {
 				system: CoordinateSystem.WGS_84,
 				lat: result.attrs.lat,

@@ -176,8 +176,7 @@ export class ReverseApiService {
         return {
           address: i.addressText,
           originalInput: item.originalInput,
-          id: i.gwr.id,
-          featureId: gwr.featureId,
+          id: i.gwr.featureId,
           isValid: true,
           wgs84: {
             system: CoordinateSystem.WGS_84,

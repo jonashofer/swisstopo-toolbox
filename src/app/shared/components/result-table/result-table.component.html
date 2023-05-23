@@ -97,7 +97,7 @@
 	<tr mat-header-row *matHeaderRowDef="displayedColumns$ | async"></tr>
 	<tr mat-row
 		*matRowDef="let row; columns: displayedColumns$ | async"
-		[class.highlight]="highlightId == row.featureId"
+		[class.highlight]="highlightId == row.id"
 		(mouseenter)="rowHovered(row, true)"
   		(mouseleave)="rowHovered(row, false)"
 		></tr>

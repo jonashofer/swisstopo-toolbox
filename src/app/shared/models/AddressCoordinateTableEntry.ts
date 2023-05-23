@@ -3,7 +3,7 @@ import { Coordinate } from './Coordinate';
 import { CoordinateSystem } from './CoordinateSystem';
 
 export interface AddressCoordinateTableEntry {
-  id: string; // id of the api feature if isValid, otherwise arbitary negative number
+  id: string; // featureId of the GWR api feature if available and valid, otherwise arbitrary id
   address: string;
 
 	[CoordinateSystem.WGS_84]: Coordinate | null;
@@ -11,8 +11,6 @@ export interface AddressCoordinateTableEntry {
 	[CoordinateSystem.LV_03]: Coordinate | null;
 
   originalInput?: string;
-
-  featureId?: string;
   [ColumnDefinitions.EGID]?: string | null;
   [ColumnDefinitions.EGRID]?: string | null;
   [ColumnDefinitions.HEIGHT]?: string | null;
