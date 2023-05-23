@@ -172,8 +172,8 @@ export class ResultMapComponent implements AfterViewInit, OnDestroy {
         view,
         target: this.mapDiv.nativeElement
       });
+      this.registerMapPointerMove();
       this.fitView();
-
       // this.map.on('click', (e: any) => {
       //   const features = this.map?.getFeaturesAtPixel(e.pixel, {layerFilter: layer => layer === markerLayer});
       //   if (features && features.length > 0) {
@@ -184,38 +184,6 @@ export class ResultMapComponent implements AfterViewInit, OnDestroy {
       //   }
       // });
 
-      this.map.on('pointermove', evt => {
-        const features = this.map?.getFeaturesAtPixel(evt.pixel, { layerFilter: layer => layer === markerLayer });
-
-        if (features == null) {
-          return;
-        }
-
-        const isLeave =
-          (features.length === 0 || features[0] !== this.lastHighlightedFeature) && this.lastHighlightedFeature != null;
-        const isEnter = features.length > 0 && features[0] !== this.lastHighlightedFeature;
-        const isSame = features.length > 0 && features[0] === this.lastHighlightedFeature;
-
-        if (!isLeave && !isEnter && !isSame) {
-          return;
-        }
-
-        if (isLeave) {
-          this.mapInteractionService.sendToTable(this.lastHighlightedFeature?.get('id'), true);
-          this.lastHighlightedFeature?.setStyle(iconStyle);
-          this.map!.getTargetElement().style.cursor = '';
-          this.lastHighlightedFeature = null;
-          return;
-        }
-        if (isEnter) {
-          const feature = features[0];
-          this.lastHighlightedFeature = feature as Feature<Geometry>;
-          this.lastHighlightedFeature.setStyle(selectedIconStyle);
-          this.map!.getTargetElement().style.cursor = 'pointer';
-          this.mapInteractionService.sendToTable(feature.get('id'), false);
-          return;
-        }
-      });
     }
   }
 
@@ -269,5 +237,40 @@ export class ResultMapComponent implements AfterViewInit, OnDestroy {
       ?.getFeatures()
       .find(f => f.get('id') === id);
     feature?.setStyle(end ? selectedIconStyle : iconStyle);
+  }
+
+  private registerMapPointerMove() {
+    this.map?.on('pointermove', evt => {
+      const features = this.map?.getFeaturesAtPixel(evt.pixel, { layerFilter: layer => layer === markerLayer });
+
+      if (features == null) {
+        return;
+      }
+
+      const isLeave =
+        (features.length === 0 || features[0] !== this.lastHighlightedFeature) && this.lastHighlightedFeature != null;
+      const isEnter = features.length > 0 && features[0] !== this.lastHighlightedFeature;
+      const isSame = features.length > 0 && features[0] === this.lastHighlightedFeature;
+
+      if (!isLeave && !isEnter && !isSame) {
+        return;
+      }
+
+      if (isLeave) {
+        this.mapInteractionService.sendToTable(this.lastHighlightedFeature?.get('id'), true);
+        this.lastHighlightedFeature?.setStyle(iconStyle);
+        this.map!.getTargetElement().style.cursor = '';
+        this.lastHighlightedFeature = null;
+        return;
+      }
+      if (isEnter) {
+        const feature = features[0];
+        this.lastHighlightedFeature = feature as Feature<Geometry>;
+        this.lastHighlightedFeature.setStyle(selectedIconStyle);
+        this.map!.getTargetElement().style.cursor = 'pointer';
+        this.mapInteractionService.sendToTable(feature.get('id'), false);
+        return;
+      }
+    });
   }
 }
