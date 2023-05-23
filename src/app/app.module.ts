@@ -37,7 +37,6 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
 import { MatLegacyTabsModule as MatTabsModule } from '@angular/material/legacy-tabs';
 import { MatLegacyAutocompleteModule as MatAutocompleteModule } from '@angular/material/legacy-autocomplete';
-import { AddressToCoordinateComponent } from './address-to-coordinate/address-to-coordinate.component';
 import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
 import { ResultTableComponent } from './shared/components/result-table/result-table.component';
 import { MatLegacyTableModule as MatTableModule } from '@angular/material/legacy-table';
@@ -64,10 +63,11 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { ToolbarComponent } from './shared/components/toolbar/toolbar.component';
 import { environment } from 'src/environments/environment';
 import { ColumnConfigDialogComponent } from './shared/components/column-config-dialog/column-config-dialog.component';
-import { CoordinateToAddressComponent } from './coordinate-to-address/coordinate-to-address.component';
 import { TextInputComponent } from './shared/components/text-input/text-input.component';
 import { SearchInputComponent } from './shared/components/search-input/search-input.component';
 import { MatRippleModule } from '@angular/material/core';
+import { FeatureTabComponent } from './shared/components/feature-tab/feature-tab.component';
+import { AddressToCoordinateComponent, CoordinateToAddressComponent } from './feature-components';
 
 registerLocaleData(localeDECH);
 registerLocaleData(localeFRCH);
@@ -90,7 +90,8 @@ registerLocaleData(localeENCH);
     FileUploadInputComponent,
     ToolbarComponent,
     ColumnConfigDialogComponent,
-    CoordinateToAddressComponent
+    CoordinateToAddressComponent,
+    FeatureTabComponent
   ],
   imports: [
     MatRippleModule,
