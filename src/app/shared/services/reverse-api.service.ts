@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, map, tap, switchMap, from, mergeMap } from 'rxjs';
-import { ApiSearchResult, ApiService } from './api.service';
+import { ApiService } from './api.service';
 import { HttpClient } from '@angular/common/http';
 import { Coordinate } from '../models/Coordinate';
 import { CoordinateSystem } from '../models/CoordinateSystem';

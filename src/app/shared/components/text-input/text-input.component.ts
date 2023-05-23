@@ -45,6 +45,7 @@ export class TextInputComponent {
     debounceTime(300),
     switchMap(value => {
       if (this.inputFormControl.valid && typeof value === 'string' && value !== '') {
+        //TODO generalize-refactoring
         if (this.mode === InputSearchMode.Coordinate) {
           return this.reverseApi.search(value).pipe(
             catchError(err => {

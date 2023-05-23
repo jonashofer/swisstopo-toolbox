@@ -7,7 +7,6 @@ import { InputSearchMode } from '../shared/models/InputSearchMode';
 @Component({
   selector: 'app-coordinate-to-address',
   templateUrl: './coordinate-to-address.component.html',
-  styleUrls: ['./coordinate-to-address.component.scss'],
   providers: getFeatureTabComponentProviders('coordinate-to-address', 'cta')
 })
 export class CoordinateToAddressComponent {

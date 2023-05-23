@@ -8,7 +8,7 @@ import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEnt
 import { Coordinate } from '../models/Coordinate';
 import { CoordinateSystem } from '../models/CoordinateSystem';
 
-export interface Attrs {
+interface Attrs {
   origin: string;
   geom_quadindex: string;
   zoomlevel: any;
@@ -30,7 +30,7 @@ export interface ApiSearchResult {
   attrs: Attrs;
 }
 
-export interface RootObject {
+interface RootObject {
   results: ApiSearchResult[];
 }
 
