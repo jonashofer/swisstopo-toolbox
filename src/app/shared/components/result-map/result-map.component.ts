@@ -74,9 +74,7 @@ const iconStyle = new Style({
 const selectedIconStyle = new Style({
   image: new Icon({
     anchor: [0.5, 1],
-    src: svgSrc('#b00020', '#ffffff')
-    // src: svgSrc("#ffffff", '#fa011c')
-    // src: svgSrc("#14516f", '#ffffff')
+    src: svgSrc("#ffffff", '#fa011c')
   })
 });
 // const markerStyle = new Style({
