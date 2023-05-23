@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CoordinateToAddressApiData, ReverseApiService } from '../reverse-api.service';
-import { FeatureServiceBase, SearchResultItemTyped } from './feature.service';
+import { FeatureServiceBase, SearchResultItemTyped } from './feature-base.service';
 import { Coordinate } from '../../models/Coordinate';
 import { Observable } from 'rxjs';
 import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTableEntry';

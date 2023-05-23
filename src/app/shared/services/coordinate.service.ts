@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CoordinateSystem } from '../models/CoordinateSystem';
 import { Coordinate } from '../models/Coordinate';
-import { ApiService } from './api.service';
 import { CoordinatePipe } from '../components/coordinate.pipe';
 import { StorageService } from './storage.service';
 

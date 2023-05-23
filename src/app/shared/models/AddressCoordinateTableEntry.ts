@@ -1,6 +1,4 @@
-import { ColumnDefinitions } from './ColumnConfiguration';
-import { Coordinate } from './Coordinate';
-import { CoordinateSystem } from './CoordinateSystem';
+import { ColumnDefinitions, Coordinate, CoordinateSystem } from ".";
 
 export interface AddressCoordinateTableEntry {
   id: string; // featureId of the GWR api feature if available and valid, otherwise arbitrary id

@@ -6,7 +6,7 @@ import { ColumnConfigItem, ColumnDefinitions, getColumnDefinition, inactiveUserC
 import { StorageService } from './storage.service';
 import { CoordinateSystem } from '../models/CoordinateSystem';
 import { CoordinateService } from './coordinate.service';
-import { FEATURE_SERVICE_TOKEN, FeatureService } from './features/feature.service';
+import { FEATURE_SERVICE_TOKEN, FeatureService } from './features/feature-base.service';
 
 @Injectable()
 export class ColumnService {

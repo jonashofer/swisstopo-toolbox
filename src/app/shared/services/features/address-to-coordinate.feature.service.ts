@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FeatureServiceBase, SearchResultItemTyped, } from './feature.service';
+import { FeatureServiceBase, SearchResultItemTyped, } from './feature-base.service';
 import { AddressToCoordinateApiData, ApiService } from '../api.service';
 import { Observable, catchError, map, of } from 'rxjs';
 import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTableEntry';

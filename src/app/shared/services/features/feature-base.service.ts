@@ -23,8 +23,6 @@ export interface FeatureService {
   
   validateSearchInput(input: string): string | null;
 
-  // parseInput(validInput: string): any;
-
   search(validInput: string): Observable<SearchResultItem[]>;
 
   // TODO remove observable need by moving dynamic things (reverse wgs84 search) into enrich
@@ -46,8 +44,6 @@ export abstract class FeatureServiceBase<AutocompleteData> implements FeatureSer
   constructor(public name: string, public shortName: string) { }
 
   abstract validateSearchInput(input: string): string | null;
-
-  // abstract parseInput(validInput: string): ParsedInputType;
 
   abstract search(validInput: string): Observable<SearchResultItemTyped<AutocompleteData>[]>;
 

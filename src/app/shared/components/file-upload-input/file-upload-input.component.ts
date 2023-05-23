@@ -1,10 +1,9 @@
-import { Component, EventEmitter, Inject, Input, Output, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Inject, Output, TemplateRef } from '@angular/core';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { ObIUploadEvent, ObNotificationService } from '@oblique/oblique';
-import { AddressService, ApiService, DownloadService } from '../../services';
-import { ReverseApiService } from '../../services/reverse-api.service';
-import { FEATURE_SERVICE_TOKEN, FeatureService } from '../../services/features/feature.service';
+import { AddressService, DownloadService } from '../../services';
+import { FEATURE_SERVICE_TOKEN, FeatureService } from '../../services/features/feature-base.service';
 
 @Component({
   selector: 'app-file-upload-input',
@@ -21,8 +20,6 @@ export class FileUploadInputComponent {
   private lines: string[] = [];
 
   constructor(
-    private readonly api: ApiService,
-    private readonly reverseApi: ReverseApiService,
     private readonly addressService: AddressService,
     public downloadService: DownloadService,
     private readonly dialog: MatDialog,

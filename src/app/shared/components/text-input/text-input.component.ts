@@ -12,11 +12,9 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ObNotificationService } from '@oblique/oblique';
 import { debounceTime, switchMap, tap } from 'rxjs/operators';
-import { ApiService } from '../../services';
 import { AddressCoordinateTableEntry, AddressSelectionResult } from '../../models/AddressCoordinateTableEntry';
-import { ReverseApiService } from '../../services/reverse-api.service';
 import { Observable, of } from 'rxjs';
-import { FEATURE_SERVICE_TOKEN, FeatureService, SearchResultItem } from '../../services/features/feature.service';
+import { FEATURE_SERVICE_TOKEN, FeatureService, SearchResultItem } from '../../services/features/feature-base.service';
 
 // export interface SearchResultItem {
 //   text: string;
@@ -68,8 +66,6 @@ export class TextInputComponent {
   resultSelected = new EventEmitter<AddressSelectionResult>();
 
   constructor(
-    private readonly api: ApiService,
-    private readonly reverseApi: ReverseApiService,
     private readonly notificationService: ObNotificationService,
     private readonly translate: TranslateService,
     @Inject(FEATURE_SERVICE_TOKEN) public featureService: FeatureService

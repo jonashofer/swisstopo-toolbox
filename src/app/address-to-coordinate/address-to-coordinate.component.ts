@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
-import { AddressCoordinateTableEntry } from '../shared/models/AddressCoordinateTableEntry';
-import { AddressService, CoordinateService } from '../shared/services';
-import { AddressToCoordinateService } from '../shared/services/features/address-to-coordinate.feature.service';
-import { getFeatureProviders } from '../shared/services/features/feature.provider';
+import { Component } from "@angular/core";
+import { AddressCoordinateTableEntry } from "../shared/models/AddressCoordinateTableEntry";
+import { AddressService } from "../shared/services";
+import { getFeatureProviders, AddressToCoordinateService } from "../shared/services/features";
 
 @Component({
   selector: 'app-address-to-coordinate',

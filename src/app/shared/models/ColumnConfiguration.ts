@@ -1,4 +1,4 @@
-import { CoordinateSystem } from "./CoordinateSystem";
+import { CoordinateSystem } from "./.";
 
 // object to enable future expansion such as width, sorts etc.
 export interface ColumnConfigItem {

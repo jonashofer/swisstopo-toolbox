@@ -4,11 +4,10 @@ import { CoordinateService } from '.';
 import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEntry';
 import { AddressService } from './address.service';
 import { Subject } from 'rxjs';
-import { FEATURE_SERVICE_TOKEN, FeatureService } from './features/feature.service';
+import { FEATURE_SERVICE_TOKEN, FeatureService } from './features/feature-base.service';
 
 @Injectable()
 export class DownloadService {
-
   public addressesCopied$ = new Subject<void>();
 
   constructor(
@@ -22,7 +21,6 @@ export class DownloadService {
   }
 
   public downloadExampleTxt() {
-    // const result = `Bundesplatz 1 3011 Bern\r\nSeftigenstrasse 264 3084 Wabern\r\nParadeplatz 2\r\n`;
     const result = this.featureService.getExampleFileContent();
     const file = new Blob([result], { type: 'text/plain' });
     saveAs(file, 'example.txt');

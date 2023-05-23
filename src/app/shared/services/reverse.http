@@ -1,5 +1,0 @@
-GET https://api.geo.admin.ch/rest/services/api/MapServer/identify?mapExtent=0,0,100,100&imageDisplay=10,10,10&tolerance=1&geometryType=esriGeometryPoint&geometry=600968.625,197426.921875&layers=all:ch.bfs.gebaeude_wohnungs_register&returnGeometry=false
-###
-GET https://api.geo.admin.ch/rest/services/api/MapServer/identify?mapExtent=0,0,10,10&imageDisplay=100,100,100&tolerance=1&geometryType=esriGeometryPoint&geometry=7.45135,46.92794&layers=all:ch.bfs.gebaeude_wohnungs_register&returnGeometry=false&sr=4326
-###
-https://api.geo.admin.ch/rest/services/api/MapServer/identify?mapExtent=0,0,1,1&imageDisplay=100,100,100&tolerance=1&geometryType=esriGeometryPoint&geometry=8.05441,46.63097&layers=all:ch.bfs.gebaeude_wohnungs_register&returnGeometry=false&sr=4326

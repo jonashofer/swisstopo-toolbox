@@ -1,4 +1,4 @@
-import { CoordinateSystem } from './CoordinateSystem';
+import { CoordinateSystem } from ".";
 
 export interface Coordinate {
   /**Latitude / Northing */

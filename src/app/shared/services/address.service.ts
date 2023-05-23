@@ -8,7 +8,7 @@ import { AddressCoordinateTableEntry, AddressSelectionResult } from '../models/A
 import { ColumnDefinitions } from '../models/ColumnConfiguration';
 import { CoordinateSystem } from '../models/CoordinateSystem';
 import { StorageService } from './storage.service';
-import { FEATURE_SERVICE_TOKEN, FeatureService } from './features/feature.service';
+import { FEATURE_SERVICE_TOKEN, FeatureService } from './features/feature-base.service';
 
 @Injectable()
 export class AddressService {
