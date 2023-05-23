@@ -24,7 +24,7 @@
       "label": "Adresse",
       "labelEdit": "Adresse bearbeiten",
       "placeholder": "z.B. Bundesplatz 1 Bern",
-      "noResults": "Keine Resultate gefunden",
+      "noResults": "Keine Adresse gefunden",
       "tooltip": "Mehrzeilen-Eingabe möglich durch das kopieren von Adressen aus der Zwischenablage. Bitte achten, dass jede Adresse auf einer neuen Zeile ist."
     },
     "cta": {
@@ -73,8 +73,7 @@
       "delete": "Eintrag löschen",
       "edit": "Eintrag ändern",
       "warning": {
-        "ambiguous": "Nicht eindeutige Adresse",
-        "invalid": "Adresse nicht gefunden"
+        "ambiguous": "Nicht eindeutige Adresse"
       }
     }
   },

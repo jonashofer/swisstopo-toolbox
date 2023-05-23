@@ -1,8 +1,8 @@
-import { Inject, Injectable, InjectionToken } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ObNotificationService } from '@oblique/oblique';
-import { BehaviorSubject, EMPTY, forkJoin, from, Observable, of } from 'rxjs';
-import { catchError, filter, flatMap, map, mergeMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, forkJoin, from, Observable, of } from 'rxjs';
+import { catchError, filter, map, mergeMap } from 'rxjs/operators';
 import { ApiDetailService, ApiService } from '.';
 import { AddressCoordinateTableEntry, AddressSelectionResult } from '../models/AddressCoordinateTableEntry';
 import { ColumnDefinitions } from '../models/ColumnConfiguration';
@@ -51,6 +51,10 @@ export class AddressService {
   }
   get validAddresses() {
     return this.addresses.filter(a => a.isValid);
+  }
+
+  public multiAddOrUpdateAddresses(addressResults: AddressCoordinateTableEntry[]) {
+    addressResults.forEach(result => this.addOrUpdateAddress({ result: result, updatedId: null }));
   }
 
   public addOrUpdateAddress(addressResult: AddressSelectionResult) {

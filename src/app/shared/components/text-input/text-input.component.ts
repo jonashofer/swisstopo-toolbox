@@ -15,6 +15,7 @@ import { debounceTime, switchMap, tap } from 'rxjs/operators';
 import { AddressCoordinateTableEntry, AddressSelectionResult } from '../../models/AddressCoordinateTableEntry';
 import { Observable, of } from 'rxjs';
 import { FEATURE_SERVICE_TOKEN, FeatureService, SearchResultItem } from '../../services/features/feature-base.service';
+import { AddressService } from '../../services';
 
 // export interface SearchResultItem {
 //   text: string;
@@ -62,10 +63,8 @@ export class TextInputComponent {
     }
   }
 
-  @Output()
-  resultSelected = new EventEmitter<AddressSelectionResult>();
-
   constructor(
+    private readonly addressService: AddressService,
     private readonly notificationService: ObNotificationService,
     private readonly translate: TranslateService,
     @Inject(FEATURE_SERVICE_TOKEN) public featureService: FeatureService
@@ -76,14 +75,19 @@ export class TextInputComponent {
   onOptionSelected(event: MatAutocompleteSelectedEvent) {
     this.inputFormControl.setValue(null);
     const selectedValue = event.option.value as SearchResultItem;
-    this.featureService.transformInput(selectedValue).subscribe(r => this.emitEntry(r));
+    this.featureService.transformInput(selectedValue).subscribe(r => {
+      this.addressService.addOrUpdateAddress({
+        result: r,
+        updatedId: this.existingEntryId
+      });
+      this.existingEntryId = null;
+    });
   }
 
   clearInput() {
     this.existingEntryId = null;
   }
 
-  //TODO generalize-refactoring
   onPaste(event: ClipboardEvent) {
     const clipboardData = event.clipboardData;
     const pastedText = clipboardData!.getData('text');
@@ -98,30 +102,23 @@ export class TextInputComponent {
           count: lines.length
         })
       );
-      this.featureService.searchMultiple(lines).subscribe(r => this.emitEntry(r));
+      this.featureService.searchMultiple(lines).subscribe(r => {
+        this.addressService.multiAddOrUpdateAddresses(r);
+      });
     }
-  }
-
-  private emitEntry(entry: AddressCoordinateTableEntry) {
-    this.resultSelected.emit({
-      result: entry,
-      updatedId: this.existingEntryId
-    });
-    this.existingEntryId = null;
   }
 
   private searchInputValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-        if (control.value && typeof control.value === 'string') {
-            const validation = this.featureService.validateSearchInput(control.value);
-            if (validation) {
-                return { searchInput: validation };
-            }
+      if (control.value && typeof control.value === 'string') {
+        const validation = this.featureService.validateSearchInput(control.value);
+        if (validation) {
+          return { searchInput: validation };
         }
-        return null;
+      }
+      return null;
     };
-}
-
+  }
 }
 
 // Custom Matcher needed to fire mat-error directly on change, as with updateOn: 'change'

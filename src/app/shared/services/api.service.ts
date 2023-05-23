@@ -1,9 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { ObNotificationService } from '@oblique/oblique';
-import { Observable, from, of } from 'rxjs';
-import { map, mergeMap, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEntry';
 import { Coordinate } from '../models/Coordinate';
 import { CoordinateSystem } from '../models/CoordinateSystem';
@@ -40,20 +38,11 @@ export class ApiService {
 
   constructor(
     private readonly httpClient: HttpClient,
-    private readonly notificationService: ObNotificationService,
-    private readonly translate: TranslateService
   ) {}
 
   public searchLocationsList(input: string): Observable<AddressToCoordinateApiData[]> {
     input = input.trim();
     if (!input) {
-      return of([]);
-    }
-
-    // same validation as in search input for catching multiline or fileinputs
-    const validation = this.validateSearchInput(input);
-    if (validation) {
-      this.notificationService.warning(this.translate.instant(validation));
       return of([]);
     }
 
@@ -78,31 +67,6 @@ export class ApiService {
       return 'notifications.inputTooManyWords';
     }
     return null;
-  }
-
-  public searchMultiple(inputs: string[]): Observable<AddressCoordinateTableEntry> {
-    return from(inputs).pipe(
-      mergeMap(userInput =>
-        this.searchLocationsList(userInput).pipe(
-          map(r => {
-            if (r.length == 1) {
-              return this.mapApiResultToAddress(r[0]);
-            }
-            const warningTranslationKey = r.length > 1 ? 'table.entry.warning.ambiguous' : 'table.entry.warning.invalid';
-            const entry: AddressCoordinateTableEntry = {
-              address: userInput,
-              id: (this.bulkAddId--).toString(),
-              isValid: false,
-              warningTranslationKey: warningTranslationKey,
-							wgs84: null,
-							lv95: null,
-							lv03: null
-            };
-            return entry;
-          })
-        )
-      )
-    );
   }
 
   public mapApiResultToAddress(result: AddressToCoordinateApiData): AddressCoordinateTableEntry {

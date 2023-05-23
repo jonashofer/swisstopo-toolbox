@@ -1,7 +1,6 @@
 <mat-tab-group animationDuration="400ms" [(selectedIndex)]="selectedInputType">
 	<mat-tab [label]="'mode.input' | translate">
-		<app-text-input [addressToEdit]="addressToEdit"
-			(resultSelected)="addressService.addOrUpdateAddress($event)">
+		<app-text-input [addressToEdit]="addressToEdit">
 		</app-text-input>
 	</mat-tab>
 	<mat-tab [label]="'mode.file' | translate">

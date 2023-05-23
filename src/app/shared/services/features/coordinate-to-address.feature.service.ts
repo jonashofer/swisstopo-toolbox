@@ -49,8 +49,4 @@ export class CoordinateToAddressService extends FeatureServiceBase<CoordinateToA
   getExampleFileContent(): string {
     return `46.7591	7.6292\r\n636'810.21, 136'435.22\r\n2'642'580.0, 1'136'725.0`;
   }
-
-  searchMultiple(lines: string[]): Observable<AddressCoordinateTableEntry> {
-    throw new Error('Method not implemented.');
-  }
 }

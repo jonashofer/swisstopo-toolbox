@@ -10,6 +10,7 @@ export class AddressToCoordinateService extends FeatureServiceBase<AddressToCoor
 
   constructor(private readonly apiService: ApiService) {
     super('address-to-coordinate', 'atc');
+    this.messageForMultipleResults = 'table.entry.warning.ambiguous';
   }
 
   validateSearchInput(input: string): string | null {
@@ -27,16 +28,11 @@ export class AddressToCoordinateService extends FeatureServiceBase<AddressToCoor
     );
   }
 
-  searchMultiple(lines: string[]): Observable<AddressCoordinateTableEntry> {
-    throw new Error('Method not implemented.');
-  }
-
   transformInput(input: SearchResultItemTyped<AddressToCoordinateApiData>): Observable<AddressCoordinateTableEntry> {
     return of(this.apiService.mapApiResultToAddress(input.data));
   }
 
   transformEntryForEdit(entry: AddressCoordinateTableEntry): string {
-    //TODO check
     return entry.address;
   }
 

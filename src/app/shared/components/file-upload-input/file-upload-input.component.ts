@@ -50,7 +50,6 @@ export class FileUploadInputComponent {
     reader.readAsText(file as File);
   }
 
-  //TODO generalize-refactoring
   emitResults(replace: boolean) {
     if (replace) {
       this.addressService.deleteAllAddresses();
@@ -62,20 +61,10 @@ export class FileUploadInputComponent {
     );
 
     this.featureService.searchMultiple(this.lines).subscribe(r => {
-      this.addressService.addOrUpdateAddress({ result: r, updatedId: null });
+      this.addressService.multiAddOrUpdateAddresses(r);
       this.lines = [];
       this.finished.emit();
     });
-
-    // if (this.mode === InputSearchMode.Address) {
-    //   this.api
-    //     .searchMultiple(this.lines)
-    //     .subscribe(r => this.addressService.addOrUpdateAddress({ result: r, updatedId: null }));
-    // } else {
-    //   this.reverseApi.searchMultiple(this.lines).subscribe(r => this.addressService.addOrUpdateAddress({ result: r, updatedId: null }));
-    // }
-    // this.lines = [];
-    // this.finished.emit();
   }
 }
 
