@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { GuideComponent } from './guide/guide.component';
 import { of, tap } from 'rxjs';
 import { AddressToCoordinateComponent, CoordinateToAddressComponent } from './feature-components';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 const routes: Routes = [
   { path: '', redirectTo: 'address-to-coordinate', pathMatch: 'full' },
@@ -28,6 +29,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }]
 })
 export class AppRoutingModule {}
