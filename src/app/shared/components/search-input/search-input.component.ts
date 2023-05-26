@@ -1,8 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTableEntry';
-import { AddressService, CoordinateService } from '../../services';
-import { combineLatest, switchMap } from 'rxjs';
-import { ColumnService } from '../../services/column.service';
 
 @Component({
   selector: 'app-search-input',
@@ -15,19 +12,5 @@ export class SearchInputComponent {
   @Input()
   addressToEdit: AddressCoordinateTableEntry | null = null;
 
-  constructor(
-    public addressService: AddressService,
-    public coordinateService: CoordinateService,
-    public columnService: ColumnService
-  ) {}
-
-  ngOnInit(): void {
-    combineLatest([
-      this.coordinateService.currentSystem$,
-      this.addressService.validAddresses$,
-      this.columnService.columns$
-    ])
-      .pipe(switchMap(([s, a, c]) => this.addressService.enrichAddresses$(a, s, c)))
-      .subscribe();
-  }
+  constructor() {}
 }

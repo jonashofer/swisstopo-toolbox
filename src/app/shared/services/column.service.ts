@@ -10,9 +10,11 @@ import { FEATURE_SERVICE_TOKEN, FeatureService } from './features/feature-base.s
 
 @Injectable()
 export class ColumnService {
-  private readonly columns = new BehaviorSubject<ColumnConfigItem[]>(this.getInitial());
+  private readonly _columns = new BehaviorSubject<ColumnConfigItem[]>(this.getInitial());
 
-  public readonly columns$ = this.columns.asObservable().pipe(
+  public readonly columns$ = this._columns.asObservable();
+
+  public readonly activeColumnsKeys$ = this._columns.asObservable().pipe(
     map(e => {
       return e.filter(c => c.active).map(c => c.key);
     })
@@ -28,18 +30,18 @@ export class ColumnService {
   ) {
     this.featureIdentifier = featureService.shortName;
     this.storageKey = `displayColumns_${featureService.shortName}`;
-    this.columns.next(StorageService.get<ColumnConfigItem[]>(this.storageKey) || this.getInitial());
+    this._columns.next(StorageService.get<ColumnConfigItem[]>(this.storageKey) || this.getInitial());
     this.coordinateService.currentSystem$
       .pipe(pairwise())
       .subscribe(([oldSystem, newSystem]) => this.handleCoordinateSystemChange(oldSystem, newSystem));
   }
 
   public getCurrentConfig() {
-    return this.columns.getValue();
+    return this._columns.getValue();
   }
 
   public setConfig(config: ColumnConfigItem[]) {
-    this.columns.next(config);
+    this._columns.next(config);
     this.saveConfig();
   }
 
@@ -50,24 +52,24 @@ export class ColumnService {
   // NOTE: this does only (de-)activate the respective systems and does not handle cases
   //       with custom orders or multiple systems activated manually by the user
   private handleCoordinateSystemChange(oldSystem: CoordinateSystem, newSystem: CoordinateSystem) {
-    if (oldSystem === newSystem || this.columns.value == null) {
+    if (oldSystem === newSystem || this._columns.value == null) {
       return;
     }
-    const newColumns = this.columns.value.slice();
+    const newColumns = this._columns.value.slice();
 
     // set old to inactive
     const oldSystemItem = newColumns.find(c => c.key === getColumnDefinition(oldSystem));
     if (oldSystemItem) {
       oldSystemItem.active = false;
     }
-    
+
     // set new to active
     const newSystemItem = newColumns.find(c => c.key === getColumnDefinition(newSystem));
     if (newSystemItem) {
       newSystemItem.active = true;
     }
 
-    this.columns.next(newColumns);
+    this._columns.next(newColumns);
     this.saveConfig();
   }
 
@@ -76,6 +78,18 @@ export class ColumnService {
   }
 
   private saveConfig() {
-    StorageService.save(this.storageKey, this.columns.value);
+    StorageService.save(this.storageKey, this._columns.value);
+  }
+
+  public expandCoordinateColumnOrDefault(column: ColumnDefinitions, seperator: string): string[] {
+    switch (column) {
+      case ColumnDefinitions.WGS_84:
+        return [`${column}${seperator}lat`, `${column}${seperator}lon`];
+      case ColumnDefinitions.LV_95:
+      case ColumnDefinitions.LV_03:
+        return [`${column}${seperator}lon`, `${column}${seperator}lat`];
+      default:
+        return [column];
+    }
   }
 }

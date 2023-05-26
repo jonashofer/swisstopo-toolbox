@@ -3,7 +3,7 @@
 		<mat-icon svgIcon="map-marker" class="ob-icon"></mat-icon>
 		<span>.kml</span>
 	</button>
-	<button mat-menu-item (click)="downloadService.downloadCsv()">
+	<button mat-menu-item (click)="downloadCsv(addressSelectDialog)">
 		<mat-icon svgIcon="file-csv" class="ob-icon"></mat-icon>
 		<span>.csv</span>
 	</button>
@@ -14,3 +14,21 @@
 	<mat-icon svgIcon="download" class="ob-icon"></mat-icon>
 	<mat-icon svgIcon="chevron-small-down" class="ob-icon"></mat-icon>
 </button>
+
+<ng-template #addressSelectDialog>
+	<h2 mat-dialog-title>{{ "toolbar.download.dialog.title" | translate }}</h2>
+	<mat-dialog-content class="mat-typography">
+		<p>{{ "toolbar.download.dialog.description" | translate }}</p>
+	</mat-dialog-content>
+	<mat-dialog-actions>
+		<button mat-button obButton="tertiary" [mat-dialog-close]>
+			{{ "i18n.common.cancel" | translate }}
+		</button>
+		<button mat-button obButton="secondary" [mat-dialog-close] (click)="this.downloadService.downloadCsv(true)">
+			{{ "toolbar.download.dialog.onlyValid" | translate }}
+		</button>
+		<button mat-button obButton="primary" [mat-dialog-close] (click)="this.downloadService.downloadCsv(false)" cdkFocusInitial>
+			{{ "toolbar.download.dialog.all" | translate }}
+		</button>
+	</mat-dialog-actions>
+</ng-template>

@@ -29,7 +29,7 @@
     },
     "cta": {
       "label": "Koordinaten",
-      "labelEdit": "Ursprüngliche Koordinaten bearbeiten",
+      "labelEdit": "Ursprüngliche Eingabe bearbeiten",
       "placeholder": "z.B. 2600994.1, 1197491.8 oder 46.95108, 7.438637 oder 683220.1, 248081.9",
       "noResults": "Keine Adresse im Umkreis von 100m gefunden",
       "tooltip": "Mehrzeilen-Eingabe möglich durch das kopieren von Koordinaten aus der Zwischenablage. Bitte achten, dass jedes Koordinaten-Paar auf einer neuen Zeile ist.",
@@ -83,7 +83,18 @@
       "tooltip": "Tabelle in Zwischenablage kopieren"
     },
     "download": {
-      "label": "Herunterladen"
+      "label": "Herunterladen",
+      "dialog": {
+        "title": "Ungültige Einträge gefunden",
+        "description": "Es bestehen ungültige Einträge. Sollen diese Einträge auch heruntergeladen werden?",
+        "onlyValid": "Nur gültige Einträge",
+        "all": "Alle Einträge"
+      },
+      "filename": {
+        "example": "Beispiel",
+        "atc": "Adressen",
+        "cta": "Koordinaten"
+      }
     },
     "coordinateSystem": {
       "tooltip": "Koordinatensystem ändern"
@@ -106,14 +117,14 @@
     "egrid": "EGRID",
     "height": "Höhe (m ü. M.)",
     "wgs84": "GPS-Koordinaten (WGS 84)",
-    "wgs84_lon": "Lon",
-    "wgs84_lat": "Lat",
+    "wgs84.lon": "Lon",
+    "wgs84.lat": "Lat",
     "lv95": "Schweizer Koordinaten (CH1903+ / LV95)",
-    "lv95_north": "Y / Norden",
-    "lv95_east": "X / Osten",
+    "lv95.lat": "Y / Norden",
+    "lv95.lon": "X / Osten",
     "lv03": "Schweizer Koordinaten (CH1903 / LV03)",
-    "lv03_north": "Y / Norden",
-    "lv03_east": "X / Osten",
+    "lv03.lat": "Y / Norden",
+    "lv03.lon": "X / Osten",
     "edit-address": "Bearbeitungsfunktion"
   },
   "columnConfigDialog": {

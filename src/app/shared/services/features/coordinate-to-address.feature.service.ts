@@ -22,7 +22,7 @@ export class CoordinateToAddressService extends FeatureServiceBase<CoordinateToA
 
   search(validInput: string): Observable<SearchResultItemTyped<CoordinateToAddressApiData>[]> {
     const coords = this.coordinateService.tryParse(validInput)!;
-    return this.reverseApiService.search(coords);
+    return this.reverseApiService.search(coords, validInput);
   }
 
   transformInput(input: SearchResultItemTyped<CoordinateToAddressApiData>): Observable<AddressCoordinateTableEntry> {

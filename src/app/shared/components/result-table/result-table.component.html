@@ -62,27 +62,27 @@
 	</ng-container>
 
 	<ng-container matColumnDef="wgs84_lat">
-		<th mat-header-cell *matHeaderCellDef>{{ "columns.wgs84_lat" | translate }}</th>
+		<th mat-header-cell *matHeaderCellDef>{{ "columns.wgs84.lat" | translate }}</th>
 		<td mat-cell *matCellDef="let element">{{ element.wgs84?.lat | coordinate: sys.WGS_84 }}</td>
 	</ng-container>
 	<ng-container matColumnDef="wgs84_lon">
-		<th mat-header-cell *matHeaderCellDef>{{ "columns.wgs84_lon" | translate }}</th>
+		<th mat-header-cell *matHeaderCellDef>{{ "columns.wgs84.lon" | translate }}</th>
 		<td mat-cell *matCellDef="let element">{{ element.wgs84?.lon | coordinate: sys.WGS_84 }}</td>
 	</ng-container>
-	<ng-container matColumnDef="lv95_east">
-		<th mat-header-cell *matHeaderCellDef>{{ "columns.lv95_east" | translate }}</th>
+	<ng-container matColumnDef="lv95_lon">
+		<th mat-header-cell *matHeaderCellDef>{{ "columns.lv95.lon" | translate }}</th>
 		<td mat-cell *matCellDef="let element">{{ element.lv95?.lon | coordinate: sys.LV_95 }}</td>
 	</ng-container>
-	<ng-container matColumnDef="lv95_north">
-		<th mat-header-cell *matHeaderCellDef>{{ "columns.lv95_north" | translate }}</th>
+	<ng-container matColumnDef="lv95_lat">
+		<th mat-header-cell *matHeaderCellDef>{{ "columns.lv95.lat" | translate }}</th>
 		<td mat-cell *matCellDef="let element">{{ element.lv95?.lat | coordinate: sys.LV_95 }}</td>
 	</ng-container>
-	<ng-container matColumnDef="lv03_east">
-		<th mat-header-cell *matHeaderCellDef>{{ "columns.lv03_east" | translate }}</th>
+	<ng-container matColumnDef="lv03_lon">
+		<th mat-header-cell *matHeaderCellDef>{{ "columns.lv03.lon" | translate }}</th>
 		<td mat-cell *matCellDef="let element">{{ element.lv03?.lon | coordinate: sys.LV_03 }}</td>
 	</ng-container>
-	<ng-container matColumnDef="lv03_north">
-		<th mat-header-cell *matHeaderCellDef>{{ "columns.lv03_north" | translate }}</th>
+	<ng-container matColumnDef="lv03_lat">
+		<th mat-header-cell *matHeaderCellDef>{{ "columns.lv03.lat" | translate }}</th>
 		<td mat-cell *matCellDef="let element">{{ element.lv03?.lat | coordinate: sys.LV_03 }}</td>
 	</ng-container>
 	

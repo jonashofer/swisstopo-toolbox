@@ -41,11 +41,11 @@ export class ReverseApiService {
     return this.coordinateService.tryParse(value) === null ? 'notifications.inputNotCoordinate' : null;
   }
 
-  public search(input: Coordinate): Observable<SearchResultItemTyped<CoordinateToAddressApiData>[]> {
+  public search(input: Coordinate, originalInput: string): Observable<SearchResultItemTyped<CoordinateToAddressApiData>[]> {
     return this.apiService
       .convert(input, CoordinateSystem.LV_95)
       .pipe(
-        switchMap(value => this.searchNearestAddresses(value, this.coordinateService.stringify(input, ', ')))
+        switchMap(value => this.searchNearestAddresses(value, originalInput))
       );
   }
 

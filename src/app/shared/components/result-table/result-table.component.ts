@@ -17,7 +17,6 @@ const customLayoutColumns: string[] = [
   ColumnDefinitions.LV_03,
   ColumnDefinitions.ADDRESS,
   ColumnDefinitions.EDIT_ADDRESS
-  // ColumnDefinitions.COORDINATE_CHIPS
 ];
 
 @Component({
@@ -31,16 +30,16 @@ export class ResultTableComponent implements OnInit {
 
   @ViewChild('tableRipple') tableRipple: MatRipple | undefined;
 
-  displayedColumns$ = this.columnService.columns$.pipe(
+  displayedColumns$ = this.columnService.activeColumnsKeys$.pipe(
     map(userConfig => {
-      const expandedColumns = userConfig.flatMap(c => this.expandColumnForView(c));
+      const expandedColumns = userConfig.flatMap(c => this.columnService.expandCoordinateColumnOrDefault(c, "_"));
       expandedColumns.unshift('trash');
       expandedColumns.push('config');
       return expandedColumns;
     })
   );
 
-  standardLayoutColumns$ = this.columnService.columns$.pipe(
+  standardLayoutColumns$ = this.columnService.activeColumnsKeys$.pipe(
     map(c => {
       return c.filter(e => !customLayoutColumns.includes(e));
     })
@@ -63,7 +62,7 @@ export class ResultTableComponent implements OnInit {
   ngOnInit() {
     this.downloadService.addressesCopied$.subscribe(() => this.tableRipple?.launch(0, 0, { centered: true }));
 
-    this.mapInteractionService.mapToTable$.subscribe((x) => {
+    this.mapInteractionService.mapToTable$.subscribe(x => {
       this.highlightRow(x.id, x.end);
     });
   }
@@ -72,18 +71,6 @@ export class ResultTableComponent implements OnInit {
   //   // this.highlightRow(row.featureId!, false);
   //   this.mapInteractionService.sendToMap(row.id, false);
   // }
-
-  private expandColumnForView(column: ColumnDefinitions): string[] {
-    switch (column) {
-      case ColumnDefinitions.WGS_84:
-        return ['wgs84_lat', 'wgs84_lon'];
-      case ColumnDefinitions.LV_95:
-      case ColumnDefinitions.LV_03:
-        return [`${column}_east`, `${column}_north`];
-      default:
-        return [column];
-    }
-  }
 
   private highlightRow(id: string, end: boolean) {
     if (end) {
@@ -94,6 +81,6 @@ export class ResultTableComponent implements OnInit {
   }
 
   rowHovered(row: AddressCoordinateTableEntry, isHovered: boolean) {
-    this.mapInteractionService.sendToMap(row.id, isHovered)
+    this.mapInteractionService.sendToMap(row.id, isHovered);
   }
 }

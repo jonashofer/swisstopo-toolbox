@@ -49,6 +49,11 @@ export class AddressService {
   get addresses() {
     return this._addresses.value;
   }
+
+  get hasInvalidAddresses() {
+    return this.addresses.some(a => !a.isValid);
+  }
+
   get validAddresses() {
     return this.addresses.filter(a => a.isValid);
   }
@@ -88,12 +93,11 @@ export class AddressService {
 
   public enrichAddresses$ = (
     addresses: AddressCoordinateTableEntry[],
-    coordinateSystem: CoordinateSystem,
     columns: ColumnDefinitions[]
   ) =>
     from(addresses).pipe(
       filter(address => address.isValid),
-      mergeMap(address => forkJoin(this.enrichAddress$(address, coordinateSystem, columns))),
+      mergeMap(address => forkJoin(this.enrichAddress$(address, columns))),
       catchError(err => {
         return of([]);
       })
@@ -104,7 +108,6 @@ export class AddressService {
   /** requires the address entry to have wgs84 coordinates */
   private readonly enrichAddress$ = (
     address: AddressCoordinateTableEntry,
-    newCoordinateSystem: CoordinateSystem,
     columns: ColumnDefinitions[]
   ) => {
     const queries: Observable<any>[] = [];

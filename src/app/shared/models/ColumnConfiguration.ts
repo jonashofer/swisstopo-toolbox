@@ -27,11 +27,8 @@ export enum ColumnDefinitions {
 	WGS_84 = 'wgs84',
 	LV_95 = 'lv95',
 	LV_03 = 'lv03',
-
-  // TRASH = 'trash',
   ADDRESS = 'address',
   EDIT_ADDRESS = 'edit-address',
-  // COORDINATE_CHIPS = 'coordinate-chips',
 }
 
 export function getColumnDefinition(coordinateSystem: CoordinateSystem) {
