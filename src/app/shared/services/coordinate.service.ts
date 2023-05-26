@@ -21,22 +21,6 @@ export class CoordinateService {
     this.system$.subscribe(system => {StorageService.save('coordinateSystem', system); })
   }
 
-  //TODO refactor to remove
-  // public stringify(coord: Coordinate | null, seperator: string, usePipe: boolean): string {
-	// 	if(coord == null) {
-	// 		return seperator
-	// 	}
-
-  //   const lat = usePipe ? this.coordinatePipe.transform(coord.lat, this.currentSystem) : coord.lat.toString();
-  //   const lon = usePipe ? this.coordinatePipe.transform(coord.lon, this.currentSystem) : coord.lon.toString();
-
-  //   // well-kown lat/lon order
-  //   if (coord.system == CoordinateSystem.WGS_84) {
-  //     return `${lat}${seperator}${lon}`;
-  //   }
-  //   return `${lon}${seperator}${lat}`;
-  // }
-
   public changeCurrentSystem(newSystem: CoordinateSystem): void {
     if (this.system$.value !== newSystem) {
       this.system$.next(newSystem);
