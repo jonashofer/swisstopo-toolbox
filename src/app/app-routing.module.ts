@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { GuideComponent } from './guide/guide.component';
-import { AddressToCoordinateComponent, AddressToEgidComponent, CoordinateToAddressComponent } from './feature-components';
+import { AddressToCoordinateComponent, AddressToEgidComponent, AddressToHeightComponent, CoordinateToAddressComponent } from './feature-components';
 
 const routes: Routes = [
   { path: '', redirectTo: 'address-to-coordinate', pathMatch: 'full' },
@@ -19,7 +19,7 @@ const routes: Routes = [
     path: 'height',
     children: [
       { path: 'from-coordinates', component: GuideComponent },
-      { path: 'from-address', component: GuideComponent }
+      { path: 'from-address', component: AddressToHeightComponent }
     ]
   },
   { path: 'guide', component: GuideComponent }
