@@ -1,35 +1,31 @@
 import { Injectable } from '@angular/core';
-import { FeatureServiceBase, SearchResultItemTyped, } from './feature-base.service';
-import { AddressToCoordinateApiData, ApiService } from '../api.service';
-import { Observable, catchError, map, of } from 'rxjs';
+import { FeatureServiceBase, LabelType, SearchResultItemTyped, } from './base/feature-base.service';
+import { AddressToCoordinateApiData } from '../api.service';
+import { Observable } from 'rxjs';
 import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTableEntry';
 import { ColumnConfigItem, ColumnDefinitions, inactiveUserCol, sysCol, userCol } from '../../models/ColumnConfiguration';
+import { AddressToCoordinateService } from './address-to-coordinate.feature';
 
 @Injectable()
-export class AddressToCoordinateService extends FeatureServiceBase<AddressToCoordinateApiData> {
+export class AddressToEgidService extends FeatureServiceBase<AddressToCoordinateApiData> {
 
-  constructor(private readonly apiService: ApiService) {
-    super('address-to-coordinate', 'atc');
+  showCoordinateSystemSwitch = false;
+
+  constructor(private readonly atcService: AddressToCoordinateService) {
+    super('address-to-egid', LabelType.ADDRESS);
     this.messageForMultipleResults = 'table.entry.warning.ambiguous';
   }
 
   validateSearchInput(input: string): string | null {
-    return this.apiService.validateSearchInput(input);
+    return this.atcService.validateSearchInput(input);
   }
 
   search(input: string): Observable<SearchResultItemTyped<AddressToCoordinateApiData>[]> {
-    return this.apiService.searchLocationsList(input).pipe(
-      map(r =>
-        r.map(apiSearchResult => ({ text: apiSearchResult.attrs.label, originalInput: input, data: apiSearchResult }))
-      ),
-      catchError(err => {
-        return of([]);
-      })
-    );
+    return this.atcService.search(input);
   }
 
   transformInput(input: SearchResultItemTyped<AddressToCoordinateApiData>): Observable<AddressCoordinateTableEntry> {
-    return of(this.apiService.mapApiResultToAddress(input.data));
+    return this.atcService.transformInput(input);
   }
 
   transformEntryForEdit(entry: AddressCoordinateTableEntry): string {
@@ -40,16 +36,16 @@ export class AddressToCoordinateService extends FeatureServiceBase<AddressToCoor
     return [
       userCol(ColumnDefinitions.ADDRESS),
       sysCol(ColumnDefinitions.EDIT_ADDRESS),
-      userCol(ColumnDefinitions.WGS_84),
+      userCol(ColumnDefinitions.EGID),
+      inactiveUserCol(ColumnDefinitions.WGS_84),
       inactiveUserCol(ColumnDefinitions.LV_95),
       inactiveUserCol(ColumnDefinitions.LV_03),
       inactiveUserCol(ColumnDefinitions.HEIGHT),
-      inactiveUserCol(ColumnDefinitions.EGID),
       inactiveUserCol(ColumnDefinitions.EGRID)
     ];
   }
 
   getExampleFileContent(): string {
-    return `Bundesplatz 1 3011 Bern\r\nSeftigenstrasse 264 3084 Wabern\r\nParadeplatz 2\r\n`;
+    return this.atcService.getExampleFileContent();
   }
 }

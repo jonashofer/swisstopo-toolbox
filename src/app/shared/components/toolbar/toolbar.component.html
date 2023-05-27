@@ -11,5 +11,5 @@
 		<mat-icon svgIcon="duplicate" class="ob-icon"></mat-icon>
 	</button>
 	<app-download-selector></app-download-selector>
-	<app-coordinate-system-switch></app-coordinate-system-switch>
+	<app-coordinate-system-switch *ngIf="featureService.showCoordinateSystemSwitch"></app-coordinate-system-switch>
 </div>

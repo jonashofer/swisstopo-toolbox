@@ -67,7 +67,7 @@ import { TextInputComponent } from './shared/components/text-input/text-input.co
 import { SearchInputComponent } from './shared/components/search-input/search-input.component';
 import { MatRippleModule } from '@angular/material/core';
 import { FeatureTabComponent } from './shared/components/feature-tab/feature-tab.component';
-import { AddressToCoordinateComponent, CoordinateToAddressComponent } from './feature-components';
+import { AddressToCoordinateComponent, AddressToEgidComponent, CoordinateToAddressComponent } from './feature-components';
 
 registerLocaleData(localeDECH);
 registerLocaleData(localeFRCH);
@@ -79,6 +79,7 @@ registerLocaleData(localeENCH);
   declarations: [
     AppComponent,
     AddressToCoordinateComponent,
+    AddressToEgidComponent,
     SearchInputComponent,
     ResultTableComponent,
     ResultMapComponent,

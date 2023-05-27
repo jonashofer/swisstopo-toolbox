@@ -14,8 +14,8 @@ import { ObNotificationService } from '@oblique/oblique';
 import { debounceTime, switchMap, tap } from 'rxjs/operators';
 import { AddressCoordinateTableEntry, AddressSelectionResult } from '../../models/AddressCoordinateTableEntry';
 import { Observable, of } from 'rxjs';
-import { FEATURE_SERVICE_TOKEN, FeatureService, SearchResultItem } from '../../services/features/feature-base.service';
 import { AddressService } from '../../services';
+import { FEATURE_SERVICE_TOKEN, FeatureService, SearchResultItem } from '../../services/features';
 
 // export interface SearchResultItem {
 //   text: string;
@@ -69,7 +69,7 @@ export class TextInputComponent {
     private readonly translate: TranslateService,
     @Inject(FEATURE_SERVICE_TOKEN) public featureService: FeatureService
   ) {
-    this.searchLabel = `search.${featureService.shortName}.`;
+    this.searchLabel = `search.${featureService.labelType}.`;
   }
 
   onOptionSelected(event: MatAutocompleteSelectedEvent) {

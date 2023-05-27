@@ -7,7 +7,7 @@ import { CoordinateSystem } from '../models/CoordinateSystem';
 import { CoordinateService } from './coordinate.service';
 import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEntry';
 import { TranslateService } from '@ngx-translate/core';
-import { SearchResultItemTyped } from './features/feature-base.service';
+import { SearchResultItemTyped } from './features/base/feature-base.service';
 import { GWREntry } from '../models/GeoAdminApiModels';
 
 interface MapServerIdentifyResult {
@@ -29,16 +29,14 @@ export interface CoordinateToAddressApiData {
 
 @Injectable()
 export class ReverseApiService {
-  // private bulkAddId = -1;
   constructor(
     private httpClient: HttpClient,
-    private coordinateService: CoordinateService,
     private apiService: ApiService,
     private translateService: TranslateService
   ) {}
 
   public validateSearchInput(value: string): string | null {
-    return this.coordinateService.tryParse(value) === null ? 'notifications.inputNotCoordinate' : null;
+    return CoordinateService.tryParse(value) === null ? 'notifications.inputNotCoordinate' : null;
   }
 
   public search(input: Coordinate, originalInput: string): Observable<SearchResultItemTyped<CoordinateToAddressApiData>[]> {
@@ -101,7 +99,7 @@ export class ReverseApiService {
             const coord: Coordinate = { lon: east, lat: north, system: CoordinateSystem.LV_95 };
             const distance = this.calculateDistance(lv95coord, coord);
             const distanceSuffix =
-              distance > 0 ? ` <i>${this.translateService.instant('search.cta.distance', { distance })}</i>` : '';
+              distance > 0 ? ` <i>${this.translateService.instant('search.coordinate.distance', { distance })}</i>` : '';
             return {
               text: `${fullAddress}${distanceSuffix}`,
               originalInput: originalInput,

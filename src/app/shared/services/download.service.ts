@@ -21,15 +21,6 @@ export class DownloadService {
     return this.joinAddressesWithHeader(this.addressService.addresses, '\t');
   }
 
-  public downloadExampleTxt() {
-    const result = this.featureService.getExampleFileContent();
-    const file = new Blob([result], { type: 'text/plain' });
-    const name = `SwisstopoToolbox_${this.translate.instant(
-      `toolbar.download.filename.${this.featureService.shortName}`
-    )}_${this.translate.instant(`toolbar.download.filename.example`)}.txt`;
-    saveAs(file, name);
-  }
-
   public downloadCsv(onlyValidAddresses: boolean) {
     const addresses = onlyValidAddresses ? this.addressService.validAddresses : this.addressService.addresses;
     const result = this.joinAddressesWithHeader(addresses, ';');
@@ -87,7 +78,7 @@ export class DownloadService {
     const formattedDate = `${year}-${month}-${day}-${hours}${minutes}`;
 
     return `${formattedDate}_SwisstopoToolbox_${this.translate.instant(
-      `toolbar.download.filename.${this.featureService.shortName}`
+      `toolbar.download.filename.${this.featureService.labelType}`
     )}`;
   }
 

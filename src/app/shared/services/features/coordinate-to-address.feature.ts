@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CoordinateToAddressApiData, ReverseApiService } from '../reverse-api.service';
-import { FeatureServiceBase, SearchResultItemTyped } from './feature-base.service';
-import { Coordinate } from '../../models/Coordinate';
+import { FeatureServiceBase, LabelType, SearchResultItemTyped } from './base/feature-base.service';
 import { Observable } from 'rxjs';
 import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTableEntry';
 import { ColumnConfigItem, ColumnDefinitions, inactiveUserCol, sysCol, userCol } from '../../models/ColumnConfiguration';
@@ -9,11 +8,13 @@ import { CoordinateService } from '../coordinate.service';
 
 @Injectable()
 export class CoordinateToAddressService extends FeatureServiceBase<CoordinateToAddressApiData> {
+
+  showCoordinateSystemSwitch = true;
+
   constructor(
     private readonly reverseApiService: ReverseApiService,
-    private readonly coordinateService: CoordinateService
   ) {
-    super('coordinate-to-address', 'cta');
+    super('coordinate-to-address', LabelType.COORDINATE);
   }
 
   validateSearchInput(input: string): string | null {
@@ -21,7 +22,7 @@ export class CoordinateToAddressService extends FeatureServiceBase<CoordinateToA
   }
 
   search(validInput: string): Observable<SearchResultItemTyped<CoordinateToAddressApiData>[]> {
-    const coords = this.coordinateService.tryParse(validInput)!;
+    const coords = CoordinateService.tryParse(validInput)!;
     return this.reverseApiService.search(coords, validInput);
   }
 

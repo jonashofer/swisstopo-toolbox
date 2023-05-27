@@ -19,17 +19,22 @@
     "input": "Eingabe",
     "file": "Datei hochladen"
   },
-  "search": {
-    "atc": {
+  "search": { 
+    "labelEdit": "Ursprüngliche Eingabe bearbeiten",
+    "egid": {
+      "label": "EGID",
+      "placeholder": "z.B. 1230564",
+      "noResults": "Keine Adresse mit dieser EGID gefunden",
+      "tooltip": "Mehrzeilen-Eingabe möglich durch das kopieren von Adressen aus der Zwischenablage. Bitte achten, dass jede EGID auf einer neuen Zeile ist."
+    },
+    "address": {
       "label": "Adresse",
-      "labelEdit": "Adresse bearbeiten",
       "placeholder": "z.B. Bundesplatz 1 Bern",
       "noResults": "Keine Adresse gefunden",
       "tooltip": "Mehrzeilen-Eingabe möglich durch das kopieren von Adressen aus der Zwischenablage. Bitte achten, dass jede Adresse auf einer neuen Zeile ist."
     },
-    "cta": {
+    "coordinate": {
       "label": "Koordinaten",
-      "labelEdit": "Ursprüngliche Eingabe bearbeiten",
       "placeholder": "z.B. 2600994.1, 1197491.8 oder 46.95108, 7.438637 oder 683220.1, 248081.9",
       "noResults": "Keine Adresse im Umkreis von 100m gefunden",
       "tooltip": "Mehrzeilen-Eingabe möglich durch das kopieren von Koordinaten aus der Zwischenablage. Bitte achten, dass jedes Koordinaten-Paar auf einer neuen Zeile ist.",
@@ -52,8 +57,9 @@
       "replace": "Ersetzen"
     },
     "exampleFile": {
-      "description": "Die Datei sollte eine Adresse pro Zeile enthalten.",
-      "button": "Beispieldatei herunterladen"
+      "description": "Die Datei sollte einen Eintrag pro Zeile enthalten.",
+      "button": "Beispieldatei herunterladen",
+      "name": "Beispiel"
     }
   },
   "table": {
@@ -91,9 +97,9 @@
         "all": "Alle Einträge"
       },
       "filename": {
-        "example": "Beispiel",
-        "atc": "Adressen",
-        "cta": "Koordinaten"
+        "address": "Adressen",
+        "coordinate": "Koordinaten",
+        "egid": "EGID"
       }
     },
     "coordinateSystem": {

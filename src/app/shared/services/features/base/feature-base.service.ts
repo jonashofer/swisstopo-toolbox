@@ -1,7 +1,7 @@
 import { Injectable, InjectionToken } from '@angular/core';
 import { Observable, forkJoin, from, mergeMap, of, switchMap } from 'rxjs';
-import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTableEntry';
-import { ColumnConfigItem } from '../../models/ColumnConfiguration';
+import { AddressCoordinateTableEntry } from '../../../models/AddressCoordinateTableEntry';
+import { ColumnConfigItem } from '../../../models/ColumnConfiguration';
 
 export interface SearchResultItem {
   data: any;
@@ -13,11 +13,18 @@ export interface SearchResultItemTyped<T> extends SearchResultItem {
   data: T;
 }
 
+export enum LabelType {
+  ADDRESS = 'address',
+  COORDINATE = 'coordinate',
+  EGID = 'egid',
+}
+
 export const FEATURE_SERVICE_TOKEN = new InjectionToken<FeatureService>('FEATURE_SERVICE_TOKEN');
 
 export interface FeatureService {
   name: string;
-  shortName: string;
+  labelType: LabelType;
+  showCoordinateSystemSwitch: boolean;
 
   validateSearchInput(input: string): string | null;
 
@@ -32,7 +39,6 @@ export interface FeatureService {
 
   getExampleFileContent(): string;
 
-  // TODO probably refactor to [] plus abstract away via single-functions
   searchMultiple(lines: string[]): Observable<AddressCoordinateTableEntry[]>;
 }
 
@@ -40,8 +46,9 @@ export interface FeatureService {
 export abstract class FeatureServiceBase<AutocompleteData> implements FeatureService {
   private bulkAddId = -1;
   protected messageForMultipleResults: string | null = null;
+  abstract showCoordinateSystemSwitch: boolean;
 
-  constructor(public name: string, public shortName: string) {}
+  constructor(public name: string, public labelType: LabelType) {}
 
   abstract validateSearchInput(input: string): string | null;
 
@@ -78,7 +85,7 @@ export abstract class FeatureServiceBase<AutocompleteData> implements FeatureSer
                             address: userInput,
                             id: (--this.bulkAddId).toString(),
                             isValid: false,
-                            warningTranslationKey: `search.${this.shortName}.noResults`,
+                            warningTranslationKey: `search.${this.labelType}.noResults`,
                             wgs84: null,
                             lv95: null,
                             lv03: null
@@ -88,11 +95,12 @@ export abstract class FeatureServiceBase<AutocompleteData> implements FeatureSer
 
                     // if there is exactly one result, take that
                     // also take the first result if no messageForMultipleResults is set, which indicates we also want the first
+                    // for e.g. reverse geocoding where we want the nearest address
                     if (r.length == 1 || this.messageForMultipleResults === null) {
                         return this.transformInput(r[0]);
                     }
 
-                    // if there is more than one result (and messageForMultipleResults is not null)
+                    // if there is more than one result (and messageForMultipleResults is not null, e.g. AddressSearch)
                     // return an invalid entry with the provided message
                     const entry: AddressCoordinateTableEntry = {
                         address: userInput,

@@ -3,10 +3,9 @@ import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { BehaviorSubject, filter, map, pairwise } from 'rxjs';
 import { ColumnConfigDialogComponent } from '../components/column-config-dialog/column-config-dialog.component';
 import { ColumnConfigItem, ColumnDefinitions, getColumnDefinition, inactiveUserCol, sysCol, userCol } from '../models/ColumnConfiguration';
-import { StorageService } from './storage.service';
 import { CoordinateSystem } from '../models/CoordinateSystem';
-import { CoordinateService } from './coordinate.service';
-import { FEATURE_SERVICE_TOKEN, FeatureService } from './features/feature-base.service';
+import { CoordinateService, StorageService } from '.';
+import { FEATURE_SERVICE_TOKEN, FeatureService } from './features';
 
 @Injectable()
 export class ColumnService {
@@ -21,15 +20,13 @@ export class ColumnService {
   );
 
   storageKey = '';
-  featureIdentifier = '';
 
   constructor(
     @Inject(FEATURE_SERVICE_TOKEN) private readonly featureService: FeatureService,
     private readonly dialog: MatDialog,
     private readonly coordinateService: CoordinateService
   ) {
-    this.featureIdentifier = featureService.shortName;
-    this.storageKey = `displayColumns_${featureService.shortName}`;
+    this.storageKey = `displayColumns_${featureService.name}`;
     this._columns.next(StorageService.get<ColumnConfigItem[]>(this.storageKey) || this.getInitial());
     this.coordinateService.currentSystem$
       .pipe(pairwise())

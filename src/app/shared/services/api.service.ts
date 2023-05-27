@@ -34,7 +34,6 @@ interface RootObject {
 
 @Injectable()
 export class ApiService {
-  private bulkAddId = -1;
 
   constructor(
     private readonly httpClient: HttpClient,

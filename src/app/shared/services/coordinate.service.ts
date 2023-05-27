@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CoordinateSystem } from '../models/CoordinateSystem';
 import { Coordinate } from '../models/Coordinate';
-import { CoordinatePipe } from '../components/coordinate.pipe';
 import { StorageService } from './storage.service';
+import { FEATURE_SERVICE_TOKEN, FeatureService } from './features';
 
 @Injectable()
 export class CoordinateService {
@@ -16,9 +16,12 @@ export class CoordinateService {
     return this.system$.value;
   }
 
-  constructor(private readonly coordinatePipe: CoordinatePipe) {
-    this.system$.next(StorageService.get('coordinateSystem') || CoordinateSystem.WGS_84);
-    this.system$.subscribe(system => {StorageService.save('coordinateSystem', system); })
+  constructor(@Inject(FEATURE_SERVICE_TOKEN) featureService: FeatureService) {
+    const storageKey = 'coordinate-system_' + featureService.name;
+    this.system$.next(StorageService.get(storageKey) || CoordinateSystem.WGS_84);
+    this.system$.subscribe(system => {
+      StorageService.save(storageKey, system);
+    });
   }
 
   public changeCurrentSystem(newSystem: CoordinateSystem): void {
@@ -27,9 +30,12 @@ export class CoordinateService {
     }
   }
 
-  public tryParse(input: string): Coordinate | null {
+  public static tryParse(input: string): Coordinate | null {
     // Remove superficial characters
-    const cleanedInput = input.trim().replace(/[°'’"NE]/g, '').replace(/[,;]/, '.');
+    const cleanedInput = input
+      .trim()
+      .replace(/[°'’"NE]/g, '')
+      .replace(/[,;]/, '.');
 
     // Split the string into two parts
     const parts = cleanedInput.split(/[\s\t]+/);

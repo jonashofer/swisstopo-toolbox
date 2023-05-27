@@ -1,11 +1,9 @@
 import { Type } from '@angular/core';
 import { Provider } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
-import { CoordinatePipe } from '../../components/coordinate.pipe';
-import { AddressService, ApiService, ApiDetailService, CoordinateService, DownloadService } from '..';
-import { ColumnService } from '../column.service';
-import { MapInteractionService } from '../map-interaction.service';
 import { FEATURE_SERVICE_TOKEN, FeatureService } from './feature-base.service';
+import { CoordinatePipe } from 'src/app/shared/components/coordinate.pipe';
+import { AddressService, ApiDetailService, ApiService, ColumnService, CoordinateService, DownloadService, MapInteractionService } from '../../.';
 
 export function getFeatureProviders(featureService: Type<FeatureService>): Provider[] {
   return [

@@ -3,12 +3,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { ObNotificationService } from '@oblique/oblique';
 import { BehaviorSubject, forkJoin, from, Observable, of } from 'rxjs';
 import { catchError, filter, map, mergeMap } from 'rxjs/operators';
-import { ApiDetailService, ApiService } from '.';
+import { ApiDetailService, ApiService, StorageService } from '.';
 import { AddressCoordinateTableEntry, AddressSelectionResult } from '../models/AddressCoordinateTableEntry';
 import { ColumnDefinitions } from '../models/ColumnConfiguration';
 import { CoordinateSystem } from '../models/CoordinateSystem';
-import { StorageService } from './storage.service';
-import { FEATURE_SERVICE_TOKEN, FeatureService } from './features/feature-base.service';
+import { FEATURE_SERVICE_TOKEN, FeatureService } from './features';
 
 @Injectable()
 export class AddressService {

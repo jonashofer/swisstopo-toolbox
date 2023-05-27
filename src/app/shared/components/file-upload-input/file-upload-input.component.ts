@@ -3,7 +3,8 @@ import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { ObIUploadEvent, ObNotificationService } from '@oblique/oblique';
 import { AddressService, DownloadService } from '../../services';
-import { FEATURE_SERVICE_TOKEN, FeatureService } from '../../services/features/feature-base.service';
+import saveAs from 'file-saver';
+import { FEATURE_SERVICE_TOKEN, FeatureService } from '../../services/features';
 
 @Component({
   selector: 'app-file-upload-input',
@@ -65,6 +66,15 @@ export class FileUploadInputComponent {
       this.lines = [];
       this.finished.emit();
     });
+  }
+  
+  downloadExampleTxt() {
+    const result = this.featureService.getExampleFileContent();
+    const file = new Blob([result], { type: 'text/plain' });
+    const name = `SwisstopoToolbox_${this.translate.instant(
+      `toolbar.download.filename.${this.featureService.labelType}`
+    )}_${this.translate.instant(`fileInput.exampleFile.name`)}.txt`;
+    saveAs(file, name);
   }
 }
 
