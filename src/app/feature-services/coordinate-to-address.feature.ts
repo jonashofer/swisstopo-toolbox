@@ -36,7 +36,7 @@ export class CoordinateToAddressService extends FeatureServiceBase<CoordinateToA
     return [
       userCol(ColumnDefinitions.WGS_84),
       userCol(ColumnDefinitions.ADDRESS),
-      sysCol(ColumnDefinitions.EDIT_ADDRESS),
+      sysCol(ColumnDefinitions.EDIT),
       inactiveUserCol(ColumnDefinitions.LV_95),
       inactiveUserCol(ColumnDefinitions.LV_03),
       inactiveUserCol(ColumnDefinitions.HEIGHT),

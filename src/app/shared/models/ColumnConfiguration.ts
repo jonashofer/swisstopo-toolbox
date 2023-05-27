@@ -1,6 +1,5 @@
 import { CoordinateSystem } from "./.";
 
-// object to enable future expansion such as width, sorts etc.
 export interface ColumnConfigItem {
   key: ColumnDefinitions;
   isSystemColumn: boolean;
@@ -19,7 +18,6 @@ export function sysCol(definition: ColumnDefinitions): ColumnConfigItem {
   return { key: definition, isSystemColumn: true, active: true }; 
 }
 
-// hardcoded columns currently: trash, address, edit
 export enum ColumnDefinitions {
   EGID = 'egid',
   EGRID = 'egrid',
@@ -28,7 +26,7 @@ export enum ColumnDefinitions {
 	LV_95 = 'lv95',
 	LV_03 = 'lv03',
   ADDRESS = 'address',
-  EDIT_ADDRESS = 'edit-address',
+  EDIT = 'edit',
 }
 
 export function getColumnDefinition(coordinateSystem: CoordinateSystem) {

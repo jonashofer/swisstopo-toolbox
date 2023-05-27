@@ -23,7 +23,7 @@
 		</td>
 	</ng-container>
 
-	<ng-container matColumnDef="edit-address">
+	<ng-container matColumnDef="edit">
 		<th mat-header-cell *matHeaderCellDef></th>
 		<td mat-cell *matCellDef="let element">
 			<mat-icon
@@ -57,11 +57,19 @@
 	<!-- COORDINATE COLUMNS -->
 	<ng-container *ngFor="let column of coordinateColumns">
 		<ng-container [matColumnDef]="column + '_lat'">
-			<th mat-header-cell *matHeaderCellDef>{{ "columns." + column + ".lat" | translate }}</th>
+			<th mat-header-cell *matHeaderCellDef
+			[matTooltip]="coordinateSystemNames[column]"
+			matTooltipPosition="left"
+			matTooltipShowDelay="200"
+			>{{ "columns." + column + ".lat" | translate }}</th>
 			<td mat-cell *matCellDef="let element">{{ element[column]?.lat | coordinate: element[column]?.system }}</td>
 		</ng-container>
 		<ng-container [matColumnDef]="column + '_lon'">
-			<th mat-header-cell *matHeaderCellDef>{{ "columns." + column + ".lon" | translate }}</th>
+			<th mat-header-cell *matHeaderCellDef
+			[matTooltip]="coordinateSystemNames[column]"
+			matTooltipPosition="left"
+			matTooltipShowDelay="200"
+			>{{ "columns." + column + ".lon" | translate }}</th>
 			<td mat-cell *matCellDef="let element">{{ element[column]?.lon | coordinate: element[column]?.system }}</td>
 		</ng-container>
 	</ng-container>

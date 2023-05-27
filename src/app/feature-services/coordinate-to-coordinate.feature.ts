@@ -93,7 +93,7 @@ export class CoordinateToCoordinateService extends FeatureServiceBase<Coordinate
       userCol(ColumnDefinitions.WGS_84),
       userCol(ColumnDefinitions.LV_95),
       inactiveUserCol(ColumnDefinitions.LV_03),
-      sysCol(ColumnDefinitions.EDIT_ADDRESS),
+      sysCol(ColumnDefinitions.EDIT),
 
       inactiveUserCol(ColumnDefinitions.HEIGHT)
 

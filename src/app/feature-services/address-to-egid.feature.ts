@@ -36,7 +36,7 @@ export class AddressToEgidService extends FeatureServiceBase<AddressToCoordinate
   getDefaultColumns(): ColumnConfigItem[] {
     return [
       userCol(ColumnDefinitions.ADDRESS),
-      sysCol(ColumnDefinitions.EDIT_ADDRESS),
+      sysCol(ColumnDefinitions.EDIT),
       userCol(ColumnDefinitions.EGID),
       inactiveUserCol(ColumnDefinitions.WGS_84),
       inactiveUserCol(ColumnDefinitions.LV_95),

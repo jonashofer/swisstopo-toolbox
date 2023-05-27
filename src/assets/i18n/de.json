@@ -124,7 +124,7 @@
     "lv03": "Schweizer Koordinaten (CH1903 / LV03)",
     "lv03.lat": "Y / Norden",
     "lv03.lon": "X / Osten",
-    "edit-address": "Bearbeitungsfunktion"
+    "edit": "Bearbeitungsfunktion"
   },
   "columnConfigDialog": {
     "title": "Anzeigespalten konfigurieren",

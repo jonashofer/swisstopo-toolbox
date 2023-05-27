@@ -39,7 +39,7 @@ export class AddressToCoordinateService extends FeatureServiceBase<AddressToCoor
   getDefaultColumns(): ColumnConfigItem[] {
     return [
       userCol(ColumnDefinitions.ADDRESS),
-      sysCol(ColumnDefinitions.EDIT_ADDRESS),
+      sysCol(ColumnDefinitions.EDIT),
       userCol(ColumnDefinitions.WGS_84),
       inactiveUserCol(ColumnDefinitions.LV_95),
       inactiveUserCol(ColumnDefinitions.LV_03),

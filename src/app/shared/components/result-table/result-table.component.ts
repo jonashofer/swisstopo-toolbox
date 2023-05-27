@@ -1,13 +1,13 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
-import { map, tap } from 'rxjs';
+import { map } from 'rxjs';
 import { AddressService, DownloadService } from '../../services';
 import { ColumnService } from '../../services/column.service';
 import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTableEntry';
-import { CoordinateSystem } from '../../models/CoordinateSystem';
 import { ColumnDefinitions } from '../../models/ColumnConfiguration';
 import { MatRipple } from '@angular/material/core';
 import { MapInteractionService } from '../../services/map-interaction.service';
+import { CoordinateSystem, CoordinateSystemNames } from '../../models/CoordinateSystem';
 
 @Component({
   selector: 'app-result-table',
@@ -40,6 +40,8 @@ export class ResultTableComponent implements OnInit {
 
   highlightId = '';
 
+  coordinateSystemNames: any = CoordinateSystemNames;
+
   constructor(
     public addressService: AddressService,
     public columnService: ColumnService,
@@ -59,6 +61,11 @@ export class ResultTableComponent implements OnInit {
 
   rowHovered(row: AddressCoordinateTableEntry, isHovered: boolean) {
     this.mapInteractionService.sendToMap(row.id, isHovered);
+  }
+
+  getCoordinateSystemName(key: ColumnDefinitions) {
+    console.log(key);
+    return CoordinateSystemNames[key as any as keyof typeof CoordinateSystemNames];
   }
 
   private highlightRow(id: string, end: boolean) {
