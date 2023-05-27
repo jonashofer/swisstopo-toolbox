@@ -45,7 +45,7 @@ export class CoordinateToCoordinateService extends FeatureServiceBase<Coordinate
           data: coords
         }
       ]),
-      catchError(() => // fallback without server - notifications comes nonetheless..
+      catchError(() => // fallback without server - notification from  mnbm comes nonetheless..
         of([
           {
             text: `${text} <i>- ${CoordinateSystemNames[coords.system]}</i>`,

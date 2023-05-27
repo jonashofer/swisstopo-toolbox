@@ -9,15 +9,6 @@ import { ColumnDefinitions } from '../../models/ColumnConfiguration';
 import { MatRipple } from '@angular/material/core';
 import { MapInteractionService } from '../../services/map-interaction.service';
 
-//all columns that should not be rendered in a generic way, need to have a custom
-//matColumnDef in the template and need to be registered here
-const customLayoutColumns: string[] = [
-  ColumnDefinitions.WGS_84,
-  ColumnDefinitions.LV_95,
-  ColumnDefinitions.LV_03,
-  ColumnDefinitions.EDIT_ADDRESS
-];
-
 @Component({
   selector: 'app-result-table',
   templateUrl: './result-table.component.html',
@@ -31,21 +22,21 @@ export class ResultTableComponent implements OnInit {
 
   displayedColumns$ = this.columnService.activeColumnsKeys$.pipe(
     map(userConfig => {
-      const expandedColumns = userConfig.flatMap(c => this.columnService.expandCoordinateColumnOrDefault(c, "_"));
+      const expandedColumns = userConfig.flatMap(c => this.columnService.expandCoordinateColumnOrDefault(c, '_'));
       expandedColumns.unshift('trash');
       expandedColumns.push('config');
       return expandedColumns;
     })
   );
 
-  standardLayoutColumns$ = this.columnService.activeColumnsKeys$.pipe(
-    map(c => {
-      return c.filter(e => !customLayoutColumns.includes(e));
-    })
-  );
+  coordinateColumns: ColumnDefinitions[] = [ColumnDefinitions.WGS_84, ColumnDefinitions.LV_95, ColumnDefinitions.LV_03];
 
-  sys = CoordinateSystem;
-  col = ColumnDefinitions;
+  genericColumns: ColumnDefinitions[] = [
+    ColumnDefinitions.ADDRESS,
+    ColumnDefinitions.EGID,
+    ColumnDefinitions.EGRID,
+    ColumnDefinitions.HEIGHT
+  ];
 
   highlightId = '';
 
@@ -66,10 +57,9 @@ export class ResultTableComponent implements OnInit {
     });
   }
 
-  // public tableRowClicked(row: AddressCoordinateTableEntry) {
-  //   // this.highlightRow(row.featureId!, false);
-  //   this.mapInteractionService.sendToMap(row.id, false);
-  // }
+  rowHovered(row: AddressCoordinateTableEntry, isHovered: boolean) {
+    this.mapInteractionService.sendToMap(row.id, isHovered);
+  }
 
   private highlightRow(id: string, end: boolean) {
     if (end) {
@@ -77,9 +67,5 @@ export class ResultTableComponent implements OnInit {
     } else {
       this.highlightId = id;
     }
-  }
-
-  rowHovered(row: AddressCoordinateTableEntry, isHovered: boolean) {
-    this.mapInteractionService.sendToMap(row.id, isHovered);
   }
 }

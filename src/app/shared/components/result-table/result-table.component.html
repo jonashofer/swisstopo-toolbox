@@ -54,33 +54,20 @@
 		<td mat-cell *matCellDef="let element"></td>
 	</ng-container>
 
-	<ng-container matColumnDef="wgs84_lat">
-		<th mat-header-cell *matHeaderCellDef>{{ "columns.wgs84.lat" | translate }}</th>
-		<td mat-cell *matCellDef="let element">{{ element.wgs84?.lat | coordinate: sys.WGS_84 }}</td>
-	</ng-container>
-	<ng-container matColumnDef="wgs84_lon">
-		<th mat-header-cell *matHeaderCellDef>{{ "columns.wgs84.lon" | translate }}</th>
-		<td mat-cell *matCellDef="let element">{{ element.wgs84?.lon | coordinate: sys.WGS_84 }}</td>
-	</ng-container>
-	<ng-container matColumnDef="lv95_lon">
-		<th mat-header-cell *matHeaderCellDef>{{ "columns.lv95.lon" | translate }}</th>
-		<td mat-cell *matCellDef="let element">{{ element.lv95?.lon | coordinate: sys.LV_95 }}</td>
-	</ng-container>
-	<ng-container matColumnDef="lv95_lat">
-		<th mat-header-cell *matHeaderCellDef>{{ "columns.lv95.lat" | translate }}</th>
-		<td mat-cell *matCellDef="let element">{{ element.lv95?.lat | coordinate: sys.LV_95 }}</td>
-	</ng-container>
-	<ng-container matColumnDef="lv03_lon">
-		<th mat-header-cell *matHeaderCellDef>{{ "columns.lv03.lon" | translate }}</th>
-		<td mat-cell *matCellDef="let element">{{ element.lv03?.lon | coordinate: sys.LV_03 }}</td>
-	</ng-container>
-	<ng-container matColumnDef="lv03_lat">
-		<th mat-header-cell *matHeaderCellDef>{{ "columns.lv03.lat" | translate }}</th>
-		<td mat-cell *matCellDef="let element">{{ element.lv03?.lat | coordinate: sys.LV_03 }}</td>
+	<!-- COORDINATE COLUMNS -->
+	<ng-container *ngFor="let column of coordinateColumns">
+		<ng-container [matColumnDef]="column + '_lat'">
+			<th mat-header-cell *matHeaderCellDef>{{ "columns." + column + ".lat" | translate }}</th>
+			<td mat-cell *matCellDef="let element">{{ element[column]?.lat | coordinate: element[column]?.system }}</td>
+		</ng-container>
+		<ng-container [matColumnDef]="column + '_lon'">
+			<th mat-header-cell *matHeaderCellDef>{{ "columns." + column + ".lon" | translate }}</th>
+			<td mat-cell *matCellDef="let element">{{ element[column]?.lon | coordinate: element[column]?.system }}</td>
+		</ng-container>
 	</ng-container>
 	
-  	<!-- Standard layout -->
-	<ng-container *ngFor="let column of standardLayoutColumns$ | async" [matColumnDef]="column">
+	<!-- GENERIC COLUMNS -->
+	<ng-container *ngFor="let column of genericColumns" [matColumnDef]="column">
 			<th mat-header-cell *matHeaderCellDef>
 				{{ "columns." + column | translate }}
 			</th>
