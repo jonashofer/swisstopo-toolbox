@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Observable, map, of } from 'rxjs';
+import { Observable, catchError, map, of } from 'rxjs';
 import { AddressCoordinateTableEntry, ColumnDefinitions, Coordinate, CoordinateSystem } from '../shared/models';
 import { ColumnConfigItem, userCol, sysCol, inactiveUserCol } from '../shared/models/ColumnConfiguration';
 import { CoordinateService, ApiService } from '../shared/services';
 import { FeatureServiceBase, LabelType, SearchResultItemTyped } from '../shared/services/feature.service';
-import { CoordinateSystemNames } from '../shared/models/CoordinateSystem';
+import { CoordinateSystemNames, CoordinateSystemSr } from '../shared/models/CoordinateSystem';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class CoordinateToCoordinateService extends FeatureServiceBase<Coordinate> {
-
   disableInactivationOfOldSystemWhenSwitching = true;
 
-  constructor(private readonly apiService: ApiService) {
+  constructor(private readonly apiService: ApiService, private readonly httpClient: HttpClient) {
     super('coordinate-to-coordinate', LabelType.COORDINATE);
   }
 
@@ -29,14 +29,32 @@ export class CoordinateToCoordinateService extends FeatureServiceBase<Coordinate
         break;
       case CoordinateSystem.WGS_84:
         text = `${coords.lat}, ${coords.lon}`;
-
     }
-    const result = {
-      text: `${text} <i>- ${CoordinateSystemNames[coords.system]}`,
-      originalInput: validInput,
-      data: coords
-    };
-    return of([result]);
+
+    // query gemeinde to have some indication of location
+    const url = `https://api.geo.admin.ch/rest/services/api/MapServer/identify?geometryType=esriGeometryPoint&geometry=${
+      coords.lon
+    },${coords.lat}&sr=${
+      CoordinateSystemSr[coords.system]
+    }&imageDisplay=0,0,0&mapExtent=0,0,0,0&tolerance=0&layers=all:ch.swisstopo.swissboundaries3d-gemeinde-flaeche.fill&returnGeometry=false`;
+    return this.httpClient.get<{ results: Result[] }>(url).pipe(
+      map(r => [
+        {
+          text: `${text} (${r?.results[0]?.attributes?.label}) <i>- ${CoordinateSystemNames[coords.system]}</i>`,
+          originalInput: validInput,
+          data: coords
+        }
+      ]),
+      catchError(() => // fallback without server - notifications comes nonetheless..
+        of([
+          {
+            text: `${text} <i>- ${CoordinateSystemNames[coords.system]}</i>`,
+            originalInput: validInput,
+            data: coords
+          }
+        ])
+      )
+    );
   }
 
   transformInput(input: SearchResultItemTyped<Coordinate>): Observable<AddressCoordinateTableEntry> {
@@ -89,4 +107,21 @@ export class CoordinateToCoordinateService extends FeatureServiceBase<Coordinate
   getExampleFileContent(): string {
     return `46.7591	7.6292\r\n636'810.21, 136'435.22\r\n2'642'580.0, 1'136'725.0`;
   }
+}
+
+interface Result {
+  layerBodId: string;
+  layerName: string;
+  featureId: number;
+  id: number;
+  attributes: Attributes;
+}
+
+interface Attributes {
+  gemname: string;
+  gemflaeche: number;
+  perimeter: number;
+  kanton: string;
+  objektart: number;
+  label: string;
 }
