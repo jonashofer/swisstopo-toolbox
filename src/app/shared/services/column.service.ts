@@ -56,7 +56,7 @@ export class ColumnService {
 
     // set old to inactive
     const oldSystemItem = newColumns.find(c => c.key === getColumnDefinition(oldSystem));
-    if (oldSystemItem) {
+    if (oldSystemItem && !this.featureService.disableInactivationOfOldSystemWhenSwitching) {
       oldSystemItem.active = false;
     }
 

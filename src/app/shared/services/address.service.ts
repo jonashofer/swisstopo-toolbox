@@ -73,7 +73,7 @@ export class AddressService {
     } else {
       this.notificationService.info(
         this.translate.instant('notifications.entryAlreadyExists', {
-          address: addressResult.result.address
+          address: addressResult.result.address.length > 0 ? `(${addressResult.result.address})` : ''
         })
       );
     }

@@ -8,8 +8,6 @@ import { FeatureServiceBase, LabelType, SearchResultItemTyped } from '../shared/
 @Injectable()
 export class AddressToCoordinateService extends FeatureServiceBase<AddressToCoordinateApiData> {
 
-  showCoordinateSystemSwitch = true;
-
   constructor(private readonly apiService: ApiService) {
     super('address-to-coordinate', LabelType.ADDRESS);
     this.messageForMultipleResults = 'table.entry.warning.ambiguous';

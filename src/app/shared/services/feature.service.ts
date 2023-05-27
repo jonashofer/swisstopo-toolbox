@@ -25,6 +25,7 @@ export interface FeatureService {
   name: string;
   labelType: LabelType;
   showCoordinateSystemSwitch: boolean;
+  disableInactivationOfOldSystemWhenSwitching: boolean;
 
   validateSearchInput(input: string): string | null;
 
@@ -44,9 +45,11 @@ export interface FeatureService {
 
 @Injectable()
 export abstract class FeatureServiceBase<AutocompleteData> implements FeatureService {
+  showCoordinateSystemSwitch: boolean = true;
+  disableInactivationOfOldSystemWhenSwitching: boolean = false;
+  
   private bulkAddId = -1;
   protected messageForMultipleResults: string | null = null;
-  abstract showCoordinateSystemSwitch: boolean;
 
   constructor(public name: string, public labelType: LabelType) {}
 

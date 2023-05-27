@@ -9,8 +9,6 @@ import { FeatureServiceBase, LabelType, SearchResultItemTyped } from '../shared/
 @Injectable()
 export class CoordinateToAddressService extends FeatureServiceBase<CoordinateToAddressApiData> {
 
-  showCoordinateSystemSwitch = true;
-
   constructor(
     private readonly reverseApiService: ReverseApiService,
   ) {

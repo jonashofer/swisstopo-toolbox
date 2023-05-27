@@ -43,8 +43,8 @@
   },
   "notifications": {
     "entriesAdded": "{{count}} Zeilen eingelesen.",
-    "entryEdited": "Adresse wurde angepasst.",
-    "entryAlreadyExists": "Diese Adresse ({{address}}) wurde bereits hinzugefügt!",
+    "entryEdited": "Eintrag wurde angepasst.",
+    "entryAlreadyExists": "Dieser Eintrag {{address}} wurde bereits hinzugefügt!",
     "inputTooManyWords": "Die Suche darf nicht mehr als 10 Wörter enthalten.",
     "inputTooLong": "Die Suche darf nicht länger als 4000 Zeichen sein.",
     "inputNotCoordinate": "Keine in der Schweiz liegenden Koordinaten erkannt."
