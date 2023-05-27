@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, of } from 'rxjs';
-import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTableEntry';
-import { ColumnConfigItem, ColumnDefinitions, inactiveUserCol, sysCol, userCol } from '../../models/ColumnConfiguration';
-import { AddressToCoordinateApiData, ApiService } from '../api.service';
+import { AddressCoordinateTableEntry } from '../shared/models/AddressCoordinateTableEntry';
+import { ColumnConfigItem, ColumnDefinitions, inactiveUserCol, sysCol, userCol } from '../shared/models/ColumnConfiguration';
+import { AddressToCoordinateApiData, ApiService } from '../shared/services/api.service';
 import { FeatureServiceBase, LabelType, SearchResultItemTyped } from './base/feature-base.service';
 
 @Injectable()

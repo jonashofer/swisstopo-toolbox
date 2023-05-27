@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { getFeatureProviders, AddressToCoordinateService } from '../shared/services/features';
+import { getFeatureProviders, AddressToCoordinateService } from '../shared/services/feature-services';
 
 @Component({
   selector: 'app-address-to-coordinate',

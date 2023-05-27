@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ObIUploadEvent, ObNotificationService } from '@oblique/oblique';
 import { AddressService, DownloadService } from '../../services';
 import saveAs from 'file-saver';
-import { FEATURE_SERVICE_TOKEN, FeatureService } from '../../services/features';
+import { FEATURE_SERVICE_TOKEN, FeatureService } from '../../services/feature-services';
 
 @Component({
   selector: 'app-file-upload-input',

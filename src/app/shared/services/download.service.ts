@@ -4,7 +4,7 @@ import { AddressService, ColumnService } from '.';
 import { Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { AddressCoordinateTableEntry } from '../models';
-import { FEATURE_SERVICE_TOKEN, FeatureService } from './features';
+import { FEATURE_SERVICE_TOKEN, FeatureService } from './feature-services';
 
 @Injectable()
 export class DownloadService {

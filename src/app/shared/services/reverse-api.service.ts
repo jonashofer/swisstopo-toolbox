@@ -7,7 +7,7 @@ import { CoordinateSystem } from '../models/CoordinateSystem';
 import { CoordinateService } from './coordinate.service';
 import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEntry';
 import { TranslateService } from '@ngx-translate/core';
-import { SearchResultItemTyped } from './features/base/feature-base.service';
+import { SearchResultItemTyped } from '../../feature-services/base/feature-base.service';
 import { GWREntry } from '../models/GeoAdminApiModels';
 
 interface MapServerIdentifyResult {

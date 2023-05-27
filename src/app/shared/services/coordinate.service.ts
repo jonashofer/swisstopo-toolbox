@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { CoordinateSystem } from '../models/CoordinateSystem';
 import { Coordinate } from '../models/Coordinate';
 import { StorageService } from './storage.service';
-import { FEATURE_SERVICE_TOKEN, FeatureService } from './features';
+import { FEATURE_SERVICE_TOKEN, FeatureService } from './feature-services';
 
 @Injectable()
 export class CoordinateService {

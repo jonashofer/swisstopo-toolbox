@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { FeatureServiceBase, LabelType, SearchResultItemTyped, } from './base/feature-base.service';
-import { AddressToCoordinateApiData } from '../api.service';
-import { Observable } from 'rxjs';
-import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTableEntry';
-import { ColumnConfigItem, ColumnDefinitions, inactiveUserCol, sysCol, userCol } from '../../models/ColumnConfiguration';
 import { AddressToCoordinateService } from './address-to-coordinate.feature';
+import { Observable } from 'rxjs';
+import { LabelType } from '.';
+import { AddressCoordinateTableEntry, ColumnDefinitions } from '../shared/models';
+import { ColumnConfigItem, userCol, sysCol, inactiveUserCol } from '../shared/models/ColumnConfiguration';
+import { AddressToCoordinateApiData } from '../shared/services/api.service';
+import { FeatureServiceBase, SearchResultItemTyped } from './base/feature-base.service';
 
 @Injectable()
 export class AddressToEgidService extends FeatureServiceBase<AddressToCoordinateApiData> {
