@@ -15,7 +15,6 @@ const customLayoutColumns: string[] = [
   ColumnDefinitions.WGS_84,
   ColumnDefinitions.LV_95,
   ColumnDefinitions.LV_03,
-  ColumnDefinitions.ADDRESS,
   ColumnDefinitions.EDIT_ADDRESS
 ];
 

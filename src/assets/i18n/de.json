@@ -63,17 +63,10 @@
     }
   },
   "table": {
-    "header": {
-      "reset": "Alles verwerfen",
-      "address": "Adresse",
-      "lon": "Lon",
-      "lat": "Lat",
-      "north": "Y / Norden",
-      "east": "X / Osten",
-      "resetDialog": {
-        "title": "Zurücksetzen",
-        "description": "Möchten Sie alle Einträge löschen?"
-      }
+    "reset": "Alles verwerfen",
+    "resetDialog": {
+      "title": "Zurücksetzen",
+      "description": "Möchten Sie alle Einträge löschen?"
     },
     "entry": {
       "delete": "Eintrag löschen",

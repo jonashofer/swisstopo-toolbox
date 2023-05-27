@@ -3,7 +3,7 @@ import { AddressToHeightService } from '../feature-services/address-to-height.fe
 import { getFeatureProviders, AddressToCoordinateService } from '../feature-services';
 
 @Component({
-  selector: 'app-address-to-coordinate',
+  selector: 'app-address-to-height',
   template: `<app-feature-tab></app-feature-tab>`,
   providers: [getFeatureProviders(AddressToHeightService), AddressToCoordinateService]
 })

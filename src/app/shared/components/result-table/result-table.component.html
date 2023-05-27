@@ -3,7 +3,7 @@
 		<th mat-header-cell *matHeaderCellDef>
 			<button
 				mat-button
-				[matTooltip]="'table.header.reset' | translate"
+				[matTooltip]="'table.reset' | translate"
 				(click)="dialog.open(confirmResetDialog)"
 				matTooltipPosition="after"
 				matTooltipShowDelay="100">
@@ -21,13 +21,6 @@
 				<mat-icon svgIcon="trash" class="ob-icon"></mat-icon>
 			</button>
 		</td>
-	</ng-container>
-
-	<ng-container matColumnDef="address">
-		<th mat-header-cell *matHeaderCellDef>
-			{{ "table.header.address" | translate }}
-		</th>
-		<td mat-cell *matCellDef="let element">{{ element.address }}</td>
 	</ng-container>
 
 	<ng-container matColumnDef="edit-address">
@@ -104,9 +97,9 @@
 </table>
 
 <ng-template #confirmResetDialog>
-	<h2 mat-dialog-title>{{ "table.header.resetDialog.title" | translate }}</h2>
+	<h2 mat-dialog-title>{{ "table.resetDialog.title" | translate }}</h2>
 	<mat-dialog-content class="mat-typography">
-		<p>{{ "table.header.resetDialog.description" | translate }}</p>
+		<p>{{ "table.resetDialog.description" | translate }}</p>
 	</mat-dialog-content>
 	<mat-dialog-actions>
 		<button mat-button obButton="secondary" [mat-dialog-close]>
@@ -118,7 +111,7 @@
 			[mat-dialog-close]
 			(click)="addressService.deleteAllAddresses()"
 			cdkFocusInitial>
-			{{ "table.header.resetDialog.title" | translate }}
+			{{ "table.resetDialog.title" | translate }}
 		</button>
 	</mat-dialog-actions>
 </ng-template>
