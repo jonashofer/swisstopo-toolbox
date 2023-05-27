@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ReverseApiService } from '../shared/services';
-import { CoordinateToAddressService, getFeatureProviders } from '../shared/services/feature-services';
+import { getFeatureProviders, CoordinateToAddressService } from '../feature-services';
 
 @Component({
   selector: 'app-coordinate-to-address',

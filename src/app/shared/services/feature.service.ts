@@ -1,7 +1,7 @@
 import { Injectable, InjectionToken } from '@angular/core';
 import { Observable, forkJoin, from, mergeMap, of, switchMap } from 'rxjs';
-import { AddressCoordinateTableEntry } from '../../shared/models/AddressCoordinateTableEntry';
-import { ColumnConfigItem } from '../../shared/models/ColumnConfiguration';
+import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEntry';
+import { ColumnConfigItem } from '../models/ColumnConfiguration';
 
 export interface SearchResultItem {
   data: any;

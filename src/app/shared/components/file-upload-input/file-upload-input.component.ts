@@ -2,9 +2,8 @@ import { Component, EventEmitter, Inject, Output, TemplateRef } from '@angular/c
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { ObIUploadEvent, ObNotificationService } from '@oblique/oblique';
-import { AddressService, DownloadService } from '../../services';
+import { AddressService, DownloadService, FEATURE_SERVICE_TOKEN, FeatureService } from '../../services';
 import saveAs from 'file-saver';
-import { FEATURE_SERVICE_TOKEN, FeatureService } from '../../services/feature-services';
 
 @Component({
   selector: 'app-file-upload-input',

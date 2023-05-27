@@ -8,12 +8,12 @@ import { AddressToCoordinateApiData } from '../shared/services/api.service';
 import { FeatureServiceBase, SearchResultItemTyped } from '../shared/services/feature.service';
 
 @Injectable()
-export class AddressToEgidService extends FeatureServiceBase<AddressToCoordinateApiData> {
+export class AddressToHeightService extends FeatureServiceBase<AddressToCoordinateApiData> {
 
   showCoordinateSystemSwitch = false;
 
   constructor(private readonly atcService: AddressToCoordinateService) {
-    super('address-to-egid', LabelType.ADDRESS);
+    super('address-to-height', LabelType.ADDRESS);
     this.messageForMultipleResults = 'table.entry.warning.ambiguous';
   }
 
@@ -37,12 +37,12 @@ export class AddressToEgidService extends FeatureServiceBase<AddressToCoordinate
     return [
       userCol(ColumnDefinitions.ADDRESS),
       sysCol(ColumnDefinitions.EDIT_ADDRESS),
-      userCol(ColumnDefinitions.EGID),
+      userCol(ColumnDefinitions.HEIGHT),
       inactiveUserCol(ColumnDefinitions.WGS_84),
       inactiveUserCol(ColumnDefinitions.LV_95),
       inactiveUserCol(ColumnDefinitions.LV_03),
-      inactiveUserCol(ColumnDefinitions.HEIGHT),
-      inactiveUserCol(ColumnDefinitions.EGRID)
+      inactiveUserCol(ColumnDefinitions.EGRID),
+      inactiveUserCol(ColumnDefinitions.EGID),
     ];
   }
 

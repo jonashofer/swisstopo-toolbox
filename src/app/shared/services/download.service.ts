@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@angular/core';
 import saveAs from 'file-saver';
-import { AddressService, ColumnService } from '.';
+import { AddressService, ColumnService, FeatureService } from '.';
 import { Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { AddressCoordinateTableEntry } from '../models';
-import { FEATURE_SERVICE_TOKEN, FeatureService } from './feature-services';
+import { FEATURE_SERVICE_TOKEN } from './feature.service';
 
 @Injectable()
 export class DownloadService {

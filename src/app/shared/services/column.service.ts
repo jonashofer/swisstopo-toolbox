@@ -4,8 +4,8 @@ import { BehaviorSubject, filter, map, pairwise } from 'rxjs';
 import { ColumnConfigDialogComponent } from '../components/column-config-dialog/column-config-dialog.component';
 import { ColumnConfigItem, ColumnDefinitions, getColumnDefinition, inactiveUserCol, sysCol, userCol } from '../models/ColumnConfiguration';
 import { CoordinateSystem } from '../models/CoordinateSystem';
-import { CoordinateService, StorageService } from '.';
-import { FEATURE_SERVICE_TOKEN, FeatureService } from './feature-services';
+import { CoordinateService, FeatureService, StorageService } from '.';
+import { FEATURE_SERVICE_TOKEN } from './feature.service';
 
 @Injectable()
 export class ColumnService {

@@ -68,6 +68,7 @@ import { SearchInputComponent } from './shared/components/search-input/search-in
 import { MatRippleModule } from '@angular/material/core';
 import { FeatureTabComponent } from './shared/components/feature-tab/feature-tab.component';
 import { AddressToCoordinateComponent, AddressToEgidComponent, CoordinateToAddressComponent } from './feature-components';
+import { AddressToHeightComponent } from './feature-components/address-to-height.component';
 
 registerLocaleData(localeDECH);
 registerLocaleData(localeFRCH);
@@ -80,6 +81,7 @@ registerLocaleData(localeENCH);
     AppComponent,
     AddressToCoordinateComponent,
     AddressToEgidComponent,
+    AddressToHeightComponent,
     SearchInputComponent,
     ResultTableComponent,
     ResultMapComponent,

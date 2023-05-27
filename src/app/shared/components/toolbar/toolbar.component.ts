@@ -1,6 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { DownloadService } from '../../services';
-import { FEATURE_SERVICE_TOKEN, FeatureService } from '../../services/feature-services';
+import { DownloadService, FEATURE_SERVICE_TOKEN, FeatureService } from '../../services';
 
 @Component({
   selector: 'app-toolbar',

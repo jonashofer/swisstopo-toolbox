@@ -7,7 +7,7 @@ import { ApiDetailService, ApiService, StorageService } from '.';
 import { AddressCoordinateTableEntry, AddressSelectionResult } from '../models/AddressCoordinateTableEntry';
 import { ColumnDefinitions } from '../models/ColumnConfiguration';
 import { CoordinateSystem } from '../models/CoordinateSystem';
-import { FEATURE_SERVICE_TOKEN, FeatureService } from './feature-services';
+import { FEATURE_SERVICE_TOKEN, FeatureService } from './feature.service';
 
 @Injectable()
 export class AddressService {

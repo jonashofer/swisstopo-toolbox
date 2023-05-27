@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { CoordinateToAddressApiData, ReverseApiService } from '../reverse-api.service';
-import { FeatureServiceBase, LabelType, SearchResultItemTyped } from '../../../feature-services/base/feature-base.service';
 import { Observable } from 'rxjs';
-import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTableEntry';
-import { ColumnConfigItem, ColumnDefinitions, inactiveUserCol, sysCol, userCol } from '../../models/ColumnConfiguration';
-import { CoordinateService } from '../coordinate.service';
+import { AddressCoordinateTableEntry, ColumnDefinitions } from '../shared/models';
+import { ColumnConfigItem, userCol, sysCol, inactiveUserCol } from '../shared/models/ColumnConfiguration';
+import { ReverseApiService, CoordinateService } from '../shared/services';
+import { CoordinateToAddressApiData } from '../shared/services/reverse-api.service';
+import { FeatureServiceBase, LabelType, SearchResultItemTyped } from '../shared/services/feature.service';
 
 @Injectable()
 export class CoordinateToAddressService extends FeatureServiceBase<CoordinateToAddressApiData> {

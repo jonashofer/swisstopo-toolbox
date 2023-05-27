@@ -14,8 +14,7 @@ import { ObNotificationService } from '@oblique/oblique';
 import { debounceTime, switchMap, tap } from 'rxjs/operators';
 import { AddressCoordinateTableEntry, AddressSelectionResult } from '../../models/AddressCoordinateTableEntry';
 import { Observable, of } from 'rxjs';
-import { AddressService } from '../../services';
-import { FEATURE_SERVICE_TOKEN, FeatureService, SearchResultItem } from '../../services/feature-services';
+import { AddressService, FEATURE_SERVICE_TOKEN, FeatureService, SearchResultItem } from '../../services';
 
 // export interface SearchResultItem {
 //   text: string;

@@ -3,7 +3,7 @@ import { Observable, catchError, map, of } from 'rxjs';
 import { AddressCoordinateTableEntry } from '../shared/models/AddressCoordinateTableEntry';
 import { ColumnConfigItem, ColumnDefinitions, inactiveUserCol, sysCol, userCol } from '../shared/models/ColumnConfiguration';
 import { AddressToCoordinateApiData, ApiService } from '../shared/services/api.service';
-import { FeatureServiceBase, LabelType, SearchResultItemTyped } from './base/feature-base.service';
+import { FeatureServiceBase, LabelType, SearchResultItemTyped } from '../shared/services/feature.service';
 
 @Injectable()
 export class AddressToCoordinateService extends FeatureServiceBase<AddressToCoordinateApiData> {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { getFeatureProviders, AddressToEgidService, AddressToCoordinateService } from '../shared/services/feature-services';
+import { getFeatureProviders, AddressToEgidService, AddressToCoordinateService } from '../feature-services';
 
 @Component({
   selector: 'app-address-to-egid',
