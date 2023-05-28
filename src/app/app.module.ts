@@ -1,4 +1,4 @@
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -19,19 +19,20 @@ import {
   ObPopoverModule,
   ObSpinnerModule,
   multiTranslateLoader,
-  ObAutocompleteModule
+  ObAutocompleteModule,
+  ObMasterLayoutService
 } from '@oblique/oblique';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DecimalPipe, registerLocaleData } from '@angular/common';
+import { registerLocaleData } from '@angular/common';
 import localeDECH from '@angular/common/locales/de-CH';
 import localeFRCH from '@angular/common/locales/fr-CH';
 import localeITCH from '@angular/common/locales/it-CH';
 import localeRM from '@angular/common/locales/rm';
 import localeENCH from '@angular/common/locales/en-CH';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import {MatListModule} from '@angular/material/list';
+import { MatListModule } from '@angular/material/list';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
@@ -52,7 +53,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
 import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
 import { CoordinateSystemSwitchComponent } from './shared/components/coordinate-system-switch/coordinate-system-switch.component';
-import { AddressService, ApiDetailService, ApiService, CoordinateService, DownloadService } from './shared/services';
 import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
 import { CoordinatePipe } from './shared/components/coordinate.pipe';
 import { DownloadSelectorComponent } from './shared/components/download-selector/download-selector.component';
@@ -61,14 +61,19 @@ import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 import { FileUploadInputComponent } from './shared/components/file-upload-input/file-upload-input.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { ToolbarComponent } from './shared/components/toolbar/toolbar.component';
-import { environment } from 'src/environments/environment';
 import { ColumnConfigDialogComponent } from './shared/components/column-config-dialog/column-config-dialog.component';
 import { TextInputComponent } from './shared/components/text-input/text-input.component';
 import { SearchInputComponent } from './shared/components/search-input/search-input.component';
 import { MatRippleModule } from '@angular/material/core';
 import { FeatureTabComponent } from './shared/components/feature-tab/feature-tab.component';
-import { AddressToCoordinateComponent, AddressToEgidComponent, CoordinateToAddressComponent, CoordinateToCoordinateComponent } from './feature-components';
-import { AddressToHeightComponent } from './feature-components/address-to-height.component';
+import {
+  AddressToCoordinateComponent,
+  AddressToEgidComponent,
+  AddressToHeightComponent,
+  CoordinateToAddressComponent,
+  CoordinateToCoordinateComponent,
+} from './feature-components';
+import { ActivatedRoute } from '@angular/router';
 
 registerLocaleData(localeDECH);
 registerLocaleData(localeFRCH);
@@ -147,7 +152,12 @@ registerLocaleData(localeENCH);
     ClipboardModule
   ],
   providers: [
-    { provide: LOCALE_ID, useValue: 'de-CH' },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeApp,
+      multi: true,
+      deps: [ActivatedRoute, ObMasterLayoutService, TranslateService]
+    },
     { provide: HTTP_INTERCEPTORS, useClass: ObHttpApiInterceptor, multi: true },
     {
       provide: OB_BANNER,
@@ -164,6 +174,8 @@ registerLocaleData(localeENCH);
 export class AppModule {
   constructor(masterConfig: ObMasterLayoutConfig, interceptorConfig: ObHttpApiInterceptorConfig) {
     masterConfig.header.isSmall = true;
+    masterConfig.header.reduceOnScroll = false;
+    masterConfig.footer.hasLogoOnScroll = false;
     masterConfig.homePageRoute = '/address-to-coordinate';
 
     // NOTE: this leads to initial error because oblique tries to load its RM file which does not exist
@@ -172,7 +184,39 @@ export class AppModule {
 
     interceptorConfig.api.spinner = false; // deactivate global spinner
     interceptorConfig.api.notification.severity = ObENotificationType.WARNING;
-    interceptorConfig.api.notification.title = "apiError.title";
-    interceptorConfig.api.notification.text = "apiError.description";
+    interceptorConfig.api.notification.title = 'apiError.title';
+    interceptorConfig.api.notification.text = 'apiError.description';
+  }
+}
+
+function initializeApp(route: ActivatedRoute, layout: ObMasterLayoutService, translate: TranslateService) {
+  return (): Promise<any> => {
+    return new Promise((resolve, reject) => {
+      route.queryParams.subscribe(params => {
+        if (params['forceHeadless'] || (params['headless'] && inIframe())) {
+          layout.layout.hasMainNavigation = false;
+          layout.layout.hasLayout = false;
+          layout.header.isCustom = true;
+          layout.footer.isCustom = true;
+        } else {
+          layout.layout.hasMainNavigation = true;
+          layout.layout.hasLayout = true;
+          layout.header.isCustom = false;
+          layout.footer.isCustom = false;
+        }
+        if (params['lang']) {
+          translate.use(params['lang']);
+        }
+        resolve(true);
+      });
+    });
+  };
+}
+
+function inIframe() {
+  try {
+    return window.self !== window.top;
+  } catch (e) {
+    return true;
   }
 }
