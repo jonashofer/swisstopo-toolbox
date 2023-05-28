@@ -72,6 +72,7 @@ import {
   AddressToHeightComponent,
   CoordinateToAddressComponent,
   CoordinateToCoordinateComponent,
+  CoordinateToHeightComponent,
 } from './feature-components';
 import { ActivatedRoute } from '@angular/router';
 
@@ -88,6 +89,7 @@ registerLocaleData(localeENCH);
     AddressToEgidComponent,
     AddressToHeightComponent,
     CoordinateToCoordinateComponent,
+    CoordinateToHeightComponent,
     SearchInputComponent,
     ResultTableComponent,
     ResultMapComponent,
@@ -181,6 +183,7 @@ export class AppModule {
     // NOTE: this leads to initial error because oblique tries to load its RM file which does not exist
     masterConfig.locale.locales.push('rm-CH');
     masterConfig.locale.locales.push('en-CH');
+    masterConfig.locale.defaultLanguage = 'de-CH';
 
     interceptorConfig.api.spinner = false; // deactivate global spinner
     interceptorConfig.api.notification.severity = ObENotificationType.WARNING;

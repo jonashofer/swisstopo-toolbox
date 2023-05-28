@@ -9,19 +9,29 @@ table {
     color: rgba(0, 0, 0, 0.54);
   }
 
-  .mat-column-trash {
-    width: 30px;
-  }
-
+  .mat-column-trash,
   .mat-column-config {
     width: 30px;
   }
 
-  .mat-column-wgs84_lat, .mat-column-wgs84_lon {
+  .mat-column-edit {
+    width: 70px;
+  }
+
+  .mat-column-wgs84_lat,
+  .mat-column-wgs84_lon {
     width: 75px;
   }
 
-  .mat-column-lv95_lat, .mat-column-lv95_lon, .mat-column-lv03_lat, .mat-column-lv03_lon {
+  .mat-column-height {
+    width: 120px;
+  }
+
+
+  .mat-column-lv95_lat,
+  .mat-column-lv95_lon,
+  .mat-column-lv03_lat,
+  .mat-column-lv03_lon {
     width: 95px;
   }
 

@@ -5,3 +5,4 @@ export { AddressToCoordinateService } from './address-to-coordinate.feature';
 export { CoordinateToAddressService } from './coordinate-to-address.feature';
 export { AddressToEgidService } from './address-to-egid.feature';
 export { CoordinateToCoordinateService } from './coordinate-to-coordinate.feature';
+export { CoordinateToHeightService } from './coordinate-to-height.feature';
