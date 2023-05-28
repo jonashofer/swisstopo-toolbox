@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { APP_INITIALIZER, LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -73,6 +73,7 @@ import {
   CoordinateToAddressComponent,
   CoordinateToCoordinateComponent,
   CoordinateToHeightComponent,
+  EgidToAddressComponent
 } from './feature-components';
 import { ActivatedRoute } from '@angular/router';
 
@@ -90,6 +91,7 @@ registerLocaleData(localeENCH);
     AddressToHeightComponent,
     CoordinateToCoordinateComponent,
     CoordinateToHeightComponent,
+    EgidToAddressComponent,
     SearchInputComponent,
     ResultTableComponent,
     ResultMapComponent,
@@ -154,6 +156,7 @@ registerLocaleData(localeENCH);
     ClipboardModule
   ],
   providers: [
+    { provide: LOCALE_ID, useValue: 'de-CH' },
     {
       provide: APP_INITIALIZER,
       useFactory: initializeApp,
@@ -180,7 +183,6 @@ export class AppModule {
     masterConfig.footer.hasLogoOnScroll = false;
     masterConfig.homePageRoute = '/address-to-coordinate';
 
-    // NOTE: this leads to initial error because oblique tries to load its RM file which does not exist
     masterConfig.locale.locales.push('rm-CH');
     masterConfig.locale.locales.push('en-CH');
     masterConfig.locale.defaultLanguage = 'de-CH';
@@ -196,7 +198,7 @@ function initializeApp(route: ActivatedRoute, layout: ObMasterLayoutService, tra
   return (): Promise<any> => {
     return new Promise((resolve, reject) => {
       route.queryParams.subscribe(params => {
-        if (params['forceHeadless'] || (params['headless'] && inIframe())) {
+        if (params['force-headless'] || (params['headless'] && inIframe())) {
           layout.layout.hasMainNavigation = false;
           layout.layout.hasLayout = false;
           layout.header.isCustom = true;

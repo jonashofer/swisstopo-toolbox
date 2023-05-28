@@ -10,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { SearchResultItemTyped } from './feature.service';
 import { GWREntry } from '../models/GeoAdminApiModels';
 
-interface MapServerIdentifyResult {
+export interface MapServerResult {
   results?: GWRSearchResult[] | null;
 }
 interface GWRSearchResult {
@@ -19,12 +19,26 @@ interface GWRSearchResult {
   featureId: string;
   id: string;
   attributes: GWREntry;
+
+  bbox: number[]
+  geometry: Geometry
 }
+
+export interface Geometry {
+  x: number
+  y: number
+  spatialReference: SpatialReference
+}
+
+export interface SpatialReference {
+  wkid: number
+}
+
 export interface CoordinateToAddressApiData {
   gwr: GWRSearchResult;
   addressText: string;
-  distance: number;
   lv95: Coordinate;
+  wgs84?: Coordinate;
 }
 
 @Injectable()
@@ -85,10 +99,10 @@ export class ReverseApiService {
     if (lv95coord.system !== CoordinateSystem.LV_95) {
       return of([]);
     }
-    const request = `https://api.geo.admin.ch/rest/services/api/MapServer/identify?mapExtent=0,0,100,100&imageDisplay=100,100,100&tolerance=100&geometryType=esriGeometryPoint&geometry=${lv95coord.lon},${lv95coord.lat}&layers=all:ch.bfs.gebaeude_wohnungs_register&returnGeometry=false&sr=2056`;
+    const request = `https://api.geo.admin.ch/rest/services/api/MapServer/identify?mapExtent=0,0,100,100&imageDisplay=100,100,100&tolerance=100&geometryType=esriGeometryPoint&geometry=${lv95coord.lon},${lv95coord.lat}&layers=all:ch.bfs.gebaeude_wohnungs_register&returnGeometry=true&sr=2056`;
 
-    return this.httpClient.get<MapServerIdentifyResult>(request).pipe(
-      map((data: MapServerIdentifyResult) => {
+    return this.httpClient.get<MapServerResult>(request).pipe(
+      map((data: MapServerResult) => {
         const apiResults = data.results || [];
         return apiResults
           .map(r => {
@@ -107,7 +121,7 @@ export class ReverseApiService {
                 gwr: r,
                 lv95: coord,
                 addressText: fullAddress,
-                distance: distance
+                distance: distance,
               }
             };
           })

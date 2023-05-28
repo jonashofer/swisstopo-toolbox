@@ -6,3 +6,5 @@ export { CoordinateToAddressService } from './coordinate-to-address.feature';
 export { AddressToEgidService } from './address-to-egid.feature';
 export { CoordinateToCoordinateService } from './coordinate-to-coordinate.feature';
 export { CoordinateToHeightService } from './coordinate-to-height.feature';
+export { AddressToHeightService } from './address-to-height.feature';
+export { EgidToAddressService } from './egid-to-address.feature';

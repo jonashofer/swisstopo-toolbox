@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { AddressToHeightService } from '../feature-services/address-to-height.feature';
-import { getFeatureProviders, AddressToCoordinateService } from '../feature-services';
+import { getFeatureProviders, AddressToCoordinateService, AddressToHeightService } from '../feature-services';
 
 @Component({
   selector: 'app-address-to-height',

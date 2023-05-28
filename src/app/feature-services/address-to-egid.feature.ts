@@ -38,11 +38,11 @@ export class AddressToEgidService extends FeatureServiceBase<AddressToCoordinate
       userCol(ColumnDefinitions.ADDRESS),
       sysCol(ColumnDefinitions.EDIT),
       userCol(ColumnDefinitions.EGID),
+      inactiveUserCol(ColumnDefinitions.EGRID),
       inactiveUserCol(ColumnDefinitions.WGS_84),
       inactiveUserCol(ColumnDefinitions.LV_95),
       inactiveUserCol(ColumnDefinitions.LV_03),
       inactiveUserCol(ColumnDefinitions.HEIGHT),
-      inactiveUserCol(ColumnDefinitions.EGRID)
     ];
   }
 

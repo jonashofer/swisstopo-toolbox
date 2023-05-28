@@ -47,7 +47,8 @@
     "entryAlreadyExists": "Dieser Eintrag {{address}} wurde bereits hinzugefügt!",
     "inputTooManyWords": "Die Suche darf nicht mehr als 10 Wörter enthalten.",
     "inputTooLong": "Die Suche darf nicht länger als 4000 Zeichen sein.",
-    "inputNotCoordinate": "Keine in der Schweiz liegenden Koordinaten erkannt."
+    "inputNotCoordinate": "Keine in der Schweiz liegenden Koordinaten erkannt.",
+    "inputNotEgid": "Keine EGID erkannt."
   },
   "fileInput": {
     "replaceDialog": {
@@ -72,7 +73,8 @@
       "delete": "Eintrag löschen",
       "edit": "Eintrag ändern",
       "warning": {
-        "ambiguous": "Nicht eindeutige Adresse"
+        "ambiguous": "Nicht eindeutige Adresse",
+        "ambiguousEgid": "Gebäude mit mehreren Adressen"
       }
     }
   },

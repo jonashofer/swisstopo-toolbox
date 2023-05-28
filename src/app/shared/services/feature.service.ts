@@ -76,7 +76,8 @@ export abstract class FeatureServiceBase<AutocompleteData> implements FeatureSer
                 warningTranslationKey: validation,
                 wgs84: null,
                 lv95: null,
-                lv03: null
+                lv03: null,
+                originalInput: userInput
             };
             return of(entry);
         } else {
@@ -88,10 +89,11 @@ export abstract class FeatureServiceBase<AutocompleteData> implements FeatureSer
                             address: userInput,
                             id: (--this.bulkAddId).toString(),
                             isValid: false,
-                            warningTranslationKey: `search.${this.labelType}.noResults`,
+                            warningTranslationKey: `search.${this.labelType}.noResultss`,
                             wgs84: null,
                             lv95: null,
-                            lv03: null
+                            lv03: null,
+                            originalInput: userInput
                         };
                         return of(entry);
                     }
@@ -112,7 +114,8 @@ export abstract class FeatureServiceBase<AutocompleteData> implements FeatureSer
                         warningTranslationKey: this.messageForMultipleResults,
                         wgs84: null,
                         lv95: null,
-                        lv03: null
+                        lv03: null,
+                        originalInput: userInput
                     };
                     return of(entry);
                 })
