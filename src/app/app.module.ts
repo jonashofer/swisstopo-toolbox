@@ -202,7 +202,9 @@ function initializeApp(route: ActivatedRoute, layout: ObMasterLayoutService, tra
           layout.header.isCustom = false;
           layout.footer.isCustom = false;
         }
-        translate.use(params['lang'] ?? 'de');
+        if (params['lang']) {
+          translate.use(params['lang']);
+        }
         resolve(true);
       });
     });
