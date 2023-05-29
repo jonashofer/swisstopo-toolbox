@@ -22,7 +22,7 @@ jobs:
         run: npm ci
 
       - name: Build
-        run:  ng build --configuration production
+        run: npm build:prod
         
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v1
