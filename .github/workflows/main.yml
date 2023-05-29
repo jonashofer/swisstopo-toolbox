@@ -1,0 +1,33 @@
+name: CI / CD for Angular
+on:
+  push:
+    branches:
+    - main
+    - develop
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up node.js
+        uses: actions/setup-node@v3.3.0
+        with:
+          node-version: '16'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run:  ng build --configuration production
+        
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+            path: dist/
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v2
