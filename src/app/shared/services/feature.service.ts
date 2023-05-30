@@ -89,7 +89,7 @@ export abstract class FeatureServiceBase<AutocompleteData> implements FeatureSer
                             address: userInput,
                             id: (--this.bulkAddId).toString(),
                             isValid: false,
-                            warningTranslationKey: `search.${this.labelType}.noResultss`,
+                            warningTranslationKey: `search.${this.labelType}.noResults`,
                             wgs84: null,
                             lv95: null,
                             lv03: null,
