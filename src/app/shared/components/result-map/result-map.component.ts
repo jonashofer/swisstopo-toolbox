@@ -227,7 +227,7 @@ export class ResultMapComponent implements AfterViewInit, OnDestroy {
       .pipe(filter(r => r))
       .subscribe(_ => {
         this.downloadService.downloadKml();
-        window.open('https://map.geo.admin.ch', '_blank');
+        setTimeout(() => window.open('https://map.geo.admin.ch', '_blank'))
       });
   }
 
