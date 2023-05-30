@@ -5,12 +5,12 @@ import { ObINavigationLink } from '@oblique/oblique';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  templateUrl: './app.component.html'
 })
 export class AppComponent {
   title = '';
   routes: ObINavigationLink[] = [];
+  fullWidth = false;
 
   constructor(router: Router, translateService: TranslateService) {
     this.title = translateService.instant('layout.title');

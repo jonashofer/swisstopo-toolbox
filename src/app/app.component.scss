@@ -1,8 +1,0 @@
-// styling rules for headless mode to hide header and footer
-::ng-deep .ob-header:not(:has(.ob-master-layout-header-title)) {
-    display: none !important;
-}
-
-::ng-deep .ob-master-layout-footer:not(:has(p)) {
-    display: none;
-}

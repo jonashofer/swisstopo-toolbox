@@ -1,11 +1,23 @@
 @import 'node_modules/@oblique/oblique/styles/scss/core/mixins/_layout.scss';
 
-.ob-main-layout {
-  @include ob-media-breakpoint-up(lg) {
-    width: 70%;
-  }
-}
-
 .mat-button-base .mat-icon[data-mat-icon-type='svg'] {
   font-size: 1em;
+}
+
+// headless/normal styling:
+// .ob-has-layout -> normal (width breakpoint if large), without .ob-has-layout -> headless (no header/footer, no width)
+.ob-master-layout {
+  &.ob-has-layout .ob-main-layout {
+    @include ob-media-breakpoint-up(lg) {
+      width: 70%;
+    }
+  }
+
+  &:not(.ob-has-layout) {
+
+    .ob-header,
+    .ob-master-layout-footer {
+      display: none;
+    }
+  }
 }
