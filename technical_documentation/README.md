@@ -11,7 +11,7 @@ Since this project could end up beeing integrated by the swiss government, it us
 
 It does more than just provide components, since it also handles the site layout and provides many handy services, e.g. for notifications or intercepting backend calls etc.
 
-### Build & Hosting (Netlify)
+### Build & Hosting (Netlify) - OUTDATED
 During development, there was the need be able to quickly deploy and use our application online. We use [Netlify](https://www.netlify.com/) for that purpose. However, there is no Netlify-specific functionality and the application can be built and hosted elsewhere. The current setup pulls the changes from the repository, builds the Angular application on Netlify and publishes the site on its CDN. This allows us to move fast but still have the advantages of a dedicated build environment.
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/f9e529de-9bf0-4cbb-8097-789831a0621c/deploy-status)](https://app.netlify.com/sites/swisstopo-showcases/deploys)
