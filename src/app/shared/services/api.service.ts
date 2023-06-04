@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEntry';
-import { Coordinate } from '../models/Coordinate';
+import { Coordinate, coords } from '../models/Coordinate';
 import { CoordinateSystem } from '../models/CoordinateSystem';
 
 interface Attrs {
@@ -72,11 +72,7 @@ export class ApiService {
     return {
       address: this.sanitize(result.attrs.label),
       id: result.attrs.featureId,
-			wgs84: {
-				system: CoordinateSystem.WGS_84,
-				lat: result.attrs.lat,
-				lon: result.attrs.lon,
-			},
+      wgs84: coords(result.attrs.lat, result.attrs.lon, CoordinateSystem.WGS_84),
 			lv95: null,
 			lv03: null,
       isValid: true
@@ -95,7 +91,7 @@ export class ApiService {
 
     return this.httpClient.get<{ easting: string; northing: string }>(request).pipe(
       map(r => {
-        return { lat: +r.northing, lon: +r.easting, system: targetSystem };
+        return coords(+r.northing, +r.easting, targetSystem);
       })
     );
   }

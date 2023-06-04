@@ -17,7 +17,6 @@ export class CoordinatePipe implements PipeTransform {
       case CoordinateSystem.WGS_84:
         return this.decimalPipe.transform(value, '1.4-4');
       case CoordinateSystem.LV_95:
-        return this.decimalPipe.transform(value, '1.1-1');
       case CoordinateSystem.LV_03:
         return this.decimalPipe.transform(value, '1.2-2');
       default:
