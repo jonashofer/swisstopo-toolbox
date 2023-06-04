@@ -95,7 +95,7 @@ export class EgidToAddressService extends FeatureServiceBase<CoordinateToAddress
       userCol(ColumnDefinitions.EGID),
       sysCol(ColumnDefinitions.EDIT),
       userCol(ColumnDefinitions.ADDRESS),
-      inactiveUserCol(ColumnDefinitions.EGRID),
+      userCol(ColumnDefinitions.EGRID),
       inactiveUserCol(ColumnDefinitions.WGS_84),
       inactiveUserCol(ColumnDefinitions.LV_95),
       inactiveUserCol(ColumnDefinitions.LV_03),
