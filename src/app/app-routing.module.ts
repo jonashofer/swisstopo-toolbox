@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { GuideComponent } from './guide/guide.component';
 import { AddressToCoordinateComponent, AddressToEgidComponent, AddressToHeightComponent, CoordinateToAddressComponent, CoordinateToCoordinateComponent, CoordinateToHeightComponent, EgidToAddressComponent } from './feature-components';
 
 const routes: Routes = [
@@ -21,8 +20,7 @@ const routes: Routes = [
       { path: 'from-coordinates', component: CoordinateToHeightComponent },
       { path: 'from-address', component: AddressToHeightComponent }
     ]
-  },
-  { path: 'guide', component: GuideComponent }
+  }
 ];
 
 @NgModule({
