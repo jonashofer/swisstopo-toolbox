@@ -57,7 +57,6 @@ import { CoordinateSystemSwitchComponent } from './shared/components/coordinate-
 import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
 import { CoordinatePipe } from './shared/components/coordinate.pipe';
 import { DownloadSelectorComponent } from './shared/components/download-selector/download-selector.component';
-import { GuideComponent } from './guide/guide.component';
 import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 import { FileUploadInputComponent } from './shared/components/file-upload-input/file-upload-input.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
@@ -100,7 +99,6 @@ registerLocaleData(localeENCH);
     CoordinateSystemSwitchComponent,
     DownloadSelectorComponent,
     CoordinatePipe,
-    GuideComponent,
     FileUploadInputComponent,
     ToolbarComponent,
     ColumnConfigDialogComponent,
