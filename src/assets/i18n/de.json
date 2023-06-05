@@ -59,7 +59,7 @@
     },
     "tooManyDialog": {
       "title": "Über 100 Einträge",
-      "description": "So viele Einträge verlangsamen die Applikation erheblich. Es wird empfohlen, die Eingabe aufzuteilen.",
+      "description": "So viele Einträge verlangsamen die Applikation erheblich. Es wird empfohlen, die Arbeit in mehrere Pakete aufzuteilen.",
       "continue": "Trotzdem hinzufügen"
     },
     "exampleFile": {

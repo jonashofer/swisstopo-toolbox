@@ -70,7 +70,6 @@ export abstract class FeatureServiceBase<AutocompleteData> implements FeatureSer
 
   public searchMultiple(lines: string[]): Observable<AddressCoordinateTableEntry[]> {
     let progress = 0;
-    const totalItems = lines.length;
     const concurrencyLimit = 10;
 
     // Split the lines array into chunks

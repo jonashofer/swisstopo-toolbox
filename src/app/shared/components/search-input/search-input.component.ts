@@ -49,7 +49,7 @@ export class SearchInputComponent {
     if (!this.addressService.hasAddresses) {
       if (lines.length > 2) {
         this.lines = lines;
-        this.dialog.open(tooManyDialogRef);
+        this.dialog.open(tooManyDialogRef, { disableClose: true });
         return;
       }
       this.featureService.searchMultiple(lines).subscribe(r => {
@@ -74,7 +74,7 @@ export class SearchInputComponent {
             }
             if (lines.length > 2) {
               this.lines = lines;
-              this.dialog.open(tooManyDialogRef);
+              this.dialog.open(tooManyDialogRef, { disableClose: true });
               return;
             }
             this.featureService.searchMultiple(lines).subscribe(r => {
