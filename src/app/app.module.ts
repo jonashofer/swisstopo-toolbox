@@ -52,6 +52,7 @@ import { ResultMapComponent } from './shared/components/result-map/result-map.co
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
 import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
+import { MatLegacyProgressBarModule as MatProgressBarModule } from '@angular/material/legacy-progress-bar';
 import { CoordinateSystemSwitchComponent } from './shared/components/coordinate-system-switch/coordinate-system-switch.component';
 import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
 import { CoordinatePipe } from './shared/components/coordinate.pipe';
@@ -131,6 +132,7 @@ registerLocaleData(localeENCH);
     MatTableModule,
     MatIconModule,
     MatButtonModule,
+    MatProgressBarModule,
     MatButtonToggleModule,
     BrowserAnimationsModule,
     HttpClientModule,

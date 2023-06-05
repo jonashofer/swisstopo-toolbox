@@ -1,9 +1,45 @@
 <mat-tab-group animationDuration="400ms" [(selectedIndex)]="selectedInputType">
 	<mat-tab [label]="'mode.input' | translate">
-		<app-text-input [addressToEdit]="addressToEdit">
+		<app-text-input [addressToEdit]="addressToEdit" (linesPasted)="multiAdd($event, replaceDialog, tooManyDialog)">
 		</app-text-input>
 	</mat-tab>
 	<mat-tab [label]="'mode.file' | translate">
-		<app-file-upload-input (finished)="selectedInputType = 0"></app-file-upload-input>
+		<app-file-upload-input (uploaded)="multiAdd($event, replaceDialog, tooManyDialog)"></app-file-upload-input>
 	</mat-tab>
 </mat-tab-group>
+
+<ng-template #replaceDialog>
+	<h2 mat-dialog-title>{{ "fileInput.replaceDialog.title" | translate }}</h2>
+	<mat-dialog-content class="mat-typography">
+		<p>{{ "fileInput.replaceDialog.description" | translate }}</p>
+	</mat-dialog-content>
+	<mat-dialog-actions>
+		<button mat-button obButton="tertiary" [mat-dialog-close]="null">
+			{{ "i18n.common.cancel" | translate }}
+		</button>
+		<button mat-button obButton="secondary" [mat-dialog-close]="false">
+			{{ "fileInput.replaceDialog.add" | translate }}
+		</button>
+		<button mat-button obButton="primary" [mat-dialog-close]="true" cdkFocusInitial>
+			{{ "fileInput.replaceDialog.replace" | translate }}
+		</button>
+	</mat-dialog-actions>
+</ng-template>
+<ng-template #tooManyDialog>
+	<h2 mat-dialog-title>{{ "fileInput.tooManyDialog.title" | translate }}</h2>
+	<mat-dialog-content class="mat-typography">
+		<p>{{ "fileInput.tooManyDialog.description" | translate }}</p>
+		<ng-container *ngIf="progress > 0">
+			<mat-progress-bar mode="buffer" [value]="progress"></mat-progress-bar>
+			<p>{{ progressText }}</p>
+		</ng-container>
+	</mat-dialog-content>
+	<mat-dialog-actions>
+		<button mat-button obButton="secondary" cdkFocusInitial (click)="addAll()" [disabled]="progress > 0">
+			{{ "fileInput.tooManyDialog.continue" | translate }}
+		</button>
+		<button mat-button obButton="primary" [mat-dialog-close] [disabled]="progress > 0">
+			{{ "i18n.common.cancel" | translate }}
+		</button>
+	</mat-dialog-actions>
+</ng-template>

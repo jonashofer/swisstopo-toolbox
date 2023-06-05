@@ -47,7 +47,7 @@ export class ApiService {
 
     const request = `https://api3.geo.admin.ch/rest/services/api/SearchServer?lang=de&searchText=${encodeURIComponent(
       input
-    )}&lang=de&type=locations&origins=address`;
+    )}&lang=de&type=locations&origins=address&limit=10`;
     return this.httpClient.get<RootObject>(request).pipe(
       map((data: RootObject) => {
         const resultWeightDesc = (a: AddressToCoordinateApiData, b: AddressToCoordinateApiData) => b.weight - a.weight;

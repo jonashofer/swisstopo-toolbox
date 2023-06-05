@@ -16,12 +16,6 @@ import { AddressCoordinateTableEntry, AddressSelectionResult } from '../../model
 import { Observable, of } from 'rxjs';
 import { AddressService, FEATURE_SERVICE_TOKEN, FeatureService, SearchResultItem } from '../../services';
 
-// export interface SearchResultItem {
-//   text: string;
-//   originalInput?: string;
-//   a2c_data?: ApiSearchResult;
-//   c2a_data?: { gwr: GWRSearchResult; addressText: string; distance: number; lv95: Coordinate };
-// }
 
 @Component({
   selector: 'app-text-input',
@@ -51,6 +45,10 @@ export class TextInputComponent {
   existingEntryId: string | null = null;
 
   searchLabel = '';
+  
+
+  @Output()
+  linesPasted = new EventEmitter<string[]>();
 
   @Input()
   set addressToEdit(existingEntry: AddressCoordinateTableEntry | null) {
@@ -64,8 +62,6 @@ export class TextInputComponent {
 
   constructor(
     private readonly addressService: AddressService,
-    private readonly notificationService: ObNotificationService,
-    private readonly translate: TranslateService,
     @Inject(FEATURE_SERVICE_TOKEN) public featureService: FeatureService
   ) {
     this.searchLabel = `search.${featureService.labelType}.`;
@@ -96,14 +92,8 @@ export class TextInputComponent {
         .split('\r')
         .map(l => l.trim())
         .filter(l => l.length > 0);
-      this.notificationService.info(
-        this.translate.instant('notifications.entriesAdded', {
-          count: lines.length
-        })
-      );
-      this.featureService.searchMultiple(lines).subscribe(r => {
-        this.addressService.multiAddOrUpdateAddresses(r);
-      });
+        
+      this.linesPasted.emit(lines);
     }
   }
 

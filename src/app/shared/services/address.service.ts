@@ -58,7 +58,7 @@ export class AddressService {
   }
 
   public multiAddOrUpdateAddresses(addressResults: AddressCoordinateTableEntry[]) {
-    addressResults.forEach(result => this.addOrUpdateAddress({ result: result, updatedId: null }));
+    this._addresses.next(this._addresses.value.concat(addressResults));
   }
 
   public addOrUpdateAddress(addressResult: AddressSelectionResult) {

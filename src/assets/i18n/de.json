@@ -57,6 +57,11 @@
       "add": "Hinzufügen",
       "replace": "Ersetzen"
     },
+    "tooManyDialog": {
+      "title": "Über 100 Einträge",
+      "description": "So viele Einträge verlangsamen die Applikation erheblich. Es wird empfohlen, die Eingabe aufzuteilen.",
+      "continue": "Trotzdem hinzufügen"
+    },
     "exampleFile": {
       "description": "Die Datei sollte einen Eintrag pro Zeile enthalten.",
       "button": "Beispieldatei herunterladen",

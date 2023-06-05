@@ -11,7 +11,7 @@ export class GuideComponent {
   srcLink = this.translateService.onLangChange.pipe(
     map(l => l.lang),
     startWith(this.translateService.currentLang),
-    map(l => `../../assets/cookbook/cookbook-${l}.md`)
+    map(l => `../assets/cookbook/cookbook-${l}.md`)
   );
   constructor(private readonly translateService: TranslateService) {}
 }

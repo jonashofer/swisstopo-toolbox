@@ -12,7 +12,7 @@ import saveAs from 'file-saver';
 })
 export class FileUploadInputComponent {
   @Output()
-  finished = new EventEmitter<void>();
+  uploaded = new EventEmitter<string[]>();
 
   // @Input()
   // mode = InputSearchMode.All;
@@ -20,15 +20,17 @@ export class FileUploadInputComponent {
   private lines: string[] = [];
 
   constructor(
-    private readonly addressService: AddressService,
     public downloadService: DownloadService,
-    private readonly dialog: MatDialog,
-    private readonly notificationService: ObNotificationService,
     private readonly translate: TranslateService,
     @Inject(FEATURE_SERVICE_TOKEN) private readonly featureService: FeatureService
-  ) {}
+  ) {
+    this.featureService.progressUpdates.subscribe(progress => {
+      console.log(`Processed items: ${progress} / X}`);
+      // Update your UI accordingly
+    });
+  }
 
-  uploadEvent($event: ObIUploadEvent, dialogRef: TemplateRef<any>) {
+  uploadEvent($event: ObIUploadEvent) {
     if ($event?.files?.length != 1) {
       return;
     }
@@ -41,30 +43,9 @@ export class FileUploadInputComponent {
         .map(l => l.trim())
         .filter(l => l.length > 0);
 
-      if (this.addressService.hasAddresses) {
-        this.dialog.open(dialogRef);
-      } else {
-        this.emitResults(false);
-      }
+        this.uploaded.emit(this.lines);
     };
     reader.readAsText(file as File);
-  }
-
-  emitResults(replace: boolean) {
-    if (replace) {
-      this.addressService.deleteAllAddresses();
-    }
-    this.notificationService.info(
-      this.translate.instant('notifications.entriesAdded', {
-        count: this.lines.length
-      })
-    );
-
-    this.featureService.searchMultiple(this.lines).subscribe(r => {
-      this.addressService.multiAddOrUpdateAddresses(r);
-      this.lines = [];
-      this.finished.emit();
-    });
   }
   
   downloadExampleTxt() {

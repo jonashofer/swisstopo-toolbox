@@ -1,5 +1,5 @@
 import { Injectable, InjectionToken } from '@angular/core';
-import { Observable, forkJoin, from, mergeMap, of, switchMap } from 'rxjs';
+import { Observable, Subject, concatMap, forkJoin, from, mergeMap, of, reduce, switchMap, tap, toArray } from 'rxjs';
 import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEntry';
 import { ColumnConfigItem } from '../models/ColumnConfiguration';
 
@@ -16,7 +16,7 @@ export interface SearchResultItemTyped<T> extends SearchResultItem {
 export enum LabelType {
   ADDRESS = 'address',
   COORDINATE = 'coordinate',
-  EGID = 'egid',
+  EGID = 'egid'
 }
 
 export const FEATURE_SERVICE_TOKEN = new InjectionToken<FeatureService>('FEATURE_SERVICE_TOKEN');
@@ -26,6 +26,7 @@ export interface FeatureService {
   labelType: LabelType;
   showCoordinateSystemSwitch: boolean;
   disableInactivationOfOldSystemWhenSwitching: boolean;
+  progressUpdates: Observable<number>;
 
   validateSearchInput(input: string): string | null;
 
@@ -47,9 +48,11 @@ export interface FeatureService {
 export abstract class FeatureServiceBase<AutocompleteData> implements FeatureService {
   showCoordinateSystemSwitch: boolean = true;
   disableInactivationOfOldSystemWhenSwitching: boolean = false;
-  
+
   private bulkAddId = -1;
   protected messageForMultipleResults: string | null = null;
+
+  public progressUpdates = new Subject<number>();
 
   constructor(public name: string, public labelType: LabelType) {}
 
@@ -66,63 +69,81 @@ export abstract class FeatureServiceBase<AutocompleteData> implements FeatureSer
   abstract getExampleFileContent(): string;
 
   public searchMultiple(lines: string[]): Observable<AddressCoordinateTableEntry[]> {
-    const observables = lines.map(userInput => {
-        const validation = this.validateSearchInput(userInput);
-        if (validation !== null) {
+    let progress = 0;
+    const totalItems = lines.length;
+    const concurrencyLimit = 10;
+
+    // Split the lines array into chunks
+    const chunks = [];
+    for (let i = 0; i < lines.length; i += concurrencyLimit) {
+      chunks.push(lines.slice(i, i + concurrencyLimit));
+    }
+
+    return from(chunks).pipe(
+      concatMap(chunkLines =>
+        // Within each chunk, process lines concurrently with forkJoin
+        forkJoin(
+          chunkLines.map(userInput => this.processLine(userInput).pipe(tap(x => this.progressUpdates.next(++progress))))
+        )
+      ),
+      // Use reduce to concatenate the results of all chunks into a single array
+      reduce((acc, val) => [...acc, ...val])
+    );
+  }
+  private processLine(userInput: string): Observable<AddressCoordinateTableEntry> {
+    const validation = this.validateSearchInput(userInput);
+    if (validation !== null) {
+      const entry: AddressCoordinateTableEntry = {
+        address: userInput,
+        id: (--this.bulkAddId).toString(),
+        isValid: false,
+        warningTranslationKey: validation,
+        wgs84: null,
+        lv95: null,
+        lv03: null,
+        originalInput: userInput
+      };
+      return of(entry);
+    } else {
+      return this.search(userInput).pipe(
+        switchMap(r => {
+          // if there are no results, return an invalid entry with "noResults" message
+          if (r.length == 0) {
             const entry: AddressCoordinateTableEntry = {
-                address: userInput,
-                id: (--this.bulkAddId).toString(),
-                isValid: false,
-                warningTranslationKey: validation,
-                wgs84: null,
-                lv95: null,
-                lv03: null,
-                originalInput: userInput
+              address: userInput,
+              id: (--this.bulkAddId).toString(),
+              isValid: false,
+              warningTranslationKey: `search.${this.labelType}.noResults`,
+              wgs84: null,
+              lv95: null,
+              lv03: null,
+              originalInput: userInput
             };
             return of(entry);
-        } else {
-            return this.search(userInput).pipe(
-                switchMap(r => {
-                    // if there are no results, return an invalid entry with "noResults" message
-                    if (r.length == 0) {
-                        const entry: AddressCoordinateTableEntry = {
-                            address: userInput,
-                            id: (--this.bulkAddId).toString(),
-                            isValid: false,
-                            warningTranslationKey: `search.${this.labelType}.noResults`,
-                            wgs84: null,
-                            lv95: null,
-                            lv03: null,
-                            originalInput: userInput
-                        };
-                        return of(entry);
-                    }
+          }
 
-                    // if there is exactly one result, take that
-                    // also take the first result if no messageForMultipleResults is set, which indicates we also want the first
-                    // for e.g. reverse geocoding where we want the nearest address
-                    if (r.length == 1 || this.messageForMultipleResults === null) {
-                        return this.transformInput(r[0]);
-                    }
+          // if there is exactly one result, take that
+          // also take the first result if no messageForMultipleResults is set, which indicates we also want the first
+          // for e.g. reverse geocoding where we want the nearest address
+          if (r.length == 1 || this.messageForMultipleResults === null) {
+            return this.transformInput(r[0]);
+          }
 
-                    // if there is more than one result (and messageForMultipleResults is not null, e.g. AddressSearch)
-                    // return an invalid entry with the provided message
-                    const entry: AddressCoordinateTableEntry = {
-                        address: userInput,
-                        id: (--this.bulkAddId).toString(),
-                        isValid: false,
-                        warningTranslationKey: this.messageForMultipleResults,
-                        wgs84: null,
-                        lv95: null,
-                        lv03: null,
-                        originalInput: userInput
-                    };
-                    return of(entry);
-                })
-            );
-        }
-    });
-    return forkJoin(observables);
-}
-
+          // if there is more than one result (and messageForMultipleResults is not null, e.g. AddressSearch)
+          // return an invalid entry with the provided message
+          const entry: AddressCoordinateTableEntry = {
+            address: userInput,
+            id: (--this.bulkAddId).toString(),
+            isValid: false,
+            warningTranslationKey: this.messageForMultipleResults,
+            wgs84: null,
+            lv95: null,
+            lv03: null,
+            originalInput: userInput
+          };
+          return of(entry);
+        })
+      );
+    }
+  }
 }

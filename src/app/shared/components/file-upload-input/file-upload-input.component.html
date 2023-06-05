@@ -1,4 +1,4 @@
-<ob-file-upload [accept]="['.txt', '.csv']" [multiple]="false" (uploadEvent)="uploadEvent($event, replaceDialog)">
+<ob-file-upload [accept]="['.txt', '.csv']" [multiple]="false" (uploadEvent)="uploadEvent($event)">
 </ob-file-upload>
 <ob-alert>
 	{{ "fileInput.exampleFile.description" | translate }}
@@ -6,21 +6,3 @@
 		{{ "fileInput.exampleFile.button" | translate }}
 	</button>
 </ob-alert>
-
-<ng-template #replaceDialog>
-	<h2 mat-dialog-title>{{ "fileInput.replaceDialog.title" | translate }}</h2>
-	<mat-dialog-content class="mat-typography">
-		<p>{{ "fileInput.replaceDialog.description" | translate }}</p>
-	</mat-dialog-content>
-	<mat-dialog-actions>
-		<button mat-button obButton="tertiary" [mat-dialog-close]>
-			{{ "i18n.common.cancel" | translate }}
-		</button>
-		<button mat-button obButton="secondary" [mat-dialog-close] (click)="emitResults(false)">
-			{{ "fileInput.replaceDialog.add" | translate }}
-		</button>
-		<button mat-button obButton="primary" [mat-dialog-close] (click)="emitResults(true)" cdkFocusInitial>
-			{{ "fileInput.replaceDialog.replace" | translate }}
-		</button>
-	</mat-dialog-actions>
-</ng-template>
