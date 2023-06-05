@@ -6,6 +6,8 @@ import { AddressService, FEATURE_SERVICE_TOKEN, FeatureService } from '../../ser
 import { TranslateService } from '@ngx-translate/core';
 import { map, of, switchMap } from 'rxjs';
 
+const INPUT_SIZE_WARNING_THRESHOLD = 100;
+
 @Component({
   selector: 'app-search-input',
   templateUrl: './search-input.component.html',
@@ -47,7 +49,7 @@ export class SearchInputComponent {
 
   multiAdd(lines: string[], replaceDialogRef: TemplateRef<any>, tooManyDialogRef: TemplateRef<any>) {
     if (!this.addressService.hasAddresses) {
-      if (lines.length > 2) {
+      if (lines.length > INPUT_SIZE_WARNING_THRESHOLD) {
         this.lines = lines;
         this.dialog.open(tooManyDialogRef, { disableClose: true });
         return;
@@ -72,7 +74,7 @@ export class SearchInputComponent {
             if (replace) {
               this.addressService.deleteAllAddresses();
             }
-            if (lines.length > 2) {
+            if (lines.length > INPUT_SIZE_WARNING_THRESHOLD) {
               this.lines = lines;
               this.dialog.open(tooManyDialogRef, { disableClose: true });
               return;
