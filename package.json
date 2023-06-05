@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "build:prod": "ng build --configuration production",
-    "build:github": "ng build --configuration production --base-href /swisstopo-toolbox/index.html",
+    "build:bfh": "ng build --configuration bfh",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",

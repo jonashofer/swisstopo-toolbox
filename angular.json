@@ -48,24 +48,23 @@
           },
           "configurations": {
             "production": {
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "2mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
-                }
-              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
+              "baseHref": "/showcase/index.html",
+              "outputHashing": "all"
+            },
+            "bfh": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.bfh.ts"
+                }
+              ],
+              "baseHref": "/swisstopo-toolbox/",
               "outputHashing": "all"
             },
             "development": {
@@ -84,6 +83,9 @@
           "configurations": {
             "production": {
               "browserTarget": "application:build:production"
+            },
+            "bfh": {
+              "browserTarget": "application:build:bfh"
             },
             "development": {
               "browserTarget": "application:build:development"

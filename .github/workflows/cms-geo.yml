@@ -1,0 +1,38 @@
+name: CI for cms.geo.admin.ch
+on:
+  push:
+    branches:
+    - main
+    - develop
+    
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up node.js
+        uses: actions/setup-node@v3.3.0
+        with:
+          node-version: '16'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build:prod
+
+      - name: Publish Artiface
+        uses: actions/upload-artifact@v3
+        with:
+          name: cms.geo.admin.ch_showcase
+          path: dist/
+        
+

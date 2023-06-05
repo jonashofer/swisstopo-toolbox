@@ -75,6 +75,7 @@ import {
   EgidToAddressComponent
 } from './feature-components';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 registerLocaleData(localeDECH);
 registerLocaleData(localeFRCH);
@@ -156,11 +157,7 @@ registerLocaleData(localeENCH);
     { provide: HTTP_INTERCEPTORS, useClass: ObHttpApiInterceptor, multi: true },
     {
       provide: OB_BANNER,
-      useValue: {
-        text: 'BFH',
-        color: '#FFCB05',
-        bgColor: '#37556E'
-      }
+      useValue: environment.banner
     },
     MatDialogActions
   ],

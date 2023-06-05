@@ -1,3 +1,6 @@
 export const environment = {
-  production: true
+  production: true,
+  banner: null,
+  githubLink: null,
+  useHashRouting: true
 };

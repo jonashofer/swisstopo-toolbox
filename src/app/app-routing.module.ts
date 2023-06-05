@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AddressToCoordinateComponent, AddressToEgidComponent, AddressToHeightComponent, CoordinateToAddressComponent, CoordinateToCoordinateComponent, CoordinateToHeightComponent, EgidToAddressComponent } from './feature-components';
+import { environment } from 'src/environments/environment';
 
 const routes: Routes = [
   { path: '', redirectTo: 'address-to-coordinate', pathMatch: 'full' },
@@ -24,7 +25,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: true })],
+  imports: [RouterModule.forRoot(routes, { useHash: environment.useHashRouting })],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
