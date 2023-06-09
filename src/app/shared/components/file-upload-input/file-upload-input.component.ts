@@ -23,12 +23,7 @@ export class FileUploadInputComponent {
     public downloadService: DownloadService,
     private readonly translate: TranslateService,
     @Inject(FEATURE_SERVICE_TOKEN) private readonly featureService: FeatureService
-  ) {
-    this.featureService.progressUpdates.subscribe(progress => {
-      console.log(`Processed items: ${progress} / X}`);
-      // Update your UI accordingly
-    });
-  }
+  ) { }
 
   uploadEvent($event: ObIUploadEvent) {
     if ($event?.files?.length != 1) {

@@ -63,11 +63,6 @@ export class ResultTableComponent implements OnInit {
     this.mapInteractionService.sendToMap(row.id, isHovered);
   }
 
-  getCoordinateSystemName(key: ColumnDefinitions) {
-    console.log(key);
-    return CoordinateSystemNames[key as any as keyof typeof CoordinateSystemNames];
-  }
-
   private highlightRow(id: string, end: boolean) {
     if (end) {
       this.highlightId = '';
