@@ -86,7 +86,8 @@ export abstract class FeatureServiceBase<AutocompleteData> implements FeatureSer
         )
       ),
       // Use reduce to concatenate the results of all chunks into a single array
-      reduce((acc, val) => [...acc, ...val])
+      reduce((acc, val) => [...acc, ...val]),
+      tap(() => this.progressUpdates.next(0)),
     );
   }
   private processLine(userInput: string): Observable<AddressCoordinateTableEntry> {
