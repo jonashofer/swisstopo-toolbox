@@ -1,6 +1,6 @@
 {
   "layout": {
-    "title": "Swisstopo Toolbox",
+    "title": "swisstopo Toolbox",
     "nav": {
       "address-to-coordinate": "Adresse zu Koordinaten",
       "coordinate-to-address": "Koordinaten zu Adresse",
@@ -13,7 +13,7 @@
       "height.from-coordinates": "Koordinaten zu Höhe",
       "guide": "Anleitung"
     },
-    "footer": "Swisstopo Toolbox für die Verarbeitung von Adressen und Koordinaten"
+    "footer": "swisstopo Toolbox für die Verarbeitung von Adressen und Koordinaten"
   },
   "mode": {
     "input": "Eingabe",
