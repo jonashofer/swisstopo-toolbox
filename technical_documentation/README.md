@@ -18,7 +18,7 @@ Besides the standard routing module, the application consists only of the root m
 The close relation of all features and the overall size and complexity did not require splitting into further modules yet.
 
 ## Environments
-The current [environments](..\src\environments\environment.ts) are reflected in [angular.json](..\angular.json) and in the projects GitHub actions.
+The current [environments](../src/environments/environment.ts) are reflected in [angular.json](../angular.json) and in the projects GitHub actions.
 
 |                          | local                                   | BFH                                                                                      | PROD                                                                                 |
 | ------------------------ | --------------------------------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
@@ -98,7 +98,7 @@ With focus on how the different features are organized, the structure looks like
 Since all features follow the same pattern, the components and services are organized in feature folders.
 
 ### Feature component
-From a functionality standpoint, the general [feature-tab](..\src\app\shared\components\feature-tab) is the top-most component used
+From a functionality standpoint, the general [feature-tab](../src/app/shared/components/feature-tab) is the top-most component used
 for all feature tabs.
 
 It gets wrapped by the individual specific feature component to provide the correct dependencies and then registered in the routing.
@@ -122,7 +122,7 @@ _app-routing.module.ts:_
 
 ### Feature service
 Each feature has its own service, which implements the `FeatureService` interface. 
-To help with that, there is the abstract base class `FeatureServiceBase` which is co-located in [feature.service.ts](..\src\app\shared\services\feature.service.ts).
+To help with that, there is the abstract base class `FeatureServiceBase` which is co-located in [feature.service.ts](../src/app/shared/services/feature.service.ts).
 
 To register the correct feature service in the angular dependency injection, the `getFeatureProviders()` function is used.
 It ensures that all services or components who inject the `FeatureService` interface via the `InjectionToken`
@@ -201,8 +201,8 @@ All availble columns are:
 - LV03
 - Edit function
 
-This is handled in the [column.service.ts](..\src\app\shared\services\column.service.ts).
-Based on the selected columns, the [address.service.ts](..\src\app\shared\services\address.service.ts) will then query the required APIs to retrieve the additional data for the columns.
+This is handled in the [column.service.ts](../src/app/shared/services/column.service.ts).
+Based on the selected columns, the [address.service.ts](../src/app/shared/services/address.service.ts) will then query the required APIs to retrieve the additional data for the columns.
 
 ## Local storage
 To enable a smooth user experience and avoid loosing all data when reloading the page, data is saved in the local storage.
