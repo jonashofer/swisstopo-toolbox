@@ -5,6 +5,5 @@ export const environment = {
     color: '#FFCB05',
     bgColor: '#37556E'
   },
-  githubLink: "https://github.com/jonashofer/swisstopo-toolbox",
-  useHashRouting: false
+  githubLink: 'https://github.com/jonashofer/swisstopo-toolbox'
 };

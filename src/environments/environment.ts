@@ -7,8 +7,7 @@ export const environment = {
   banner : {
     text: 'LOCAL',
   },
-  githubLink : null,
-  useHashRouting: true
+  githubLink: null
 };
 
 /*
