@@ -1,4 +1,5 @@
 # Cookbook
+> Diese Anleitung deckt die Funktionen der Protoyp-Version ab und ist deswegen nicht mehr aktuell.
 
 Beinvegni sil Cookbook.
 Cheu anfleis Vus differentas informaziuns e declaraziuns sur las singulas funcziuns da Swisstopo.

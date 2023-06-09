@@ -1,4 +1,5 @@
 # Cookbook
+> This manual covers the functions of the protoype version and is therefore no longer up to date.
 
 Welcome to the Cookbook. Here you will find various information and explanations on the individual functions of Swisstopo.
 

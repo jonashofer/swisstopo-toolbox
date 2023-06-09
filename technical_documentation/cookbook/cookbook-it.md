@@ -1,4 +1,5 @@
 # Cookbook
+> Questo manuale copre le funzioni della versione prototipo e non è quindi più aggiornato.
 
 Benvenuti nel Cookbook. Qui si trovano le informazioni e le spiegazioni sulle singole funzioni di Swisstopo.
 

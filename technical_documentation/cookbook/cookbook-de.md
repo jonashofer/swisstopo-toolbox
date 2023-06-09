@@ -1,4 +1,5 @@
 # Cookbook
+> Diese Anleitung deckt die Funktionen der Protoyp-Version ab und ist deswegen nicht mehr aktuell.
 
 Willkommen auf dem Cookbook. Hier finden Sie verschiedenen Informationen und Erklärungen zu den einzelnen Funktionen von Swisstopo.
 

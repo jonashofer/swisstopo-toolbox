@@ -1,4 +1,5 @@
 # Cookbook
+> Ces instructions couvrent les fonctions de la version prototype et ne sont donc plus actuelles.
 
 Bienvenue sur le Cookbook. Vous y trouverez des informations et des explications sur les différentes fonctions de Swisstopo.
 
