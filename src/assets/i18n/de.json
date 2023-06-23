@@ -120,7 +120,7 @@
     },
     "adminCHDialog": {
       "title": "Weiter nach map.geo.admin.ch",
-      "description": "Auf der offiziellen Karte von Swisstopo haben Sie die vollen Möglichkeiten zur Weiterverwendung Ihrer Adressen.</br></br>Dazu wird eine <b>.kml</b>-Datei heruntergeladen, die Sie dann in der Karte per Hineinziehen importieren können.</br></br>Somit werden keine Adressen online gespeichert.",
+      "description": "Auf dem Geoportal haben Sie die vollen Möglichkeiten zur Weiterverwendung Ihrer Adressen.</br></br>Dazu wird eine <b>.kml</b>-Datei heruntergeladen, die Sie dann in der Karte per Hineinziehen importieren können.</br></br>Somit werden keine Adressen online gespeichert.",
       "button": "Herunterladen und zu"
     }
   },

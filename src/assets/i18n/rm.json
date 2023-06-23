@@ -1,67 +1,113 @@
 {
   "layout": {
-    "title": "Swisstopo Toolbox",
+    "title": "swisstopo Toolbox",
     "nav": {
       "address-to-coordinate": "Adressa tier coordinatas",
+      "coordinate-to-address": "Koordinaten zu Adresse",
+      "convert-coordinates": "Koordinaten konvertieren",
+      "egid": "EGID",
+      "egid.to-address": "EGID zu Adresse",
+      "egid.from-address": "Adresse zu EGID",
+      "height": "Höhe",
+      "height.from-address": "Adresse zu Höhe",
+      "height.from-coordinates": "Koordinaten zu Höhe",
       "guide": "Instrucziun"
     },
-    "footer": "Swisstopo Toolbox"
+    "footer": "swisstopo Toolbox für die Verarbeitung von Adressen und Koordinaten"
   },
   "mode": {
     "input": "Endataziun",
     "file": "Importar datoteca"
   },
-  "search": {
-    "label": "Adressa",
-    "labelEdit": "Adattadar adressa",
-    "placeholder": "z.B. Bundesplatz 1 Bern",
-    "tooltip": "Endataziun da pliras lingias pusseivel entras copiar adressas digl archiv provisoric. Per plascher far stem che mintga adressa sesanfla sin ina nova lingia"
+  "search": { 
+    "labelEdit": "Adattadar",
+    "egid": {
+      "label": "EGID",
+      "placeholder": "z.B. 1230564",
+      "noResults": "Keine Adresse mit dieser EGID gefunden",
+      "tooltip": "Mehrzeilen-Eingabe möglich durch das kopieren von Adressen aus der Zwischenablage. Bitte achten, dass jede EGID auf einer neuen Zeile ist."
+    },
+    "address": {
+      "label": "Adresse",
+      "placeholder": "z.B. Bundesplatz 1 Bern",
+      "noResults": "Keine Adresse gefunden",
+      "tooltip": "Mehrzeilen-Eingabe möglich durch das kopieren von Adressen aus der Zwischenablage. Bitte achten, dass jede Adresse auf einer neuen Zeile ist."
+    },
+    "coordinate": {
+      "label": "Koordinaten",
+      "placeholder": "z.B. 2600994.1, 1197491.8 oder 46.95108, 7.438637 oder 683220.1, 248081.9",
+      "noResults": "Keine Adresse im Umkreis von 100m gefunden",
+      "tooltip": "Mehrzeilen-Eingabe möglich durch das kopieren von Koordinaten aus der Zwischenablage. Bitte achten, dass jedes Koordinaten-Paar auf einer neuen Zeile ist.",
+      "distance": "({{distance}}m entfernt)"
+    }
   },
   "notifications": {
-    "entriesAdded": "{{count}} lingia(s) endatadas.",
+    "entriesAdded": "{{count}} Zeilen eingelesen.",
     "entryEdited": "Adressa ei vegnida adattada.",
-    "entryAlreadyExists": "Questa adressa ({{address}}) ei gia vegnida agiuntada!",
+    "entryAlreadyExists": "Dieser Eintrag {{address}} wurde bereits hinzugefügt!",
     "inputTooManyWords": "La tscherca astga buc cuntener dapli che 10 plaids.",
-    "inputTooLong": "La tscherca astga buc esser pli liunga che 4000 simbols."
+    "inputTooLong": "La tscherca astga buc esser pli liunga che 4000 simbols.",
+    "inputNotCoordinate": "Keine in der Schweiz liegenden Koordinaten erkannt.",
+    "inputNotEgid": "Keine EGID erkannt."
   },
   "fileInput": {
     "replaceDialog": {
-      "title": "Importar",
+      "title": "Hochladen",
       "description": "Ei exista gia endataziuns. Vuleis Vus agiuntar las novas adressas ni remplazzar las existentas?",
       "add": "Agiuntar",
       "replace": "Remplazzar"
     },
+    "tooManyDialog": {
+      "title": "Über 100 Einträge",
+      "description": "So viele Einträge verlangsamen die Applikation erheblich. Es wird empfohlen, die Arbeit in mehrere Pakete aufzuteilen.",
+      "continue": "Trotzdem hinzufügen"
+    },
     "exampleFile": {
-      "description": "La datoteca duess haver ina adressa per lingia",
-      "button": "Exportar datoteca d’exempel"
+      "description": "Die Datei sollte einen Eintrag pro Zeile enthalten.",
+      "button": "Beispieldatei herunterladen",
+      "name": "Beispiel"
     }
   },
   "table": {
-    "header": {
-      "reset": "Annullar tut",
-      "address": "Adressa",
-      "lon": "Lon",
-      "lat": "Lat",
-      "north": "Y / Nord",
-      "east": "X / Ost",
-      "resetDialog": {
-        "title": "Reinizialisar",
-        "description": "Vuleis Vus annullar tut las endataziuns?"
-      }
+    "reset": "Annullar tu",
+    "resetDialog": {
+      "title": "Zurücksetzen",
+      "description": "Möchten Sie alle Einträge löschen?"
     },
     "entry": {
-      "delete": "Annullar endataziun",
-      "edit": "Midar endataziun",
-      "warning": "Adressa nunprecisa"
+      "delete": "Eintrag löschen",
+      "edit": "Eintrag ändern",
+      "warning": {
+        "ambiguous": "Adressa nunprecisa",
+        "ambiguousEgid": "Gebäude mit mehreren Adressen"
+      }
+    },
+    "clipboard": {
+      "copy": "{{item}} in die Zwischenablage kopieren",
+      "copied": "{{item}} in die Zwischenablage kopiert.",
+      "table": "Tabelle",
+      "column": "Spalte",
+      "row": "Zeile",
+      "item": "Wert"
     }
   },
   "toolbar": {
     "copy": {
-      "label": "Copiar",
-      "tooltip": "Exportar tabella sco datoteca"
+      "label": "Copiar"
     },
     "download": {
-      "label": "Exportar"
+      "label": "Exportar",
+      "dialog": {
+        "title": "Ungültige Einträge gefunden",
+        "description": "Es bestehen ungültige Einträge. Sollen diese Einträge auch heruntergeladen werden?",
+        "onlyValid": "Nur gültige Einträge",
+        "all": "Alle Einträge"
+      },
+      "filename": {
+        "address": "Adressen",
+        "coordinate": "Koordinaten",
+        "egid": "EGID"
+      }
     },
     "coordinateSystem": {
       "tooltip": "Midar sistem da coordinatas"
@@ -74,8 +120,32 @@
     },
     "adminCHDialog": {
       "title": "Vinavon sin map.geo.admin.ch",
-      "description": "Sin la carta ufficiala da Swisstopo haveis Vus tuttas pusseivladas d‘utilisar vinavon Vossas adressas. </br></br> Per quei vegn ina datoteca exportada <b>\"addresses.kml\"</b>, la quala che Vus saveis silsuenter importar entras trer viaden. </br></br> Aschia vegnan neginas adressas memorisadas online.",
-      "button": "Exportar e per "
+      "description": "Sin la carta ufficiala da swisstopo haveis Vus tuttas pusseivladas d‘utilisar vinavon Vossas adressas. </br></br> Per quei vegn ina datoteca exportada <b>\"addresses.kml\"</b>, la quala che Vus saveis silsuenter importar entras trer viaden. </br></br> Aschia vegnan neginas adressas memorisadas online.",
+      "button": "Exportar e per"
     }
+  },
+  "columns": {
+    "address": "Adressa",
+    "egid": "EGID",
+    "egrid": "EGRID",
+    "height": "Höhe (m ü. M.)",
+    "wgs84": "GPS-Koordinaten (WGS 84)",
+    "wgs84.lon": "Lon",
+    "wgs84.lat": "Lat",
+    "lv95": "Schweizer Koordinaten (CH1903+ / LV95)",
+    "lv95.lat": "Y / Norden",
+    "lv95.lon": "X / Osten",
+    "lv03": "Schweizer Koordinaten (CH1903 / LV03)",
+    "lv03.lat": "Y / Norden",
+    "lv03.lon": "X / Osten",
+    "edit": "Bearbeitungsfunktion"
+  },
+  "columnConfigDialog": {
+    "title": "Anzeigespalten konfigurieren",
+    "add": "Spalte hinzufügen"
+  },
+  "apiError": {
+    "title": "Serverfehler",
+    "description": "Fehler bei der Abfrage der Daten. Bitte versuchen Sie es später noch einmal."
   }
 }

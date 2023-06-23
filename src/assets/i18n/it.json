@@ -1,82 +1,151 @@
 {
-    "layout": {
-      "title": "Swisstopo Toolbox",
-      "nav": {
-        "address-to-coordinate": "Indirizzo per le coordinate",
-        "guide": "Istruzioni"
-      },
-      "footer": "Swisstopo Toolbox per l'elaborazione di indirizzi e coordinate"
+  "layout": {
+    "title": "swisstopo Toolbox",
+    "nav": {
+      "address-to-coordinate": "Indirizzo a coordinate",
+      "coordinate-to-address": "Coordinate a indirizzo",
+      "convert-coordinates": "Convertire coordinate",
+      "egid": "EGID",
+      "egid.to-address": "EGID a indirizzo",
+      "egid.from-address": "Indirizzo a EGID",
+      "height": "Altezza",
+      "height.from-address": "Indirizzo a altezza",
+      "height.from-coordinates": "Coordinate a altezza",
+      "guide": "Guida"
     },
-    "mode": {
-      "input": "Inserimento dei dati",
-      "file": "Caricare i documenti"
+    "footer": "swisstopo Toolbox per il trattamento di indirizzi e coordinate"
+  },
+  "mode": {
+    "input": "Ingresso",
+    "file": "Carica file"
+  },
+  "search": { 
+    "labelEdit": "Modificare l'ingresso originale",
+    "egid": {
+      "label": "EGID",
+      "placeholder": "es. 1230564",
+      "noResults": "Nessun indirizzo trovato con questo EGID",
+      "tooltip": "È possibile inserire più linee copiando gli indirizzi negli appunti. Assicurati che ogni EGID sia su una nuova riga."
     },
-    "search": {
+    "address": {
       "label": "Indirizzo",
-      "labelEdit": "Modificare indirizzo",
-      "placeholder": "per es. Bundesplatz 1 Bern",
-      "tooltip": "Possibilità di inserire più righe copiando gli indirizzi dagli appunti. Ogni indirizzo contempla la propria linea."
+      "placeholder": "es. Bundesplatz 1 Berna",
+      "noResults": "Nessun indirizzo trovato",
+      "tooltip": "È possibile inserire più linee copiando gli indirizzi negli appunti. Assicurati che ogni indirizzo sia su una nuova riga."
     },
-    "notifications": {
-      "entriesAdded": "{{count}} linee riconosciute.",
-      "entryEdited": "Indirizzo modificato",
-      "entryAlreadyExists": "Questo indirizzo ({{address}}) è già stato inserito ({{address}})!",
-      "inputTooManyWords": "La ricerca non deve contenere più di 10 parole.",
-      "inputTooLong": "Per la ricerca immettere al massimo 4000 caratteri."
-    },
-    "fileInput": {
-      "replaceDialog": {
-        "title": "Caricare",
-        "description": "Esistono già delle registrazioni. Si desidera aggiungere dei nuovi indirizzi o sostituire quelli esistenti?",
-        "add": "Aggiungere",
-        "replace": "Rimpiazzare"
-      },
-      "exampleFile": {
-        "description": "Il documento deve contenere un indirizzo per ogni riga.",
-        "button": "Scaricare un documento come  esempio"
-      }
-    },
-    "table": {
-      "header": {
-        "reset": "Eliminare",
-        "address": "Indirizzo",
-        "lon": "Lon",
-        "lat": "Lat",
-        "north": "Y / Nord",
-        "east": "X / Est",
-        "resetDialog": {
-          "title": "Resettare",
-          "description": "Si desidera cancellare tutti i dati?"
-        }
-      },
-      "entry": {
-        "delete": "Eliminare la registrazione",
-        "edit": "Modificare la registrazione",
-        "warning": "Indirizzo non specifico"
-      }
-    },
-    "toolbar": {
-      "copy": {
-        "label": "Copiare",
-        "tooltip": "I dati possono essere copiati negli appunti"
-      },
-      "download": {
-        "label": "Scaricare"
-      },
-      "coordinateSystem": {
-        "tooltip": "Cambiare le coordinate del sistema"
-      }
-    },
-    "map": {
-      "background": {
-        "standard": "Mappa",
-        "satellite": "Satellite"
-      },
-      "adminCHDialog": {
-        "title": "Continuare su map.geo.admin.ch",
-        "description": "Tramite la mappa ufficiale di Swisstopo è possibile utilizzare al meglio i propri indirizzi.</br></br>Il documento che viene scaricato <b>\"addresses.kml\"</b> può essere trascinato sulla mappa. </br></br>In questo modo, nessun indirizzo viene memorizzato online.",
-        "button": "Scaricare e continuare"
-      }
+    "coordinate": {
+      "label": "Coordinate",
+      "placeholder": "es. 2600994.1, 1197491.8 oppure 46.95108, 7.438637 oppure 683220.1, 248081.9",
+      "noResults": "Nessun indirizzo trovato entro un raggio di 100m",
+      "tooltip": "È possibile inserire più linee copiando le coordinate negli appunti. Assicurati che ogni coppia di coordinate sia su una nuova riga.",
+      "distance": "({{distance}}m di distanza)"
     }
+  },
+  "notifications": {
+    "entriesAdded": "{{count}} righe lette.",
+    "entryEdited": "La voce è stata modificata.",
+    "entryAlreadyExists": "Questa voce {{address}} è già stata aggiunta!",
+    "inputTooManyWords": "La ricerca non deve contenere più di 10 parole.",
+    "inputTooLong": "La ricerca non deve essere più lunga di 4000 caratteri.",
+    "inputNotCoordinate": "Non riconosciuto come coordinate svizzere.",
+    "inputNotEgid": "Non riconosciuto come EGID."
+  },
+  "fileInput": {
+    "replaceDialog": {
+      "title": "Caricamento",
+      "description": "Esistono già voci. Vuoi aggiungere i nuovi indirizzi o sostituire quelli esistenti?",
+      "add": "Aggiungi",
+      "replace": "Sostituisci"
+    },
+    "tooManyDialog": {
+      "title": "Più di 100 voci",
+      "description": "Tante voci rallentano notevolmente l'applicazione. Si consiglia di suddividere il lavoro in più pacchetti.",
+      "continue": "Aggiungi comunque"
+    },
+    "exampleFile": {
+      "description": "Il file dovrebbe contenere una voce per riga.",
+      "button": "Scarica il file di esempio",
+      "name": "Esempio"
+    }
+  },
+  "table": {
+    "reset": "Elimina tutto",
+    "resetDialog": {
+      "title": "Ripristina",
+      "description": "Vuoi eliminare tutte le voci?"
+    },
+    "entry": {
+      "delete": "Elimina voce",
+      "edit": "Modifica voce",
+      "warning": {
+        "ambiguous": "Indirizzo non univoco",
+        "ambiguousEgid": "Edificio con più indirizzi"
+      }
+    },
+    "clipboard": {
+      "copy": "Copia {{item}} negli appunti",
+      "copied": "{{item}} copiato negli appunti.",
+      "table": "Tabella",
+      "column": "Colonna",
+      "row": "Riga",
+      "item": "Valore"
+    }
+  },
+  "toolbar": {
+    "copy": {
+      "label": "Copia"
+    },
+    "download": {
+      "label": "Scarica",
+      "dialog": {
+        "title": "Trovate voci non valide",
+        "description": "Esistono voci non valide. Vuoi scaricare anche queste voci?",
+        "onlyValid": "Solo voci valide",
+        "all": "Tutte le voci"
+      },
+      "filename": {
+        "address": "Indirizzi",
+        "coordinate": "Coordinate",
+        "egid": "EGID"
+      }
+    },
+    "coordinateSystem": {
+      "tooltip": "Cambia sistema di coordinate"
+    }
+  },
+  "map": {
+    "background": {
+      "standard": "Mappa",
+      "satellite": "Satellite"
+    },
+    "adminCHDialog": {
+      "title": "Continua su map.geo.admin.ch",
+      "description": "Sul portale Geo hai piena libertà di utilizzare i tuoi indirizzi.</br></br>Per questo viene scaricato un file <b>.kml</b> che puoi importare nella mappa tramite trascinamento.</br></br>In questo modo, nessun indirizzo viene salvato online.",
+      "button": "Scarica e vai a"
+    }
+  },
+  "columns": {
+    "address": "Indirizzo",
+    "egid": "EGID",
+    "egrid": "EGRID",
+    "height": "Altezza",
+    "wgs84": "Coordinate GPS (WGS 84)",
+    "wgs84.lon": "Lon",
+    "wgs84.lat": "Lat",
+    "lv95": "Coordinate svizzere (CH1903+ / LV95)",
+    "lv95.lat": "Y / Nord",
+    "lv95.lon": "X / Est",
+    "lv03": "Coordinate svizzere (CH1903 / LV03)",
+    "lv03.lat": "Y / Nord",
+    "lv03.lon": "X / Est",
+    "edit": "Funzione di modifica"
+  },
+  "columnConfigDialog": {
+    "title": "Configura colonne di visualizzazione",
+    "add": "Aggiungi colonna"
+  },
+  "apiError": {
+    "title": "Errore del server",
+    "description": "Errore durante la richiesta dei dati. Riprova più tardi."
   }
-  
+}

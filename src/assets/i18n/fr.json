@@ -1,70 +1,116 @@
 {
   "layout": {
-    "title": "Swisstopo Toolbox",
+    "title": "swisstopo Toolbox",
     "nav": {
-      "address-to-coordinate": "Adresses aux coordonnées",
-      "guide": "Instructions"
+      "address-to-coordinate": "Adresse vers coordonnées",
+      "coordinate-to-address": "Coordonnées vers adresse",
+      "convert-coordinates": "Convertir coordonnées",
+      "egid": "EGID",
+      "egid.to-address": "EGID vers adresse",
+      "egid.from-address": "Adresse vers EGID",
+      "height": "Hauteur",
+      "height.from-address": "Adresse vers hauteur",
+      "height.from-coordinates": "Coordonnées vers hauteur",
+      "guide": "Guide"
     },
-    "footer": "Swisstopo Toolbox pour le travail sur les adresses et les coordonnées"
+    "footer": "swisstopo Toolbox pour le traitement des adresses et des coordonnées"
   },
   "mode": {
     "input": "Saisie des données",
     "file": "Télécharger un fichier"
   },
-  "search": {
-    "label": "Adresse",
-    "labelEdit": "Modifier l'adresse",
-    "placeholder": "p.Ex. Bundesplatz 1 Bern",
-    "tooltip": "Possibilité de saisir plusieurs lignes en copiant les adresses depuis le presse-papiers. Veillez à ce que chaque adresse soit sur une nouvelle ligne."
+  "search": { 
+    "labelEdit": "Modifier l'entrée originale",
+    "egid": {
+      "label": "EGID",
+      "placeholder": "ex. 1230564",
+      "noResults": "Aucune adresse trouvée avec cet EGID",
+      "tooltip": "Saisie multi-lignes possible en copiant des adresses depuis le presse-papiers. Assurez-vous que chaque EGID est sur une nouvelle ligne."
+    },
+    "address": {
+      "label": "Adresse",
+      "placeholder": "ex. Place fédérale 1 Berne",
+      "noResults": "Aucune adresse trouvée",
+      "tooltip": "Saisie multi-lignes possible en copiant des adresses depuis le presse-papiers. Assurez-vous que chaque adresse est sur une nouvelle ligne."
+    },
+    "coordinate": {
+      "label": "Coordonnées",
+      "placeholder": "ex. 2600994.1, 1197491.8 ou 46.95108, 7.438637 ou 683220.1, 248081.9",
+      "noResults": "Aucune adresse trouvée dans un rayon de 100m",
+      "tooltip": "Saisie multi-lignes possible en copiant des coordonnées depuis le presse-papiers. Assurez-vous que chaque paire de coordonnées est sur une nouvelle ligne.",
+      "distance": "({{distance}}m de distance)"
+    }
   },
   "notifications": {
     "entriesAdded": "{{count}} lignes lues.",
-    "entryEdited": "L'adresse a été modifiée.",
-    "entryAlreadyExists": "Cette adresse ({{address}}) a déjà été ajoutée!",
+    "entryEdited": "L'entrée a été ajustée.",
+    "entryAlreadyExists": "Cette entrée {{address}} a déjà été ajoutée!",
     "inputTooManyWords": "La recherche ne doit pas contenir plus de 10 mots.",
-    "inputTooLong": "La recherche ne doit pas dépasser 4000 caractères."
+    "inputTooLong": "La recherche ne doit pas être plus longue que 4000 caractères.",
+    "inputNotCoordinate": "Aucune coordonnée reconnue en Suisse.",
+    "inputNotEgid": "Aucun EGID reconnu."
   },
   "fileInput": {
     "replaceDialog": {
-      "title": "Télécharger",
-      "description": "Des entrées existent déjà. Souhaitez-vous ajouter les nouvelles adresses ou remplacer les adresses existantes?",
+      "title": "Téléchargement",
+      "description": "Des entrées existent déjà. Voulez-vous ajouter de nouvelles adresses ou remplacer celles existantes?",
       "add": "Ajouter",
       "replace": "Remplacer"
     },
+    "tooManyDialog": {
+      "title": "Plus de 100 entrées",
+      "description": "Autant d'entrées ralentissent considérablement l'application. Il est recommandé de diviser le travail en plusieurs paquets.",
+      "continue": "Ajouter quand même"
+    },
     "exampleFile": {
-      "description": "Le fichier doit contenir une adresse par ligne.",
-      "button": "Télécharger le fichier d'exemple"
+      "description": "Le fichier doit contenir une entrée par ligne.",
+      "button": "Télécharger le fichier d'exemple",
+      "name": "Exemple"
     }
   },
   "table": {
-    "header": {
-      "reset": "Rejeter tout",
-      "address": "Adresse",
-      "lon": "Lon",
-      "lat": "Lat",
-      "north": "Y / Nord",
-      "east": "X / Est",
-      "resetDialog": {
-        "title": "Réinitialiser",
-        "description": "Souhaitez-vous supprimer toutes les entrées?"
-      }
+    "reset": "Tout supprimer",
+    "resetDialog": {
+      "title": "Réinitialiser",
+      "description": "Voulez-vous supprimer toutes les entrées?"
     },
     "entry": {
       "delete": "Supprimer l'entrée",
       "edit": "Modifier l'entrée",
-      "warning": "Adresse non unique"
+      "warning": {
+        "ambiguous": "Adresse ambiguë",
+        "ambiguousEgid": "Bâtiment avec plusieurs adresses"
+      }
+    },
+    "clipboard": {
+      "copy": "Copier {{item}} dans le presse-papiers",
+      "copied": "{{item}} copié dans le presse-papiers.",
+      "table": "Table",
+      "column": "Colonne",
+      "row": "Ligne",
+      "item": "Valeur"
     }
   },
   "toolbar": {
     "copy": {
-      "label": "Copier",
-      "tooltip": "Copier le tableau dans le presse-papiers"
+      "label": "Copier"
     },
     "download": {
-      "label": "Télécharger"
+      "label": "Télécharger",
+      "dialog": {
+        "title": "Entrées invalides trouvées",
+        "description": "Il y a des entrées invalides. Voulez-vous télécharger ces entrées également?",
+        "onlyValid": "Seulement les entrées valides",
+        "all": "Toutes les entrées"
+      },
+      "filename": {
+        "address": "Adresses",
+        "coordinate": "Coordonnées",
+        "egid": "EGID"
+      }
     },
     "coordinateSystem": {
-      "tooltip": "Modifier le système de coordonnées"
+      "tooltip": "Changer de système de coordonnées"
     }
   },
   "map": {
@@ -73,9 +119,33 @@
       "satellite": "Satellite"
     },
     "adminCHDialog": {
-      "title": "Continuer sur map.geo.admin.ch",
-      "description": "Sur la carte officielle de Swisstopo, vous avez toutes les possibilités de réutiliser vos adresses. Pour ce faire, un fichier est téléchargé <b>\"addresses.kml\"</b>, que vous pouvez ensuite importer sur la carte par glisser-déposer. </br></br> Ainsi, aucune adresse n'est enregistrée en ligne.",
-      "button": "Télécharger et continuer sur"
+      "title": "Continuer vers map.geo.admin.ch",
+      "description": "Sur le portail géographique, vous avez toutes les possibilités de réutiliser vos adresses.</br></br>Un fichier <b>.kml</b> sera téléchargé, que vous pourrez ensuite importer dans la carte en le glissant-déposant.</br></br>Ainsi, aucune adresse n'est stockée en ligne.",
+      "button": "Télécharger et continuer vers"
     }
+  },
+  "columns": {
+    "address": "Adresse",
+    "egid": "EGID",
+    "egrid": "EGRID",
+    "height": "Hauteur",
+    "wgs84": "Coordonnées GPS (WGS 84)",
+    "wgs84.lon": "Lon",
+    "wgs84.lat": "Lat",
+    "lv95": "Coordonnées suisses (CH1903+ / LV95)",
+    "lv95.lat": "Y / Nord",
+    "lv95.lon": "X / Est",
+    "lv03": "Coordonnées suisses (CH1903 / LV03)",
+    "lv03.lat": "Y / Nord",
+    "lv03.lon": "X / Est",
+    "edit": "Fonction de modification"
+  },
+  "columnConfigDialog": {
+    "title": "Configurer les colonnes d'affichage",
+    "add": "Ajouter une colonne"
+  },
+  "apiError": {
+    "title": "Erreur du serveur",
+    "description": "Erreur lors de la récupération des données. Veuillez réessayer plus tard."
   }
 }

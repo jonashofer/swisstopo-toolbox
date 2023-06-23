@@ -1,67 +1,113 @@
 {
   "layout": {
-    "title": "Swisstopo Toolbox",
+    "title": "swisstopo Toolbox",
     "nav": {
-      "address-to-coordinate": "Address to coordinate",
-      "guide": "Guide"
+      "address-to-coordinate": "Address to coordinates",
+      "coordinate-to-address": "Coordinates to address",
+      "convert-coordinates": "Convert coordinates",
+      "egid": "EGID",
+      "egid.to-address": "EGID to address",
+      "egid.from-address": "Address to EGID",
+      "height": "Height",
+      "height.from-address": "Address to height",
+      "height.from-coordinates": "Coordinates to height",
+      "guide": "Instructions"
     },
-    "footer": "Swisstopo Toolbox for processing addresses and coordinates"
+    "footer": "swisstopo Toolbox for processing addresses and coordinates"
   },
   "mode": {
     "input": "Input",
     "file": "Upload file"
   },
   "search": {
-    "label": "Address",
-    "labelEdit": "Modify address",
-    "placeholder": "e.g. Bundesplatz 1 Bern",
-    "tooltip": "Multi-line entry possible by copying addresses from the clipboard. Please ensure that each address is on a new line."
+    "labelEdit": "Edit original input",
+    "egid": {
+      "label": "EGID",
+      "placeholder": "e.g. 1230564",
+      "noResults": "No address found with this EGID",
+      "tooltip": "Multiline input possible by copying addresses from the clipboard. Please ensure that each EGID is on a new line."
+    },
+    "address": {
+      "label": "Address",
+      "placeholder": "e.g. Bundesplatz 1 Bern",
+      "noResults": "No address found",
+      "tooltip": "Multiline input possible by copying addresses from the clipboard. Please ensure that each address is on a new line."
+    },
+    "coordinate": {
+      "label": "Coordinates",
+      "placeholder": "e.g. 2600994.1, 1197491.8 or 46.95108, 7.438637 or 683220.1, 248081.9",
+      "noResults": "No address found within 100m radius",
+      "tooltip": "Multiline input possible by copying coordinates from the clipboard. Please ensure that each pair of coordinates is on a new line.",
+      "distance": "({{distance}}m away)"
+    }
   },
   "notifications": {
-    "entriesAdded": "{{count}} lines read in",
-    "entryEdited": "Address was adjusted",
-    "entryAlreadyExists": "This address ({{address}}) has already been added!",
+    "entriesAdded": "{{count}} lines read.",
+    "entryEdited": "Entry has been adjusted.",
+    "entryAlreadyExists": "This entry {{address}} has already been added!",
     "inputTooManyWords": "The search must not contain more than 10 words.",
-    "inputTooLong": "The search must not be longer than 4000 characters."
+    "inputTooLong": "The search must not be longer than 4000 characters.",
+    "inputNotCoordinate": "No coordinates in Switzerland recognized.",
+    "inputNotEgid": "No EGID recognized."
   },
   "fileInput": {
     "replaceDialog": {
       "title": "Upload",
-      "description": "There are already entries. Would you like to add the new addresses or replace the existing ones?",
+      "description": "Entries already exist. Do you want to add new addresses or replace the existing ones?",
       "add": "Add",
       "replace": "Replace"
     },
+    "tooManyDialog": {
+      "title": "Over 100 entries",
+      "description": "So many entries significantly slow down the application. It is recommended to divide the work into several packages.",
+      "continue": "Add anyway"
+    },
     "exampleFile": {
-      "description": "The file should contain one address per line.",
-      "button": "Download sample file"
+      "description": "The file should contain one entry per line.",
+      "button": "Download sample file",
+      "name": "Example"
     }
   },
   "table": {
-    "header": {
-      "reset": "Discard all",
-      "address": "Address",
-      "lon": "Lon",
-      "lat": "Lat",
-      "north": "Y / North",
-      "east": "X / East",
-      "resetDialog": {
-        "title": "Reset",
-        "description": "Do you want to delete all entries?"
-      }
+    "reset": "Discard all",
+    "resetDialog": {
+      "title": "Reset",
+      "description": "Do you want to delete all entries?"
     },
     "entry": {
       "delete": "Delete entry",
-      "edit": "Modify entry",
-      "warning": "Non-unique address"
+      "edit": "Change entry",
+      "warning": {
+        "ambiguous": "Ambiguous address",
+        "ambiguousEgid": "Building with multiple addresses"
+      }
+    },
+    "clipboard": {
+      "copy": "Copy {{item}} to clipboard",
+      "copied": "{{item}} copied to clipboard.",
+      "table": "Table",
+      "column": "Column",
+      "row": "Row",
+      "item": "Value"
     }
   },
   "toolbar": {
     "copy": {
-      "label": "Copy",
-      "tooltip": "Copy table to clipboard"
+      "label": "Copy"
     },
     "download": {
-      "label": "Download"
+      "label": "Download",
+      "dialog": {
+        "title": "Invalid entries found",
+        "description": "There are invalid entries. Do you want these entries to be downloaded as well?",
+        "onlyValid": "Only valid entries",
+        "all": "All entries"
+      },
+      "filename": {
+        "address": "Addresses",
+        "coordinate": "Coordinates",
+        "egid": "EGID"
+      }
     },
     "coordinateSystem": {
       "tooltip": "Change coordinate system"
@@ -70,12 +116,36 @@
   "map": {
     "background": {
       "standard": "Map",
-      "satellite": "Satelite"
+      "satellite": "Satellite"
     },
     "adminCHDialog": {
       "title": "Continue to map.geo.admin.ch",
-      "description": "On the official map of Swisstopo you have the full possibilities for further use of your addresses.</br></br>To do this, a file is downloaded <b>\"addresses.kml\"</b> which you can then import into the map by dragging it in.</br></br>Thus no addresses are stored online.",
+      "description": "On the official Geoportal, you have full possibilities for further use of your addresses.</br></br>To do this, a <b>.kml</b> file will be downloaded, which you can then import into the map by dragging and dropping.</br></br>Thus, no addresses are stored online.",
       "button": "Download and continue to"
     }
+  },
+  "columns": {
+    "address": "Address",
+    "egid": "EGID",
+    "egrid": "EGRID",
+    "height": "Height",
+    "wgs84": "GPS Coordinates (WGS 84)",
+    "wgs84.lon": "Lon",
+    "wgs84.lat": "Lat",
+    "lv95": "Swiss Coordinates (CH1903+ / LV95)",
+    "lv95.lat": "Y / North",
+    "lv95.lon": "X / East",
+    "lv03": "Swiss Coordinates (CH1903 / LV03)",
+    "lv03.lat": "Y / North",
+    "lv03.lon": "X / East",
+    "edit": "Editing function"
+  },
+  "columnConfigDialog": {
+    "title": "Configure display columns",
+    "add": "Add column"
+  },
+  "apiError": {
+    "title": "Server error",
+    "description": "Error querying the data. Please try again later."
   }
 }
