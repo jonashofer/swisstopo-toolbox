@@ -5,6 +5,7 @@
         <section *ngFor="let item of items; let i=index; let first = first; let last = last" cdkDrag>
             <mat-list-option [value]="item" [checkboxPosition]="'before'" [selected]="item.active">
                 <span class="label">{{ 'columns.' + item.key | translate }}</span>
+                <br id="spacer">
                 <mat-icon [matTooltip]="'Nach unten' | translate" matTooltipPosition="after" matTooltipShowDelay="500"
                     svgIcon="arrow-down" class="ob-icon" [class.hidden]="last"
                     (click)="moveDown(i); $event.stopPropagation()"></mat-icon>
@@ -12,7 +13,6 @@
                 <mat-icon [matTooltip]="'Nach oben' | translate" matTooltipPosition="after" matTooltipShowDelay="500"
                     svgIcon="arrow-up" class="ob-icon" [class.hidden]="first"
                     (click)="moveUp(i); $event.stopPropagation()"></mat-icon>
-
             </mat-list-option>
             <mat-divider></mat-divider>
         </section>

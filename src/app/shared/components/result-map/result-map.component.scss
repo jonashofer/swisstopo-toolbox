@@ -40,6 +40,13 @@ mat-dialog-content {
   max-width: 500px;
 }
 
+mat-dialog-actions button {
+  margin-top: 2px;
+  white-space: normal;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
 b {
   vertical-align: unset !important;
 }

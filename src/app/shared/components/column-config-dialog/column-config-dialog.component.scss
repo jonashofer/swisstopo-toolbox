@@ -1,4 +1,5 @@
 @import 'node_modules/@oblique/oblique/styles/scss/core/variables';
+@import 'node_modules/@oblique/oblique/styles/scss/core/mixins/_layout.scss';
 
 #cdk-drop-list-0>mat-list-option:nth-child(1)>span.mdc-list-item__start.mat-mdc-list-option-checkbox-before.ng-star-inserted {
   margin-right: 10px
@@ -48,12 +49,35 @@ mat-list-option {
   cursor: default;
 
   .label {
-    cursor: grab
+    cursor: grab;
+    white-space: normal
   }
 
   .mat-checkbox,
   .ob-icon {
     cursor: pointer;
+  }
+}
+
+mat-dialog-actions button {
+  @include ob-media-breakpoint-down(sm) {
+    margin-top: 2px;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+}
+
+#spacer {
+  @include ob-media-breakpoint-up(sm) {
+    display: none;
+  }
+}
+
+.mdc-list-item--with-leading-checkbox.mdc-list-item--with-one-line {
+  @include ob-media-breakpoint-down(sm) {
+    height: auto !important;
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 }
 
