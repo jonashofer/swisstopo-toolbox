@@ -2,7 +2,7 @@
 	<button
 		mat-button
 		obButton="secondary"
-		[matTooltip]="'toolbar.copy.tooltip' | translate"
+		[matTooltip]="getCopyTooltip()"
 		matTooltipPosition="after"
 		matTooltipShowDelay="100"
 		[cdkCopyToClipboard]="downloadService.getCopyToClipboardText()"

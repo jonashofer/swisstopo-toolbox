@@ -21,6 +21,16 @@ export class DownloadService {
     return this.joinAddressesWithHeader(this.addressService.addresses, '\t');
   }
 
+  public getCopyToClipboardColum(column: string): string {
+    return this.addressService.addresses.map(a => this.getNestedProperty(a, column)).join('\r\n');
+  }
+
+  public getCopyToCliboardRow(row: AddressCoordinateTableEntry): string {
+    return this.getCurrentColumns()
+      .map(c => this.getNestedProperty(row, c.toString()))
+      .join('\t');
+  }
+
   public downloadCsv(onlyValidAddresses: boolean) {
     const addresses = onlyValidAddresses ? this.addressService.validAddresses : this.addressService.addresses;
     const result = this.joinAddressesWithHeader(addresses, ';');

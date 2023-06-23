@@ -7,7 +7,10 @@ import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTable
 import { ColumnDefinitions } from '../../models/ColumnConfiguration';
 import { MatRipple } from '@angular/material/core';
 import { MapInteractionService } from '../../services/map-interaction.service';
-import { CoordinateSystem, CoordinateSystemNames } from '../../models/CoordinateSystem';
+import { CoordinateSystemNames } from '../../models/CoordinateSystem';
+import { Clipboard } from '@angular/cdk/clipboard';
+import { ObNotificationService } from '@oblique/oblique';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-result-table',
@@ -48,11 +51,17 @@ export class ResultTableComponent implements OnInit {
     public dialog: MatDialog,
     public viewContainerRef: ViewContainerRef,
     private downloadService: DownloadService,
-    private mapInteractionService: MapInteractionService
+    private mapInteractionService: MapInteractionService,
+    private clipboard: Clipboard,
+    private notifcationService: ObNotificationService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
-    this.downloadService.addressesCopied$.subscribe(() => this.tableRipple?.launch(0, 0, { centered: true }));
+    this.downloadService.addressesCopied$.subscribe(() => {
+      this.tableRipple?.launch(0, 0, { centered: true });
+      this.copyNotify('table');
+    });
 
     this.mapInteractionService.mapToTable$.subscribe(x => {
       this.highlightRow(x.id, x.end);
@@ -63,11 +72,36 @@ export class ResultTableComponent implements OnInit {
     this.mapInteractionService.sendToMap(row.id, isHovered);
   }
 
+  copyRowData(item: AddressCoordinateTableEntry) {
+    const dataToCopy = this.downloadService.getCopyToCliboardRow(item);
+    this.clipboard.copy(dataToCopy);
+    this.copyNotify('row');
+  }
+
+  copyColumnData(column: string) {
+    const dataToCopy = this.downloadService.getCopyToClipboardColum(column);
+    this.clipboard.copy(dataToCopy);
+    this.copyNotify('column');
+  }
+
   private highlightRow(id: string, end: boolean) {
     if (end) {
       this.highlightId = '';
     } else {
       this.highlightId = id;
     }
+  }
+
+  public copyTooltip(typeKey: string) { 
+    return this.translate.instant('table.clipboard.copy', {
+      item: this.translate.instant(`table.clipboard.${typeKey}`)
+    });
+  }
+
+  public copyNotify(typeKey: string) {
+    const message = this.translate.instant('table.clipboard.copied', {
+      item: this.translate.instant(`table.clipboard.${typeKey}`)
+    });
+    this.notifcationService.info(message);
   }
 }

@@ -81,12 +81,19 @@
         "ambiguous": "Nicht eindeutige Adresse",
         "ambiguousEgid": "Gebäude mit mehreren Adressen"
       }
+    },
+    "clipboard": {
+      "copy": "{{item}} in die Zwischenablage kopieren",
+      "copied": "{{item}} in die Zwischenablage kopiert.",
+      "table": "Tabelle",
+      "column": "Spalte",
+      "row": "Zeile",
+      "item": "Wert"
     }
   },
   "toolbar": {
     "copy": {
-      "label": "Kopieren",
-      "tooltip": "Tabelle in Zwischenablage kopieren"
+      "label": "Kopieren"
     },
     "download": {
       "label": "Herunterladen",
