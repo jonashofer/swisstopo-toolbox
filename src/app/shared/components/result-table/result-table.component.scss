@@ -29,14 +29,14 @@ table {
   }
 
   .mat-column-height {
-    width: 120px;
+    width: 140px;
   }
-
 
   .mat-column-lv95_lat,
   .mat-column-lv95_lon,
   .mat-column-lv03_lat,
-  .mat-column-lv03_lon {
+  .mat-column-lv03_lon,
+  .mat-column-egid {
     width: 100px;
   }
 
@@ -50,13 +50,15 @@ table {
     margin-bottom: -2px;
   }
 
-  tr:hover .mat-icon[svgIcon='duplicate'],
+  .mat-header-cell:hover .mat-icon[svgIcon='duplicate'],
+  .mat-row:hover .mat-icon[svgIcon='duplicate'],
   .mat-column-config:hover .mat-icon[svgIcon='duplicate'] {
     visibility: visible;
     opacity: 1;
   }
 
-  tr:hover .mat-icon[svgIcon='duplicate'] {
+  .mat-header-cell:hover .mat-icon[svgIcon='duplicate'],
+  .mat-row:hover .mat-icon[svgIcon='duplicate'] {
     transition-delay: 1s;
   }
 
