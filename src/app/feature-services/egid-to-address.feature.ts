@@ -1,18 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, of } from 'rxjs';
 import { AddressCoordinateTableEntry } from '../shared/models/AddressCoordinateTableEntry';
-import { ColumnConfigItem, ColumnDefinitions, inactiveUserCol, sysCol, userCol } from '../shared/models/ColumnConfiguration';
-import { AddressToCoordinateApiData, ApiService } from '../shared/services/api.service';
+import {
+  ColumnConfigItem,
+  ColumnDefinitions,
+  inactiveUserCol,
+  sysCol,
+  userCol
+} from '../shared/models/ColumnConfiguration';
 import { FeatureServiceBase, LabelType, SearchResultItemTyped } from '../shared/services/feature.service';
 import { HttpClient } from '@angular/common/http';
-import { CoordinateToAddressApiData, MapServerResult } from '../shared/services/reverse-api.service';
-import { Coordinate, CoordinateSystem } from '../shared/models';
+import { Coordinate, CoordinateSystem, MapServerResult } from '../shared/models';
+import { CoordinateToAddressApiData } from './coordinate-to-address.feature';
 
 @Injectable()
 export class EgidToAddressService extends FeatureServiceBase<CoordinateToAddressApiData> {
   showCoordinateSystemSwitch = false;
 
-  constructor(private readonly apiService: ApiService, private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient) {
     super('egid-to-address', LabelType.EGID);
     this.messageForMultipleResults = 'table.entry.warning.ambiguousEgid';
   }
@@ -24,14 +29,14 @@ export class EgidToAddressService extends FeatureServiceBase<CoordinateToAddress
   search(input: string): Observable<SearchResultItemTyped<CoordinateToAddressApiData>[]> {
     const parsedInput = this.tryParseEgid(input)!;
     const request = `https://api.geo.admin.ch/rest/services/api/MapServer/find?layer=ch.bfs.gebaeude_wohnungs_register&searchText=${parsedInput}&searchField=egid&returnGeometry=true&sr=4326&contains=false`;
-  
+
     return this.httpClient.get<MapServerResult>(request).pipe(
       map((data: MapServerResult) => {
         const apiResults = data.results || [];
         return apiResults.map(r => {
           const attr = r.attributes;
           const fullAddress = `${attr.strname_deinr}, ${attr.dplz4} ${attr.dplzname}`;
-  
+
           const lv95: Coordinate = {
             lon: attr.dkode || attr.gkode,
             lat: attr.dkodn || attr.gkodn,
@@ -49,19 +54,16 @@ export class EgidToAddressService extends FeatureServiceBase<CoordinateToAddress
               gwr: r,
               lv95: lv95,
               wgs84: wgs84,
-              addressText: fullAddress,
+              addressText: fullAddress
             }
           };
         });
       }),
-      catchError(() => 
-        of([])
-      )
+      catchError(() => of([]))
     );
   }
-  
 
-  transformInput(item: SearchResultItemTyped<CoordinateToAddressApiData>): Observable<AddressCoordinateTableEntry> {
+  transformInput(item: SearchResultItemTyped<CoordinateToAddressApiData>): AddressCoordinateTableEntry {
     const i = item.data;
     const gwr = i.gwr;
     const result = {
@@ -79,11 +81,10 @@ export class EgidToAddressService extends FeatureServiceBase<CoordinateToAddress
         lat: i.lv95.lat,
         lon: i.lv95.lon
       },
-      lv03: null,
       egid: gwr.attributes.egid,
       egrid: gwr.attributes.egrid
     };
-    return of(result);
+    return result;
   }
 
   transformEntryForEdit(entry: AddressCoordinateTableEntry): string {
@@ -99,7 +100,7 @@ export class EgidToAddressService extends FeatureServiceBase<CoordinateToAddress
       inactiveUserCol(ColumnDefinitions.WGS_84),
       inactiveUserCol(ColumnDefinitions.LV_95),
       inactiveUserCol(ColumnDefinitions.LV_03),
-      inactiveUserCol(ColumnDefinitions.HEIGHT),
+      inactiveUserCol(ColumnDefinitions.HEIGHT)
     ];
   }
 
@@ -112,9 +113,9 @@ export class EgidToAddressService extends FeatureServiceBase<CoordinateToAddress
     const numberInput = Number(sanitizedInput);
 
     if (numberInput >= 1 && numberInput <= 900_000_000) {
-        return numberInput;
+      return numberInput;
     } else {
-        return null;
+      return null;
     }
-}
+  }
 }

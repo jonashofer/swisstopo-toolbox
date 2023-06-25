@@ -1,17 +1,17 @@
-import { ColumnDefinitions, Coordinate, CoordinateSystem } from ".";
+import { Coordinate } from ".";
 
 export interface AddressCoordinateTableEntry {
   id: string; // featureId of the GWR api feature if available and valid, otherwise arbitrary id
-  address: string;
+  address?: string;
 
-	[CoordinateSystem.WGS_84]: Coordinate | null;
-	[CoordinateSystem.LV_95]: Coordinate | null;
-	[CoordinateSystem.LV_03]: Coordinate | null;
+	wgs84?: Coordinate;
+	lv95?: Coordinate;
+	lv03?: Coordinate;
 
   originalInput?: string;
-  [ColumnDefinitions.EGID]?: string | null;
-  [ColumnDefinitions.EGRID]?: string | null;
-  [ColumnDefinitions.HEIGHT]?: string | null;
+  egid?: string | null;
+  egrid?: string | null;
+  height?: number | null;
 
   isValid: boolean;
   warningTranslationKey?: string;

@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { AddressToCoordinateService } from './address-to-coordinate.feature';
+import { AddressToCoordinateApiData, AddressToCoordinateService } from './address-to-coordinate.feature';
 import { Observable } from 'rxjs';
 import { LabelType } from '.';
 import { AddressCoordinateTableEntry, ColumnDefinitions } from '../shared/models';
 import { ColumnConfigItem, userCol, sysCol, inactiveUserCol } from '../shared/models/ColumnConfiguration';
-import { AddressToCoordinateApiData } from '../shared/services/api.service';
 import { FeatureServiceBase, SearchResultItemTyped } from '../shared/services/feature.service';
 
 @Injectable()
@@ -25,12 +24,12 @@ export class AddressToHeightService extends FeatureServiceBase<AddressToCoordina
     return this.atcService.search(input);
   }
 
-  transformInput(input: SearchResultItemTyped<AddressToCoordinateApiData>): Observable<AddressCoordinateTableEntry> {
+  transformInput(input: SearchResultItemTyped<AddressToCoordinateApiData>): AddressCoordinateTableEntry {
     return this.atcService.transformInput(input);
   }
 
   transformEntryForEdit(entry: AddressCoordinateTableEntry): string {
-    return entry.address;
+    return entry.address!;
   }
 
   getDefaultColumns(): ColumnConfigItem[] {

@@ -20,7 +20,7 @@ export class CoordinateToHeightService extends FeatureServiceBase<Coordinate> {
     return this.ctcService.search(validInput);
   }
 
-  transformInput(input: SearchResultItemTyped<Coordinate>): Observable<AddressCoordinateTableEntry> {
+  transformInput(input: SearchResultItemTyped<Coordinate>): AddressCoordinateTableEntry {
     return this.ctcService.transformInput(input);
   }
 
@@ -37,7 +37,7 @@ export class CoordinateToHeightService extends FeatureServiceBase<Coordinate> {
       userCol(ColumnDefinitions.HEIGHT),
 
 
-      // do not setup since not applicable here
+      // DO NOT setup these columns, otherwise the enrichement will fail
       // inactiveUserCol(ColumnDefinitions.ADDRESS),
       // inactiveUserCol(ColumnDefinitions.EGID),
       // inactiveUserCol(ColumnDefinitions.EGRID)

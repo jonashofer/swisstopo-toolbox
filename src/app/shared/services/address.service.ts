@@ -1,37 +1,38 @@
 import { Inject, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ObNotificationService } from '@oblique/oblique';
-import { BehaviorSubject, forkJoin, from, Observable, of } from 'rxjs';
-import { catchError, filter, map, mergeMap } from 'rxjs/operators';
-import { ApiDetailService, ApiService, StorageService } from '.';
+import { BehaviorSubject, combineLatest, forkJoin, from, Observable, of } from 'rxjs';
+import { catchError, concatMap, delay, filter, last, map, mergeMap, shareReplay, switchMap, tap, toArray } from 'rxjs/operators';
+import { ColumnService, StorageService } from '.';
 import { AddressCoordinateTableEntry, AddressSelectionResult } from '../models/AddressCoordinateTableEntry';
 import { ColumnDefinitions } from '../models/ColumnConfiguration';
-import { CoordinateSystem } from '../models/CoordinateSystem';
 import { FEATURE_SERVICE_TOKEN, FeatureService } from './feature.service';
+import { HttpClient } from '@angular/common/http';
+import { getEnrichQueries } from './enrich-api-calls';
 
 @Injectable()
 export class AddressService {
-  public featureName;
-  private readonly _addresses;
-  public addresses$;
-  public validAddresses$;
-  public hasAddresses$;
+  public featureName = this.featureService.name;;
+
+  private readonly _bareAddresses = new BehaviorSubject<AddressCoordinateTableEntry[]>(
+    StorageService.get<AddressCoordinateTableEntry[]>(this.featureService.name) || []
+  );
+
+  public addresses$ = combineLatest([this._bareAddresses, this.columnService.activeColumnsKeys$]).pipe(
+    switchMap(([adresses, columns]) => this.enrichAddresses$(adresses, columns)),
+    shareReplay(1)
+  );
+
+  public validAddresses$ = this.addresses$.pipe(map(a => a.filter(a => a.isValid)));
+  public hasAddresses$ = this.addresses$.pipe(map(a => a.length > 0));
 
   constructor(
-    private readonly api: ApiService,
-    private readonly apiDetail: ApiDetailService,
     private readonly notificationService: ObNotificationService,
     private readonly translate: TranslateService,
-    @Inject(FEATURE_SERVICE_TOKEN) featureService: FeatureService
+    @Inject(FEATURE_SERVICE_TOKEN) private featureService: FeatureService,
+    private readonly http: HttpClient,
+    private readonly columnService: ColumnService
   ) {
-    this.featureName = featureService.name;
-    this._addresses = new BehaviorSubject<AddressCoordinateTableEntry[]>(
-      StorageService.get<AddressCoordinateTableEntry[]>(this.featureName) || []
-    );
-    this.addresses$ = this._addresses.asObservable();
-    this.validAddresses$ = this.addresses$.pipe(map(a => a.filter(a => a.isValid)));
-    this.hasAddresses$ = this.addresses$.pipe(map(a => a.length > 0));
-
     this.addresses$
       .pipe(
         map(addresses => {
@@ -46,7 +47,7 @@ export class AddressService {
   }
 
   get addresses() {
-    return this._addresses.value;
+    return this._bareAddresses.value;
   }
 
   get hasInvalidAddresses() {
@@ -58,108 +59,102 @@ export class AddressService {
   }
 
   public multiAddOrUpdateAddresses(addressResults: AddressCoordinateTableEntry[]) {
-    this._addresses.next(this._addresses.value.concat(addressResults));
+    this._bareAddresses.next(this._bareAddresses.value.concat(addressResults));
   }
 
   public addOrUpdateAddress(addressResult: AddressSelectionResult) {
-    if (addressResult.updatedId && this._addresses.value.some(a => a.id === addressResult.updatedId)) {
-      const addresses = this._addresses.value.slice();
+    if (addressResult.updatedId && this._bareAddresses.value.some(a => a.id === addressResult.updatedId)) {
+      const addresses = this._bareAddresses.value.slice();
       const indexToReplace = addresses.findIndex(e => e.id == addressResult.updatedId);
       addresses[indexToReplace] = addressResult.result;
-      this._addresses.next(addresses);
+      this._bareAddresses.next(addresses);
       this.notificationService.success(this.translate.instant('notifications.entryEdited'));
-    } else if (!this._addresses.value.some(a => a.id === addressResult.result.id)) {
-      this._addresses.next(this._addresses.value.concat(addressResult.result));
+    } else if (!this._bareAddresses.value.some(a => a.id === addressResult.result.id)) {
+      this._bareAddresses.next(this._bareAddresses.value.concat(addressResult.result));
     } else {
       this.notificationService.info(
         this.translate.instant('notifications.entryAlreadyExists', {
-          address: addressResult.result.address.length > 0 ? `(${addressResult.result.address})` : ''
+          address:
+            addressResult.result.address && addressResult.result.address.length > 0
+              ? `(${addressResult.result.address})`
+              : ''
         })
       );
     }
   }
 
   public removeAddress(address: AddressCoordinateTableEntry) {
-    const newAddresses = this._addresses.value.slice();
+    const newAddresses = this._bareAddresses.value.slice();
     const index = newAddresses.indexOf(address);
     newAddresses.splice(index, 1);
-    this._addresses.next(newAddresses);
+    this._bareAddresses.next(newAddresses);
   }
 
   public deleteAllAddresses() {
-    this._addresses.next([]);
+    this._bareAddresses.next([]);
   }
 
-  public enrichAddresses$ = (
-    addresses: AddressCoordinateTableEntry[],
-    columns: ColumnDefinitions[]
-  ) =>
-    from(addresses).pipe(
-      filter(address => address.isValid),
-      mergeMap(address => forkJoin(this.enrichAddress$(address, columns))),
+  public enrichAddresses$ = (addresses: AddressCoordinateTableEntry[], columns: ColumnDefinitions[]) => {
+    return from(addresses).pipe(
+      mergeMap(address => this.enrichAddress$(address, columns)), //mergeMap to parallelize the enrichments of the entries
+      toArray(),
       catchError(err => {
-        return of([]);
+        return of();
       })
     );
+  };
 
-  //TODO generalize-refactoring
-  //TODO optional: rework together with c2a to fetch wgs84 here and not in mapReverseApiResultToAddress(?)
-  /** requires the address entry to have wgs84 coordinates */
-  private readonly enrichAddress$ = (
-    address: AddressCoordinateTableEntry,
-    columns: ColumnDefinitions[]
-  ) => {
-    const queries: Observable<any>[] = [];
+  private static getPresentValues(entry: AddressCoordinateTableEntry): (keyof AddressCoordinateTableEntry)[] {
+    return Object.keys(entry).filter(
+      key => entry[key as keyof AddressCoordinateTableEntry] != null
+    ) as (keyof AddressCoordinateTableEntry)[];
+  }
 
-    // GWR data
-    if ((address.id && columns.includes(ColumnDefinitions.EGID)) || columns.includes(ColumnDefinitions.EGRID)) {
-      const gwrQuery = this.apiDetail.getBuildingInfo(address.id).pipe(
-        map(r => {
-          address.egid = r.feature.attributes.egid;
-          address.egrid = r.feature.attributes.egrid;
-          return address;
-        })
-      );
-      queries.push(gwrQuery);
+  private static getKeyOf(column: ColumnDefinitions): keyof AddressCoordinateTableEntry | null {
+    switch (column) {
+      case ColumnDefinitions.ADDRESS:
+        return 'id'; //the graph works with id, not address
+      case ColumnDefinitions.WGS_84:
+        return 'wgs84';
+      case ColumnDefinitions.LV_95:
+        return 'lv95';
+      case ColumnDefinitions.LV_03:
+        return 'lv03';
+      case ColumnDefinitions.HEIGHT:
+        return 'height';
+      case ColumnDefinitions.EGID:
+        return 'egid';
+      case ColumnDefinitions.EGRID:
+        return 'egrid';
+      default:
+        return null;
+    }
+  }
+
+  private readonly enrichAddress$ = (address: AddressCoordinateTableEntry, columns: ColumnDefinitions[]) : Observable<AddressCoordinateTableEntry> => {
+    if(!address.isValid) {
+      return of(address);
     }
 
-    // LV95 data plus dependent Height data
-    if (columns.includes(ColumnDefinitions.HEIGHT) || columns.includes(ColumnDefinitions.LV_95)) {
-      const lv95Query = this.api.convert(address.wgs84!, CoordinateSystem.LV_95).pipe(
-        map(r => {
-          address.lv95 = r;
-          return address;
-        })
-      );
+    const presentValues = AddressService.getPresentValues(address);
+    const targetValues = columns
+      .map(c => AddressService.getKeyOf(c))
+      .filter((s): s is keyof AddressCoordinateTableEntry => Boolean(s)); //translate ColumnDefinitions to AddressCoordinateTableEntry keys
 
-      if (columns.includes(ColumnDefinitions.HEIGHT)) {
-        const lv95AndHeightQuery = lv95Query.pipe(
-          mergeMap(r =>
-            this.apiDetail.getHeight(r.lv95!.lon, r.lv95!.lat).pipe(
-              map(r => {
-                address.height = r;
-                return r;
-              })
-            )
-          )
-        );
-
-        queries.push(lv95AndHeightQuery);
-      } else {
-        queries.push(lv95Query);
-      }
+    // wgs84 always needed for the map
+    if (!targetValues.includes('wgs84')) {
+      targetValues.push('wgs84');
     }
 
-    if (columns.includes(ColumnDefinitions.LV_03)) {
-      const lv03Query = this.api.convert(address.wgs84!, CoordinateSystem.LV_03).pipe(
-        map(r => {
-          address.lv03 = r;
-          return r;
-        })
-      );
-      queries.push(lv03Query);
-    }
+    const chain = getEnrichQueries(presentValues, targetValues);
 
-    return queries;
+    if (chain.length === 0) {
+      return of(address);
+    } 
+    
+    return from(chain).pipe(
+      concatMap(apiCall => apiCall(address, this.http)), //concatMap to ensure the order and dependencies of the api calls
+      last()
+    );
   };
 }

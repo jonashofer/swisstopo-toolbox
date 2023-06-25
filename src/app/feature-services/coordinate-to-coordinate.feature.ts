@@ -2,16 +2,17 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, map, of } from 'rxjs';
 import { AddressCoordinateTableEntry, ColumnDefinitions, Coordinate, CoordinateSystem } from '../shared/models';
 import { ColumnConfigItem, userCol, sysCol, inactiveUserCol } from '../shared/models/ColumnConfiguration';
-import { CoordinateService, ApiService } from '../shared/services';
+import { CoordinateService } from '../shared/services';
 import { FeatureServiceBase, LabelType, SearchResultItemTyped } from '../shared/services/feature.service';
 import { CoordinateSystemNames, CoordinateSystemSr } from '../shared/models/CoordinateSystem';
 import { HttpClient } from '@angular/common/http';
+import { apiConvert } from '../shared/services/enrich-api-calls';
 
 @Injectable()
 export class CoordinateToCoordinateService extends FeatureServiceBase<Coordinate> {
   disableInactivationOfOldSystemWhenSwitching = true;
 
-  constructor(private readonly apiService: ApiService, private readonly httpClient: HttpClient) {
+  constructor(private readonly httpClient: HttpClient) {
     super('coordinate-to-coordinate', LabelType.COORDINATE);
   }
 
@@ -57,31 +58,13 @@ export class CoordinateToCoordinateService extends FeatureServiceBase<Coordinate
     );
   }
 
-  transformInput(input: SearchResultItemTyped<Coordinate>): Observable<AddressCoordinateTableEntry> {
-    return this.apiService.convert(input.data, CoordinateSystem.WGS_84).pipe(
-      map(wgs84 => {
-        const item: AddressCoordinateTableEntry = {
-          address: '',
-          originalInput: input.originalInput,
-          id: `${wgs84.lat}_${wgs84.lon}`,
-          isValid: true,
-          wgs84: {
-            system: CoordinateSystem.WGS_84,
-            lat: wgs84.lat,
-            lon: wgs84.lon
-          },
-          lv95: null,
-          lv03: null
-        };
-        if (input.data.system === CoordinateSystem.LV_03) {
-          item.lv03 = input.data;
-        }
-        if (input.data.system === CoordinateSystem.LV_95) {
-          item.lv95 = input.data;
-        }
-        return item;
-      })
-    );
+  transformInput(input: SearchResultItemTyped<Coordinate>): AddressCoordinateTableEntry {
+    return {
+      originalInput: input.originalInput,
+      id: `${input.data.lat}_${input.data.lon}`,
+      isValid: true,
+      [input.data.system]: input.data,
+    }
   }
 
   transformEntryForEdit(entry: AddressCoordinateTableEntry): string {
@@ -97,7 +80,7 @@ export class CoordinateToCoordinateService extends FeatureServiceBase<Coordinate
 
       inactiveUserCol(ColumnDefinitions.HEIGHT)
 
-      // do not setup since not applicable here
+      // DO NOT setup these columns, otherwise the enrichement will fail
       // inactiveUserCol(ColumnDefinitions.ADDRESS),
       // inactiveUserCol(ColumnDefinitions.EGID),
       // inactiveUserCol(ColumnDefinitions.EGRID)

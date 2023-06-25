@@ -70,13 +70,11 @@ export class TextInputComponent {
   onOptionSelected(event: MatAutocompleteSelectedEvent) {
     this.inputFormControl.setValue(null);
     const selectedValue = event.option.value as SearchResultItem;
-    this.featureService.transformInput(selectedValue).subscribe(r => {
-      this.addressService.addOrUpdateAddress({
-        result: r,
-        updatedId: this.existingEntryId
-      });
-      this.existingEntryId = null;
+    this.addressService.addOrUpdateAddress({
+      result: this.featureService.transformInput(selectedValue),
+      updatedId: this.existingEntryId
     });
+    this.existingEntryId = null;
   }
 
   clearInput() {

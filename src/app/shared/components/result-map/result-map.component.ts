@@ -15,10 +15,7 @@ import { filter } from 'rxjs/operators';
 import { DownloadService } from '../../services';
 import { StorageService } from '../../services/storage.service';
 import { MapInteractionService } from '../../services/map-interaction.service';
-import EventType from 'ol/events/EventType';
-import BaseEvent from 'ol/events/Event';
 import CircleStyle from 'ol/style/Circle';
-import { set } from 'ol/transform';
 import { Geometry } from 'ol/geom';
 
 enum BackgroundLayers {
@@ -174,15 +171,6 @@ export class ResultMapComponent implements AfterViewInit, OnDestroy {
       });
       this.registerMapPointerMove();
       this.fitView();
-      // this.map.on('click', (e: any) => {
-      //   const features = this.map?.getFeaturesAtPixel(e.pixel, {layerFilter: layer => layer === markerLayer});
-      //   if (features && features.length > 0) {
-      //     const feature = features[0];
-      //     const featureId = feature.get('id');
-      //     this.mapInteractionService.sendToTable(featureId, false);
-      //     this.hightlightFeature(featureId, false)
-      //   }
-      // });
 
     }
   }

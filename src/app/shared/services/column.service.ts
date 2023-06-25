@@ -9,7 +9,11 @@ import { FEATURE_SERVICE_TOKEN } from './feature.service';
 
 @Injectable()
 export class ColumnService {
-  private readonly _columns = new BehaviorSubject<ColumnConfigItem[]>(this.getInitial());
+  storageKey = `displayColumns_${this.featureService.name}`;
+
+  private readonly _columns = new BehaviorSubject<ColumnConfigItem[]>(
+    StorageService.get<ColumnConfigItem[]>(this.storageKey) || this.getInitial()
+  );
 
   public readonly columns$ = this._columns.asObservable();
 
@@ -19,15 +23,11 @@ export class ColumnService {
     })
   );
 
-  storageKey = '';
-
   constructor(
     @Inject(FEATURE_SERVICE_TOKEN) private readonly featureService: FeatureService,
     private readonly dialog: MatDialog,
     private readonly coordinateService: CoordinateService
   ) {
-    this.storageKey = `displayColumns_${featureService.name}`;
-    this._columns.next(StorageService.get<ColumnConfigItem[]>(this.storageKey) || this.getInitial());
     this.coordinateService.currentSystem$
       .pipe(pairwise())
       .subscribe(([oldSystem, newSystem]) => this.handleCoordinateSystemChange(oldSystem, newSystem));

@@ -1,5 +1,5 @@
 import { Injectable, InjectionToken } from '@angular/core';
-import { Observable, Subject, concatMap, forkJoin, from, mergeMap, of, reduce, switchMap, tap, toArray } from 'rxjs';
+import { Observable, Subject, concatMap, forkJoin, from, map, mergeMap, of, reduce, switchMap, tap, toArray } from 'rxjs';
 import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEntry';
 import { ColumnConfigItem } from '../models/ColumnConfiguration';
 
@@ -32,8 +32,7 @@ export interface FeatureService {
 
   search(validInput: string): Observable<SearchResultItem[]>;
 
-  // TODO remove observable need by moving dynamic things (reverse wgs84 search) into enrich
-  transformInput(input: SearchResultItem): Observable<AddressCoordinateTableEntry>;
+  transformInput(input: SearchResultItem): AddressCoordinateTableEntry;
 
   transformEntryForEdit(entry: AddressCoordinateTableEntry): string;
 
@@ -60,7 +59,7 @@ export abstract class FeatureServiceBase<AutocompleteData> implements FeatureSer
 
   abstract search(validInput: string): Observable<SearchResultItemTyped<AutocompleteData>[]>;
 
-  abstract transformInput(input: SearchResultItemTyped<AutocompleteData>): Observable<AddressCoordinateTableEntry>;
+  abstract transformInput(input: SearchResultItemTyped<AutocompleteData>): AddressCoordinateTableEntry;
 
   abstract transformEntryForEdit(entry: AddressCoordinateTableEntry): string;
 
@@ -98,15 +97,12 @@ export abstract class FeatureServiceBase<AutocompleteData> implements FeatureSer
         id: (--this.bulkAddId).toString(),
         isValid: false,
         warningTranslationKey: validation,
-        wgs84: null,
-        lv95: null,
-        lv03: null,
         originalInput: userInput
       };
       return of(entry);
     } else {
       return this.search(userInput).pipe(
-        switchMap(r => {
+        map(r => {
           // if there are no results, return an invalid entry with "noResults" message
           if (r.length == 0) {
             const entry: AddressCoordinateTableEntry = {
@@ -114,12 +110,9 @@ export abstract class FeatureServiceBase<AutocompleteData> implements FeatureSer
               id: (--this.bulkAddId).toString(),
               isValid: false,
               warningTranslationKey: `search.${this.labelType}.noResults`,
-              wgs84: null,
-              lv95: null,
-              lv03: null,
               originalInput: userInput
             };
-            return of(entry);
+            return entry;
           }
 
           // if there is exactly one result, take that
@@ -136,12 +129,9 @@ export abstract class FeatureServiceBase<AutocompleteData> implements FeatureSer
             id: (--this.bulkAddId).toString(),
             isValid: false,
             warningTranslationKey: this.messageForMultipleResults,
-            wgs84: null,
-            lv95: null,
-            lv03: null,
             originalInput: userInput
           };
-          return of(entry);
+          return entry;
         })
       );
     }
