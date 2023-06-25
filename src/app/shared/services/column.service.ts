@@ -1,8 +1,8 @@
 import { Inject, Injectable, ViewContainerRef } from '@angular/core';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
-import { BehaviorSubject, filter, map, pairwise } from 'rxjs';
+import { BehaviorSubject, map, pairwise, tap } from 'rxjs';
 import { ColumnConfigDialogComponent } from '../components/column-config-dialog/column-config-dialog.component';
-import { ColumnConfigItem, ColumnDefinitions, getColumnDefinition, inactiveUserCol, sysCol, userCol } from '../models/ColumnConfiguration';
+import { ColumnConfigItem, ColumnDefinitions, getColumnDefinition } from '../models/ColumnConfiguration';
 import { CoordinateSystem } from '../models/CoordinateSystem';
 import { CoordinateService, FeatureService, StorageService } from '.';
 import { FEATURE_SERVICE_TOKEN } from './feature.service';
@@ -20,6 +20,15 @@ export class ColumnService {
   public readonly activeColumnsKeys$ = this._columns.asObservable().pipe(
     map(e => {
       return e.filter(c => c.active).map(c => c.key);
+    }),
+    tap(c => {
+      // If only one coordinate column is active, set that as current system in coordinate-service
+      const activeCoordinateColumns = c.filter(item =>
+        Object.values(CoordinateSystem).includes(item as unknown as CoordinateSystem)
+      );
+      if (activeCoordinateColumns.length === 1) {
+        this.coordinateService.changeCurrentSystem(activeCoordinateColumns[0] as unknown as CoordinateSystem);
+      }
     })
   );
 
