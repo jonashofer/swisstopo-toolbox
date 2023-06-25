@@ -95,11 +95,17 @@ export class AddressService {
   }
 
   public enrichAddresses$ = (addresses: AddressCoordinateTableEntry[], columns: ColumnDefinitions[]) => {
-    return from(addresses).pipe(
-      mergeMap(address => this.enrichAddress$(address, columns)), //mergeMap to parallelize the enrichments of the entries
+    return from(addresses.entries()).pipe(
+      mergeMap(([index, address]) => 
+        this.enrichAddress$(address, columns).pipe(
+          map(enrichedAddress => ({index, enrichedAddress})) // pass along index to keep order
+        )
+      ),
       toArray(),
+      map(arr => arr.sort((a, b) => a.index - b.index)),
+      map(arr => arr.map(item => item.enrichedAddress)),
       catchError(err => {
-        return of();
+        return of([]);
       })
     );
   };
