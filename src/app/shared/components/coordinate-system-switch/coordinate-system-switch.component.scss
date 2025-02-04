@@ -5,12 +5,14 @@
   margin-left: 3px;
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
+/* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
 mat-button-toggle-group {
   flex-wrap: wrap;
   flex-direction: column;
   font-size: 14px;
   outline: none;
-
+  /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
   mat-button-toggle {
     border-left: none !important;
   }

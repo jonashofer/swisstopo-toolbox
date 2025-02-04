@@ -118,7 +118,8 @@
             "ignoreDeclarationSort": true
           }
         ],
-        "spaced-comment": "error"
+        "spaced-comment": "error",
+        "@angular-eslint/prefer-standalone-component": "off"
       }
     },
     {

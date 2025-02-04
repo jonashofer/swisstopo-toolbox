@@ -54,15 +54,15 @@ table {
     margin-bottom: -2px;
   }
 
-  .mat-header-cell:hover .mat-icon[svgIcon='duplicate'],
-  .mat-row:hover .mat-icon[svgIcon='duplicate'],
+  .mat-mdc-header-cell:hover .mat-icon[svgIcon='duplicate'],
+  .mat-mdc-row:hover .mat-icon[svgIcon='duplicate'],
   .mat-column-config:hover .mat-icon[svgIcon='duplicate'] {
     visibility: visible;
     opacity: 1;
   }
 
-  .mat-header-cell:hover .mat-icon[svgIcon='duplicate'],
-  .mat-row:hover .mat-icon[svgIcon='duplicate'] {
+  .mat-mdc-header-cell:hover .mat-icon[svgIcon='duplicate'],
+  .mat-mdc-row:hover .mat-icon[svgIcon='duplicate'] {
     transition-delay: 1s;
   }
 

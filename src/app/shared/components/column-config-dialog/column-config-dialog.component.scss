@@ -1,6 +1,7 @@
 @import 'node_modules/@oblique/oblique/styles/scss/core/variables';
 @import 'node_modules/@oblique/oblique/styles/scss/core/mixins/_layout.scss';
 
+/* TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version.*/
 #cdk-drop-list-0>mat-list-option:nth-child(1)>span.mdc-list-item__start.mat-mdc-list-option-checkbox-before.ng-star-inserted {
   margin-right: 10px
 }
@@ -21,7 +22,7 @@
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-.cdk-drop-list-dragging .mat-row:not(.cdk-drag-placeholder) {
+.cdk-drop-list-dragging .mat-mdc-row:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
@@ -45,6 +46,8 @@
   height: 40px;
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version.*/
+/* TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version.*/
 mat-list-option {
   cursor: default;
 
@@ -53,12 +56,13 @@ mat-list-option {
     white-space: normal
   }
 
-  .mat-checkbox,
+  .mat-mdc-checkbox,
   .ob-icon {
     cursor: pointer;
   }
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of dialog that may no longer apply for the MDC version.*/
 mat-dialog-actions button {
   @include ob-media-breakpoint-down(sm) {
     margin-top: 2px;
@@ -82,6 +86,7 @@ mat-dialog-actions button {
 }
 
 // styling hack to be able to use non-legacy list module that isn't yet obliqued.
+/* TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version.*/
 ::ng-deep mat-list-option[aria-selected="true"] .mdc-checkbox__background {
   border-color: $ob-primary !important;
   background-color: $ob-primary !important;
