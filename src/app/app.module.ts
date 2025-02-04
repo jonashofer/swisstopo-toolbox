@@ -31,7 +31,7 @@ import localeRM from '@angular/common/locales/rm';
 import localeENCH from '@angular/common/locales/en-CH';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatListModule } from '@angular/material/list';
-import { HTTP_INTERCEPTORS, HttpClient} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withFetch} from '@angular/common/http';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatButtonModule as MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -132,7 +132,6 @@ registerLocaleData(localeENCH);
     MatProgressBarModule,
     MatButtonToggleModule,
     BrowserAnimationsModule,
-    HttpClientModule,
     TranslateModule.forRoot(multiTranslateLoader()),
     MatButtonModule,
     MatCardModule,
@@ -158,7 +157,8 @@ registerLocaleData(localeENCH);
       provide: OB_BANNER,
       useValue: environment.banner
     },
-    MatDialogActions
+    MatDialogActions,
+    provideHttpClient(withFetch()),
   ],
   bootstrap: [AppComponent]
 })
