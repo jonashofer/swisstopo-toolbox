@@ -7,14 +7,12 @@ import {
   ValidationErrors,
   ValidatorFn
 } from '@angular/forms';
-import { MatLegacyAutocompleteSelectedEvent as MatAutocompleteSelectedEvent } from '@angular/material/legacy-autocomplete';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { TranslateService } from '@ngx-translate/core';
-import { ObNotificationService } from '@oblique/oblique';
 import { debounceTime, switchMap, tap } from 'rxjs/operators';
-import { AddressCoordinateTableEntry, AddressSelectionResult } from '../../models/AddressCoordinateTableEntry';
+import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTableEntry';
 import { Observable, of } from 'rxjs';
 import { AddressService, FEATURE_SERVICE_TOKEN, FeatureService, SearchResultItem } from '../../services';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 
 @Component({

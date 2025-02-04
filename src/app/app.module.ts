@@ -33,28 +33,28 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatListModule } from '@angular/material/list';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
+import { MatButtonModule as MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
-import { MatLegacyTabsModule as MatTabsModule } from '@angular/material/legacy-tabs';
-import { MatLegacyAutocompleteModule as MatAutocompleteModule } from '@angular/material/legacy-autocomplete';
-import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
+import { MatCardModule as MatCardModule } from '@angular/material/card';
+import { MatTabsModule as MatTabsModule } from '@angular/material/tabs';
+import { MatAutocompleteModule as MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule as MatFormFieldModule } from '@angular/material/form-field';
 import { ResultTableComponent } from './shared/components/result-table/result-table.component';
-import { MatLegacyTableModule as MatTableModule } from '@angular/material/legacy-table';
+import { MatTableModule as MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
-import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
+import { MatMenuModule as MatMenuModule } from '@angular/material/menu';
 
 import {
-  MatLegacyDialogActions as MatDialogActions,
-  MatLegacyDialogModule as MatDialogModule
-} from '@angular/material/legacy-dialog';
+  MatDialogActions as MatDialogActions,
+  MatDialogModule as MatDialogModule
+} from '@angular/material/dialog';
 import { ResultMapComponent } from './shared/components/result-map/result-map.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
-import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
-import { MatLegacyProgressBarModule as MatProgressBarModule } from '@angular/material/legacy-progress-bar';
+import { MatInputModule as MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule as MatProgressBarModule } from '@angular/material/progress-bar';
 import { CoordinateSystemSwitchComponent } from './shared/components/coordinate-system-switch/coordinate-system-switch.component';
-import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
+import { MatTooltipModule as MatTooltipModule } from '@angular/material/tooltip';
 import { CoordinatePipe } from './shared/components/coordinate.pipe';
 import { DownloadSelectorComponent } from './shared/components/download-selector/download-selector.component';
 import { FileUploadInputComponent } from './shared/components/file-upload-input/file-upload-input.component';

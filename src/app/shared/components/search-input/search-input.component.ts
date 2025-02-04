@@ -1,6 +1,6 @@
 import { Component, Inject, Input, TemplateRef } from '@angular/core';
 import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTableEntry';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ObNotificationService } from '@oblique/oblique';
 import { AddressService, FEATURE_SERVICE_TOKEN, FeatureService } from '../../services';
 import { TranslateService } from '@ngx-translate/core';

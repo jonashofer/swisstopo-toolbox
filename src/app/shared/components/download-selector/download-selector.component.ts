@@ -1,6 +1,6 @@
 import { Component, TemplateRef } from '@angular/core';
 import { AddressService, DownloadService } from '../../services';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-download-selector',
@@ -11,7 +11,7 @@ export class DownloadSelectorComponent {
   constructor(
     public downloadService: DownloadService,
     private readonly addressService: AddressService,
-    private readonly dialog: MatDialog
+    private readonly dialog: MatDialog,
   ) {}
 
   public downloadCsv(dialogRef: TemplateRef<any>) {

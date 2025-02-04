@@ -10,13 +10,13 @@ import Point from 'ol/geom/Point';
 import { fromLonLat, transformExtent } from 'ol/proj';
 import { Fill, Icon, Stroke, Style } from 'ol/style';
 import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTableEntry';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { filter } from 'rxjs/operators';
 import { DownloadService } from '../../services';
 import { StorageService } from '../../services/storage.service';
 import { MapInteractionService } from '../../services/map-interaction.service';
 import CircleStyle from 'ol/style/Circle';
 import { Geometry } from 'ol/geom';
+import { MatDialog } from '@angular/material/dialog';
 
 enum BackgroundLayers {
   Standard = 'pixel_farbig',
