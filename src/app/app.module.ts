@@ -31,7 +31,7 @@ import localeRM from '@angular/common/locales/rm';
 import localeENCH from '@angular/common/locales/en-CH';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatListModule } from '@angular/material/list';
-import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient} from '@angular/common/http';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatButtonModule as MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -110,7 +110,6 @@ registerLocaleData(localeENCH);
     MatListModule,
     DragDropModule,
     BrowserModule,
-    HttpClientModule,
     AppRoutingModule,
     MatDialogModule,
     ObIconModule.forRoot(),
