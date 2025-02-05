@@ -1,27 +1,15 @@
 @import 'node_modules/@oblique/oblique/styles/scss/core/mixins/_layout.scss';
 
 :host::ng-deep {
-  /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
   mat-tab-header {
     margin-bottom: 20px;
   }
-  /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
   .mat-tab-body-content {
     overflow: hidden;
   }
 
 }
 
-/* TODO(mdc-migration): The following rule targets internal classes of progress-bar that may no longer apply for the MDC version. */
 mat-progress-bar {
   margin-top: 15px;
-}
-
-/* TODO(mdc-migration): The following rule targets internal classes of dialog that may no longer apply for the MDC version. */
-mat-dialog-actions button {
-  @include ob-media-breakpoint-down(sm) {
-    margin-top: 2px;
-    width: 100%;
-    flex-wrap: wrap;
-  }
 }
