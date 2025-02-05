@@ -31,7 +31,7 @@ import localeRM from '@angular/common/locales/rm';
 import localeENCH from '@angular/common/locales/en-CH';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatListModule } from '@angular/material/list';
-import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withFetch} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatButtonModule as MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -44,10 +44,7 @@ import { MatTableModule as MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule as MatMenuModule } from '@angular/material/menu';
 
-import {
-  MatDialogActions as MatDialogActions,
-  MatDialogModule as MatDialogModule
-} from '@angular/material/dialog';
+import { MatDialogActions as MatDialogActions, MatDialogModule as MatDialogModule } from '@angular/material/dialog';
 import { ResultMapComponent } from './shared/components/result-map/result-map.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule as MatInputModule } from '@angular/material/input';
@@ -158,7 +155,7 @@ registerLocaleData(localeENCH);
       useValue: environment.banner
     },
     MatDialogActions,
-    provideHttpClient(withFetch()),
+    provideHttpClient(withFetch())
   ],
   bootstrap: [AppComponent]
 })

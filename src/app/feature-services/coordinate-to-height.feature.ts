@@ -7,7 +7,6 @@ import { FeatureServiceBase, SearchResultItemTyped } from '../shared/services/fe
 
 @Injectable()
 export class CoordinateToHeightService extends FeatureServiceBase<Coordinate> {
-
   constructor(private readonly ctcService: CoordinateToCoordinateService) {
     super('coordinate-to-height', LabelType.COORDINATE);
   }
@@ -34,8 +33,7 @@ export class CoordinateToHeightService extends FeatureServiceBase<Coordinate> {
       inactiveUserCol(ColumnDefinitions.LV_95),
       inactiveUserCol(ColumnDefinitions.LV_03),
       sysCol(ColumnDefinitions.EDIT),
-      userCol(ColumnDefinitions.HEIGHT),
-
+      userCol(ColumnDefinitions.HEIGHT)
 
       // DO NOT setup these columns, otherwise the enrichement will fail
       // inactiveUserCol(ColumnDefinitions.ADDRESS),

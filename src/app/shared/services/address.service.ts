@@ -2,7 +2,19 @@ import { Inject, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ObNotificationService } from '@oblique/oblique';
 import { BehaviorSubject, combineLatest, forkJoin, from, Observable, of } from 'rxjs';
-import { catchError, concatMap, delay, filter, last, map, mergeMap, shareReplay, switchMap, tap, toArray } from 'rxjs/operators';
+import {
+  catchError,
+  concatMap,
+  delay,
+  filter,
+  last,
+  map,
+  mergeMap,
+  shareReplay,
+  switchMap,
+  tap,
+  toArray
+} from 'rxjs/operators';
 import { ColumnService, StorageService } from '.';
 import { AddressCoordinateTableEntry, AddressSelectionResult } from '../models/AddressCoordinateTableEntry';
 import { ColumnDefinitions } from '../models/ColumnConfiguration';
@@ -12,7 +24,7 @@ import { getEnrichQueries } from './enrich-api-calls';
 
 @Injectable()
 export class AddressService {
-  public featureName = this.featureService.name;;
+  public featureName = this.featureService.name;
 
   private readonly _bareAddresses = new BehaviorSubject<AddressCoordinateTableEntry[]>(
     StorageService.get<AddressCoordinateTableEntry[]>(this.featureService.name) || []
@@ -96,9 +108,9 @@ export class AddressService {
 
   public enrichAddresses$ = (addresses: AddressCoordinateTableEntry[], columns: ColumnDefinitions[]) => {
     return from(addresses.entries()).pipe(
-      mergeMap(([index, address]) => 
+      mergeMap(([index, address]) =>
         this.enrichAddress$(address, columns).pipe(
-          map(enrichedAddress => ({index, enrichedAddress})) // pass along index to keep order
+          map(enrichedAddress => ({ index, enrichedAddress })) // pass along index to keep order
         )
       ),
       toArray(),
@@ -137,8 +149,11 @@ export class AddressService {
     }
   }
 
-  private readonly enrichAddress$ = (address: AddressCoordinateTableEntry, columns: ColumnDefinitions[]) : Observable<AddressCoordinateTableEntry> => {
-    if(!address.isValid) {
+  private readonly enrichAddress$ = (
+    address: AddressCoordinateTableEntry,
+    columns: ColumnDefinitions[]
+  ): Observable<AddressCoordinateTableEntry> => {
+    if (!address.isValid) {
       return of(address);
     }
 
@@ -156,8 +171,8 @@ export class AddressService {
 
     if (chain.length === 0) {
       return of(address);
-    } 
-    
+    }
+
     return from(chain).pipe(
       concatMap(apiCall => apiCall(address, this.http)), //concatMap to ensure the order and dependencies of the api calls
       last()

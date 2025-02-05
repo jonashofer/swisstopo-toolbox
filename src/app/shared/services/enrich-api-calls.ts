@@ -1,7 +1,7 @@
-import { HttpClient } from "@angular/common/http";
-import { Observable, map, of } from "rxjs";
-import { AddressCoordinateTableEntry, CoordinateSystem, GWREntry, Coordinate } from "../models";
-import { coords } from "../models/Coordinate";
+import { HttpClient } from '@angular/common/http';
+import { Observable, map, of } from 'rxjs';
+import { AddressCoordinateTableEntry, CoordinateSystem, GWREntry, Coordinate } from '../models';
+import { coords } from '../models/Coordinate';
 
 // this class helps to build the correct chain of API calls to enrich the table entries with the desired columns
 
@@ -151,10 +151,9 @@ export function getEnrichQueries(
   return apiCalls.map(i => i.call);
 }
 
-
 function apiGwr(featureId: string, httpClient: HttpClient) {
   const request = `https://api.geo.admin.ch/rest/services/api/MapServer/ch.bfs.gebaeude_wohnungs_register/${featureId}?returnGeometry=false`;
-  return httpClient.get<{feature: {attributes: GWREntry}}>(request);
+  return httpClient.get<{ feature: { attributes: GWREntry } }>(request);
 }
 
 function apiHeight(lv95_east: number, lv95_north: number, httpClient: HttpClient) {

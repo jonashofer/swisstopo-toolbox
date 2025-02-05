@@ -19,7 +19,7 @@
     "input": "Ingresso",
     "file": "Carica file"
   },
-  "search": { 
+  "search": {
     "labelEdit": "Modificare l'ingresso originale",
     "egid": {
       "label": "EGID",

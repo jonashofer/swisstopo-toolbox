@@ -27,7 +27,12 @@
 		<button mat-button obButton="secondary" [mat-dialog-close] (click)="this.downloadService.downloadCsv(true)">
 			{{ "toolbar.download.dialog.onlyValid" | translate }}
 		</button>
-		<button mat-button obButton="primary" [mat-dialog-close] (click)="this.downloadService.downloadCsv(false)" cdkFocusInitial>
+		<button
+			mat-button
+			obButton="primary"
+			[mat-dialog-close]
+			(click)="this.downloadService.downloadCsv(false)"
+			cdkFocusInitial>
 			{{ "toolbar.download.dialog.all" | translate }}
 		</button>
 	</mat-dialog-actions>

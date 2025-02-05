@@ -14,7 +14,6 @@ import { Observable, of } from 'rxjs';
 import { AddressService, FEATURE_SERVICE_TOKEN, FeatureService, SearchResultItem } from '../../services';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
-
 @Component({
   selector: 'app-text-input',
   templateUrl: './text-input.component.html',
@@ -43,7 +42,6 @@ export class TextInputComponent {
   existingEntryId: string | null = null;
 
   searchLabel = '';
-  
 
   @Output()
   linesPasted = new EventEmitter<string[]>();
@@ -88,7 +86,7 @@ export class TextInputComponent {
         .split('\r')
         .map(l => l.trim())
         .filter(l => l.length > 0);
-        
+
       this.linesPasted.emit(lines);
     }
   }

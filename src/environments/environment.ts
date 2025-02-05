@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  banner : {
-    text: 'LOCAL',
+  banner: {
+    text: 'LOCAL'
   },
   githubLink: null
 };

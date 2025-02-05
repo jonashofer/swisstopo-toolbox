@@ -11,7 +11,7 @@ export class DownloadSelectorComponent {
   constructor(
     public downloadService: DownloadService,
     private readonly addressService: AddressService,
-    private readonly dialog: MatDialog,
+    private readonly dialog: MatDialog
   ) {}
 
   public downloadCsv(dialogRef: TemplateRef<any>) {

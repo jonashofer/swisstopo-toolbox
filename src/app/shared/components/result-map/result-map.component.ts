@@ -70,7 +70,7 @@ const iconStyle = new Style({
 const selectedIconStyle = new Style({
   image: new Icon({
     anchor: [0.5, 1],
-    src: svgSrc("#ffffff", '#fa011c')
+    src: svgSrc('#ffffff', '#fa011c')
   })
 });
 
@@ -134,7 +134,7 @@ export class ResultMapComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     if (this.mapDiv) {
-			this.map = new Map({
+      this.map = new Map({
         controls: [new FullScreen()],
         layers: this.getLayers(),
         view,
@@ -142,7 +142,6 @@ export class ResultMapComponent implements AfterViewInit, OnDestroy {
       });
       this.registerMapPointerMove();
       this.fitView();
-
     }
   }
 
@@ -186,7 +185,7 @@ export class ResultMapComponent implements AfterViewInit, OnDestroy {
       .pipe(filter(r => r))
       .subscribe(_ => {
         this.downloadService.downloadKml();
-        setTimeout(() => window.open('https://map.geo.admin.ch', '_blank'))
+        setTimeout(() => window.open('https://map.geo.admin.ch', '_blank'));
       });
   }
 

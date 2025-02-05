@@ -92,7 +92,7 @@ export class ResultTableComponent implements OnInit {
     }
   }
 
-  public copyTooltip(typeKey: string) { 
+  public copyTooltip(typeKey: string) {
     return this.translate.instant('table.clipboard.copy', {
       item: this.translate.instant(`table.clipboard.${typeKey}`)
     });

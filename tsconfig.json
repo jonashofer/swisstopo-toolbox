@@ -17,10 +17,7 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "es2020",
-    "lib": [
-      "es2019",
-      "dom"
-    ],
+    "lib": ["es2022", "dom"],
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "useDefineForClassFields": false

@@ -1,6 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable, map, of, switchMap } from 'rxjs';
-import { AddressCoordinateTableEntry, ColumnDefinitions, Coordinate, CoordinateSystem, GWREntry, GWRSearchResult, MapServerResult } from '../shared/models';
+import {
+  AddressCoordinateTableEntry,
+  ColumnDefinitions,
+  Coordinate,
+  CoordinateSystem,
+  GWREntry,
+  GWRSearchResult,
+  MapServerResult
+} from '../shared/models';
 import { ColumnConfigItem, userCol, sysCol, inactiveUserCol } from '../shared/models/ColumnConfiguration';
 import { CoordinateService } from '../shared/services';
 import { FeatureServiceBase, LabelType, SearchResultItemTyped } from '../shared/services/feature.service';
@@ -18,7 +26,10 @@ export interface CoordinateToAddressApiData {
 
 @Injectable()
 export class CoordinateToAddressService extends FeatureServiceBase<CoordinateToAddressApiData> {
-  constructor(private httpClient: HttpClient, private translateService: TranslateService) {
+  constructor(
+    private httpClient: HttpClient,
+    private translateService: TranslateService
+  ) {
     super('coordinate-to-address', LabelType.COORDINATE);
   }
 

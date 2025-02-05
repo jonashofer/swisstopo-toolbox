@@ -2,14 +2,10 @@
   "root": true,
   "overrides": [
     {
-      "files": [
-        "*.ts"
-      ],
+      "files": ["*.ts"],
       "parser": "@typescript-eslint/parser",
       "parserOptions": {
-        "project": [
-          "tsconfig.json"
-        ],
+        "project": ["tsconfig.json"],
         "createDefaultProgram": true
       },
       "extends": [
@@ -68,10 +64,7 @@
         "@typescript-eslint/prefer-string-starts-ends-with": "error",
         "@typescript-eslint/unified-signatures": "error",
         "dot-notation": "error",
-        "eqeqeq": [
-          "error",
-          "smart"
-        ],
+        "eqeqeq": ["error", "smart"],
         "guard-for-in": "error",
         "max-lines": [
           "error",
@@ -90,11 +83,7 @@
         "no-console": [
           "error",
           {
-            "allow": [
-              "info",
-              "warn",
-              "error"
-            ]
+            "allow": ["info", "warn", "error"]
           }
         ],
         "no-else-return": "error",
@@ -123,9 +112,7 @@
       }
     },
     {
-      "files": [
-        "*.spec.ts"
-      ],
+      "files": ["*.spec.ts"],
       "rules": {
         "@typescript-eslint/ban-ts-comment": "off",
         "@typescript-eslint/no-floating-promises": "off",
@@ -135,39 +122,25 @@
       }
     },
     {
-      "files": [
-        "*.decorator.ts"
-      ],
+      "files": ["*.decorator.ts"],
       "rules": {
         "max-lines-per-function": "off"
       }
     },
     {
-      "files": [
-        "polyfills.ts"
-      ],
+      "files": ["polyfills.ts"],
       "rules": {
         "spaced-comment": "off"
       }
     },
     {
-      "files": [
-        "*.html"
-      ],
-      "extends": [
-        "plugin:@angular-eslint/template/recommended"
-      ]
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended"]
     },
     {
-      "files": [
-        "*.html"
-      ],
-      "excludedFiles": [
-        "*inline-template-*.component.html"
-      ],
-      "extends": [
-        "plugin:prettier/recommended"
-      ],
+      "files": ["*.html"],
+      "excludedFiles": ["*inline-template-*.component.html"],
+      "extends": ["plugin:prettier/recommended"],
       "rules": {
         "prettier/prettier": [
           "error",

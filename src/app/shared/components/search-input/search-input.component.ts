@@ -86,8 +86,9 @@ export class SearchInputComponent {
             });
             return;
           })
-        ).subscribe();
-        return;
+        )
+        .subscribe();
+      return;
     }
   }
 

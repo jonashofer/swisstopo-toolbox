@@ -22,7 +22,7 @@ export class FileUploadInputComponent {
     public downloadService: DownloadService,
     private readonly translate: TranslateService,
     @Inject(FEATURE_SERVICE_TOKEN) private readonly featureService: FeatureService
-  ) { }
+  ) {}
 
   uploadEvent($event: ObIUploadEvent) {
     if ($event?.files?.length != 1) {
@@ -37,11 +37,11 @@ export class FileUploadInputComponent {
         .map(l => l.trim())
         .filter(l => l.length > 0);
 
-        this.uploaded.emit(this.lines);
+      this.uploaded.emit(this.lines);
     };
     reader.readAsText(file as File);
   }
-  
+
   downloadExampleTxt() {
     const result = this.featureService.getExampleFileContent();
     const file = new Blob([result], { type: 'text/plain' });
@@ -51,4 +51,3 @@ export class FileUploadInputComponent {
     saveAs(file, name);
   }
 }
-

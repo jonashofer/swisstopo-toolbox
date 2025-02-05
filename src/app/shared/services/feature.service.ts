@@ -1,5 +1,18 @@
 import { Injectable, InjectionToken } from '@angular/core';
-import { Observable, Subject, concatMap, forkJoin, from, map, mergeMap, of, reduce, switchMap, tap, toArray } from 'rxjs';
+import {
+  Observable,
+  Subject,
+  concatMap,
+  forkJoin,
+  from,
+  map,
+  mergeMap,
+  of,
+  reduce,
+  switchMap,
+  tap,
+  toArray
+} from 'rxjs';
 import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEntry';
 import { ColumnConfigItem } from '../models/ColumnConfiguration';
 
@@ -53,7 +66,10 @@ export abstract class FeatureServiceBase<AutocompleteData> implements FeatureSer
 
   public progressUpdates = new Subject<number>();
 
-  constructor(public name: string, public labelType: LabelType) {}
+  constructor(
+    public name: string,
+    public labelType: LabelType
+  ) {}
 
   abstract validateSearchInput(input: string): string | null;
 
@@ -86,7 +102,7 @@ export abstract class FeatureServiceBase<AutocompleteData> implements FeatureSer
       ),
       // Use reduce to concatenate the results of all chunks into a single array
       reduce((acc, val) => [...acc, ...val]),
-      tap(() => this.progressUpdates.next(0)),
+      tap(() => this.progressUpdates.next(0))
     );
   }
   private processLine(userInput: string): Observable<AddressCoordinateTableEntry> {

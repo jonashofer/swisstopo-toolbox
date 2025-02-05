@@ -8,7 +8,6 @@ import { FeatureServiceBase, SearchResultItemTyped } from '../shared/services/fe
 
 @Injectable()
 export class AddressToHeightService extends FeatureServiceBase<AddressToCoordinateApiData> {
-
   showCoordinateSystemSwitch = false;
 
   constructor(private readonly atcService: AddressToCoordinateService) {
@@ -41,7 +40,7 @@ export class AddressToHeightService extends FeatureServiceBase<AddressToCoordina
       inactiveUserCol(ColumnDefinitions.LV_95),
       inactiveUserCol(ColumnDefinitions.LV_03),
       inactiveUserCol(ColumnDefinitions.EGRID),
-      inactiveUserCol(ColumnDefinitions.EGID),
+      inactiveUserCol(ColumnDefinitions.EGID)
     ];
   }
 
