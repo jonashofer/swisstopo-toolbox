@@ -13,6 +13,10 @@ table {
     color: rgba(0, 0, 0, 0.54);
   }
 
+	.mat-icon[svgIcon='cog'] {
+    margin-right: 10px;
+  }
+
   .mat-column-trash,
   .mat-column-config {
     width: 30px;
