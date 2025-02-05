@@ -1,5 +1,5 @@
 <mat-form-field>
-	<mat-label>{{( existingEntryId ? "search.labelEdit" : searchLabel + "label") | translate }}</mat-label>
+	<mat-label>{{ (existingEntryId ? "search.labelEdit" : searchLabel + "label") | translate }}</mat-label>
 	<mat-icon matPrefix svgIcon="search"></mat-icon>
 	<input
 		type="text"
@@ -26,7 +26,7 @@
 			<div [outerHTML]="option.text"></div>
 		</mat-option>
 		<mat-option *ngIf="noResults" disabled>
-			<span>{{searchLabel + 'noResults' | translate}}</span>
+			<span>{{ searchLabel + "noResults" | translate }}</span>
 		</mat-option>
-	  </mat-autocomplete>
+	</mat-autocomplete>
 </mat-form-field>

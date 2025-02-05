@@ -1,5 +1,5 @@
 import { Inject, Injectable, ViewContainerRef } from '@angular/core';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, map, pairwise, tap } from 'rxjs';
 import { ColumnConfigDialogComponent } from '../components/column-config-dialog/column-config-dialog.component';
 import { ColumnConfigItem, ColumnDefinitions, getColumnDefinition } from '../models/ColumnConfiguration';

@@ -13,7 +13,6 @@ import { HttpClient } from '@angular/common/http';
 import { coords } from '../shared/models/Coordinate';
 import { AddressToCoordinateAttrs, CoordinateSystem } from '../shared/models';
 
-
 export interface AddressToCoordinateApiData {
   id: number;
   weight: number;
@@ -48,8 +47,8 @@ export class AddressToCoordinateService extends FeatureServiceBase<AddressToCoor
     const request = `https://api3.geo.admin.ch/rest/services/api/SearchServer?lang=de&searchText=${encodeURIComponent(
       input
     )}&lang=de&type=locations&origins=address&limit=10&sr=2056`;
-    return this.httpClient.get<{results: AddressToCoordinateApiData[]}>(request).pipe(
-      map((data) => {
+    return this.httpClient.get<{ results: AddressToCoordinateApiData[] }>(request).pipe(
+      map(data => {
         const resultWeightDesc = (a: AddressToCoordinateApiData, b: AddressToCoordinateApiData) => b.weight - a.weight;
         return data.results
           .sort(resultWeightDesc)

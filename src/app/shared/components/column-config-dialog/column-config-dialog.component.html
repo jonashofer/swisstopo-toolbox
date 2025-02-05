@@ -1,31 +1,44 @@
-<h2 mat-dialog-title>{{ "columnConfigDialog.title" | translate }}</h2>
+<h2 mat-dialog-title id="title">{{ "columnConfigDialog.title" | translate }}</h2>
 <mat-dialog-content class="mat-typography">
-    <mat-selection-list #list cdkDropList (cdkDropListDropped)="drop($event)"
-        (selectionChange)="onSelectionChange($event)">
-        <section *ngFor="let item of items; let i=index; let first = first; let last = last" cdkDrag>
-            <mat-list-option [value]="item" [checkboxPosition]="'before'" [selected]="item.active">
-                <span class="label">{{ 'columns.' + item.key | translate }}</span>
-                <br id="spacer">
-                <mat-icon [matTooltip]="'Nach unten' | translate" matTooltipPosition="after" matTooltipShowDelay="500"
-                    svgIcon="arrow-down" class="ob-icon" [class.hidden]="last"
-                    (click)="moveDown(i); $event.stopPropagation()"></mat-icon>
+	<mat-selection-list
+		#list
+		cdkDropList
+		(cdkDropListDropped)="drop($event)"
+		(selectionChange)="onSelectionChange($event)">
+		<section *ngFor="let item of items; let i = index; let first = first; let last = last" cdkDrag>
+			<mat-list-option [value]="item" [checkboxPosition]="'before'" [selected]="item.active">
+				<span class="label">{{ "columns." + item.key | translate }}</span>
+				<br id="spacer" />
+				<mat-icon
+					[matTooltip]="'Nach unten' | translate"
+					matTooltipPosition="after"
+					matTooltipShowDelay="500"
+					svgIcon="arrow-down"
+					class="ob-icon"
+					[class.hidden]="last"
+					(click)="moveDown(i); $event.stopPropagation()"></mat-icon>
 
-                <mat-icon [matTooltip]="'Nach oben' | translate" matTooltipPosition="after" matTooltipShowDelay="500"
-                    svgIcon="arrow-up" class="ob-icon" [class.hidden]="first"
-                    (click)="moveUp(i); $event.stopPropagation()"></mat-icon>
-            </mat-list-option>
-            <mat-divider></mat-divider>
-        </section>
-    </mat-selection-list>
+				<mat-icon
+					[matTooltip]="'Nach oben' | translate"
+					matTooltipPosition="after"
+					matTooltipShowDelay="500"
+					svgIcon="arrow-up"
+					class="ob-icon"
+					[class.hidden]="first"
+					(click)="moveUp(i); $event.stopPropagation()"></mat-icon>
+			</mat-list-option>
+			<mat-divider></mat-divider>
+		</section>
+	</mat-selection-list>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button mat-button obButton="tertiary" (click)="reset()">
-        {{ "i18n.common.reset" | translate }}
-    </button>
-    <button mat-button obButton="secondary" [mat-dialog-close]>
-        {{ "i18n.common.cancel" | translate }}
-    </button>
-    <button mat-button obButton="primary" [mat-dialog-close] cdkFocusInitial (click)="save()">
-        {{ "i18n.common.save" | translate }}
-    </button>
+	<button mat-button obButton="tertiary" (click)="reset()">
+		{{ "i18n.common.reset" | translate }}
+	</button>
+	<button mat-button obButton="secondary" [mat-dialog-close]>
+		{{ "i18n.common.cancel" | translate }}
+	</button>
+	<button mat-button obButton="primary" [mat-dialog-close] cdkFocusInitial (click)="save()">
+		{{ "i18n.common.save" | translate }}
+	</button>
 </mat-dialog-actions>

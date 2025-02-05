@@ -19,7 +19,7 @@
     "input": "Saisie des données",
     "file": "Télécharger un fichier"
   },
-  "search": { 
+  "search": {
     "labelEdit": "Modifier l'entrée originale",
     "egid": {
       "label": "EGID",

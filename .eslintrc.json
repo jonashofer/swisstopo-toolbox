@@ -5,9 +5,7 @@
       "files": ["*.ts"],
       "parser": "@typescript-eslint/parser",
       "parserOptions": {
-        "project": [
-          "tsconfig.json"
-        ],
+        "project": ["tsconfig.json"],
         "createDefaultProgram": true
       },
       "extends": [
@@ -40,7 +38,12 @@
             ]
           }
         ],
-        "@angular-eslint/no-host-metadata-property": ["error", { "allowStatic": true }],
+        "@angular-eslint/no-host-metadata-property": [
+          "error",
+          {
+            "allowStatic": true
+          }
+        ],
         "@angular-eslint/no-pipe-impure": "error",
         "@angular-eslint/prefer-output-readonly": "error",
         "@angular-eslint/relative-url-prefix": "error",
@@ -63,22 +66,24 @@
         "dot-notation": "error",
         "eqeqeq": ["error", "smart"],
         "guard-for-in": "error",
-        "max-lines": ["error", {
-          "max": 300
-        }],
-        "max-lines-per-function": ["error", {
-          "max": 35
-        }],
+        "max-lines": [
+          "error",
+          {
+            "max": 300
+          }
+        ],
+        "max-lines-per-function": [
+          "error",
+          {
+            "max": 35
+          }
+        ],
         "no-bitwise": "error",
         "no-caller": "error",
         "no-console": [
           "error",
           {
-            "allow": [
-              "info",
-              "warn",
-              "error"
-            ]
+            "allow": ["info", "warn", "error"]
           }
         ],
         "no-else-return": "error",
@@ -96,10 +101,14 @@
         "prefer-regex-literals": "error",
         "prefer-template": "error",
         "radix": "error",
-        "sort-imports": ["error", {
-          "ignoreDeclarationSort": true
-        }],
-        "spaced-comment": "error"
+        "sort-imports": [
+          "error",
+          {
+            "ignoreDeclarationSort": true
+          }
+        ],
+        "spaced-comment": "error",
+        "@angular-eslint/prefer-standalone-component": "off"
       }
     },
     {
@@ -133,7 +142,12 @@
       "excludedFiles": ["*inline-template-*.component.html"],
       "extends": ["plugin:prettier/recommended"],
       "rules": {
-        "prettier/prettier": ["error", { "parser": "angular" }]
+        "prettier/prettier": [
+          "error",
+          {
+            "parser": "angular"
+          }
+        ]
       }
     }
   ]

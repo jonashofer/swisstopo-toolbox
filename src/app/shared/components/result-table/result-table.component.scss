@@ -5,8 +5,16 @@ table {
   font-size: 0.9rem;
   line-height: 35px;
 
+  .mat-mdc-header-cell {
+    text-transform: none;
+  }
+
   .mat-icon[svgIcon='repeat'] {
     color: rgba(0, 0, 0, 0.54);
+  }
+
+  .mat-icon[svgIcon='cog'] {
+    margin-right: 10px;
   }
 
   .mat-column-trash,
@@ -49,20 +57,22 @@ table {
     cursor: pointer;
     visibility: hidden;
     opacity: 0;
-    transition: visibility 0s, opacity 0.2s ease-in-out;
+    transition:
+      visibility 0s,
+      opacity 0.2s ease-in-out;
     margin-top: 2px;
     margin-bottom: -2px;
   }
 
-  .mat-header-cell:hover .mat-icon[svgIcon='duplicate'],
-  .mat-row:hover .mat-icon[svgIcon='duplicate'],
+  .mat-mdc-header-cell:hover .mat-icon[svgIcon='duplicate'],
+  .mat-mdc-row:hover .mat-icon[svgIcon='duplicate'],
   .mat-column-config:hover .mat-icon[svgIcon='duplicate'] {
     visibility: visible;
     opacity: 1;
   }
 
-  .mat-header-cell:hover .mat-icon[svgIcon='duplicate'],
-  .mat-row:hover .mat-icon[svgIcon='duplicate'] {
+  .mat-mdc-header-cell:hover .mat-icon[svgIcon='duplicate'],
+  .mat-mdc-row:hover .mat-icon[svgIcon='duplicate'] {
     transition-delay: 1s;
   }
 
@@ -86,6 +96,6 @@ table {
 
   .highlight {
     background-color: $ob-light !important;
-    transition: background-color 0.5s cubic-bezier(0.075, 0.82, 0.165, 1)
+    transition: background-color 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
   }
 }

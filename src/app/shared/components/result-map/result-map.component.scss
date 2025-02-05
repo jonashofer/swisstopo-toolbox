@@ -13,7 +13,6 @@
   bottom: 8px;
   z-index: 1;
   width: 100px;
-  font-size: 13px;
 }
 
 #mapLink {
@@ -33,20 +32,6 @@
 ::ng-deep {
   #legend .mat-button-toggle-label-content {
     line-height: 20px !important;
+    font-size: 13px;
   }
-}
-
-mat-dialog-content {
-  max-width: 500px;
-}
-
-mat-dialog-actions button {
-  margin-top: 2px;
-  white-space: normal;
-  width: 100%;
-  flex-wrap: wrap;
-}
-
-b {
-  vertical-align: unset !important;
 }

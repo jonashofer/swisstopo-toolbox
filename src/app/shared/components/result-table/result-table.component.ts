@@ -1,5 +1,4 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { map } from 'rxjs';
 import { AddressService, DownloadService } from '../../services';
 import { ColumnService } from '../../services/column.service';
@@ -11,6 +10,7 @@ import { CoordinateSystemNames } from '../../models/CoordinateSystem';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { ObNotificationService } from '@oblique/oblique';
 import { TranslateService } from '@ngx-translate/core';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-result-table',
@@ -92,7 +92,7 @@ export class ResultTableComponent implements OnInit {
     }
   }
 
-  public copyTooltip(typeKey: string) { 
+  public copyTooltip(typeKey: string) {
     return this.translate.instant('table.clipboard.copy', {
       item: this.translate.instant(`table.clipboard.${typeKey}`)
     });

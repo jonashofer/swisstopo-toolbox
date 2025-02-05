@@ -4,21 +4,11 @@
   mat-tab-header {
     margin-bottom: 20px;
   }
-
   .mat-tab-body-content {
     overflow: hidden;
   }
-
 }
 
 mat-progress-bar {
   margin-top: 15px;
-}
-
-mat-dialog-actions button {
-  @include ob-media-breakpoint-down(sm) {
-    margin-top: 2px;
-    width: 100%;
-    flex-wrap: wrap;
-  }
 }

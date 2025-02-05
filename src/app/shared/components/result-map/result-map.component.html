@@ -6,7 +6,11 @@
 		</button>
 	</div>
 	<div id="legend">
-		<mat-button-toggle-group name="background" aria-label="Background Layer" [(value)]="currentLayer">
+		<mat-button-toggle-group
+			name="background"
+			aria-label="Background Layer"
+			[(value)]="currentLayer"
+			[hideSingleSelectionIndicator]="true">
 			<mat-button-toggle (click)="changeBackground()" [value]="BackgroundLayers.Standard"
 				>{{ "map.background.standard" | translate }}
 			</mat-button-toggle>

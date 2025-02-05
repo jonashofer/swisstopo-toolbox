@@ -22,7 +22,7 @@ export class ColumnConfigDialogComponent implements OnInit {
   list: MatSelectionList | null = null;
 
   onSelectionChange(event: MatSelectionListChange) {
-    event.options[0].value.active = event.options[0].selected
+    event.options[0].value.active = event.options[0].selected;
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -46,6 +46,6 @@ export class ColumnConfigDialogComponent implements OnInit {
   }
 
   reset() {
-    this.items = this.columnService.getInitial()
+    this.items = this.columnService.getInitial();
   }
 }

@@ -46,7 +46,8 @@ export class CoordinateToCoordinateService extends FeatureServiceBase<Coordinate
           data: coords
         }
       ]),
-      catchError(() => // fallback without server - notification from  mnbm comes nonetheless..
+      catchError(() =>
+        // fallback without server - notification from  mnbm comes nonetheless..
         of([
           {
             text: `${text} <i>- ${CoordinateSystemNames[coords.system]}</i>`,
@@ -63,8 +64,8 @@ export class CoordinateToCoordinateService extends FeatureServiceBase<Coordinate
       originalInput: input.originalInput,
       id: `${input.data.lat}_${input.data.lon}`,
       isValid: true,
-      [input.data.system]: input.data,
-    }
+      [input.data.system]: input.data
+    };
   }
 
   transformEntryForEdit(entry: AddressCoordinateTableEntry): string {

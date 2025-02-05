@@ -1,4 +1,4 @@
-import { CoordinateSystem } from "./.";
+import { CoordinateSystem } from './.';
 
 export interface ColumnConfigItem {
   key: ColumnDefinitions;
@@ -15,18 +15,18 @@ export function inactiveUserCol(definition: ColumnDefinitions): ColumnConfigItem
 }
 
 export function sysCol(definition: ColumnDefinitions): ColumnConfigItem {
-  return { key: definition, isSystemColumn: true, active: true }; 
+  return { key: definition, isSystemColumn: true, active: true };
 }
 
 export enum ColumnDefinitions {
   EGID = 'egid',
   EGRID = 'egrid',
   HEIGHT = 'height',
-	WGS_84 = 'wgs84',
-	LV_95 = 'lv95',
-	LV_03 = 'lv03',
+  WGS_84 = 'wgs84',
+  LV_95 = 'lv95',
+  LV_03 = 'lv03',
   ADDRESS = 'address',
-  EDIT = 'edit',
+  EDIT = 'edit'
 }
 
 export function getColumnDefinition(coordinateSystem: CoordinateSystem) {

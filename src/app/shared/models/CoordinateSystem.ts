@@ -14,4 +14,4 @@ export const CoordinateSystemSr = {
   [CoordinateSystem.WGS_84]: 4326,
   [CoordinateSystem.LV_95]: 2056,
   [CoordinateSystem.LV_03]: 21781
-}
+};

@@ -4,19 +4,18 @@ import { Feature, View } from 'ol';
 import { Tile as TileLayer } from 'ol/layer';
 import { XYZ } from 'ol/source';
 import { FullScreen } from 'ol/control';
-import VectorSource, { VectorSourceEvent } from 'ol/source/Vector';
+import VectorSource from 'ol/source/Vector';
 import VectorLayer from 'ol/layer/Vector';
 import Point from 'ol/geom/Point';
-import { fromLonLat, transformExtent } from 'ol/proj';
-import { Fill, Icon, Stroke, Style } from 'ol/style';
+import { fromLonLat } from 'ol/proj';
+import { Icon, Style } from 'ol/style';
 import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTableEntry';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { filter } from 'rxjs/operators';
 import { DownloadService } from '../../services';
 import { StorageService } from '../../services/storage.service';
 import { MapInteractionService } from '../../services/map-interaction.service';
-import CircleStyle from 'ol/style/Circle';
 import { Geometry } from 'ol/geom';
+import { MatDialog } from '@angular/material/dialog';
 
 enum BackgroundLayers {
   Standard = 'pixel_farbig',
@@ -40,7 +39,7 @@ const layers = [
 
 const svg = (hexFill: string, hexStroke: string) =>
   encodeURIComponent(`
-<svg version="1.1" id="marker" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+<svg version="1.1" id="marker" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 	width="40" height="40" viewBox="0 0 256 256" xml:space="preserve">
 	<style type="text/css">
 		<![CDATA[
@@ -71,34 +70,7 @@ const iconStyle = new Style({
 const selectedIconStyle = new Style({
   image: new Icon({
     anchor: [0.5, 1],
-    src: svgSrc("#ffffff", '#fa011c')
-  })
-});
-// const markerStyle = new Style({
-//   image: new Icon({
-//     anchor: [0.5, 1],
-//     src: 'https://map.geo.admin.ch/f13b978/img/marker.png'
-//   })
-// })
-
-// const selectedMarkerStyle = new Style({
-//   image: new Icon({
-//     anchor: [0.5, 1],
-//     src: 'https://map.geo.admin.ch/f13b978/img/marker.png',
-//     color: '#ffff00'
-//   })
-// })
-
-const circleStyle = new Style({
-  image: new CircleStyle({
-    radius: 8,
-    fill: new Fill({
-      color: [255, 255, 0, 0.5]
-    }),
-    stroke: new Stroke({
-      color: [255, 140, 0, 1],
-      width: 3
-    })
+    src: svgSrc('#ffffff', '#fa011c')
   })
 });
 
@@ -107,11 +79,10 @@ const markerLayer = new VectorLayer({
 });
 
 const view = new View({
-  projection: 'EPSG:3857',
   maxZoom: 20,
   constrainOnlyCenter: true,
   minZoom: 7.5,
-  extent: transformExtent([5.6, 48, 11, 45], 'EPSG:4326', 'EPSG:3857'),
+  extent: [609050.241376, 5719527, 1200978.588417, 6372035],
   enableRotation: false
 });
 
@@ -171,7 +142,6 @@ export class ResultMapComponent implements AfterViewInit, OnDestroy {
       });
       this.registerMapPointerMove();
       this.fitView();
-
     }
   }
 
@@ -215,7 +185,7 @@ export class ResultMapComponent implements AfterViewInit, OnDestroy {
       .pipe(filter(r => r))
       .subscribe(_ => {
         this.downloadService.downloadKml();
-        setTimeout(() => window.open('https://map.geo.admin.ch', '_blank'))
+        setTimeout(() => window.open('https://map.geo.admin.ch', '_blank'));
       });
   }
 

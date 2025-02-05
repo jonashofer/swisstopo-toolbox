@@ -5,7 +5,7 @@ import {
   ColumnService,
   CoordinateService,
   DownloadService,
-  MapInteractionService,
+  MapInteractionService
 } from '../../services';
 import { DecimalPipe } from '@angular/common';
 import { CoordinatePipe } from '../coordinate.pipe';
@@ -21,16 +21,13 @@ import { combineLatest, switchMap } from 'rxjs';
     DownloadService,
     DecimalPipe,
     CoordinatePipe,
-    MapInteractionService,
+    MapInteractionService
   ]
 })
 export class FeatureTabComponent {
   addressToEdit: AddressCoordinateTableEntry | null = null;
 
-  constructor(
-    public addressService: AddressService,
-  ) {}
-
+  constructor(public addressService: AddressService) {}
 
   edit(address: AddressCoordinateTableEntry) {
     this.addressToEdit = { ...address };

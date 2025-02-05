@@ -2,13 +2,18 @@ import { Injectable } from '@angular/core';
 import { AddressToCoordinateApiData, AddressToCoordinateService } from './address-to-coordinate.feature';
 import { Observable } from 'rxjs';
 import { LabelType } from '.';
-import { ColumnConfigItem, userCol, sysCol, inactiveUserCol, ColumnDefinitions } from '../shared/models/ColumnConfiguration';
+import {
+  ColumnConfigItem,
+  userCol,
+  sysCol,
+  inactiveUserCol,
+  ColumnDefinitions
+} from '../shared/models/ColumnConfiguration';
 import { FeatureServiceBase, SearchResultItemTyped } from '../shared/services/feature.service';
 import { AddressCoordinateTableEntry } from '../shared/models';
 
 @Injectable()
 export class AddressToEgidService extends FeatureServiceBase<AddressToCoordinateApiData> {
-
   showCoordinateSystemSwitch = false;
 
   constructor(private readonly atcService: AddressToCoordinateService) {
@@ -41,7 +46,7 @@ export class AddressToEgidService extends FeatureServiceBase<AddressToCoordinate
       inactiveUserCol(ColumnDefinitions.WGS_84),
       inactiveUserCol(ColumnDefinitions.LV_95),
       inactiveUserCol(ColumnDefinitions.LV_03),
-      inactiveUserCol(ColumnDefinitions.HEIGHT),
+      inactiveUserCol(ColumnDefinitions.HEIGHT)
     ];
   }
 

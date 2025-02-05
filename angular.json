@@ -42,9 +42,8 @@
               "node_modules/ol/ol.css",
               "src/styles/styles.scss"
             ],
-            "scripts": [
-              "node_modules/@oblique/oblique/ob-features.js"
-            ]
+            "scripts": ["node_modules/@oblique/oblique/ob-features.js"],
+            "allowedCommonJsDependencies": ["ajv", "ajv-formats", "file-saver", "xml-utils"]
           },
           "configurations": {
             "production": {
@@ -82,13 +81,13 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "application:build:production"
+              "buildTarget": "application:build:production"
             },
             "bfh": {
-              "browserTarget": "application:build:bfh"
+              "buildTarget": "application:build:bfh"
             },
             "development": {
-              "browserTarget": "application:build:development"
+              "buildTarget": "application:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -110,10 +109,7 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         }
       }
@@ -135,8 +131,7 @@
     }
   },
   "cli": {
-    "schematicCollections": [
-      "@angular-eslint/schematics"
-    ]
+    "schematicCollections": ["@angular-eslint/schematics"],
+    "analytics": false
   }
 }

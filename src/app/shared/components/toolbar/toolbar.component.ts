@@ -8,13 +8,15 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent {
-  constructor(public downloadService: DownloadService,
+  constructor(
+    public downloadService: DownloadService,
     @Inject(FEATURE_SERVICE_TOKEN) public featureService: FeatureService,
-    private translate: TranslateService) {}
+    private translate: TranslateService
+  ) {}
 
-    public getCopyTooltip(): string {
-      return this.translate.instant('table.clipboard.copy', {
-        item: this.translate.instant(`table.clipboard.table`)
-      });
-    }
+  public getCopyTooltip(): string {
+    return this.translate.instant('table.clipboard.copy', {
+      item: this.translate.instant(`table.clipboard.table`)
+    });
+  }
 }

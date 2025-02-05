@@ -1,6 +1,6 @@
 import { Component, TemplateRef } from '@angular/core';
 import { AddressService, DownloadService } from '../../services';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-download-selector',
