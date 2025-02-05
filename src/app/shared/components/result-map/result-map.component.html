@@ -1,20 +1,21 @@
 <div id="map" #map>
-	<div id="mapLink">
+	<!-- <div id="mapLink">
 		<button (click)="openMapAdminDialog(mapAdminDialog)" mat-button obButton="secondary" target="_blank">
 			<mat-icon svgIcon="login" class="ob-icon"></mat-icon>
 			map.geo.admin.ch
 		</button>
 	</div>
 	<div id="legend">
-		<mat-button-toggle-group name="background" aria-label="Background Layer" [(value)]="currentLayer">
-			<mat-button-toggle (click)="changeBackground()" [value]="BackgroundLayers.Standard"
-				>{{ "map.background.standard" | translate }}
+		<mat-button-toggle-group name="background" aria-label="Background Layer" [(value)]="currentLayer"
+			[hideSingleSelectionIndicator]="true">
+			<mat-button-toggle (click)="changeBackground()" [value]="BackgroundLayers.Standard">{{
+				"map.background.standard" | translate }}
 			</mat-button-toggle>
-			<mat-button-toggle (click)="changeBackground()" [value]="BackgroundLayers.Satellite"
-				>{{ "map.background.satellite" | translate }}
+			<mat-button-toggle (click)="changeBackground()" [value]="BackgroundLayers.Satellite">{{
+				"map.background.satellite" | translate }}
 			</mat-button-toggle>
 		</mat-button-toggle-group>
-	</div>
+	</div> -->
 </div>
 
 <ng-template #mapAdminDialog id="mapAdminDialog">

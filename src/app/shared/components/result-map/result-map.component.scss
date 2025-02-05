@@ -13,7 +13,6 @@
   bottom: 8px;
   z-index: 1;
   width: 100px;
-  font-size: 13px;
 }
 
 #mapLink {
@@ -31,25 +30,8 @@
 }
 
 ::ng-deep {
-  /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
   #legend .mat-button-toggle-label-content {
     line-height: 20px !important;
+		font-size: 13px;
   }
-}
-
-/* TODO(mdc-migration): The following rule targets internal classes of dialog that may no longer apply for the MDC version. */
-mat-dialog-content {
-  max-width: 500px;
-}
-
-/* TODO(mdc-migration): The following rule targets internal classes of dialog that may no longer apply for the MDC version. */
-mat-dialog-actions button {
-  margin-top: 2px;
-  white-space: normal;
-  width: 100%;
-  flex-wrap: wrap;
-}
-
-b {
-  vertical-align: unset !important;
 }

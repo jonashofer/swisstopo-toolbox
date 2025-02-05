@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>{{ "columnConfigDialog.title" | translate }}</h2>
+<h2 mat-dialog-title id="title">{{ "columnConfigDialog.title" | translate }}</h2>
 <mat-dialog-content class="mat-typography">
     <mat-selection-list #list cdkDropList (cdkDropListDropped)="drop($event)"
         (selectionChange)="onSelectionChange($event)">

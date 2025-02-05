@@ -1,18 +1,18 @@
 <mat-menu #menu="matMenu">
 	<button mat-menu-item (click)="downloadService.downloadKml()">
-		<mat-icon svgIcon="map-marker" class="ob-icon"></mat-icon>
+		<mat-icon svgIcon="map-marker"></mat-icon>
 		<span>.kml</span>
 	</button>
 	<button mat-menu-item (click)="downloadCsv(addressSelectDialog)">
-		<mat-icon svgIcon="file-csv" class="ob-icon"></mat-icon>
+		<mat-icon svgIcon="file-csv"></mat-icon>
 		<span>.csv</span>
 	</button>
 </mat-menu>
 
 <button mat-button obButton="secondary" [matMenuTriggerFor]="menu">
 	{{ "toolbar.download.label" | translate }}
-	<mat-icon svgIcon="download" class="ob-icon"></mat-icon>
-	<mat-icon svgIcon="chevron-small-down" class="ob-icon"></mat-icon>
+	<mat-icon iconPositionEnd svgIcon="download" class="ob-icon"></mat-icon>
+	<mat-icon iconPositionEnd svgIcon="chevron-small-down" class="ob-icon"></mat-icon>
 </button>
 
 <ng-template #addressSelectDialog>

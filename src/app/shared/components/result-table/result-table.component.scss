@@ -5,6 +5,10 @@ table {
   font-size: 0.9rem;
   line-height: 35px;
 
+	.mat-mdc-header-cell {
+		text-transform: none;
+	}
+
   .mat-icon[svgIcon='repeat'] {
     color: rgba(0, 0, 0, 0.54);
   }
