@@ -1,25 +1,40 @@
-<div id="map" #map>
-	<div id="mapLink">
-		<button (click)="openMapAdminDialog(mapAdminDialog)" mat-button obButton="secondary" target="_blank">
+<mgl-map
+	(mapLoad)="map = $event"
+	[style]="LayerDict[currentLayer]"
+	[zoom]="[7.5]"
+	[minZoom]="7.5"
+	[maxZoom]="20"
+	[attributionControl]="false"
+	[maxBounds]="[
+		[5.5, 45.5],
+		[11.0, 48.0],
+	]">
+	<mgl-control mglFullscreen></mgl-control>
+	<mgl-control position="bottom-left"
+		><button
+			(click)="openMapAdminDialog(mapAdminDialog)"
+			mat-button
+			obButton="secondary"
+			target="_blank"
+			id="mapLinkButton">
 			<mat-icon svgIcon="login" class="ob-icon"></mat-icon>
 			map.geo.admin.ch
-		</button>
-	</div>
-	<div id="legend">
+		</button></mgl-control
+	>
+	<mgl-control position="bottom-right">
 		<mat-button-toggle-group
 			name="background"
 			aria-label="Background Layer"
 			[(value)]="currentLayer"
 			[hideSingleSelectionIndicator]="true">
-			<mat-button-toggle (click)="changeBackground()" [value]="BackgroundLayers.Standard"
-				>{{ "map.background.standard" | translate }}
-			</mat-button-toggle>
-			<mat-button-toggle (click)="changeBackground()" [value]="BackgroundLayers.Satellite"
-				>{{ "map.background.satellite" | translate }}
-			</mat-button-toggle>
+			<ng-container *ngFor="let enum of BackgroundLayers | keyvalue">
+				<mat-button-toggle (click)="persistBackgroundLayer()" [value]="enum.value"
+					>{{ "map.background." + enum.value | translate }}
+				</mat-button-toggle>
+			</ng-container>
 		</mat-button-toggle-group>
-	</div>
-</div>
+	</mgl-control>
+</mgl-map>
 
 <ng-template #mapAdminDialog id="mapAdminDialog">
 	<h2 mat-dialog-title>{{ "map.adminCHDialog.title" | translate }}</h2>

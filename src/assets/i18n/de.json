@@ -115,8 +115,10 @@
   },
   "map": {
     "background": {
-      "standard": "Karte",
-      "satellite": "Satelit"
+      "basemap": "Karte",
+      "hybrid": "Hybrid",
+      "satellite": "Satellit",
+      "landeskarte": "Landeskarte"
     },
     "adminCHDialog": {
       "title": "Weiter nach map.geo.admin.ch",

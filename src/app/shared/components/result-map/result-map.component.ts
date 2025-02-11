@@ -1,14 +1,4 @@
-import Map from 'ol/Map';
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
-import { Feature, View } from 'ol';
-import { Tile as TileLayer } from 'ol/layer';
-import { XYZ } from 'ol/source';
-import { FullScreen } from 'ol/control';
-import VectorSource from 'ol/source/Vector';
-import VectorLayer from 'ol/layer/Vector';
-import Point from 'ol/geom/Point';
-import { fromLonLat } from 'ol/proj';
-import { Icon, Style } from 'ol/style';
 import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTableEntry';
 import { filter } from 'rxjs/operators';
 import { DownloadService } from '../../services';
@@ -16,26 +6,58 @@ import { StorageService } from '../../services/storage.service';
 import { MapInteractionService } from '../../services/map-interaction.service';
 import { Geometry } from 'ol/geom';
 import { MatDialog } from '@angular/material/dialog';
+import { StyleSpecification } from '@maplibre/maplibre-gl-style-spec';
+import { Map } from 'maplibre-gl';
 
 enum BackgroundLayers {
-  Standard = 'pixel_farbig',
-  Satellite = 'satellite'
+  Standard = 'basemap',
+  Pixel = 'landeskarte',
+  Satellite = 'satellite',
+  Hybrid = 'hybrid'
 }
 
-const layers = [
-  new TileLayer({
-    source: new XYZ({
-      url: `https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/{z}/{x}/{y}.jpeg`
-    }),
-    properties: { name: BackgroundLayers.Standard }
-  }),
-  new TileLayer({
-    source: new XYZ({
-      url: `https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.swissimage/default/current/3857/{z}/{x}/{y}.jpeg`
-    }),
-    properties: { name: BackgroundLayers.Satellite }
-  })
-];
+const layerDict = {
+  [BackgroundLayers.Standard]: 'https://vectortiles.geo.admin.ch/styles/ch.swisstopo.basemap.vt/style.json',
+  [BackgroundLayers.Hybrid]: 'https://vectortiles.geo.admin.ch/styles/ch.swisstopo.imagerybasemap.vt/style.json',
+  [BackgroundLayers.Satellite]: {
+    version: 8,
+    sources: {
+      swissimage_wmts: {
+        type: 'raster',
+        tiles: ['https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.swissimage/default/current/3857/{z}/{x}/{y}.jpeg'],
+        minzoom: 0,
+        maxzoom: 20,
+        tileSize: 256
+      }
+    },
+    layers: [
+      {
+        id: 'swissimage',
+        type: 'raster',
+        source: 'swissimage_wmts'
+      }
+    ]
+  } as StyleSpecification,
+  [BackgroundLayers.Pixel]: {
+    version: 8,
+    sources: {
+      pixelkarte: {
+        type: 'raster',
+        tiles: ['https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/{z}/{x}/{y}.jpeg'],
+        minzoom: 0,
+        maxzoom: 20,
+        tileSize: 256
+      }
+    },
+    layers: [
+      {
+        id: 'swissimage',
+        type: 'raster',
+        source: 'pixelkarte'
+      }
+    ]
+  } as StyleSpecification
+};
 
 const svg = (hexFill: string, hexStroke: string) =>
   encodeURIComponent(`
@@ -60,31 +82,23 @@ const svg = (hexFill: string, hexStroke: string) =>
 
 const svgSrc = (hexFill: string, hexStroke: string) => `data:image/svg+xml;charset=utf-8,${svg(hexFill, hexStroke)}`;
 
-const iconStyle = new Style({
-  image: new Icon({
-    anchor: [0.5, 1],
-    src: svgSrc('#fa011c', '#ffffff')
-  })
-});
+// const iconStyle = new Style({
+//   image: new Icon({
+//     anchor: [0.5, 1],
+//     src: svgSrc('#fa011c', '#ffffff')
+//   })
+// });
 
-const selectedIconStyle = new Style({
-  image: new Icon({
-    anchor: [0.5, 1],
-    src: svgSrc('#ffffff', '#fa011c')
-  })
-});
+// const selectedIconStyle = new Style({
+//   image: new Icon({
+//     anchor: [0.5, 1],
+//     src: svgSrc('#ffffff', '#fa011c')
+//   })
+// });
 
-const markerLayer = new VectorLayer({
-  style: iconStyle
-});
-
-const view = new View({
-  maxZoom: 20,
-  constrainOnlyCenter: true,
-  minZoom: 7.5,
-  extent: [609050.241376, 5719527, 1200978.588417, 6372035],
-  enableRotation: false
-});
+// const markerLayer = new VectorLayer({
+//   style: iconStyle
+// });
 
 const storageKey = 'map-background';
 
@@ -93,32 +107,18 @@ const storageKey = 'map-background';
   templateUrl: './result-map.component.html',
   styleUrls: ['./result-map.component.scss']
 })
-export class ResultMapComponent implements AfterViewInit, OnDestroy {
+export class ResultMapComponent implements AfterViewInit {
+
   map: Map | null = null;
   _addresses: AddressCoordinateTableEntry[] = [];
 
   @Input()
   set addresses(value: AddressCoordinateTableEntry[]) {
     this._addresses = value.sort((a, b) => (b.wgs84?.lat || 0) - (a.wgs84?.lat || 0)); // sort addresses based on latitude
-    const newFeatures = this._addresses.map(
-      c =>
-        new Feature({
-          geometry: new Point(fromLonLat([c.wgs84?.lon!, c.wgs84?.lat!])),
-          id: c.id
-        })
-    );
-    markerLayer.setSource(
-      new VectorSource({
-        features: newFeatures
-      })
-    );
-    this.fitView();
   }
 
-  @ViewChild('map')
-  mapDiv: ElementRef | undefined;
-
   BackgroundLayers = BackgroundLayers;
+  LayerDict = layerDict;
   currentLayer: BackgroundLayers = BackgroundLayers.Standard;
 
   lastHighlightedFeature: Feature<Geometry> | null = null;
@@ -133,48 +133,28 @@ export class ResultMapComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    if (this.mapDiv) {
-      this.map = new Map({
-        controls: [new FullScreen()],
-        layers: this.getLayers(),
-        view,
-        target: this.mapDiv.nativeElement
-      });
       this.registerMapPointerMove();
-      this.fitView();
-    }
   }
 
-  ngOnDestroy(): void {
-    if (this.map) {
-      this.map.setTarget(undefined);
-    }
-  }
+  // fitView() {
+  //   const extent = markerLayer.getSource()?.getExtent();
+  //   if (extent == null) {
+  //     return;
+  //   }
+  //   if (extent[0] == Infinity && extent[1] == Infinity) {
+  //     view.setCenter([910000, 5910000]);
+  //     view.setZoom(8);
+  //   } else {
+  //     view.fit(extent, {
+  //       duration: 1000,
+  //       padding: [70, 50, 50, 70],
+  //       maxZoom: 15
+  //     });
+  //   }
+  // }
 
-  fitView() {
-    const extent = markerLayer.getSource()?.getExtent();
-    if (extent == null) {
-      return;
-    }
-    if (extent[0] == Infinity && extent[1] == Infinity) {
-      view.setCenter([910000, 5910000]);
-      view.setZoom(8);
-    } else {
-      view.fit(extent, {
-        duration: 1000,
-        padding: [70, 50, 50, 70],
-        maxZoom: 15
-      });
-    }
-  }
-
-  changeBackground() {
-    this.map?.setLayers(this.getLayers());
+  persistBackgroundLayer() {
     StorageService.save<BackgroundLayers>(storageKey, this.currentLayer);
-  }
-
-  getLayers() {
-    return [...layers.filter(l => l.getProperties().name == this.currentLayer), markerLayer];
   }
 
   openMapAdminDialog(templateRef: TemplateRef<any>) {
@@ -190,16 +170,17 @@ export class ResultMapComponent implements AfterViewInit, OnDestroy {
   }
 
   private hightlightFeature(id: string, end: boolean) {
-    const feature = markerLayer
-      .getSource()
-      ?.getFeatures()
-      .find(f => f.get('id') === id);
-    feature?.setStyle(end ? selectedIconStyle : iconStyle);
+    // const feature = markerLayer
+    //   .getSource()
+    //   ?.getFeatures()
+    //   .find(f => f.get('id') === id);
+    // feature?.setStyle(end ? selectedIconStyle : iconStyle);
   }
 
   private registerMapPointerMove() {
     this.map?.on('pointermove', evt => {
-      const features = this.map?.getFeaturesAtPixel(evt.pixel, { layerFilter: layer => layer === markerLayer });
+      const features = this.map?.queryRenderedFeatures(evt.pixel);
+			console.log(features)
 
       if (features == null) {
         return;
@@ -216,17 +197,17 @@ export class ResultMapComponent implements AfterViewInit, OnDestroy {
 
       if (isLeave) {
         this.mapInteractionService.sendToTable(this.lastHighlightedFeature?.get('id'), true);
-        this.lastHighlightedFeature?.setStyle(iconStyle);
-        this.map!.getTargetElement().style.cursor = '';
+        // this.lastHighlightedFeature?.setStyle(iconStyle);
+        // this.map!.getTargetElement().style.cursor = '';
         this.lastHighlightedFeature = null;
         return;
       }
       if (isEnter) {
         const feature = features[0];
         this.lastHighlightedFeature = feature as Feature<Geometry>;
-        this.lastHighlightedFeature.setStyle(selectedIconStyle);
-        this.map!.getTargetElement().style.cursor = 'pointer';
-        this.mapInteractionService.sendToTable(feature.get('id'), false);
+        // this.lastHighlightedFeature.setStyle(selectedIconStyle);
+        // this.map!.getTargetElement().style.cursor = 'pointer';
+        // this.mapInteractionService.sendToTable(feature.get('id'), false);
         return;
       }
     });

@@ -73,6 +73,7 @@ import {
 } from './feature-components';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { ControlComponent, FullscreenControlDirective, MapComponent } from '@maplibre/ngx-maplibre-gl';
 
 registerLocaleData(localeDECH);
 registerLocaleData(localeFRCH);
@@ -139,7 +140,10 @@ registerLocaleData(localeENCH);
     MatTooltipModule,
     MatMenuModule,
     ObAlertModule,
-    ClipboardModule
+    ClipboardModule,
+    MapComponent,
+		ControlComponent,
+		FullscreenControlDirective
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'de-CH' },
