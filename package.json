@@ -8,7 +8,6 @@
     "build:prod": "ng build --configuration production",
     "build:bfh": "ng build --configuration bfh",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
     "lint": "ng lint",
     "format": "npm run lint --fix"
   },
@@ -37,7 +36,6 @@
     "zone.js": "^0.15.0"
   },
   "devDependencies": {
-    "@angular-builders/jest": "^18.0.0",
     "@angular-eslint/builder": "19.3.0",
     "@angular-eslint/eslint-plugin": "19.3.0",
     "@angular-eslint/eslint-plugin-template": "19.3.0",
@@ -54,7 +52,6 @@
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-prettier": "^5.2.3",
-    "jest": "^29.7.0",
     "jest-sonar-reporter": "2.0.0",
     "prettier": "^3.4.2",
     "typescript": "~5.8.3"

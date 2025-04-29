@@ -105,20 +105,6 @@
           },
           "defaultConfiguration": "development"
         },
-        "test": {
-          "builder": "@angular-builders/jest:run",
-          "options": {
-            "configPath": "./tests/jest.config.js",
-            "watch": true,
-            "verbose": true
-          },
-          "configurations": {
-            "production": {
-              "watch": false,
-              "verbose": false
-            }
-          }
-        },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
