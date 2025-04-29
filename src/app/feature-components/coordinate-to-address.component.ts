@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { getFeatureProviders, CoordinateToAddressService } from '../feature-services';
 
 @Component({
-  selector: 'app-coordinate-to-address',
-  template: `<app-feature-tab></app-feature-tab>`,
-  providers: [getFeatureProviders(CoordinateToAddressService)]
+    selector: 'app-coordinate-to-address',
+    template: `<app-feature-tab></app-feature-tab>`,
+    providers: [getFeatureProviders(CoordinateToAddressService)],
+    standalone: false
 })
 export class CoordinateToAddressComponent {}

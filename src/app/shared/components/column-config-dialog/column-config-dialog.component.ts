@@ -5,9 +5,10 @@ import { ColumnConfigItem } from '../../models/ColumnConfiguration';
 import { MatSelectionList, MatSelectionListChange } from '@angular/material/list';
 
 @Component({
-  selector: 'app-column-config-dialog',
-  templateUrl: './column-config-dialog.component.html',
-  styleUrls: ['./column-config-dialog.component.scss']
+    selector: 'app-column-config-dialog',
+    templateUrl: './column-config-dialog.component.html',
+    styleUrls: ['./column-config-dialog.component.scss'],
+    standalone: false
 })
 export class ColumnConfigDialogComponent implements OnInit {
   constructor(private readonly columnService: ColumnService) {}

@@ -12,17 +12,18 @@ import { CoordinatePipe } from '../coordinate.pipe';
 import { combineLatest, switchMap } from 'rxjs';
 
 @Component({
-  selector: 'app-feature-tab',
-  templateUrl: './feature-tab.component.html',
-  providers: [
-    AddressService,
-    ColumnService,
-    CoordinateService,
-    DownloadService,
-    DecimalPipe,
-    CoordinatePipe,
-    MapInteractionService
-  ]
+    selector: 'app-feature-tab',
+    templateUrl: './feature-tab.component.html',
+    providers: [
+        AddressService,
+        ColumnService,
+        CoordinateService,
+        DownloadService,
+        DecimalPipe,
+        CoordinatePipe,
+        MapInteractionService
+    ],
+    standalone: false
 })
 export class FeatureTabComponent {
   addressToEdit: AddressCoordinateTableEntry | null = null;

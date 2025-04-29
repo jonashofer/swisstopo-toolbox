@@ -5,9 +5,10 @@ import { AddressService, DownloadService, FEATURE_SERVICE_TOKEN, FeatureService 
 import saveAs from 'file-saver';
 
 @Component({
-  selector: 'app-file-upload-input',
-  templateUrl: './file-upload-input.component.html',
-  styleUrls: ['./file-upload-input.component.scss']
+    selector: 'app-file-upload-input',
+    templateUrl: './file-upload-input.component.html',
+    styleUrls: ['./file-upload-input.component.scss'],
+    standalone: false
 })
 export class FileUploadInputComponent {
   @Output()

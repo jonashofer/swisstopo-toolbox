@@ -3,9 +3,10 @@ import { DownloadService, FEATURE_SERVICE_TOKEN, FeatureService } from '../../se
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-toolbar',
-  templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.scss']
+    selector: 'app-toolbar',
+    templateUrl: './toolbar.component.html',
+    styleUrls: ['./toolbar.component.scss'],
+    standalone: false
 })
 export class ToolbarComponent {
   constructor(

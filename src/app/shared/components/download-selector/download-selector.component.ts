@@ -3,9 +3,10 @@ import { AddressService, DownloadService } from '../../services';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-download-selector',
-  templateUrl: './download-selector.component.html',
-  styleUrls: ['./download-selector.component.scss']
+    selector: 'app-download-selector',
+    templateUrl: './download-selector.component.html',
+    styleUrls: ['./download-selector.component.scss'],
+    standalone: false
 })
 export class DownloadSelectorComponent {
   constructor(

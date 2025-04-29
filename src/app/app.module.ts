@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, LOCALE_ID, NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule, inject, provideAppInitializer } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -143,12 +143,10 @@ registerLocaleData(localeENCH);
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'de-CH' },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeApp,
-      multi: true,
-      deps: [ActivatedRoute, ObMasterLayoutService, TranslateService]
-    },
+    provideAppInitializer(() => {
+        const initializerFn = (initializeApp)(inject(ActivatedRoute), inject(ObMasterLayoutService), inject(TranslateService));
+        return initializerFn();
+      }),
     { provide: HTTP_INTERCEPTORS, useClass: ObHttpApiInterceptor, multi: true },
     {
       provide: OB_BANNER,

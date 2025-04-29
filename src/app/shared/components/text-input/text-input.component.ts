@@ -15,9 +15,10 @@ import { AddressService, FEATURE_SERVICE_TOKEN, FeatureService, SearchResultItem
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
-  selector: 'app-text-input',
-  templateUrl: './text-input.component.html',
-  styleUrls: ['./text-input.component.scss']
+    selector: 'app-text-input',
+    templateUrl: './text-input.component.html',
+    styleUrls: ['./text-input.component.scss'],
+    standalone: false
 })
 export class TextInputComponent {
   public inputFormControl = new FormControl<string>('', {

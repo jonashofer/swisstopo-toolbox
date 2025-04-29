@@ -13,9 +13,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-result-table',
-  templateUrl: './result-table.component.html',
-  styleUrls: ['./result-table.component.scss']
+    selector: 'app-result-table',
+    templateUrl: './result-table.component.html',
+    styleUrls: ['./result-table.component.scss'],
+    standalone: false
 })
 export class ResultTableComponent implements OnInit {
   @Output()

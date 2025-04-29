@@ -9,9 +9,10 @@ import { map, of, switchMap } from 'rxjs';
 const INPUT_SIZE_WARNING_THRESHOLD = 100;
 
 @Component({
-  selector: 'app-search-input',
-  templateUrl: './search-input.component.html',
-  styleUrls: ['./search-input.component.scss']
+    selector: 'app-search-input',
+    templateUrl: './search-input.component.html',
+    styleUrls: ['./search-input.component.scss'],
+    standalone: false
 })
 export class SearchInputComponent {
   selectedInputType = 0; // 0 = text, 1 = file

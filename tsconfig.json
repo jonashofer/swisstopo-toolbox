@@ -7,18 +7,20 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitReturns": true,
+    "esModuleInterop": true,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "declaration": false,
-    "downlevelIteration": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "ES2022",
     "module": "es2020",
-    "lib": ["es2022", "dom"],
-    "allowSyntheticDefaultImports": true,
+    "lib": [
+      "es2022",
+      "dom"
+    ],
     "skipLibCheck": true,
     "useDefineForClassFields": false
   },
