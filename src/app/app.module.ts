@@ -6,21 +6,20 @@ import { AppComponent } from './app.component';
 import {
   OB_BANNER,
   ObAlertModule,
+  ObAutocompleteModule,
   ObButtonModule,
   ObENotificationType,
   ObFileUploadModule,
   ObHttpApiInterceptor,
   ObHttpApiInterceptorConfig,
-  ObIconModule,
   ObInputClearModule,
   ObMasterLayoutConfig,
   ObMasterLayoutModule,
+  ObMasterLayoutService,
   ObNotificationModule,
   ObPopoverModule,
   ObSpinnerModule,
-  multiTranslateLoader,
-  ObAutocompleteModule,
-  ObMasterLayoutService
+  provideObliqueConfiguration
 } from '@oblique/oblique';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
@@ -109,7 +108,6 @@ registerLocaleData(localeENCH);
     BrowserModule,
     AppRoutingModule,
     MatDialogModule,
-    ObIconModule.forRoot(),
     ObMasterLayoutModule,
     ObFileUploadModule,
     ObButtonModule,
@@ -129,7 +127,7 @@ registerLocaleData(localeENCH);
     MatProgressBarModule,
     MatButtonToggleModule,
     BrowserAnimationsModule,
-    TranslateModule.forRoot(multiTranslateLoader()),
+    TranslateModule,
     MatButtonModule,
     MatCardModule,
     FormsModule,
@@ -142,11 +140,24 @@ registerLocaleData(localeENCH);
     ClipboardModule
   ],
   providers: [
+    provideObliqueConfiguration({
+      accessibilityStatement: {
+        applicationName: "Replace me with the application's name",
+        applicationOperator:
+          'Replace me with the name and address of the federal office that exploit this application, HTML is permitted',
+        contact: { /* at least 1 email or phone number has to be provided */ emails: [''], phones: [''] }
+      }
+    }),
+
     { provide: LOCALE_ID, useValue: 'de-CH' },
     provideAppInitializer(() => {
-        const initializerFn = (initializeApp)(inject(ActivatedRoute), inject(ObMasterLayoutService), inject(TranslateService));
-        return initializerFn();
-      }),
+      const initializerFn = initializeApp(
+        inject(ActivatedRoute),
+        inject(ObMasterLayoutService),
+        inject(TranslateService)
+      );
+      return initializerFn();
+    }),
     { provide: HTTP_INTERCEPTORS, useClass: ObHttpApiInterceptor, multi: true },
     {
       provide: OB_BANNER,
@@ -160,8 +171,7 @@ registerLocaleData(localeENCH);
 export class AppModule {
   constructor(masterConfig: ObMasterLayoutConfig, interceptorConfig: ObHttpApiInterceptorConfig) {
     masterConfig.header.isSmall = true;
-    masterConfig.header.reduceOnScroll = false;
-    masterConfig.footer.hasLogoOnScroll = false;
+
     masterConfig.homePageRoute = '/address-to-coordinate';
 
     masterConfig.locale.locales.push('rm-CH');
@@ -176,10 +186,10 @@ export class AppModule {
 }
 
 function initializeApp(route: ActivatedRoute, layout: ObMasterLayoutService, translate: TranslateService) {
-  return (): Promise<any> => {
-    return new Promise((resolve, reject) => {
+  return (): Promise<unknown> => {
+    return new Promise(resolve => {
       route.queryParams.subscribe(params => {
-        if (params['force-headless'] || (params['headless'] && inIframe())) {
+        if (params['force-headless'] || (params.headless && inIframe())) {
           layout.layout.hasMainNavigation = false;
           layout.layout.hasLayout = false;
           layout.header.isCustom = true;
@@ -190,8 +200,8 @@ function initializeApp(route: ActivatedRoute, layout: ObMasterLayoutService, tra
           layout.header.isCustom = false;
           layout.footer.isCustom = false;
         }
-        if (params['lang']) {
-          translate.use(params['lang']);
+        if (params.lang) {
+          translate.use(params.lang);
         }
         resolve(true);
       });

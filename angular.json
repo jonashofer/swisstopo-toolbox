@@ -41,11 +41,12 @@
             ],
             "styles": [
               "node_modules/@oblique/oblique/styles/css/oblique-core.css",
-              "node_modules/@oblique/oblique/styles/css/frutiger.css",
               "node_modules/ol/ol.css",
               "src/styles/styles.scss"
             ],
-            "scripts": ["node_modules/@oblique/oblique/ob-features.js"],
+            "scripts": [
+              "node_modules/@oblique/oblique/ob-features.js"
+            ],
             "allowedCommonJsDependencies": [
               "ajv",
               "ajv-formats",
@@ -121,7 +122,10 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         }
       }
@@ -143,7 +147,9 @@
     }
   },
   "cli": {
-    "schematicCollections": ["@angular-eslint/schematics"],
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ],
     "analytics": false
   }
 }
