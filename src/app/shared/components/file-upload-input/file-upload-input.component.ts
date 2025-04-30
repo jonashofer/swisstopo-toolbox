@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Output, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ObIUploadEvent } from '@oblique/oblique';
 import { DownloadService, FEATURE_SERVICE_TOKEN, FeatureService } from '../../services';

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { getFeatureProviders, CoordinateToAddressService, CoordinateToCoordinateService } from '../feature-services';
+import { getFeatureProviders, CoordinateToCoordinateService } from '../feature-services';
 import { FeatureTabComponent } from '../shared/components/feature-tab/feature-tab.component';
 
 @Component({

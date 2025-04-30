@@ -6,7 +6,6 @@ import { CoordinateService } from '../shared/services';
 import { FeatureServiceBase, LabelType, SearchResultItemTyped } from '../shared/services/feature.service';
 import { CoordinateSystemNames, CoordinateSystemSr } from '../shared/models/CoordinateSystem';
 import { HttpClient } from '@angular/common/http';
-import { apiConvert } from '../shared/services/enrich-api-calls';
 
 @Injectable()
 export class CoordinateToCoordinateService extends FeatureServiceBase<Coordinate> {

@@ -54,7 +54,7 @@ export class AddressToCoordinateService extends FeatureServiceBase<AddressToCoor
           .sort(resultWeightDesc)
           .map(apiSearchResult => ({ text: apiSearchResult.attrs.label, originalInput: input, data: apiSearchResult }));
       }),
-      catchError(err => {
+      catchError(_ => {
         return of([]);
       })
     );

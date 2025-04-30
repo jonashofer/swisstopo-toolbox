@@ -92,6 +92,7 @@ export class DownloadService {
     )}`;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private getNestedProperty(obj: any, path: string) {
     const parts = path.split('.');
     let current = obj;

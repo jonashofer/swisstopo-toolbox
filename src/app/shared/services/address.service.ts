@@ -1,18 +1,15 @@
 import { Inject, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ObNotificationService } from '@oblique/oblique';
-import { BehaviorSubject, combineLatest, forkJoin, from, Observable, of } from 'rxjs';
+import { BehaviorSubject, combineLatest, from, Observable, of } from 'rxjs';
 import {
   catchError,
   concatMap,
-  delay,
-  filter,
   last,
   map,
   mergeMap,
   shareReplay,
   switchMap,
-  tap,
   toArray
 } from 'rxjs/operators';
 import { ColumnService, StorageService } from '.';
@@ -116,7 +113,7 @@ export class AddressService {
       toArray(),
       map(arr => arr.sort((a, b) => a.index - b.index)),
       map(arr => arr.map(item => item.enrichedAddress)),
-      catchError(err => {
+      catchError(_ => {
         return of([]);
       })
     );

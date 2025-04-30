@@ -2,8 +2,6 @@ import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
-  FormGroupDirective,
-  NgForm,
   ValidationErrors,
   ValidatorFn
 } from '@angular/forms';
@@ -109,7 +107,7 @@ export class TextInputComponent {
 
 // Custom Matcher needed to fire mat-error directly on change, as with updateOn: 'change'
 class InstantErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+  isErrorState(control: FormControl | null): boolean {
     return !!(control && control.invalid && (control.dirty || control.touched));
   }
 }

@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ObNotificationService } from '@oblique/oblique';
 import { AddressService, FEATURE_SERVICE_TOKEN, FeatureService } from '../../services';
 import { TranslateService } from '@ngx-translate/core';
-import { map, of, switchMap } from 'rxjs';
+import { map } from 'rxjs';
 import { SharedStandaloneModule } from '../../shared-standalone.module';
 import { TextInputComponent } from '../text-input/text-input.component';
 import { FileUploadInputComponent } from '../file-upload-input/file-upload-input.component';
@@ -52,7 +52,7 @@ export class SearchInputComponent {
     });
   }
 
-  multiAdd(lines: string[], replaceDialogRef: TemplateRef<any>, tooManyDialogRef: TemplateRef<any>) {
+  multiAdd(lines: string[], replaceDialogRef: TemplateRef<unknown>, tooManyDialogRef: TemplateRef<unknown>) {
     if (!this.addressService.hasAddresses) {
       if (lines.length > INPUT_SIZE_WARNING_THRESHOLD) {
         this.lines = lines;

@@ -47,7 +47,7 @@ export class ResultTableComponent implements OnInit {
 
   highlightId = '';
 
-  coordinateSystemNames: any = CoordinateSystemNames;
+  coordinateSystemNames = CoordinateSystemNames;
 
   constructor(
     public addressService: AddressService,

@@ -12,6 +12,7 @@ const angular = require("angular-eslint");
 // Export our config array, which is composed together thanks to the typed utility function from typescript-eslint
 module.exports = tseslint.config(
 	{
+		ignores: ['.angular/**'],
 		// Everything in this config object targets our TypeScript files (Components, Directives, Pipes etc)
 		files: ["**/*.ts"],
 		extends: [
@@ -43,6 +44,15 @@ module.exports = tseslint.config(
 					type: "element",
 					prefix: "app",
 					style: "kebab-case",
+				},
+			],
+			"no-unused-vars": "off",
+			"@typescript-eslint/no-unused-vars": [
+				"error",
+				{
+					argsIgnorePattern: "^_",
+					varsIgnorePattern: "^_",
+					caughtErrorsIgnorePattern: "^_",
 				},
 			],
 		},
