@@ -3,13 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: true,
+  production: false,
   banner: {
-    text: 'BFH',
-    color: '#FFCB05',
-    bgColor: '#37556E'
+    text: 'LOCAL'
   },
-  githubLink: 'https://github.com/jonashofer/swisstopo-toolbox'
+  githubLink: null
 };
 
 /*
