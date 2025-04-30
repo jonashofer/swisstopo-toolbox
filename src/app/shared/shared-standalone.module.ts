@@ -4,7 +4,6 @@ import { CommonModule }                      from '@angular/common';
 import { FormsModule, ReactiveFormsModule }  from '@angular/forms';
 import { ClipboardModule }                   from '@angular/cdk/clipboard';
 import { DragDropModule }                    from '@angular/cdk/drag-drop';
-import { BrowserAnimationsModule }           from '@angular/platform-browser/animations';
 
 import { TranslateModule }                   from '@ngx-translate/core';
 import {
@@ -56,7 +55,6 @@ import { environment }                       from '../../environments/environmen
     ReactiveFormsModule,
     ClipboardModule,
     DragDropModule,
-    BrowserAnimationsModule,
     // 3rd-party
     TranslateModule,
     // Oblique modules
@@ -93,7 +91,6 @@ import { environment }                       from '../../environments/environmen
     ReactiveFormsModule,
     ClipboardModule,
     DragDropModule,
-    BrowserAnimationsModule,
     TranslateModule,
     ObMasterLayoutModule,
     ObFileUploadModule,

@@ -7,7 +7,6 @@ import { SharedStandaloneModule } from './shared/shared-standalone.module';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   imports: [
     SharedStandaloneModule
 ],
