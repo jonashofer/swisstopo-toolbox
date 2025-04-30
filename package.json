@@ -36,23 +36,19 @@
     "zone.js": "^0.15.0"
   },
   "devDependencies": {
-    "@angular-eslint/builder": "19.3.0",
-    "@angular-eslint/eslint-plugin": "19.3.0",
-    "@angular-eslint/eslint-plugin-template": "19.3.0",
-    "@angular-eslint/schematics": "19.3.0",
-    "@angular-eslint/template-parser": "19.3.0",
     "@angular/build": "^19.2.9",
     "@angular/cli": "^19.2.9",
     "@angular/compiler-cli": "^19.2.8",
+    "@eslint/js": "^9.25.1",
     "@types/file-saver": "^2.0.7",
     "@types/jest": "^29.5.14",
-    "@typescript-eslint/eslint-plugin": "^8.31.1",
-    "@typescript-eslint/parser": "^8.31.1",
+    "angular-eslint": "^19.3.0",
     "eslint": "^9.25.1",
     "eslint-config-prettier": "^10.1.2",
+    "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-prettier": "^5.2.6",
-    "jest-sonar-reporter": "2.0.0",
     "prettier": "^3.5.3",
-    "typescript": "~5.8.3"
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.31.1"
   }
 }
