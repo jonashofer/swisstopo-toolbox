@@ -11,12 +11,15 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import { ObNotificationService } from '@oblique/oblique';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
+import { SharedStandaloneModule } from '../../shared-standalone.module';
+import { CoordinatePipe } from '../coordinate.pipe';
 
 @Component({
-    selector: 'app-result-table',
-    templateUrl: './result-table.component.html',
-    styleUrls: ['./result-table.component.scss'],
-    standalone: false
+  selector: 'app-result-table',
+  templateUrl: './result-table.component.html',
+  styleUrls: ['./result-table.component.scss'],
+	imports: [SharedStandaloneModule, CoordinatePipe]
+
 })
 export class ResultTableComponent implements OnInit {
   @Output()

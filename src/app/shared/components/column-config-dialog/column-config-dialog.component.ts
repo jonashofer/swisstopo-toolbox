@@ -3,12 +3,14 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ColumnService } from '../../services/column.service';
 import { ColumnConfigItem } from '../../models/ColumnConfiguration';
 import { MatSelectionList, MatSelectionListChange } from '@angular/material/list';
+import { SharedStandaloneModule } from '../../shared-standalone.module';
 
 @Component({
-    selector: 'app-column-config-dialog',
-    templateUrl: './column-config-dialog.component.html',
-    styleUrls: ['./column-config-dialog.component.scss'],
-    standalone: false
+  selector: 'app-column-config-dialog',
+  templateUrl: './column-config-dialog.component.html',
+  styleUrls: ['./column-config-dialog.component.scss'],
+	imports: [SharedStandaloneModule]
+
 })
 export class ColumnConfigDialogComponent implements OnInit {
   constructor(private readonly columnService: ColumnService) {}

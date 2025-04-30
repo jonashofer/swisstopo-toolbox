@@ -16,6 +16,7 @@ import { StorageService } from '../../services/storage.service';
 import { MapInteractionService } from '../../services/map-interaction.service';
 import { Geometry } from 'ol/geom';
 import { MatDialog } from '@angular/material/dialog';
+import { SharedStandaloneModule } from '../../shared-standalone.module';
 
 enum BackgroundLayers {
   Standard = 'pixel_farbig',
@@ -89,10 +90,11 @@ const view = new View({
 const storageKey = 'map-background';
 
 @Component({
-    selector: 'app-result-map',
-    templateUrl: './result-map.component.html',
-    styleUrls: ['./result-map.component.scss'],
-    standalone: false
+  selector: 'app-result-map',
+  templateUrl: './result-map.component.html',
+  styleUrls: ['./result-map.component.scss'],
+	imports: [SharedStandaloneModule]
+
 })
 export class ResultMapComponent implements AfterViewInit, OnDestroy {
   map: Map | null = null;

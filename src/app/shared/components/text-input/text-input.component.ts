@@ -13,12 +13,14 @@ import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTable
 import { Observable, of } from 'rxjs';
 import { AddressService, FEATURE_SERVICE_TOKEN, FeatureService, SearchResultItem } from '../../services';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { SharedStandaloneModule } from '../../shared-standalone.module';
 
 @Component({
-    selector: 'app-text-input',
-    templateUrl: './text-input.component.html',
-    styleUrls: ['./text-input.component.scss'],
-    standalone: false
+  selector: 'app-text-input',
+  templateUrl: './text-input.component.html',
+  styleUrls: ['./text-input.component.scss'],
+	imports: [SharedStandaloneModule]
+
 })
 export class TextInputComponent {
   public inputFormControl = new FormControl<string>('', {

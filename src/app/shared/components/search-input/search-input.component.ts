@@ -5,14 +5,18 @@ import { ObNotificationService } from '@oblique/oblique';
 import { AddressService, FEATURE_SERVICE_TOKEN, FeatureService } from '../../services';
 import { TranslateService } from '@ngx-translate/core';
 import { map, of, switchMap } from 'rxjs';
+import { SharedStandaloneModule } from '../../shared-standalone.module';
+import { TextInputComponent } from '../text-input/text-input.component';
+import { FileUploadInputComponent } from '../file-upload-input/file-upload-input.component';
 
 const INPUT_SIZE_WARNING_THRESHOLD = 100;
 
 @Component({
-    selector: 'app-search-input',
-    templateUrl: './search-input.component.html',
-    styleUrls: ['./search-input.component.scss'],
-    standalone: false
+  selector: 'app-search-input',
+  templateUrl: './search-input.component.html',
+  styleUrls: ['./search-input.component.scss'],
+	imports: [SharedStandaloneModule, TextInputComponent, FileUploadInputComponent]
+
 })
 export class SearchInputComponent {
   selectedInputType = 0; // 0 = text, 1 = file
