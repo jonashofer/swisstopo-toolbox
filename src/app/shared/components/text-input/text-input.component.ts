@@ -2,8 +2,6 @@ import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
-  FormGroupDirective,
-  NgForm,
   ValidationErrors,
   ValidatorFn
 } from '@angular/forms';
@@ -13,11 +11,14 @@ import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTable
 import { Observable, of } from 'rxjs';
 import { AddressService, FEATURE_SERVICE_TOKEN, FeatureService, SearchResultItem } from '../../services';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { SharedStandaloneModule } from '../../shared-standalone.module';
 
 @Component({
   selector: 'app-text-input',
   templateUrl: './text-input.component.html',
-  styleUrls: ['./text-input.component.scss']
+  styleUrls: ['./text-input.component.scss'],
+	imports: [SharedStandaloneModule]
+
 })
 export class TextInputComponent {
   public inputFormControl = new FormControl<string>('', {
@@ -106,7 +107,7 @@ export class TextInputComponent {
 
 // Custom Matcher needed to fire mat-error directly on change, as with updateOn: 'change'
 class InstantErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+  isErrorState(control: FormControl | null): boolean {
     return !!(control && control.invalid && (control.dirty || control.touched));
   }
 }

@@ -5,11 +5,11 @@ import { coords } from '../models/Coordinate';
 
 // this class helps to build the correct chain of API calls to enrich the table entries with the desired columns
 
-type APICall = {
+interface APICall {
   source: keyof AddressCoordinateTableEntry;
   targets: (keyof AddressCoordinateTableEntry)[];
   call: (entry: AddressCoordinateTableEntry, httpClient: HttpClient) => Observable<AddressCoordinateTableEntry>;
-};
+}
 
 const calls = {
   gwr: {

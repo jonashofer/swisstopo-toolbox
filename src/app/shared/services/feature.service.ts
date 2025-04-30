@@ -6,18 +6,14 @@ import {
   forkJoin,
   from,
   map,
-  mergeMap,
   of,
   reduce,
-  switchMap,
-  tap,
-  toArray
-} from 'rxjs';
+  tap} from 'rxjs';
 import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEntry';
 import { ColumnConfigItem } from '../models/ColumnConfiguration';
 
 export interface SearchResultItem {
-  data: any;
+  data: unknown;
   text: string;
   originalInput?: string;
 }
@@ -58,8 +54,8 @@ export interface FeatureService {
 
 @Injectable()
 export abstract class FeatureServiceBase<AutocompleteData> implements FeatureService {
-  showCoordinateSystemSwitch: boolean = true;
-  disableInactivationOfOldSystemWhenSwitching: boolean = false;
+  showCoordinateSystemSwitch = true;
+  disableInactivationOfOldSystemWhenSwitching = false;
 
   private bulkAddId = -1;
   protected messageForMultipleResults: string | null = null;
@@ -97,7 +93,7 @@ export abstract class FeatureServiceBase<AutocompleteData> implements FeatureSer
       concatMap(chunkLines =>
         // Within each chunk, process lines concurrently with forkJoin
         forkJoin(
-          chunkLines.map(userInput => this.processLine(userInput).pipe(tap(x => this.progressUpdates.next(++progress))))
+          chunkLines.map(userInput => this.processLine(userInput).pipe(tap(_ => this.progressUpdates.next(++progress))))
         )
       ),
       // Use reduce to concatenate the results of all chunks into a single array

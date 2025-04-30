@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { CoordinateService } from '../../services';
-import { CoordinateSystemNames, CoordinateSystem } from '../../models/CoordinateSystem';
+import { CoordinateSystem, CoordinateSystemNames } from '../../models/CoordinateSystem';
+import { SharedStandaloneModule } from '../../shared-standalone.module';
 
 @Component({
   selector: 'app-coordinate-system-switch',
   templateUrl: './coordinate-system-switch.component.html',
-  styleUrls: ['./coordinate-system-switch.component.scss']
+  styleUrls: ['./coordinate-system-switch.component.scss'],
+	imports: [SharedStandaloneModule]
+
 })
 export class CoordinateSystemSwitchComponent {
   coordinateSystems = Object.values(CoordinateSystem);

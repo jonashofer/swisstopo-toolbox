@@ -16,6 +16,7 @@ import { StorageService } from '../../services/storage.service';
 import { MapInteractionService } from '../../services/map-interaction.service';
 import { Geometry } from 'ol/geom';
 import { MatDialog } from '@angular/material/dialog';
+import { SharedStandaloneModule } from '../../shared-standalone.module';
 
 enum BackgroundLayers {
   Standard = 'pixel_farbig',
@@ -91,7 +92,9 @@ const storageKey = 'map-background';
 @Component({
   selector: 'app-result-map',
   templateUrl: './result-map.component.html',
-  styleUrls: ['./result-map.component.scss']
+  styleUrls: ['./result-map.component.scss'],
+	imports: [SharedStandaloneModule]
+
 })
 export class ResultMapComponent implements AfterViewInit, OnDestroy {
   map: Map | null = null;
@@ -103,7 +106,7 @@ export class ResultMapComponent implements AfterViewInit, OnDestroy {
     const newFeatures = this._addresses.map(
       c =>
         new Feature({
-          geometry: new Point(fromLonLat([c.wgs84?.lon!, c.wgs84?.lat!])),
+          geometry: new Point(fromLonLat([c.wgs84!.lon, c.wgs84!.lat])),
           id: c.id
         })
     );
@@ -177,7 +180,7 @@ export class ResultMapComponent implements AfterViewInit, OnDestroy {
     return [...layers.filter(l => l.getProperties().name == this.currentLayer), markerLayer];
   }
 
-  openMapAdminDialog(templateRef: TemplateRef<any>) {
+  openMapAdminDialog(templateRef: TemplateRef<unknown>) {
     const dialogRef = this.dialog.open(templateRef);
 
     dialogRef

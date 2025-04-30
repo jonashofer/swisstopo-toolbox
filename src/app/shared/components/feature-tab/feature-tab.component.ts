@@ -9,7 +9,11 @@ import {
 } from '../../services';
 import { DecimalPipe } from '@angular/common';
 import { CoordinatePipe } from '../coordinate.pipe';
-import { combineLatest, switchMap } from 'rxjs';
+import { SharedStandaloneModule } from '../../shared-standalone.module';
+import { SearchInputComponent } from '../search-input/search-input.component';
+import { ResultTableComponent } from '../result-table/result-table.component';
+import { ToolbarComponent } from '../toolbar/toolbar.component';
+import { ResultMapComponent } from '../result-map/result-map.component';
 
 @Component({
   selector: 'app-feature-tab',
@@ -22,7 +26,9 @@ import { combineLatest, switchMap } from 'rxjs';
     DecimalPipe,
     CoordinatePipe,
     MapInteractionService
-  ]
+  ],
+	imports: [SharedStandaloneModule, SearchInputComponent, ResultTableComponent, ToolbarComponent, ResultMapComponent]
+
 })
 export class FeatureTabComponent {
   addressToEdit: AddressCoordinateTableEntry | null = null;

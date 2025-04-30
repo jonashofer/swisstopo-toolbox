@@ -5,7 +5,6 @@ import {
   ColumnDefinitions,
   Coordinate,
   CoordinateSystem,
-  GWREntry,
   GWRSearchResult,
   MapServerResult
 } from '../shared/models';

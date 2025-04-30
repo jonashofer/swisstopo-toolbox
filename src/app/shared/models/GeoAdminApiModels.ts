@@ -88,7 +88,6 @@ export interface Geometry {
 export interface AddressToCoordinateAttrs {
   origin: string;
   geom_quadindex: string;
-  zoomlevel: any;
   featureId: string;
   lon: number;
   detail: string;

@@ -9,8 +9,6 @@ export class MapInteractionService {
   private mapToTable = new Subject<{ id: string; end: boolean }>();
   public mapToTable$ = this.mapToTable.asObservable();
 
-  constructor() {}
-
   public sendToMap(id: string, end: boolean) {
     this.tableToMap.next({ id, end });
   }

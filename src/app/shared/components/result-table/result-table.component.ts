@@ -11,11 +11,15 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import { ObNotificationService } from '@oblique/oblique';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
+import { SharedStandaloneModule } from '../../shared-standalone.module';
+import { CoordinatePipe } from '../coordinate.pipe';
 
 @Component({
   selector: 'app-result-table',
   templateUrl: './result-table.component.html',
-  styleUrls: ['./result-table.component.scss']
+  styleUrls: ['./result-table.component.scss'],
+	imports: [SharedStandaloneModule, CoordinatePipe]
+
 })
 export class ResultTableComponent implements OnInit {
   @Output()
@@ -43,7 +47,7 @@ export class ResultTableComponent implements OnInit {
 
   highlightId = '';
 
-  coordinateSystemNames: any = CoordinateSystemNames;
+  coordinateSystemNames = CoordinateSystemNames;
 
   constructor(
     public addressService: AddressService,

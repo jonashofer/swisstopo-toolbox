@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEntry';
 
 @Injectable()
 export class StorageService {
-  constructor() {}
-
   public static save<T>(key: string, value: T): void {
     localStorage.setItem(key, JSON.stringify(value));
   }

@@ -1,13 +1,16 @@
-import { Component, EventEmitter, Inject, Output, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { ObIUploadEvent, ObNotificationService } from '@oblique/oblique';
-import { AddressService, DownloadService, FEATURE_SERVICE_TOKEN, FeatureService } from '../../services';
+import { ObIUploadEvent } from '@oblique/oblique';
+import { DownloadService, FEATURE_SERVICE_TOKEN, FeatureService } from '../../services';
 import saveAs from 'file-saver';
+import { SharedStandaloneModule } from '../../shared-standalone.module';
 
 @Component({
   selector: 'app-file-upload-input',
   templateUrl: './file-upload-input.component.html',
-  styleUrls: ['./file-upload-input.component.scss']
+  styleUrls: ['./file-upload-input.component.scss'],
+	imports: [SharedStandaloneModule]
+
 })
 export class FileUploadInputComponent {
   @Output()
