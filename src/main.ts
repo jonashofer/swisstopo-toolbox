@@ -1,4 +1,4 @@
-import { enableProdMode, importProvidersFrom } from '@angular/core';
+import { enableProdMode, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
 import { HTTP_INTERCEPTORS, provideHttpClient, withFetch } from '@angular/common/http';
@@ -16,17 +16,18 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
   providers: [
+    provideZoneChangeDetection(),
     importProvidersFrom(SharedStandaloneModule),
     importProvidersFrom(BrowserAnimationsModule),
     provideHttpClient(withFetch()),
     provideRouter(AppRoutes),
-		provideObliqueConfiguration({
+    provideObliqueConfiguration({
       accessibilityStatement: {
-				createdOn: new Date('2026-08-04'),
-				conformity: 'none',
+        createdOn: new Date('2026-08-04'),
+        conformity: 'none',
         applicationName: 'Swisstopo Toolbox',
         applicationOperator: '3rd Party',
-        contact:[{email: ''}, {phone: ''}]
+        contact: [{ email: '' }, { phone: '' }]
       }
     }),
     { provide: OB_BANNER, useValue: environment.banner },

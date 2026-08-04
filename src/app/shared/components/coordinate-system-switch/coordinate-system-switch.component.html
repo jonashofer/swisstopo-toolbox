@@ -5,9 +5,11 @@
 		(ngModelChange)="onChange($event)"
 		aria-label="Coordinate System"
 		[hideSingleSelectionIndicator]="true">
-		<mat-button-toggle *ngFor="let system of coordinateSystems" [value]="system">
-			{{ coordinateSystemNames[system] }}
-		</mat-button-toggle>
+		@for (system of coordinateSystems; track system) {
+			<mat-button-toggle [value]="system">
+				{{ coordinateSystemNames[system] }}
+			</mat-button-toggle>
+		}
 	</mat-button-toggle-group>
 </ng-template>
 

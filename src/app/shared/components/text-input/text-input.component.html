@@ -14,19 +14,26 @@
 	<button [obInputClear]="inputFormControl" (click)="clearInput()">
 		<mat-icon svgIcon="xmark" class="ob-icon"></mat-icon>
 	</button>
-	<mat-icon
-		matSuffix
-		svgIcon="info_circle"
-		*ngIf="!existingEntryId"
-		[matTooltip]="searchLabel + 'tooltip' | translate"
-		matTooltipPosition="after"></mat-icon>
-	<mat-error *ngIf="inputFormControl.invalid">{{ inputFormControl.getError("searchInput") | translate }}</mat-error>
+	@if (!existingEntryId) {
+		<mat-icon
+			matSuffix
+			svgIcon="info_circle"
+			[matTooltip]="searchLabel + 'tooltip' | translate"
+			matTooltipPosition="after"></mat-icon>
+	}
+	@if (inputFormControl.invalid) {
+		<mat-error>{{ inputFormControl.getError("searchInput") | translate }}</mat-error>
+	}
 	<mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
-		<mat-option *ngFor="let option of results$ | async" [value]="option">
-			<div [outerHTML]="option.text"></div>
-		</mat-option>
-		<mat-option *ngIf="noResults" disabled>
-			<span>{{ searchLabel + "noResults" | translate }}</span>
-		</mat-option>
+		@for (option of results$ | async; track option) {
+			<mat-option [value]="option">
+				<div [outerHTML]="option.text"></div>
+			</mat-option>
+		}
+		@if (noResults) {
+			<mat-option disabled>
+				<span>{{ searchLabel + "noResults" | translate }}</span>
+			</mat-option>
+		}
 	</mat-autocomplete>
 </mat-form-field>

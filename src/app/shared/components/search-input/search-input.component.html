@@ -29,10 +29,10 @@
 	<h2 mat-dialog-title>{{ "fileInput.tooManyDialog.title" | translate }}</h2>
 	<mat-dialog-content class="mat-typography">
 		<p>{{ "fileInput.tooManyDialog.description" | translate }}</p>
-		<ng-container *ngIf="progress > 0">
+		@if (progress > 0) {
 			<mat-progress-bar mode="buffer" [value]="progress"></mat-progress-bar>
 			<p>{{ progressText }}</p>
-		</ng-container>
+		}
 	</mat-dialog-content>
 	<mat-dialog-actions>
 		<button mat-button obButton="secondary" cdkFocusInitial (click)="addAll()" [disabled]="progress > 0">
