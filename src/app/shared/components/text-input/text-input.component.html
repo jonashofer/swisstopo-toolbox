@@ -12,11 +12,11 @@
 		[matAutocomplete]="auto"
 		(paste)="onPaste($event)" />
 	<button [obInputClear]="inputFormControl" (click)="clearInput()">
-		<mat-icon svgIcon="cancel" class="ob-icon"></mat-icon>
+		<mat-icon svgIcon="xmark" class="ob-icon"></mat-icon>
 	</button>
 	<mat-icon
 		matSuffix
-		svgIcon="info-circle"
+		svgIcon="info_circle"
 		*ngIf="!existingEntryId"
 		[matTooltip]="searchLabel + 'tooltip' | translate"
 		matTooltipPosition="after"></mat-icon>

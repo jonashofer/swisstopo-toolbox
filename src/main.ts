@@ -22,9 +22,11 @@ bootstrapApplication(AppComponent, {
     provideRouter(AppRoutes),
 		provideObliqueConfiguration({
       accessibilityStatement: {
+				createdOn: new Date('2026-08-04'),
+				conformity: 'none',
         applicationName: 'Swisstopo Toolbox',
         applicationOperator: '3rd Party',
-        contact: { emails: [''], phones: [''] }
+        contact:[{email: ''}, {phone: ''}]
       }
     }),
     { provide: OB_BANNER, useValue: environment.banner },

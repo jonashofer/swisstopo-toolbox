@@ -13,7 +13,7 @@
 				(click)="dialog.open(confirmResetDialog)"
 				matTooltipPosition="after"
 				matTooltipShowDelay="100">
-				<mat-icon svgIcon="repeat" class="ob-icon"></mat-icon>
+				<mat-icon svgIcon="arrow_clockwise" class="ob-icon"></mat-icon>
 			</button>
 		</th>
 		<td mat-cell *matCellDef="let element">
@@ -24,7 +24,7 @@
 				[matTooltip]="'table.entry.delete' | translate"
 				matTooltipPosition="after"
 				matTooltipShowDelay="500">
-				<mat-icon svgIcon="trash" class="ob-icon"></mat-icon>
+				<mat-icon svgIcon="delete" class="ob-icon"></mat-icon>
 			</button>
 		</td>
 	</ng-container>
@@ -34,7 +34,7 @@
 		<td mat-cell *matCellDef="let element">
 			<mat-icon
 				*ngIf="element.isValid"
-				svgIcon="pen"
+				svgIcon="pencil"
 				class="ob-icon icon-button"
 				[matTooltip]="'table.entry.edit' | translate"
 				matTooltipPosition="after"
@@ -42,7 +42,7 @@
 				(click)="editHandler.emit(element); $event.stopPropagation()"></mat-icon>
 			<mat-icon
 				*ngIf="!element.isValid"
-				svgIcon="warning-triangle"
+				svgIcon="exclamation_triangle"
 				class="ob-icon icon-button"
 				[matTooltip]="element.warningTranslationKey | translate"
 				matTooltipPosition="after"
@@ -54,7 +54,7 @@
 	<ng-container matColumnDef="config">
 		<th mat-header-cell *matHeaderCellDef>
 			<mat-icon
-				svgIcon="cog"
+				svgIcon="settings"
 				class="ob-icon icon-button"
 				[matTooltip]="'columnConfigDialog.title' | translate"
 				(click)="columnService.openConfigDialog(viewContainerRef)"
@@ -63,7 +63,7 @@
 		</th>
 		<td mat-cell *matCellDef="let element">
 			<mat-icon
-				svgIcon="duplicate"
+				svgIcon="copy"
 				class="ob-icon"
 				(click)="copyRowData(element)"
 				[matTooltip]="copyTooltip('row')"
@@ -78,7 +78,7 @@
 			<th mat-header-cell *matHeaderCellDef (click)="copyColumnData(column + '.lat')" matRipple
 				>{{ "columns." + column + ".lat" | translate }}
 				<mat-icon
-					svgIcon="duplicate"
+					svgIcon="copy"
 					class="ob-icon"
 					[matTooltip]="copyTooltip('column')"
 					matTooltipPosition="after"
@@ -97,7 +97,7 @@
 			<th mat-header-cell *matHeaderCellDef (click)="copyColumnData(column + '.lon')" matRipple
 				>{{ "columns." + column + ".lon" | translate }}
 				<mat-icon
-					svgIcon="duplicate"
+					svgIcon="copy"
 					class="ob-icon"
 					[matTooltip]="copyTooltip('column')"
 					matTooltipPosition="after"
@@ -119,7 +119,7 @@
 		<th mat-header-cell *matHeaderCellDef (click)="copyColumnData(column)" matRipple>
 			{{ "columns." + column | translate }}
 			<mat-icon
-				svgIcon="duplicate"
+				svgIcon="copy"
 				class="ob-icon"
 				[matTooltip]="copyTooltip('column')"
 				matTooltipPosition="after"
