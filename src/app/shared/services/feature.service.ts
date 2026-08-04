@@ -53,8 +53,11 @@ export abstract class FeatureServiceBase<AutocompleteData> implements FeatureSer
 
   public progressUpdates = new Subject<number>();
 
+  // not DI: name and labelType are plain values passed by subclasses via super()
   constructor(
+    // eslint-disable-next-line @angular-eslint/prefer-inject
     public name: string,
+    // eslint-disable-next-line @angular-eslint/prefer-inject
     public labelType: LabelType
   ) {}
 

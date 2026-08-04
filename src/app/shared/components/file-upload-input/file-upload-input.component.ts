@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Output } from '@angular/core';
+import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ObIUploadEvent } from '@oblique/oblique';
 import { DownloadService, FEATURE_SERVICE_TOKEN, FeatureService } from '../../services';
@@ -12,6 +12,10 @@ import { SharedStandaloneModule } from '../../shared-standalone.module';
   imports: [SharedStandaloneModule]
 })
 export class FileUploadInputComponent {
+  downloadService = inject(DownloadService);
+  private readonly translate = inject(TranslateService);
+  private readonly featureService = inject<FeatureService>(FEATURE_SERVICE_TOKEN);
+
   @Output()
   uploaded = new EventEmitter<string[]>();
 
@@ -19,12 +23,6 @@ export class FileUploadInputComponent {
   // mode = InputSearchMode.All;
 
   private lines: string[] = [];
-
-  constructor(
-    public downloadService: DownloadService,
-    private readonly translate: TranslateService,
-    @Inject(FEATURE_SERVICE_TOKEN) private readonly featureService: FeatureService
-  ) {}
 
   uploadEvent($event: ObIUploadEvent) {
     if ($event?.files?.length != 1) {

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, map, of } from 'rxjs';
 import { AddressCoordinateTableEntry, ColumnDefinitions, Coordinate, CoordinateSystem } from '../shared/models';
 import { ColumnConfigItem, userCol, sysCol, inactiveUserCol } from '../shared/models/ColumnConfiguration';
@@ -9,9 +9,11 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class CoordinateToCoordinateService extends FeatureServiceBase<Coordinate> {
+  private readonly httpClient = inject(HttpClient);
+
   disableInactivationOfOldSystemWhenSwitching = true;
 
-  constructor(private readonly httpClient: HttpClient) {
+  constructor() {
     super('coordinate-to-coordinate', LabelType.COORDINATE);
   }
 

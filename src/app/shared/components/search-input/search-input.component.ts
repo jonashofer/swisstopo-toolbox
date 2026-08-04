@@ -1,4 +1,4 @@
-import { Component, Inject, Input, TemplateRef } from '@angular/core';
+import { Component, Input, TemplateRef, inject } from '@angular/core';
 import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTableEntry';
 import { MatDialog } from '@angular/material/dialog';
 import { ObNotificationService } from '@oblique/oblique';
@@ -18,6 +18,12 @@ const INPUT_SIZE_WARNING_THRESHOLD = 100;
   imports: [SharedStandaloneModule, TextInputComponent, FileUploadInputComponent]
 })
 export class SearchInputComponent {
+  private readonly addressService = inject(AddressService);
+  private readonly dialog = inject(MatDialog);
+  private readonly notificationService = inject(ObNotificationService);
+  private readonly translate = inject(TranslateService);
+  private readonly featureService = inject<FeatureService>(FEATURE_SERVICE_TOKEN);
+
   selectedInputType = 0; // 0 = text, 1 = file
   progress = 0;
   progressText = '';
@@ -26,14 +32,6 @@ export class SearchInputComponent {
   addressToEdit: AddressCoordinateTableEntry | null = null;
 
   lines: string[] = [];
-
-  constructor(
-    private readonly addressService: AddressService,
-    private readonly dialog: MatDialog,
-    private readonly notificationService: ObNotificationService,
-    private readonly translate: TranslateService,
-    @Inject(FEATURE_SERVICE_TOKEN) private readonly featureService: FeatureService
-  ) {}
 
   addAll() {
     this.featureService.progressUpdates.subscribe(progress => {

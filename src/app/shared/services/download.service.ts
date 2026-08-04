@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import saveAs from 'file-saver';
 import { AddressService, ColumnService, FeatureService } from '.';
 import { Subject } from 'rxjs';
@@ -8,14 +8,12 @@ import { FEATURE_SERVICE_TOKEN } from './feature.service';
 
 @Injectable()
 export class DownloadService {
-  public addressesCopied$ = new Subject<void>();
+  private readonly addressService = inject(AddressService);
+  private readonly featureService = inject<FeatureService>(FEATURE_SERVICE_TOKEN);
+  private readonly translate = inject(TranslateService);
+  private readonly columnService = inject(ColumnService);
 
-  constructor(
-    private readonly addressService: AddressService,
-    @Inject(FEATURE_SERVICE_TOKEN) private readonly featureService: FeatureService,
-    private readonly translate: TranslateService,
-    private readonly columnService: ColumnService
-  ) {}
+  public addressesCopied$ = new Subject<void>();
 
   public getCopyToClipboardText(): string {
     return this.joinAddressesWithHeader(this.addressService.addresses, '\t');

@@ -1,4 +1,4 @@
-import { Inject, Injectable, ViewContainerRef } from '@angular/core';
+import { Injectable, ViewContainerRef, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, map, pairwise, tap } from 'rxjs';
 import { ColumnConfigDialogComponent } from '../components/column-config-dialog/column-config-dialog.component';
@@ -9,6 +9,10 @@ import { FEATURE_SERVICE_TOKEN } from './feature.service';
 
 @Injectable()
 export class ColumnService {
+  private readonly featureService = inject<FeatureService>(FEATURE_SERVICE_TOKEN);
+  private readonly dialog = inject(MatDialog);
+  private readonly coordinateService = inject(CoordinateService);
+
   storageKey = `displayColumns_${this.featureService.name}`;
 
   private readonly _columns = new BehaviorSubject<ColumnConfigItem[]>(
@@ -32,11 +36,7 @@ export class ColumnService {
     })
   );
 
-  constructor(
-    @Inject(FEATURE_SERVICE_TOKEN) private readonly featureService: FeatureService,
-    private readonly dialog: MatDialog,
-    private readonly coordinateService: CoordinateService
-  ) {
+  constructor() {
     this.coordinateService.currentSystem$
       .pipe(pairwise())
       .subscribe(([oldSystem, newSystem]) => this.handleCoordinateSystemChange(oldSystem, newSystem));

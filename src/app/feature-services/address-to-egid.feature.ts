@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AddressToCoordinateApiData, AddressToCoordinateService } from './address-to-coordinate.feature';
 import { Observable } from 'rxjs';
 import { LabelType } from '.';
@@ -14,9 +14,11 @@ import { AddressCoordinateTableEntry } from '../shared/models';
 
 @Injectable()
 export class AddressToEgidService extends FeatureServiceBase<AddressToCoordinateApiData> {
+  private readonly atcService = inject(AddressToCoordinateService);
+
   showCoordinateSystemSwitch = false;
 
-  constructor(private readonly atcService: AddressToCoordinateService) {
+  constructor() {
     super('address-to-egid', LabelType.ADDRESS);
     this.messageForMultipleResults = 'table.entry.warning.ambiguous';
   }

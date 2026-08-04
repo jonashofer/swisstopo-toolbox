@@ -1,12 +1,12 @@
 import { DecimalPipe } from '@angular/common';
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
 import { CoordinateSystem } from '../models';
 
 @Pipe({
   name: 'coordinate'
 })
 export class CoordinatePipe implements PipeTransform {
-  constructor(private readonly decimalPipe: DecimalPipe) {}
+  private readonly decimalPipe = inject(DecimalPipe);
 
   transform(value: number | undefined, coordinateSystem: CoordinateSystem): string | null {
     if (!value || !coordinateSystem) {

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CoordinateToCoordinateService, LabelType } from '.';
 import { AddressCoordinateTableEntry, ColumnDefinitions, Coordinate } from '../shared/models';
@@ -7,7 +7,9 @@ import { FeatureServiceBase, SearchResultItemTyped } from '../shared/services/fe
 
 @Injectable()
 export class CoordinateToHeightService extends FeatureServiceBase<Coordinate> {
-  constructor(private readonly ctcService: CoordinateToCoordinateService) {
+  private readonly ctcService = inject(CoordinateToCoordinateService);
+
+  constructor() {
     super('coordinate-to-height', LabelType.COORDINATE);
   }
 

@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ObNotificationService } from '@oblique/oblique';
 import { BehaviorSubject, combineLatest, from, Observable, of } from 'rxjs';
@@ -12,6 +12,12 @@ import { getEnrichQueries } from './enrich-api-calls';
 
 @Injectable()
 export class AddressService {
+  private readonly notificationService = inject(ObNotificationService);
+  private readonly translate = inject(TranslateService);
+  private featureService = inject<FeatureService>(FEATURE_SERVICE_TOKEN);
+  private readonly http = inject(HttpClient);
+  private readonly columnService = inject(ColumnService);
+
   public featureName = this.featureService.name;
 
   private readonly _bareAddresses = new BehaviorSubject<AddressCoordinateTableEntry[]>(
@@ -26,13 +32,7 @@ export class AddressService {
   public validAddresses$ = this.addresses$.pipe(map(a => a.filter(a => a.isValid)));
   public hasAddresses$ = this.addresses$.pipe(map(a => a.length > 0));
 
-  constructor(
-    private readonly notificationService: ObNotificationService,
-    private readonly translate: TranslateService,
-    @Inject(FEATURE_SERVICE_TOKEN) private featureService: FeatureService,
-    private readonly http: HttpClient,
-    private readonly columnService: ColumnService
-  ) {
+  constructor() {
     this.addresses$
       .pipe(
         map(addresses => {

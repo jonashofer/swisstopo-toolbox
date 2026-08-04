@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, map, of, switchMap } from 'rxjs';
 import {
   AddressCoordinateTableEntry,
@@ -25,10 +25,10 @@ export interface CoordinateToAddressApiData {
 
 @Injectable()
 export class CoordinateToAddressService extends FeatureServiceBase<CoordinateToAddressApiData> {
-  constructor(
-    private httpClient: HttpClient,
-    private translateService: TranslateService
-  ) {
+  private httpClient = inject(HttpClient);
+  private translateService = inject(TranslateService);
+
+  constructor() {
     super('coordinate-to-address', LabelType.COORDINATE);
   }
 

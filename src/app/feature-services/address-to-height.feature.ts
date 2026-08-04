@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AddressToCoordinateApiData, AddressToCoordinateService } from './address-to-coordinate.feature';
 import { Observable } from 'rxjs';
 import { LabelType } from '.';
@@ -8,9 +8,11 @@ import { FeatureServiceBase, SearchResultItemTyped } from '../shared/services/fe
 
 @Injectable()
 export class AddressToHeightService extends FeatureServiceBase<AddressToCoordinateApiData> {
+  private readonly atcService = inject(AddressToCoordinateService);
+
   showCoordinateSystemSwitch = false;
 
-  constructor(private readonly atcService: AddressToCoordinateService) {
+  constructor() {
     super('address-to-height', LabelType.ADDRESS);
     this.messageForMultipleResults = 'table.entry.warning.ambiguous';
   }

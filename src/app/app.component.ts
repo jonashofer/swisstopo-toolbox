@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -15,12 +15,12 @@ export class AppComponent {
   title = '';
   routes: ObINavigationLink[] = [];
 
-  constructor(
-    router: Router,
-    translate: TranslateService,
-    masterConfig: ObMasterLayoutConfig,
-    interceptorConfig: ObHttpApiInterceptorConfig
-  ) {
+  constructor() {
+    const router = inject(Router);
+    const translate = inject(TranslateService);
+    const masterConfig = inject(ObMasterLayoutConfig);
+    const interceptorConfig = inject(ObHttpApiInterceptorConfig);
+
     masterConfig.header.isSmall = true;
     masterConfig.homePageRoute = '/address-to-coordinate';
     masterConfig.locale.locales = ['de-CH', 'fr-CH', 'it-CH', 'rm', 'en-CH'];

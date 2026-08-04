@@ -1,5 +1,5 @@
 import Map from 'ol/Map';
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, TemplateRef, ViewChild, inject } from '@angular/core';
 import { Feature, View } from 'ol';
 import { Tile as TileLayer } from 'ol/layer';
 import { XYZ } from 'ol/source';
@@ -96,6 +96,10 @@ const storageKey = 'map-background';
   imports: [SharedStandaloneModule]
 })
 export class ResultMapComponent implements AfterViewInit, OnDestroy {
+  private readonly mapInteractionService = inject(MapInteractionService);
+  private readonly downloadService = inject(DownloadService);
+  private readonly dialog = inject(MatDialog);
+
   map: Map | null = null;
   _addresses: AddressCoordinateTableEntry[] = [];
 
@@ -124,11 +128,7 @@ export class ResultMapComponent implements AfterViewInit, OnDestroy {
   currentLayer: BackgroundLayers = BackgroundLayers.Standard;
 
   lastHighlightedFeature: Feature<Geometry> | null = null;
-  constructor(
-    private readonly mapInteractionService: MapInteractionService,
-    private readonly downloadService: DownloadService,
-    private readonly dialog: MatDialog
-  ) {
+  constructor() {
     this.currentLayer = StorageService.get<BackgroundLayers>(storageKey) || BackgroundLayers.Standard;
 
     this.mapInteractionService.tableToMap$.subscribe(x => this.hightlightFeature(x.id, x.end));

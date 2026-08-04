@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { AbstractControl, FormControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { debounceTime, switchMap, tap } from 'rxjs/operators';
@@ -15,6 +15,9 @@ import { SharedStandaloneModule } from '../../shared-standalone.module';
   imports: [SharedStandaloneModule]
 })
 export class TextInputComponent {
+  private readonly addressService = inject(AddressService);
+  featureService = inject<FeatureService>(FEATURE_SERVICE_TOKEN);
+
   public inputFormControl = new FormControl<string>('', {
     validators: this.searchInputValidator(),
     updateOn: 'change'
@@ -51,10 +54,9 @@ export class TextInputComponent {
     }
   }
 
-  constructor(
-    private readonly addressService: AddressService,
-    @Inject(FEATURE_SERVICE_TOKEN) public featureService: FeatureService
-  ) {
+  constructor() {
+    const featureService = this.featureService;
+
     this.searchLabel = `search.${featureService.labelType}.`;
   }
 

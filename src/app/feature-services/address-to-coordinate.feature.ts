@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, map, of } from 'rxjs';
 import { AddressCoordinateTableEntry } from '../shared/models/AddressCoordinateTableEntry';
 import {
@@ -21,7 +21,9 @@ export interface AddressToCoordinateApiData {
 
 @Injectable()
 export class AddressToCoordinateService extends FeatureServiceBase<AddressToCoordinateApiData> {
-  constructor(private readonly httpClient: HttpClient) {
+  private readonly httpClient = inject(HttpClient);
+
+  constructor() {
     super('address-to-coordinate', LabelType.ADDRESS);
     this.messageForMultipleResults = 'table.entry.warning.ambiguous';
   }

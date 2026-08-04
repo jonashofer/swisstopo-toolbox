@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CoordinateSystem } from '../models/CoordinateSystem';
 import { Coordinate } from '../models/Coordinate';
@@ -16,7 +16,9 @@ export class CoordinateService {
     return this.system$.value;
   }
 
-  constructor(@Inject(FEATURE_SERVICE_TOKEN) featureService: FeatureService) {
+  constructor() {
+    const featureService = inject<FeatureService>(FEATURE_SERVICE_TOKEN);
+
     const storageKey = 'coordinate-system_' + featureService.name;
     this.system$.next(StorageService.get(storageKey) || CoordinateSystem.WGS_84);
     this.system$.subscribe(system => {

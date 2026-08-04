@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { DownloadService, FEATURE_SERVICE_TOKEN, FeatureService } from '../../services';
 import { TranslateService } from '@ngx-translate/core';
 import { SharedStandaloneModule } from '../../shared-standalone.module';
@@ -12,11 +12,9 @@ import { CoordinateSystemSwitchComponent } from '../coordinate-system-switch/coo
   imports: [SharedStandaloneModule, DownloadSelectorComponent, CoordinateSystemSwitchComponent]
 })
 export class ToolbarComponent {
-  constructor(
-    public downloadService: DownloadService,
-    @Inject(FEATURE_SERVICE_TOKEN) public featureService: FeatureService,
-    private translate: TranslateService
-  ) {}
+  downloadService = inject(DownloadService);
+  featureService = inject<FeatureService>(FEATURE_SERVICE_TOKEN);
+  private translate = inject(TranslateService);
 
   public getCopyTooltip(): string {
     return this.translate.instant('table.clipboard.copy', {

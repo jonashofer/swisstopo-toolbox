@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AddressCoordinateTableEntry } from '../../models';
 import {
   AddressService,
@@ -30,9 +30,9 @@ import { ResultMapComponent } from '../result-map/result-map.component';
   imports: [SharedStandaloneModule, SearchInputComponent, ResultTableComponent, ToolbarComponent, ResultMapComponent]
 })
 export class FeatureTabComponent {
-  addressToEdit: AddressCoordinateTableEntry | null = null;
+  addressService = inject(AddressService);
 
-  constructor(public addressService: AddressService) {}
+  addressToEdit: AddressCoordinateTableEntry | null = null;
 
   edit(address: AddressCoordinateTableEntry) {
     this.addressToEdit = { ...address };

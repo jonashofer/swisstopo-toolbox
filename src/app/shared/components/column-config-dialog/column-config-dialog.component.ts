@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ColumnService } from '../../services/column.service';
 import { ColumnConfigItem } from '../../models/ColumnConfiguration';
@@ -12,7 +12,7 @@ import { SharedStandaloneModule } from '../../shared-standalone.module';
   imports: [SharedStandaloneModule]
 })
 export class ColumnConfigDialogComponent implements OnInit {
-  constructor(private readonly columnService: ColumnService) {}
+  private readonly columnService = inject(ColumnService);
 
   ngOnInit() {
     this.items = this.columnService.getCurrentConfig().map(x => Object.assign({}, x)); // deep copy to prevent setting original objects

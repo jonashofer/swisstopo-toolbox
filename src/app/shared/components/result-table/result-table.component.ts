@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild, ViewContainerRef, inject } from '@angular/core';
 import { map } from 'rxjs';
 import { AddressService, DownloadService } from '../../services';
 import { ColumnService } from '../../services/column.service';
@@ -21,6 +21,16 @@ import { CoordinatePipe } from '../coordinate.pipe';
   imports: [SharedStandaloneModule, CoordinatePipe]
 })
 export class ResultTableComponent implements OnInit {
+  addressService = inject(AddressService);
+  columnService = inject(ColumnService);
+  dialog = inject(MatDialog);
+  viewContainerRef = inject(ViewContainerRef);
+  private downloadService = inject(DownloadService);
+  private mapInteractionService = inject(MapInteractionService);
+  private clipboard = inject(Clipboard);
+  private notifcationService = inject(ObNotificationService);
+  private translate = inject(TranslateService);
+
   @Output()
   editHandler = new EventEmitter<AddressCoordinateTableEntry>();
 
@@ -47,18 +57,6 @@ export class ResultTableComponent implements OnInit {
   highlightId = '';
 
   coordinateSystemNames = CoordinateSystemNames;
-
-  constructor(
-    public addressService: AddressService,
-    public columnService: ColumnService,
-    public dialog: MatDialog,
-    public viewContainerRef: ViewContainerRef,
-    private downloadService: DownloadService,
-    private mapInteractionService: MapInteractionService,
-    private clipboard: Clipboard,
-    private notifcationService: ObNotificationService,
-    private translate: TranslateService
-  ) {}
 
   ngOnInit() {
     this.downloadService.addressesCopied$.subscribe(() => {
