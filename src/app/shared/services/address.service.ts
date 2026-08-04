@@ -2,16 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ObNotificationService } from '@oblique/oblique';
 import { BehaviorSubject, combineLatest, from, Observable, of } from 'rxjs';
-import {
-  catchError,
-  concatMap,
-  last,
-  map,
-  mergeMap,
-  shareReplay,
-  switchMap,
-  toArray
-} from 'rxjs/operators';
+import { catchError, concatMap, last, map, mergeMap, shareReplay, switchMap, toArray } from 'rxjs/operators';
 import { ColumnService, StorageService } from '.';
 import { AddressCoordinateTableEntry, AddressSelectionResult } from '../models/AddressCoordinateTableEntry';
 import { ColumnDefinitions } from '../models/ColumnConfiguration';

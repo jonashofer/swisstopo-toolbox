@@ -9,8 +9,7 @@ import { CoordinateSystemSwitchComponent } from '../coordinate-system-switch/coo
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss'],
-	imports: [SharedStandaloneModule, DownloadSelectorComponent, CoordinateSystemSwitchComponent]
-
+  imports: [SharedStandaloneModule, DownloadSelectorComponent, CoordinateSystemSwitchComponent]
 })
 export class ToolbarComponent {
   constructor(

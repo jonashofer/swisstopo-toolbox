@@ -6,7 +6,6 @@ import { FeatureTabComponent } from '../shared/components/feature-tab/feature-ta
   selector: 'app-address-to-height',
   template: `<app-feature-tab></app-feature-tab>`,
   providers: [getFeatureProviders(AddressToHeightService), AddressToCoordinateService],
-	imports: [FeatureTabComponent]
-
+  imports: [FeatureTabComponent]
 })
 export class AddressToHeightComponent {}

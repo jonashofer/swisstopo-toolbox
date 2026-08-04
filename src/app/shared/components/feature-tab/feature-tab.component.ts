@@ -27,8 +27,7 @@ import { ResultMapComponent } from '../result-map/result-map.component';
     CoordinatePipe,
     MapInteractionService
   ],
-	imports: [SharedStandaloneModule, SearchInputComponent, ResultTableComponent, ToolbarComponent, ResultMapComponent]
-
+  imports: [SharedStandaloneModule, SearchInputComponent, ResultTableComponent, ToolbarComponent, ResultMapComponent]
 })
 export class FeatureTabComponent {
   addressToEdit: AddressCoordinateTableEntry | null = null;

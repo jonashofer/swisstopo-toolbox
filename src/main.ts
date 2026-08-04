@@ -2,8 +2,6 @@ import { enableProdMode, importProvidersFrom, provideZoneChangeDetection } from 
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
 import { HTTP_INTERCEPTORS, provideHttpClient, withFetch } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { AppComponent } from './app/app.component';
 import { AppRoutes } from './app/app-routing.module';
 import { environment } from './environments/environment';
@@ -18,7 +16,6 @@ bootstrapApplication(AppComponent, {
   providers: [
     provideZoneChangeDetection(),
     importProvidersFrom(SharedStandaloneModule),
-    importProvidersFrom(BrowserAnimationsModule),
     provideHttpClient(withFetch()),
     provideRouter(AppRoutes),
     provideObliqueConfiguration({

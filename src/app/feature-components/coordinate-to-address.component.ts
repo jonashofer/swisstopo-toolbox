@@ -6,7 +6,6 @@ import { FeatureTabComponent } from '../shared/components/feature-tab/feature-ta
   selector: 'app-coordinate-to-address',
   template: `<app-feature-tab></app-feature-tab>`,
   providers: [getFeatureProviders(CoordinateToAddressService)],
-	imports: [FeatureTabComponent]
-
+  imports: [FeatureTabComponent]
 })
 export class CoordinateToAddressComponent {}

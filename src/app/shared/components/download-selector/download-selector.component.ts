@@ -7,8 +7,7 @@ import { SharedStandaloneModule } from '../../shared-standalone.module';
   selector: 'app-download-selector',
   templateUrl: './download-selector.component.html',
   styleUrls: ['./download-selector.component.scss'],
-		imports: [SharedStandaloneModule]
-
+  imports: [SharedStandaloneModule]
 })
 export class DownloadSelectorComponent {
   constructor(

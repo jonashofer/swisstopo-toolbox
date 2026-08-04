@@ -32,6 +32,12 @@
 				"htmlWhitespaceSensitivity": "strict",
 				"printWidth": 120
 			}
+		},
+		{
+			"files": "*.html",
+			"options": {
+				"parser": "angular"
+			}
 		}
 	]
 }

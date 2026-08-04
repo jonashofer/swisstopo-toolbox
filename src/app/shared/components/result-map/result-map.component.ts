@@ -93,8 +93,7 @@ const storageKey = 'map-background';
   selector: 'app-result-map',
   templateUrl: './result-map.component.html',
   styleUrls: ['./result-map.component.scss'],
-	imports: [SharedStandaloneModule]
-
+  imports: [SharedStandaloneModule]
 })
 export class ResultMapComponent implements AfterViewInit, OnDestroy {
   map: Map | null = null;

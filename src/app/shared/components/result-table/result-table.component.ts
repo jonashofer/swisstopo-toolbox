@@ -18,8 +18,7 @@ import { CoordinatePipe } from '../coordinate.pipe';
   selector: 'app-result-table',
   templateUrl: './result-table.component.html',
   styleUrls: ['./result-table.component.scss'],
-	imports: [SharedStandaloneModule, CoordinatePipe]
-
+  imports: [SharedStandaloneModule, CoordinatePipe]
 })
 export class ResultTableComponent implements OnInit {
   @Output()

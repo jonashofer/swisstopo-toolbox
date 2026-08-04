@@ -9,8 +9,7 @@ import { SharedStandaloneModule } from '../../shared-standalone.module';
   selector: 'app-file-upload-input',
   templateUrl: './file-upload-input.component.html',
   styleUrls: ['./file-upload-input.component.scss'],
-	imports: [SharedStandaloneModule]
-
+  imports: [SharedStandaloneModule]
 })
 export class FileUploadInputComponent {
   @Output()

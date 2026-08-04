@@ -8,8 +8,7 @@ import { SharedStandaloneModule } from '../../shared-standalone.module';
   selector: 'app-coordinate-system-switch',
   templateUrl: './coordinate-system-switch.component.html',
   styleUrls: ['./coordinate-system-switch.component.scss'],
-	imports: [SharedStandaloneModule]
-
+  imports: [SharedStandaloneModule]
 })
 export class CoordinateSystemSwitchComponent {
   coordinateSystems = Object.values(CoordinateSystem);

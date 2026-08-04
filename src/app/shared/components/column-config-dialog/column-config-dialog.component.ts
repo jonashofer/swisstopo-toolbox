@@ -9,8 +9,7 @@ import { SharedStandaloneModule } from '../../shared-standalone.module';
   selector: 'app-column-config-dialog',
   templateUrl: './column-config-dialog.component.html',
   styleUrls: ['./column-config-dialog.component.scss'],
-	imports: [SharedStandaloneModule]
-
+  imports: [SharedStandaloneModule]
 })
 export class ColumnConfigDialogComponent implements OnInit {
   constructor(private readonly columnService: ColumnService) {}

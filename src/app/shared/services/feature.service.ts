@@ -1,14 +1,5 @@
 import { Injectable, InjectionToken } from '@angular/core';
-import {
-  Observable,
-  Subject,
-  concatMap,
-  forkJoin,
-  from,
-  map,
-  of,
-  reduce,
-  tap} from 'rxjs';
+import { Observable, Subject, concatMap, forkJoin, from, map, of, reduce, tap } from 'rxjs';
 import { AddressCoordinateTableEntry } from '../models/AddressCoordinateTableEntry';
 import { ColumnConfigItem } from '../models/ColumnConfiguration';
 

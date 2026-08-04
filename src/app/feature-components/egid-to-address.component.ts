@@ -6,7 +6,6 @@ import { FeatureTabComponent } from '../shared/components/feature-tab/feature-ta
   selector: 'app-egid-to-address',
   template: `<app-feature-tab></app-feature-tab>`,
   providers: getFeatureProviders(EgidToAddressService),
-	imports: [FeatureTabComponent]
-
+  imports: [FeatureTabComponent]
 })
 export class EgidToAddressComponent {}
