@@ -1,0 +1,34 @@
+name: PR checks
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+
+permissions:
+  contents: read
+
+jobs:
+  lint-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.1
+
+      - name: Set up node.js
+        uses: actions/setup-node@v7.1.0
+        with:
+          node-version: "24"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build (cms.geo.admin.ch)
+        run: npm run build:prod
+
+      - name: Build (BFH GitHub Pages)
+        run: npm run build:bfh
