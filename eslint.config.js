@@ -1,16 +1,17 @@
 // @ts-check
 
+const { defineConfig } = require("eslint/config");
+
 // Allows us to bring in the recommended core rules from eslint itself
 const eslint = require("@eslint/js");
 
-// Allows us to use the typed utility for our config, and to bring in the recommended rules for TypeScript projects from typescript-eslint
+// Allows us to bring in the recommended rules for TypeScript projects from typescript-eslint
 const tseslint = require("typescript-eslint");
 
 // Allows us to bring in the recommended rules for Angular projects from angular-eslint
 const angular = require("angular-eslint");
 
-// Export our config array, which is composed together thanks to the typed utility function from typescript-eslint
-module.exports = tseslint.config(
+module.exports = defineConfig(
 	{
 		ignores: ['.angular/**'],
 		// Everything in this config object targets our TypeScript files (Components, Directives, Pipes etc)
@@ -46,6 +47,8 @@ module.exports = tseslint.config(
 					style: "kebab-case",
 				},
 			],
+			"@angular-eslint/prefer-inject": "off",
+			"@angular-eslint/prefer-on-push-component-change-detection": "off",
 			"no-unused-vars": "off",
 			"@typescript-eslint/no-unused-vars": [
 				"error",

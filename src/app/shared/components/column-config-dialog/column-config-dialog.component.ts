@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ColumnService } from '../../services/column.service';
 import { ColumnConfigItem } from '../../models/ColumnConfiguration';
@@ -9,8 +9,8 @@ import { SharedStandaloneModule } from '../../shared-standalone.module';
   selector: 'app-column-config-dialog',
   templateUrl: './column-config-dialog.component.html',
   styleUrls: ['./column-config-dialog.component.scss'],
-	imports: [SharedStandaloneModule]
-
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [SharedStandaloneModule]
 })
 export class ColumnConfigDialogComponent implements OnInit {
   constructor(private readonly columnService: ColumnService) {}

@@ -1,4 +1,4 @@
-import { Component, TemplateRef } from '@angular/core';
+import { Component, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 import { AddressService, DownloadService } from '../../services';
 import { MatDialog } from '@angular/material/dialog';
 import { SharedStandaloneModule } from '../../shared-standalone.module';
@@ -7,8 +7,8 @@ import { SharedStandaloneModule } from '../../shared-standalone.module';
   selector: 'app-download-selector',
   templateUrl: './download-selector.component.html',
   styleUrls: ['./download-selector.component.scss'],
-		imports: [SharedStandaloneModule]
-
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [SharedStandaloneModule]
 })
 export class DownloadSelectorComponent {
   constructor(

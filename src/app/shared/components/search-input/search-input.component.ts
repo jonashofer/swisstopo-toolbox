@@ -1,4 +1,4 @@
-import { Component, Inject, Input, TemplateRef } from '@angular/core';
+import { Component, Inject, Input, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTableEntry';
 import { MatDialog } from '@angular/material/dialog';
 import { ObNotificationService } from '@oblique/oblique';
@@ -15,8 +15,8 @@ const INPUT_SIZE_WARNING_THRESHOLD = 100;
   selector: 'app-search-input',
   templateUrl: './search-input.component.html',
   styleUrls: ['./search-input.component.scss'],
-	imports: [SharedStandaloneModule, TextInputComponent, FileUploadInputComponent]
-
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [SharedStandaloneModule, TextInputComponent, FileUploadInputComponent]
 })
 export class SearchInputComponent {
   selectedInputType = 0; // 0 = text, 1 = file

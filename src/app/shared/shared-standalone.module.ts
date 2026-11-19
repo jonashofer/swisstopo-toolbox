@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import {
   ObAlertModule,
   ObAutocompleteModule,
@@ -42,7 +42,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     ReactiveFormsModule,
     ClipboardModule,
     DragDropModule,
-    TranslateModule,
+    TranslatePipe,
     ObMasterLayoutModule,
     ObFileUploadModule,
     ObButtonModule,
@@ -75,7 +75,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     ReactiveFormsModule,
     ClipboardModule,
     DragDropModule,
-    TranslateModule,
+    TranslatePipe,
     ObMasterLayoutModule,
     ObFileUploadModule,
     ObButtonModule,

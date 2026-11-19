@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { CoordinateService } from '../../services';
 import { CoordinateSystem, CoordinateSystemNames } from '../../models/CoordinateSystem';
@@ -8,8 +8,8 @@ import { SharedStandaloneModule } from '../../shared-standalone.module';
   selector: 'app-coordinate-system-switch',
   templateUrl: './coordinate-system-switch.component.html',
   styleUrls: ['./coordinate-system-switch.component.scss'],
-	imports: [SharedStandaloneModule]
-
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [SharedStandaloneModule]
 })
 export class CoordinateSystemSwitchComponent {
   coordinateSystems = Object.values(CoordinateSystem);

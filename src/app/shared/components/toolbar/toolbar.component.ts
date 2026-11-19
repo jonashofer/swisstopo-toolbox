@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { DownloadService, FEATURE_SERVICE_TOKEN, FeatureService } from '../../services';
 import { TranslateService } from '@ngx-translate/core';
 import { SharedStandaloneModule } from '../../shared-standalone.module';
@@ -9,8 +9,8 @@ import { CoordinateSystemSwitchComponent } from '../coordinate-system-switch/coo
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss'],
-	imports: [SharedStandaloneModule, DownloadSelectorComponent, CoordinateSystemSwitchComponent]
-
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [SharedStandaloneModule, DownloadSelectorComponent, CoordinateSystemSwitchComponent]
 })
 export class ToolbarComponent {
   constructor(
