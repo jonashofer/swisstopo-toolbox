@@ -1,10 +1,5 @@
-import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
-import {
-  AbstractControl,
-  FormControl,
-  ValidationErrors,
-  ValidatorFn
-} from '@angular/forms';
+import { Component, EventEmitter, Inject, Input, Output, ChangeDetectionStrategy } from '@angular/core';
+import { AbstractControl, FormControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { debounceTime, switchMap, tap } from 'rxjs/operators';
 import { AddressCoordinateTableEntry } from '../../models/AddressCoordinateTableEntry';
@@ -17,8 +12,8 @@ import { SharedStandaloneModule } from '../../shared-standalone.module';
   selector: 'app-text-input',
   templateUrl: './text-input.component.html',
   styleUrls: ['./text-input.component.scss'],
-	imports: [SharedStandaloneModule]
-
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [SharedStandaloneModule]
 })
 export class TextInputComponent {
   public inputFormControl = new FormControl<string>('', {

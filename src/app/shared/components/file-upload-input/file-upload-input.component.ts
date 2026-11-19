@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Output, ChangeDetectionStrategy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ObIUploadEvent } from '@oblique/oblique';
 import { DownloadService, FEATURE_SERVICE_TOKEN, FeatureService } from '../../services';
@@ -9,8 +9,8 @@ import { SharedStandaloneModule } from '../../shared-standalone.module';
   selector: 'app-file-upload-input',
   templateUrl: './file-upload-input.component.html',
   styleUrls: ['./file-upload-input.component.scss'],
-	imports: [SharedStandaloneModule]
-
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [SharedStandaloneModule]
 })
 export class FileUploadInputComponent {
   @Output()

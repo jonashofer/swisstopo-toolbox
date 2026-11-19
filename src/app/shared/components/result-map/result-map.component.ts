@@ -1,5 +1,14 @@
 import Map from 'ol/Map';
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  TemplateRef,
+  ViewChild,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { Feature, View } from 'ol';
 import { Tile as TileLayer } from 'ol/layer';
 import { XYZ } from 'ol/source';
@@ -93,8 +102,8 @@ const storageKey = 'map-background';
   selector: 'app-result-map',
   templateUrl: './result-map.component.html',
   styleUrls: ['./result-map.component.scss'],
-	imports: [SharedStandaloneModule]
-
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [SharedStandaloneModule]
 })
 export class ResultMapComponent implements AfterViewInit, OnDestroy {
   map: Map | null = null;
@@ -220,7 +229,7 @@ export class ResultMapComponent implements AfterViewInit, OnDestroy {
       if (isLeave) {
         this.mapInteractionService.sendToTable(this.lastHighlightedFeature?.get('id'), true);
         this.lastHighlightedFeature?.setStyle(iconStyle);
-        this.map!.getTargetElement().style.cursor = '';
+        this.map?.getTargetElement()?.style.setProperty('cursor', '');
         this.lastHighlightedFeature = null;
         return;
       }
@@ -228,7 +237,7 @@ export class ResultMapComponent implements AfterViewInit, OnDestroy {
         const feature = features[0];
         this.lastHighlightedFeature = feature as Feature<Geometry>;
         this.lastHighlightedFeature.setStyle(selectedIconStyle);
-        this.map!.getTargetElement().style.cursor = 'pointer';
+        this.map?.getTargetElement()?.style.setProperty('cursor', 'pointer');
         this.mapInteractionService.sendToTable(feature.get('id'), false);
         return;
       }

@@ -3,8 +3,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { CoordinateSystem } from '../models';
 
 @Pipe({
-  name: 'coordinate',
-  
+  name: 'coordinate'
 })
 export class CoordinatePipe implements PipeTransform {
   constructor(private readonly decimalPipe: DecimalPipe) {}

@@ -1,4 +1,12 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+  ViewContainerRef,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { map } from 'rxjs';
 import { AddressService, DownloadService } from '../../services';
 import { ColumnService } from '../../services/column.service';
@@ -18,8 +26,8 @@ import { CoordinatePipe } from '../coordinate.pipe';
   selector: 'app-result-table',
   templateUrl: './result-table.component.html',
   styleUrls: ['./result-table.component.scss'],
-	imports: [SharedStandaloneModule, CoordinatePipe]
-
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [SharedStandaloneModule, CoordinatePipe]
 })
 export class ResultTableComponent implements OnInit {
   @Output()

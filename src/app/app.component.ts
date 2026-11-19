@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -10,7 +10,12 @@ import {
 import { environment } from '../environments/environment';
 import { SharedStandaloneModule } from './shared/shared-standalone.module';
 
-@Component({ selector: 'app-root', imports: [SharedStandaloneModule], templateUrl: './app.component.html' })
+@Component({
+  selector: 'app-root',
+  imports: [SharedStandaloneModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  templateUrl: './app.component.html'
+})
 export class AppComponent {
   title = '';
   routes: ObINavigationLink[] = [];
@@ -23,7 +28,6 @@ export class AppComponent {
   ) {
     masterConfig.header.isSmall = true;
     masterConfig.homePageRoute = '/address-to-coordinate';
-    masterConfig.locale.locales = ['de-CH', 'fr-CH', 'it-CH', 'rm', 'en-CH'];
     masterConfig.footer.isCustom = true;
 
     interceptorConfig.api.spinner = false;
@@ -48,7 +52,7 @@ export class AppComponent {
       );
 
     if (environment.githubLink) {
-      nav.push({ url: environment.githubLink, label: 'GitHub', isExternal: true, icon: 'git-hub' });
+      nav.push({ url: environment.githubLink, label: 'GitHub', isExternal: true, icon: 'github' });
     }
 
     this.routes = nav;

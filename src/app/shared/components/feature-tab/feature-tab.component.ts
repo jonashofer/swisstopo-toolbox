@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AddressCoordinateTableEntry } from '../../models';
 import {
   AddressService,
@@ -27,8 +27,8 @@ import { ResultMapComponent } from '../result-map/result-map.component';
     CoordinatePipe,
     MapInteractionService
   ],
-	imports: [SharedStandaloneModule, SearchInputComponent, ResultTableComponent, ToolbarComponent, ResultMapComponent]
-
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [SharedStandaloneModule, SearchInputComponent, ResultTableComponent, ToolbarComponent, ResultMapComponent]
 })
 export class FeatureTabComponent {
   addressToEdit: AddressCoordinateTableEntry | null = null;
